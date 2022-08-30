@@ -33,17 +33,17 @@ import org.matsim.core.utils.geometry.transformations.TransformationFactory;
  * @author Ricardo
  *
  */
-public class CreateHotelFacilities {
+public class CreateTourismFacilities {
 
-	final private static Logger log = Logger.getLogger(CreateHotelFacilities.class);
+	final private static Logger log = Logger.getLogger(CreateTourismFacilities.class);
 
 	public static void main(String[] args) {
 
-		String osmFile = "../../Downloads/hotels_berlin.osm";
+		String osmFile = "../../Downloads/export.osm";
 
 		String outputBase = "output/facilities/";
 
-		String facilityFile = outputBase + "hotelFacilities.xml";
+		String facilityFile = outputBase + "tourismFacilities.xml";
 //		String attributeFile = outputBase + "hotelFacilitiy_attributes.xml";
 
 		log.info("Parsing land use from OpenStreetMap.");
@@ -72,7 +72,7 @@ public class CreateHotelFacilities {
 		map.put("alpine_hut", FacilityTypes.IGNORE);
 
 		map.put("apartment", FacilityTypes.IGNORE);
-		map.put("attraction", FacilityTypes.IGNORE);
+		map.put("attraction", FacilityTypes.ATTRACTION);
 		map.put("artwork", FacilityTypes.IGNORE);
 
 		map.put("camp_site", FacilityTypes.IGNORE);
