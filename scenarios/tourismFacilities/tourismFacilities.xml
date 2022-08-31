@@ -1,0 +1,3525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE facilities SYSTEM "http://www.matsim.org/files/dtd/facilities_v2.dtd">
+
+<facilities name="Land Use">
+	<facility id="1011897688" x="4584883.660369259" y="5823806.09064938" desc="Old Texas Town">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1012992898" x="4603200.3879668815" y="5817600.224126558" desc="Mit-Mensch">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1014916947" x="4598283.229217792" y="5815176.464883329" desc="Ibis Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="102413148" x="4598505.562884755" y="5814877.264070587" desc="Centro Park Hotel Berlin Neukölln">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1033893408" x="4598422.569832416" y="5820038.875988042" desc="Michelberger Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="104011054" x="4595438.12519495" y="5820603.1226774715" desc="Titanic Comfort Hotel Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1042056267" x="4606771.400406948" y="5823922.426472379">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="104393230" x="4593735.905973076" y="5822708.288945957" desc="Hotel Berlin Mitte by Campanile">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="104397217" x="4594599.349555947" y="5827493.619202436" desc="Akademie Hotel Berlin-Pankow">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="104414792" x="4590314.370688257" y="5819932.459914573">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="104515701" x="4597085.717814478" y="5829410.93621241" desc="Businesshotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="104776772" x="4593211.030491526" y="5822643.747180971" desc="Kleihueshalle">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="104779560" x="4592069.447895447" y="5814542.505529455">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="105210648" x="4595306.875548594" y="5822609.545579554" desc="Hotel Amano">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="105678678" x="4595166.537308705" y="5822371.534555025" desc="Sophie-Gips-Höfe">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1066721478" x="4598637.252675066" y="5820951.048061615" desc="Juncker's Hotel Garni">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="106810312" x="4595187.418357436" y="5818988.959730865" desc="Hotel Johann">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="106845513" x="4589918.046576963" y="5819879.2368818885" desc="H’Otello K’80 / Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1072624497" x="4600680.506620401" y="5823785.29293038" desc="Sandino Hostel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1073958531" x="4593382.455502726" y="5820421.222519319" desc="The Mandala Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="108607225" x="4598361.109506698" y="5819311.087291481" desc="Hostel X Berger">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="109159643" x="4588553.372324331" y="5812543.65828962" desc="ApartHotel Landhaus Lichterfelde">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1125043960" x="4588189.29054991" y="5819566.532329933" desc="Landmark eco Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="112620621" x="4592060.317813147" y="5814539.501690469">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1129787533" x="4594309.697692665" y="5822388.666144843" desc="Märkischer Hof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1134199097" x="4594546.789703867" y="5822285.51867946" desc="Hotel 38">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="113550809" x="4593161.264231315" y="5819793.550222716" desc="Fjord Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1138450185" x="4591341.005388146" y="5822971.509338402" desc="Mercure Hotel Moa Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1165969865" x="4596953.975677703" y="5819355.7810918195" desc="Vier Jahreszeiten">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1165969893" x="4594365.297544756" y="5818758.663462412" desc="Metropol Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1169468049" x="4596115.110436292" y="5822324.348474609" desc="H4 Hotel Berlin-Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="117395689" x="4593697.017128501" y="5825633.244891401" desc="mk hotel berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="117855555" x="4598392.445779431" y="5825400.903021276" desc="Bethanien-Kirche">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1181625806" x="4598390.683240938" y="5819972.294456193" desc="Industriepalast Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="118204666" x="4583712.416023819" y="5812499.079309224" desc="Hotel Landhaus Schlachtensee">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1182595451" x="4597839.23986104" y="5821589.201042863" desc="Hotel Pension Reiter">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="119495739" x="4590240.379046357" y="5820053.658644116" desc="Hotel Savoy">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1199943378" x="4587271.700498285" y="5820087.249643855" desc="hotel messe">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1200964388" x="4587066.129136465" y="5820442.33341292" desc="Brandies Hotel Berlin Messe">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1200964413" x="4588385.83329113" y="5820108.089590512" desc="Cityblick">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1200964523" x="4587006.667618082" y="5820438.005819698" desc="Hotel Amelie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1200964541" x="4586894.754358757" y="5820367.936333926" desc="Hotel-Pension Gribnitz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="120456815" x="4594025.591897468" y="5824979.531780865" desc="Moxy Berlin Humboldthain Park">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="120472218" x="4591665.813479177" y="5820330.979287664" desc="Pestana Berlin Tiergarten">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1209659403" x="4594193.957346319" y="5818470.318351472" desc="Hotel Transit">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1212618075" x="4603175.3960945625" y="5817557.966380672" desc="Mit-Mensch">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="122006131" x="4591169.015773924" y="5822203.8682005005" desc="Hotel Park Consul">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1229132250" x="4595992.495692703" y="5823135.100091804" desc="Meininger Hotel Berlin Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1242813831" x="4595240.405620845" y="5820765.638458619" desc="Cosmo">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="125194752" x="4588826.471866125" y="5814257.041180339" desc="Botanischer Garten">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1257750727" x="4594568.833609389" y="5820751.806561944" desc="Hotel Gendarm nouveau">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="125895871" x="4592565.369863939" y="5818717.423236284" desc="Lindemann's">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1259545063" x="4594096.912927526" y="5819969.702832129" desc="ibis Berlin City Potsdamer Platz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1259818858" x="4588535.560380202" y="5820290.015206163" desc="Hotel Pension Arta">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="126128623" x="4595139.43466074" y="5822030.363171218" desc="monbijou hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="12688118" x="4594382.217993828" y="5822303.673997706" desc="ehem. Kunsthaus Tacheles">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1282111598" x="4588486.8707346115" y="5819929.806749491" desc="Art Hotel Charlottenburger Hof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1282111601" x="4588517.079756601" y="5820038.674973905" desc="Adam">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1282111605" x="4588521.714984321" y="5820001.615742975" desc="Hôtel Atrium Charlottenburg">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1282111608" x="4588519.068197515" y="5820021.825706485" desc="Birth City Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1285663836" x="4586318.964443029" y="5820292.299438496" desc="Ivbergs Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1296266115" x="4592971.109531902" y="5819689.040862161" desc="Hotel Tagungshaus Tiergarten">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="129660219" x="4599657.406267932" y="5820548.610008132" desc="Almodóvar Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1297269762" x="4583905.315943841" y="5819920.546441329" desc="Gästehaus Rosemarie Reichwein">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="130277322" x="4598865.23912319" y="5820321.2421187" desc="RAW Gelände">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="130661683" x="4591009.339981366" y="5816052.993925511" desc="Hotel Friedenau, Das Literaturhotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1306698841" x="4598934.865035173" y="5820811.779716596" desc="All In Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="131381658" x="4594030.062478334" y="5822083.145193586" desc="Best Western Hotel Berlin-Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1314907073" x="4589407.6485567195" y="5819679.856825921" desc="Hotel Wieland">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="13312710" x="4596314.983483595" y="5821349.679868189" desc="The Student Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1333747986" x="4591486.205007091" y="5820489.556927787" desc="Das Stue">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1343144279" x="4590508.942797563" y="5821978.0968306735" desc="Les Nations">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1348445592" x="4595864.060206948" y="5824505.405946521" desc="1a pension apartment berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1349696692" x="4594402.642136299" y="5821714.088262205" desc="Eurostars Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1362945867" x="4602835.223955274" y="5814704.101075327" desc="Check In Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1363463109" x="4596090.82109632" y="5822302.411315238" desc="H₂ Hotel Berlin Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="136777833" x="4606947.49597123" y="5823901.109530263" desc="Bodenlabyrinth">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="137049846" x="4591410.233008353" y="5819711.827399288" desc="Ibis Budget">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="137219848" x="4607051.9804333765" y="5813456.205367627" desc="Schloss Köpenick">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="137353386" x="4596364.096948433" y="5823289.103291431" desc="Wasserturm Prenzlauer Berg">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1382270880" x="4596351.869432463" y="5824339.50527787" desc="Lette 'm Sleep">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1385272346" x="4597152.344817856" y="5823299.704738036" desc="Melarose">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1385305692" x="4598450.808634255" y="5828092.647046641" desc="Graffiti">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1395140448" x="4594100.122104846" y="5822504.3077607425" desc="Hotel Aquino">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1405049414" x="4586013.884665064" y="5823491.442396134" desc="Hotel Siemensstadt">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="14261343" x="4592865.686432865" y="5822047.768326418" desc="Intercity Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="14261344" x="4592934.67345839" y="5822049.354057149" desc="Steigenberger Hotel Am Kanzleramt">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="143367746" x="4592840.340077954" y="5820410.935877762">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="14375945" x="4594562.289320343" y="5823397.890178992" desc="Gedenkstätte Berliner Mauer">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="148099838" x="4590126.877656855" y="5826550.681299701" desc="Bärlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1495251827" x="4589095.513587211" y="5819234.639841457" desc="Arta Lenz Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1495251835" x="4588919.435620079" y="5819215.740257837" desc="Xantener Eck">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1503871568" x="4595811.634420082" y="5824895.43023184" desc="tuc apartments">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1504564887" x="4598659.094210258" y="5820574.959148758" desc="Goldmarie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1512604669" x="4595218.222071842" y="5823134.964500772" desc="Midi Inn">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1519970115" x="4591588.92933638" y="5818205.984960476" desc="Happy Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1522513810" x="4594222.855942823" y="5815447.107177657" desc="Hotel Alt-Tempelhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1530345432" x="4598578.211000711" y="5820912.459485379" desc="Hotel Comenius">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="153772871" x="4596562.674518391" y="5822294.55937391" desc="ibis budget Berlin Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1540406298" x="4607274.293245059" y="5813103.313945908" desc="Hostel am Flußbad">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1544188678" x="4595824.02565366" y="5824748.696295298" desc="City Guesthouse Pension Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1561099986" x="4588734.316328835" y="5819268.887839879" desc="Louisas Place">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="156650952" x="4604862.490543629" y="5815656.537097449" desc="Rot- und Damwild">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="15700566" x="4584394.763215609" y="5818970.202276062" desc="Field Station Berlin">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="157390075" x="4592971.639479996" y="5821662.464252823" desc="Bundeskanzleramt">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1589171931" x="4591458.687533928" y="5817046.334548217" desc="Preußischer Meilenstein">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="159230368" x="4594741.349380335" y="5817254.982008892" desc="Ehemaliger Flughafen Berlin-Tempelhof">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1598987141" x="4594739.200587088" y="5821210.065737417" desc="Hotel de Rome">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1609064712" x="4584368.74806497" y="5829875.963482281">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="16095527" x="4592098.5347791035" y="5820023.637339371" desc="Sheraton Berlin Grand Hotel Esplanade">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1613685634" x="4591935.827824856" y="5819414.87807059" desc="Aparthotel Christie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1637952052" x="4596936.822805562" y="5828984.166943922" desc="Pankow">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="166024812" x="4600561.1280132625" y="5819797.6853375565" desc="Schrotkugelturm">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="16765818" x="4587350.720430677" y="5828605.091177458" desc="Hotel am Borsigturm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1677275386" x="4594614.138466937" y="5820365.965915285" desc="ABRI Apartments Berlin-Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="167983108" x="4593694.081745488" y="5819329.753227179" desc="Rosinenbomber">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1711934396" x="4601083.488810324" y="5819836.356425835" desc="Midel Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1713177144" x="4592625.626294192" y="5818104.670890121" desc="Berlincity">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1718478155" x="4590390.274401155" y="5816639.4680477725" desc="Pension Senta">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="172234733" x="4593701.371441927" y="5820979.373944435" desc="Denkmal für die ermordeten Juden Europas">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1733584202" x="4596321.695362093" y="5822964.908051108" desc="Myer's Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1738271360" x="4594582.093764643" y="5820630.489091179" desc="Select Hotel Berlin Gendarmenmarkt">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1738706654" x="4591432.793244443" y="5819284.719276464" desc="Hotel artim">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1755950625" x="4599386.442121232" y="5820521.722195452" desc="BackpackerBerlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="175671140" x="4591574.555224338" y="5819846.53631091" desc="Holiday Inn Express Berlin City Centre-West">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="175671144" x="4591658.040196996" y="5820068.2243290385" desc="Hotel Lützow">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1780648823" x="4595494.143499364" y="5820395.844568505" desc="Grimm's Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1818907679" x="4594598.424628502" y="5822225.884045876" desc="Meininger Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1825682816" x="4596306.170474402" y="5822126.078985179" desc="Holiday Inn Berlin - Centre Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1825682839" x="4596303.491631994" y="5822156.681638096" desc="Hotel Indigo Berlin Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1827049047" x="4589273.474443243" y="5819670.378704108" desc="Art Nouveau">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1827349673" x="4596338.784305329" y="5822134.166649537" desc="One80°">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1830206154" x="4594372.860456232" y="5822730.737205216" desc="Honigmond Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1830209312" x="4594521.041909701" y="5822609.203266177" desc="Hotel Adelante">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="183272253" x="4593356.576226386" y="5820558.391865147" desc="Sony Center">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="18340403" x="4590907.872715656" y="5820552.288180558" desc="Fasanerie">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="1870419345" x="4592054.311085262" y="5819085.712443134" desc="Pension Michele">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1877345436" x="4592545.9345242325" y="5822409.397801026" desc="Jugendgästehaus Hauptbahnhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1877771773" x="4605570.127651917" y="5824257.492964599" desc="Hotel Pension Blumenbach">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="188033979" x="4594053.201965717" y="5821890.048419265" desc="Hotel Albrechtshof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1882081076" x="4589385.899566897" y="5819373.767833708" desc="Hotel Castell Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1882081077" x="4589413.471958653" y="5819389.029521694" desc="Kima">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1882267390" x="4590000.818468107" y="5819646.035951016" desc="Hotel Leonardo">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1882363930" x="4590248.440334729" y="5819609.0118609285" desc="Hotel Pension Fasanen Haus">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1882363945" x="4590228.379771913" y="5819623.903082083" desc="Hotel Augusta">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1882401734" x="4590333.038105537" y="5819477.868324641" desc="Henri Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1884439683" x="4595845.960983902" y="5828973.275303457" desc="Hotel-Pension Schenk">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1899010760" x="4588511.041442379" y="5820458.324093998" desc="Amary City Residence">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1905963683" x="4590010.075039182" y="5819016.675364786" desc="Max Brown">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1905963712" x="4590086.835199076" y="5819314.394634068" desc="Hotel Seifert">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1906549327" x="4589548.740309623" y="5819173.725004486" desc="Boutique Hotel Kerlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1906549330" x="4589599.03764087" y="5819159.8951045675" desc="Austriana">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1909903030" x="4599798.480959045" y="5821531.416436354" desc="Pension Regenbogen">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1915618609" x="4591878.38867253" y="5819252.638752403" desc="Hotel Sachsenhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1934211318" x="4589858.743349378" y="5819799.016429079" desc="Hotel Vivaldi">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1934239400" x="4589461.437140611" y="5819498.850925087" desc="Hotel Askanischer Hof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="194079585" x="4595486.002085994" y="5821019.372831651" desc="Capri by Fraser Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="195302828" x="4598761.384345792" y="5814468.379525458" desc="Hotel am Buschkrugpark">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1956290758" x="4588876.190081948" y="5819168.185804061" desc="Hotel Maison am Adenauerplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1963335117" x="4589472.321116717" y="5819817.898745748" desc="Hotel Pension Elegia">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1966761110" x="4603955.551521956" y="5822430.744940847" desc="AapHotel.com">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1979921428" x="4589298.882705675" y="5819613.028480522" desc="Hotel Alte Galerie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="1979921513" x="4589886.5766123915" y="5819653.780921379" desc="Q!">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2013009701" x="4596615.168100435" y="5818946.438870208" desc="Hotel Prens">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2014602124" x="4599642.64321252" y="5821195.02778996" desc="Best Western Hotel City Ost">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="201855154" x="4592383.652082393" y="5825218.202242584" desc="Steps Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="205066401" x="4585819.7863444155" y="5829703.803590122" desc="Dicke Marie">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="205337276" x="4586454.289597417" y="5816297.797108053" desc="Abenteuerzentrum im Grunewald">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2068646526" x="4596991.3242323" y="5818299.948324058" desc="Hüttenpalast">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2095599668" x="4588989.538937847" y="5818870.792910987" desc="Provocateur">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="210286679" x="4603673.771439206" y="5821832.919042421" desc="Alte Börse Marzahn">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="210753143" x="4586601.423319321" y="5814367.370694542" desc="Hastings TG 503">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2110726365" x="4590239.529914969" y="5815522.64990248" desc="Anna 1908">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2139861328" x="4589217.83552304" y="5819231.62009238" desc="Agon Olivaer Apart">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2139861372" x="4589257.886346784" y="5819251.448745283" desc="Citadines">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2139861391" x="4589214.176436135" y="5819104.842238119" desc="Europa City">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2145981494" x="4590999.59128497" y="5819788.714266431" desc="Berliner Hof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="215055223" x="4594890.442009356" y="5818254.203415654" desc="Matzbach">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="217512230" x="4594593.772942721" y="5820961.178284289" desc="Konzerthaus Berlin">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="217996838" x="4592358.301938275" y="5820005.970532713" desc="Gästehaus Pumpe">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2181178541" x="4595101.687538529" y="5820347.445603402" desc="Lebensquelle">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2187588494" x="4588693.591962066" y="5820695.565831657" desc="Goodman's Living">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2196136407" x="4607845.524212878" y="5820975.484276321" desc="CVJM Hostel - Jugend Gästehaus Kaulsdorf">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="219699293" x="4594263.874706909" y="5827098.812943494" desc="Kinderbauernhof Pinke-Panke">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2198410" x="4590749.90866053" y="5819915.916030011" desc="Kaiser-Wilhelm-Gedächtniskirche">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2199557560" x="4594449.193379344" y="5822383.950153129" desc="Calma Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2201742" x="4593513.708390479" y="5821498.691289618" desc="Reichstagsgebäude">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2213457114" x="4589923.209814591" y="5819325.729256829" desc="art’otel Berlin city center west">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="221951672" x="4594259.221542393" y="5813689.64507728" desc="City Pension Sanader">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="223023512" x="4592494.414860285" y="5819144.272920672" desc="Novum Aldea Berlin Zentrum">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2246559586" x="4594160.031920606" y="5819989.970349188" desc="relexa hotel Stuttgarter Hof Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2250295178" x="4606731.144454162" y="5824706.449976613" desc="Parkhotel Marzahn">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2258022689" x="4589547.666159942" y="5828951.599952435" desc="Hotel Bongard">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="226371533" x="4591824.985089124" y="5821208.685914163" desc="Bundespräsidialamt">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="22769137" x="4600680.1377128605" y="5818158.066150395" desc="Insel der Jugend">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="228852971" x="4596139.034331965" y="5812763.083488682" desc="Casa Topal">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2298051683" x="4587618.092465107" y="5831034.888361271" desc="Jugendherberge Berlin Ernst Reuter">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="22986535" x="4590545.70784417" y="5819893.0142579675" desc="Azimut Hotel Berlin Kurfürstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2309799962" x="4594105.675289925" y="5818821.198090351" desc="Pension Kreuzberg">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="231258095" x="4594842.391983681" y="5820160.765795162" desc="mondrian suites hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="231969555" x="4591410.76509508" y="5819677.804878862" desc="Ibis">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2320624912" x="4596500.7276806915" y="5818904.84935716" desc="Lekkerurlaub">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="23278333" x="4596178.494053875" y="5822571.201387463" desc="Soho House Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2334538044" x="4589047.9813968465" y="5819347.387383723" desc="City Hotel am Kurfürstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2334538079" x="4589073.925146044" y="5819350.2736841375" desc="Gosch Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2335049582" x="4596981.159892776" y="5819985.397501527" desc="Armony Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="234435310" x="4592663.139729792" y="5819957.996588413" desc="DJH Berlin International">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2347507169" x="4589781.569712329" y="5819998.668331532" desc="Sir Savigny">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="23482470" x="4605063.31380261" y="5815874.446209058" desc="Umweltzentrum Fuchsbau">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="23548580" x="4584201.451050056" y="5818400.598271932" desc="Kinder- und Jugenderholungsstätte Teufelssee">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="23631271" x="4596175.8109575575" y="5824397.678702501" desc="Aurora Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="23695971" x="4595839.313220881" y="5822980.305846705" desc="Hostel Pfefferbett">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="23723125" x="4595995.094276876" y="5822019.301093093" desc="Park Inn by Radisson Berlin-Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2374058059" x="4588963.340087848" y="5818971.76240786" desc="Hotel Pension Margrit">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="23748095" x="4595710.220908139" y="5822055.945371706" desc="Motel One">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="237687062" x="4593108.042883413" y="5822452.67987028" desc="Amano Grand Central">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="237687064" x="4593088.727106273" y="5822437.575562156" desc="Ibis Berlin Hauptbahnhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="237687067" x="4593212.7051874455" y="5822536.955024134" desc="Westflügel">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="237687068" x="4593266.63814409" y="5822570.834167166" desc="Ostflügel">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="23813204" x="4595598.156689881" y="5821650.143709918" desc="Neptunbrunnen">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="23853138" x="4595410.758451975" y="5821869.527141923" desc="Alexander Plaza">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2388280732" x="4588854.079895089" y="5813532.7201108225" desc="Hotel Enzian">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="23910829" x="4604980.627060326" y="5825325.304799825" desc="Don-Bosco-Zentrum Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="239425912" x="4596211.8807364805" y="5819922.868117091" desc="Markthalle VII">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="239570637" x="4594801.825944416" y="5822228.361292638" desc="KunstHof Berlin">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="23964893" x="4606839.0726304855" y="5813435.576534476" desc="Pentahotel Berlin-Köpenick">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="23970967" x="4598409.8842282295" y="5822234.64674195" desc="Hotel New Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="24036371" x="4598625.196924764" y="5819052.070853792" desc="Wachturm Schlesischer Busch">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="24054915" x="4594736.583049745" y="5822233.550294873" desc="Neue Synagoge">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="242254364" x="4598144.222642029" y="5819863.3962905845" desc="Western Comfort">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="242254365" x="4598180.154898043" y="5819843.778520627" desc="Eastern Comfort">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="24240381" x="4594834.395476134" y="5821445.435851741" desc="Neue Wache">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2426118" x="4594258.125979667" y="5823050.767628161" desc="Symbolische Gleise">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2437533571" x="4595316.291445936" y="5821645.211914225" desc="Aquadom Sealife">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2439759166" x="4586830.892326103" y="5820355.485575915" desc="Concorde Hotel am Studio">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="245287545" x="4596077.660511916" y="5820783.91890394" desc="The Dude">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="24531220" x="4595089.033203333" y="5822719.352284307" desc="Mani">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="245623947" x="4604956.110010556" y="5815634.748243681" desc="Schweine">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="245624091" x="4604972.975829488" y="5815617.537269065" desc="Streicheltiergehege mit Ziegen, Schafen, Hühnern und Eseln">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="245869504" x="4604960.734590299" y="5815636.28305421" desc="Kaninchen und Mandarinenten">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2466173852" x="4588434.689698807" y="5819909.36489455" desc="Happy go Lucky">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="24715182" x="4591984.264168347" y="5826354.962399713" desc="Victor's Residenz Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2476267533" x="4590503.499789063" y="5816959.546298124" desc="Hotel Atlas">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2479053621" x="4589827.510133679" y="5819542.082130453" desc="Hollywood Media Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2484792432" x="4596810.83101367" y="5818364.496053981" desc="Hotel am Hermannplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="24865198" x="4590372.678789094" y="5819805.012745368" desc="Lindner Hotel Am Ku'damm Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="24865205" x="4590217.709925369" y="5819781.729759185" desc="Hotel Bristol Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="24964784" x="4592345.151586521" y="5824667.445054317" desc="Alte Nazarethkirche">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2496652035" x="4594377.609502359" y="5818448.779830213" desc="Sarotti-Höfe">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2522216702" x="4596888.726379269" y="5818829.712984768" desc="Riverside Lodge">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="252550951" x="4594220.0424815975" y="5819804.633948023" desc="Three Little Pigs">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2529737622" x="4604943.499279416" y="5815653.608622007" desc="Waschbären">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2529748103" x="4604972.235848872" y="5815596.80535439" desc="Taubenturm">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2529758733" x="4604939.889573418" y="5815664.718859979" desc="Tauben">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="25325965" x="4585471.958716049" y="5815539.760896473" desc="Locanda 12 Apostoli">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="253260469" x="4597939.8271350935" y="5816670.385823276" desc="Karl Marx Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2532898319" x="4588642.135760415" y="5819975.652185149" desc="City Pension Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2532898377" x="4588679.295461647" y="5819977.848736675" desc="Hotel AI Königshof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2532898388" x="4588660.123577813" y="5819977.001294509" desc="Hotel Abendstern">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2532898393" x="4588619.912769174" y="5820070.751420382" desc="Hotel Spreewitz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2532898399" x="4588773.32662565" y="5820072.969027666" desc="Best Western Hotel Kantstraße Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2533696976" x="4602502.846127165" y="5822017.040562505" desc="Klanghölzer">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="25369489" x="4600335.884396058" y="5814525.857628974" desc="Späth-Arboretum">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="254307091" x="4590539.281423556" y="5819651.83702743">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="255072469" x="4593756.857918895" y="5819294.710095478" desc="Rotorblatt">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="25557953" x="4592794.628092832" y="5822282.543324831" desc="Motel One Berlin-Hauptbahnhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2557711059" x="4591308.239263924" y="5822183.034854648" desc="Hotel Tiergarten">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="256960151" x="4595822.600561798" y="5828709.746574828" desc="Villa Maxi">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2581112669" x="4592907.064732277" y="5819940.65493232" desc="Hotel Potsdamer Hof Berlin Am Potsdamer Platz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2582086309" x="4598479.603812931" y="5820876.483071668" desc="nu hotel berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="25880837" x="4606478.629571148" y="5822774.543322945" desc="Haus Pro-social">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2592764" x="4587503.521570679" y="5819020.3763026" desc="Romantik Hotel Kronprinz Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="25946425" x="4595211.253345785" y="5820652.342315384" desc="Motel One Berlin-Spittelmarkt">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26131643" x="4588975.437874357" y="5814506.322164078">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="26133873" x="4601749.424084794" y="5823957.0088122515" desc="AuO Berlin Kolumbus">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26255599" x="4589002.73941326" y="5819219.231944387" desc="Quentin Berlin am Kurfürstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26289092" x="4600906.35328144" y="5822021.86269283" desc="Good Morning+ Berlin City East">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2629704691" x="4589626.653797625" y="5820588.745251036" desc="Pension Brinn">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2634764019" x="4593568.330694358" y="5816860.4405736" desc="Appartements Eisemann">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2637185327" x="4603043.845050495" y="5830895.830991151" desc="Hotel Lindenberger Hof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2638063064" x="4597766.650740472" y="5815856.139442192" desc="Motel Plus Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26408075" x="4590947.422493625" y="5820007.429364473" desc="25hours Hotel Bikini Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="264868150" x="4583467.028640242" y="5826987.645391676" desc="Havel Lodge">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2663087282" x="4600706.001635996" y="5819972.421517037" desc="Hotel Victoria">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2663504120" x="4590156.112200703" y="5820269.970845788" desc="Hotel am Steinplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26640312" x="4590721.482816902" y="5819358.390407248" desc="Hotel Arrival">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="266593733" x="4596342.244428254" y="5822717.976719614" desc="Hotel ibis Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2669771197" x="4589835.77281181" y="5819450.672318675" desc="Mercure Hotel Chateau">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26706314" x="4591142.819727314" y="5819818.972141791" desc="Crowne Plaza Berlin City Centre">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26706506" x="4590527.122774417" y="5819591.289572218" desc="H10 Berlin Ku'damm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26706521" x="4590514.251323782" y="5819530.884840897" desc="Park Plaza Berlin Kudamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26707722" x="4590697.4670450445" y="5819421.191310759" desc="Dormero Berlin Ku'damm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26708018" x="4590979.3573031435" y="5819387.992840947" desc="Scandic Berlin Kurfürstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2671311400" x="4595366.061834695" y="5821848.042570418" desc="Berlin Dungeon">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="267246999" x="4586196.197132455" y="5820443.407071742" desc="Hotel Villa Kastania Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26777822" x="4589774.837774394" y="5818938.936622576" desc="Hotel Bellevue">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="26816140" x="4591699.463188339" y="5819864.658804436" desc="Golden Tulip Berlin - Hotel Hamburg">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2686535074" x="4590169.43276599" y="5818800.816070617" desc="Dream Apartments">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="268870899" x="4593323.528324016" y="5819771.144722111" desc="Grimm's">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2703829986" x="4589587.691121932" y="5822729.350045093" desc="Classic Remise Berlin">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="27119679" x="4597867.064822878" y="5813603.34454648" desc="Schloss Britz">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2712712221" x="4588706.111371368" y="5820842.149132965" desc="Smart Stay Hotel Berlin City">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="271766267" x="4594261.343170194" y="5819223.665948098" desc="acama">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2721904163" x="4601846.705251879" y="5824300.4930107035" desc="Eastpax Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="272748506" x="4595191.657391051" y="5822028.733408535" desc="Hotel ZOE">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="273198564" x="4592064.841189114" y="5814535.0617868705">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="27356394" x="4586962.359048205" y="5824017.264446478" desc="Gustav-Böß-Freilichtbühne">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="27695497" x="4593981.310143265" y="5819847.104946358" desc="Portikus des zerstörten Anhalter Bahnhofs">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2772307534" x="4595638.073900175" y="5822485.212167469" desc="Flower's Boardinghause">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2776767374" x="4595212.487357009" y="5822044.304099318" desc="Hotel Hackescher Markt">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2785891583" x="4596216.973302491" y="5820742.604414955" desc="Catalonia Berlin-Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="278887999" x="4599472.423342011" y="5820812.9037364535" desc="Gold Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2796710200" x="4595401.427598509" y="5821952.472730712" desc="Adina Apartment Hotel Berlin Hackescher Markt">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="28104405" x="4593191.387569182" y="5828451.857721608" desc="Sowjetisches Ehrenmal Schönholzer Heide">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2815361403" x="4593967.809245828" y="5826873.19614261" desc="Kolo 77">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="281844233" x="4593709.229683198" y="5825915.885035048" desc="Big Mama">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="282107703" x="4598491.329892803" y="5820789.037192936" desc="Upstalsboom Hotel Friedrichshain">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="28248283" x="4594626.527742172" y="5821052.745362568" desc="Französischer Dom">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2842306125" x="4594990.859506529" y="5820543.041139781" desc="Adina Apartment Hotel Berlin Checkpoint Charlie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="28497169" x="4588097.356055317" y="5820502.388147898" desc="BuB Hôtel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="28681362" x="4586473.1095621055" y="5815467.515716481" desc="Jetpak">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="28717368" x="4592177.127969775" y="5827720.778710399" desc="Ibis Berlin Airport Tegel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="288101218" x="4586483.844505693" y="5823274.555191308" desc="Mercure Hotel Berlin City West">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="288253333" x="4599227.399153271" y="5826619.700577231" desc="Motorwerk Berlin">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="288514442" x="4598272.797845469" y="5819714.774328467" desc="Oberbaumbrücke">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2892161731" x="4596004.884043615" y="5825385.727096064" desc="Hotel 103">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="289704960" x="4588405.820253517" y="5814425.41811431" desc="Schaugärten der ehemaligen Königlichen Gärtnerlehranstalt">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="290078078" x="4590401.195150436" y="5820067.656025504" desc="aletto Kudamm Hotel u Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="29056578" x="4597622.149704736" y="5822062.466195778" desc="NH Berlin Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="29214537" x="4598883.886085567" y="5822840.294176205" desc="Generator Berlin Prenzlauer Berg">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="29245096" x="4587921.329712412" y="5827776.307614839" desc="Central Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2930469301" x="4595905.616113354" y="5824433.0986285405" desc="Alcatraz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2930470652" x="4595881.187821052" y="5824169.501163612" desc="Zarenhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="29319121" x="4593520.004205113" y="5819465.145690262" desc="Mercure Hotel Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2933780417" x="4593779.188182613" y="5822737.79606504" desc="Garden Living">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="29386807" x="4596861.548380983" y="5821356.952255276" desc="Singer109">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="29483601" x="4603075.666052004" y="5823347.529138774" desc="Comfort Hotel Lichtenberg">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="295084271" x="4598298.484943413" y="5820592.239967662" desc="SunFlower Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="295155307" x="4597806.954279157" y="5820719.271063445" desc="Ostel - Das DDR Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2951629888" x="4593804.612297625" y="5822747.654965202" desc="Neues Tor">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2954444684" x="4598194.128263139" y="5820060.055151262" desc="Holiday Inn Berlin - City East Side">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2966005919" x="4593778.279720936" y="5820382.837688085" desc="Wachturm">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2974018" x="4588491.962378724" y="5812140.497543406" desc="Lichterfelder Burgen">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="2977563057" x="4590120.415565212" y="5819822.293755354" desc="Hotel Eden am Zoo">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2981833496" x="4594137.556916633" y="5819984.273998212" desc="relexa hotel conference">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="2993531033" x="4594134.892370971" y="5826074.454799823" desc="Inn Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3007958" x="4595248.03560863" y="5821378.469789737" desc="Berliner Schloss">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="30098329" x="4589140.5872394955" y="5818003.642286351" desc="Jugendbildungsstätte Kaubstraße">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="30154873" x="4588971.528544962" y="5817609.456429692" desc="enjoy hotel Berlin City Messe">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="30215600" x="4585727.457566732" y="5823791.465235257" desc="Holiday Inn Berlin City-West">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="30351183" x="4595914.41511208" y="5825355.001806033" desc="Bornholmer Hof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3039050408" x="4598582.760692932" y="5824943.885385551" desc="Green-Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3061372133" x="4595837.777713647" y="5825111.519837268" desc="Pension Marie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="306900087" x="4594659.067832051" y="5819823.532707037" desc="Miniloft">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3072346145" x="4590995.563136704" y="5818721.421413959" desc="Hotel de Ela">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="30789095" x="4586641.246539859" y="5814156.311309022" desc="Apartment Hotel Dahlem">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3084834449" x="4590890.707042707" y="5819447.919521732" desc="Bernstein">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="30926247" x="4586891.011209327" y="5819866.145253288" desc="Funkturm">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="3098126874" x="4595242.716964419" y="5822819.739536729" desc="The Circus Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3099114508" x="4593178.161471235" y="5819439.451448141" desc="Flottwell Berlin Hotel u Residenz am Park">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3100248585" x="4593748.992441389" y="5822645.921726717" desc="Mikon Eastgate Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="311615327" x="4594529.972440191" y="5825108.561947243" desc="Ocak">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="312391532" x="4595580.586035501" y="5821347.368491606" desc="Nikolaiviertel">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="3131997508" x="4604004.282845681" y="5822431.277897326" desc="Berlin Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="31347999" x="4593020.485905276" y="5823172.682647904" desc="Gedenkstätte Günter Litfin">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="313670734" x="4595204.580214127" y="5821585.827363553" desc="Berliner Dom">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="3139370871" x="4594216.508551585" y="5821964.306187457" desc="Leonardo Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="314137159" x="4594343.33539551" y="5822573.554740597" desc="Eastener Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="314137172" x="4594376.316337375" y="5822575.24718622" desc="Green Eggs and Ham">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="314139811" x="4594563.806740477" y="5822170.618171377" desc="Heart of Gold Hostel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="314140615" x="4594514.158940274" y="5822075.079973082" desc="Bax Pax Downtown Hostel/Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="31418047" x="4594108.878930852" y="5819759.5065768" desc="Akzisemauer">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="31523527" x="4600150.907873692" y="5824367.690669194" desc="Herberge Fritz-Lesch-Straße">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3157916988" x="4590785.86609545" y="5816077.397093488" desc="Madflats">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3166224260" x="4594128.581974622" y="5819268.223396237" desc="Grand Hostel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3172134163" x="4590348.0051603345" y="5819765.773197651" desc="Hotel Zoo">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="317449636" x="4597855.69407787" y="5821301.318261243" desc="Pegasus Hostel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="317785085" x="4596350.975679738" y="5822858.451597689" desc="Schoenhouse studios">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3200536" x="4593527.091534784" y="5820449.997232209" desc="Potsdamer Platz">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="321347091" x="4598964.830334" y="5822803.508197554" desc="Vienna House Easy">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="321597100" x="4597068.434103104" y="5822710.556249868" desc="Victor's Residenz-Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="32294784" x="4596021.184891449" y="5823850.997040722" desc="Kulturbrauerei">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="3235827767" x="4596791.512497231" y="5820469.720565258" desc="AuO Hotel and Hostel Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="32521584" x="4600987.133429552" y="5818863.262046073" desc="Das Andere Haus VIII">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3273190565" x="4593970.490485547" y="5821973.108006008" desc="Apart Hotel Residenz Am Deutschen Theater">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3280590302" x="4588000.937350536" y="5820105.576772511" desc="Quentin Boutique Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="329262981" x="4596986.480369929" y="5824288.370277888" desc="Zeiss-Großplanetarium Berlin">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="330257182" x="4595517.690851965" y="5823335.421150722" desc="Kastanienhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="330264477" x="4595197.9345343625" y="5822731.979866671" desc="The Circus Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="330840129" x="4594942.350813894" y="5821682.307542596" desc="Museumsinsel">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="331362" x="4598991.450642591" y="5822660.924029284" desc="Vienna House Andel's Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="33170325" x="4603163.341187743" y="5823475.624706901" desc="Die Pyramide">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="332554289" x="4594039.602218954" y="5822016.931632636" desc="Hotel Amelie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="332554293" x="4593740.892976784" y="5821846.883133181" desc="Arte Luise Kunsthotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="332966065" x="4592933.273811377" y="5825269.275090416" desc="Jerusalem Bibliothek">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="333136476" x="4593911.975835637" y="5821953.041630038" desc="Residenz am Deutschen Theater">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3343" x="4593640.340240524" y="5821679.159627713" desc="Marie-Elisabeth-Lüders-Haus">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="3349" x="4593434.099703944" y="5821676.170705783" desc="Paul-Löbe-Haus">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="336063501" x="4597417.489207106" y="5820642.1265187515" desc="InterCity Hotel Berlin Ostbahnhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="337201828" x="4595234.091003388" y="5822193.02356103" desc="Hackesche Höfe">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="33833697" x="4592711.4421512075" y="5820233.631043897" desc="Hotel Berlin Central District">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="339477343" x="4594126.434556708" y="5819738.789138935" desc="Akzisemauer">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="343093984" x="4587675.614041508" y="5813975.676604832" desc="Berlin Brain">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="343095342" x="4588028.304921787" y="5814536.390396003" desc="Seminaris CampusHotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3455613421" x="4589667.728555095" y="5820005.779908437" desc="Cortina">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="34871206" x="4589609.713843156" y="5814746.737420501" desc="Hotel Ravenna">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3487251662" x="4588601.524012776" y="5821079.099678231" desc="Hotel Haubach">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="34910017" x="4589611.54346073" y="5815344.595370612" desc="Eckstein">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="350598464" x="4606776.737258001" y="5813472.181450278" desc="Bett u Buch">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3519366793" x="4593852.452699572" y="5820545.700315061" desc="Motel One Potsdamer Platz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3524098866" x="4590282.185145586" y="5818940.865591676" desc="JETpak Flashpacker">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="35467228" x="4589991.913315088" y="5822543.459149367" desc="Peter-Behrens-Halle">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="36126649" x="4606908.103278192" y="5823877.145179779" desc="Irrgarten und Labyrinth">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="3626485" x="4593090.542069151" y="5820532.826074207" desc="Philharmonie">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="3655999636" x="4595579.658449408" y="5821379.797625205" desc="Nikolai Residence">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="365647209" x="4590857.461510562" y="5821322.829068388" desc="Hansablick Garni">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="365726272" x="4593837.76278428" y="5819856.63426167" desc="Mövenpick Hotel Berlin am Potsdamer Platz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="366943326" x="4603806.075810701" y="5817884.06240896" desc="Hotel Karlshorst">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3669516499" x="4591295.69224474" y="5819437.852548409" desc="Hotel Auberge">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="367009575" x="4604377.153762085" y="5818123.5497480845" desc="Allee-Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3675739233" x="4590620.524969625" y="5819529.474146378" desc="Aurum">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3675973921" x="4590361.067325953" y="5819461.510317076" desc="Berlin Mark Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3676977428" x="4590711.705384622" y="5819751.592780948" desc="Upper Room Hotel Kurfürstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="36811138" x="4595499.570862772" y="5820587.46080778" desc="Best Western Hotel am Spittelmarkt">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3683945001" x="4590608.820381135" y="5819995.803445683" desc="Waldorf Astoria Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="370046203" x="4593594.272358392" y="5825408.113134123" desc="Pankemühle">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="370046553" x="4593603.535294241" y="5825471.904198402" desc="Tresorfabrik Arnheim">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="370060895" x="4592314.556799168" y="5821985.911038289" desc="Central Inn">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="370680968" x="4601785.557006887" y="5820080.874548425" desc="HOLI Hostel u Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3706893532" x="4594403.776439746" y="5819807.687847379" desc="Pension Galerie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3712919144" x="4592486.816385396" y="5818952.183475505" desc="Hotel Palacina">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="372378739" x="4594171.354200576" y="5819647.497782951" desc="Holiday Inn Express Hotel Berlin City Centre">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="372676350" x="4598511.213036731" y="5823411.413209957" desc="Lodgecity Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3733679785" x="4594461.571079812" y="5821208.393543869" desc="Clipper City Home">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3734954312" x="4594358.43479955" y="5822624.614184503" desc="Hotel Novalis">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3734954313" x="4594285.273348755" y="5822788.702650639" desc="Hotel Zarenhof Berlin-Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3741085192" x="4599814.45808193" y="5825931.554382025" desc="Tagungswerk">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3754876557" x="4595092.222588465" y="5820307.012138982" desc="Tagungshaus Alte Feuerwache">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="37639475" x="4604996.712647721" y="5815582.656925591" desc="Präriehunde">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="3764417287" x="4591630.205143521" y="5825001.974908991" desc="Hostel Hana.de">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3774793898" x="4599231.518890095" y="5816605.521902239" desc="Estrel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3774805572" x="4591644.869463458" y="5819006.688171453" desc="Hotel Ambiente">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3777482221" x="4603131.4858911205" y="5813641.994878401" desc="IBB Blue Hotel Berlin-Airport">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780043351" x="4595120.056360423" y="5820545.4562650435" desc="Courtyard by Marriott Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780075957" x="4598904.069851521" y="5821028.409042621" desc="Hotel Zarenhof Friedrichshain">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780076398" x="4596802.664496928" y="5822796.397329288" desc="Adele Designhotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780106082" x="4589707.738986195" y="5819378.473326898" desc="Bleibtreu Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780138653" x="4596244.380680952" y="5820158.54534873" desc="NH Berlin Kreuzberg">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780145552" x="4594371.628905153" y="5820305.015121993" desc="Select Hotel Berlin The Wall">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780147516" x="4595422.863081278" y="5822311.31214111" desc="The Weinmeister">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780323763" x="4591030.93136884" y="5819103.016696473" desc="Arco Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780340152" x="4590076.278469945" y="5819122.385325032" desc="Bella">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780366541" x="4599408.987544349" y="5825232.729808381" desc="Ariadna Apart Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780381757" x="4590245.972086328" y="5819491.359218223" desc="Hotel-Pension Funk">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780382762" x="4596406.388675897" y="5823077.9635551" desc="ackselhaus u bluehome">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780384061" x="4594533.110265475" y="5822246.763605398" desc="Generator Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780854972" x="4594450.509846881" y="5822076.402130822" desc="Hotel Dietrich-Bonhoeffer-Haus">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780858495" x="4592120.801086848" y="5817732.182631887" desc="Hotel Schöneberg">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780937605" x="4594195.942919664" y="5819619.25190528" desc="NH Berlin Potsdamer Platz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780963364" x="4594530.598164809" y="5821058.319428267" desc="Sofitel Berlin Gendarmenmarkt">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780969415" x="4591730.048327535" y="5819170.444691916" desc="Tom's Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780986023" x="4599842.23368344" y="5820333.2866204325" desc="AuO Berlin Friedrichshain">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3780997597" x="4594273.576732069" y="5813106.3615334" desc="Appartments und private Zimmervermietungen B. Jahn">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3781008298" x="4590005.659738144" y="5817980.8948292285" desc="Gasteiner Hof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3781030711" x="4591247.406699106" y="5819062.837403414" desc="Stars Guesthouse">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3781031385" x="4589975.943415016" y="5819981.960886816" desc="Pension Peters">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3781036805" x="4589592.300388501" y="5819079.453135817" desc="Kleist">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3781061381" x="4603789.532501595" y="5821266.87713044" desc="Qbe Hotel Heizhaus Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3781065289" x="4598374.371326266" y="5820618.873881883" desc="Art-Hostel Berlin City">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3781072174" x="4593423.964369853" y="5823717.797316145" desc="Eigenart Appartements">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3781074063" x="4589959.540729794" y="5819315.965813665" desc="Hotel-Pension Charlottenburg">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3782185836" x="4607503.445208121" y="5820266.768039566" desc="Hotel B1 Tourist">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3782198596" x="4588229.758521167" y="5817830.366737956" desc="Amadeus Central">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3782278799" x="4589205.763358411" y="5831086.025236968" desc="Kazakh House">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3782309130" x="4592785.556159033" y="5819611.451616725" desc="Arabel Design">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="379346459" x="4591568.05783609" y="5819435.715800866" desc="Hotel Riu Plaza Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="38019608" x="4594902.840535626" y="5815723.004823263" desc="Hotel Berliner Bär">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="380498020" x="4594416.225385471" y="5820568.487653133" desc="Kubrat">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3814669373" x="4589882.222521776" y="5819329.3748195935" desc="abba Berlin hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3826451056" x="4591562.504155826" y="5819259.756503117" desc="BuB Hôtel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3826451971" x="4591740.78689904" y="5819139.646146112" desc="Gunia">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3826452465" x="4591638.12271112" y="5819314.440373167" desc="Mercure Hotel Berlin Zentrum">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3826455883" x="4591670.536233866" y="5819214.612565352" desc="Quentin Design Berlin Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3826455889" x="4591743.880661729" y="5819138.769005488" desc="TOM's House">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3830162444" x="4593098.863696499" y="5819331.5233375495" desc="Academy-Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3830510728" x="4585346.398754242" y="5824699.115550555" desc="Hotel und City-Camping Berlin Siemensstadt">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3831815753" x="4589298.723739537" y="5820018.382224383" desc="Artus Apartments Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3834088057" x="4593428.907431016" y="5826169.99226856" desc="Prens Apartments">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3834273066" x="4592770.780807732" y="5819587.808432088" desc="Villa Amadeus">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3837620167" x="4592845.408876485" y="5819810.8810435785" desc="Alper Hotel am Potsdamer Platz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3837620172" x="4592794.069662715" y="5819718.703011577" desc="BuB Hotel Berlin-Potsdamer Platz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3837620178" x="4592042.121269369" y="5819559.101013489" desc="CVJM - Haus Schöneberg">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3837620618" x="4592872.247069917" y="5819869.29206423" desc="Quentin XL">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3837620651" x="4592877.5068923645" y="5819795.616005957" desc="Lulu Guldsmeden">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3837620652" x="4592653.427534467" y="5819540.076410528" desc="Hotel Delta">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="38383464" x="4592933.60168829" y="5822116.44780658" desc="Meininger Berlin Hauptbahnhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="384790168" x="4593611.741680797" y="5825361.34044983" desc="Luisenbad">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="385515318" x="4600712.76260578" y="5821085.546357462" desc="NH Berlin CIty Ost">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="38554249" x="4599673.723996035" y="5812495.567753349" desc="Azimut Berlin City South">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3855567794" x="4592582.341590622" y="5818998.252424809" desc="Hotel Potsdamer Inn">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3855567797" x="4592614.49895947" y="5819125.472991727" desc="Novum Business Hotel City B Berlin Centrum">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="385640015" x="4591688.166777539" y="5819491.832212993" desc="Titanic Comfort Kurfürstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3859009798" x="4589740.934888121" y="5818646.781748547" desc="Centro Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3862782284" x="4590024.396452895" y="5819375.001705232" desc="Amaryl City-Hotel am Kurfürstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3862782285" x="4589919.3868360855" y="5819566.549824144" desc="Best Western Plus Plaza Berlin Kurfürstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3862782313" x="4589959.507867528" y="5819375.180545763" desc="Mark Apart Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="387588992" x="4601063.496859679" y="5822565.152050358" desc="H24 Hotel DXC - Gästehaus DONG XUAN">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3900017" x="4595799.157352803" y="5823682.270496646" desc="Stadtbad Oderberger Straße">
+		<activity type="attraction">
+		</activity>
+		<activity type="leisure">
+		</activity>
+	</facility>
+	<facility id="391603884" x="4593869.277086001" y="5823052.519821566" desc="Titanic Chaussee Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="3937513964" x="4595187.706754213" y="5822829.356588778" desc="ibis Styles Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="393884517" x="4593674.802401882" y="5820443.761299551">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="393884518" x="4593709.529121792" y="5820563.125435659">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="39496774" x="4596225.277615119" y="5822121.395816346" desc="Ibis Styles Berlin Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="397821440" x="4592467.579058534" y="5819177.18752069" desc="Novum Style Hotel Aldea">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4006950739" x="4586994.287078443" y="5820944.103077697" desc="Queen’s Park Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="40128237" x="4602957.252679787" y="5815026.543610061" desc="ibis Styles Berlin Treptow">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="402751124" x="4588627.476342127" y="5819576.1541197505" desc="Hotel Orion">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="403749810" x="4607187.700546943" y="5818958.676908789" desc="Hotel Hildebrandt">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="404775652" x="4597198.494149261" y="5820726.246450726" desc="Moxy Berlin Ostbahnhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="405536360" x="4590484.960287413" y="5820973.134991719" desc="BuB Hotel Berlin-Tiergarten">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4063472846" x="4601624.677209117" y="5821952.158511212" desc="Bornitz 101">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4073531" x="4591453.906395855" y="5820207.394885117" desc="InterContinental Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="40761659" x="4590332.649789607" y="5818213.244701824" desc="Carolinenhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4095897082" x="4595812.046727434" y="5823700.994747821" desc="Hotel Oderberger">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="41368167" x="4593235.990228175" y="5821275.424390728" desc="Sowjetisches Ehrenmal Tiergarten">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="414161389" x="4594782.380812113" y="5821112.128795448" desc="Titanic Gendarmenmarkt Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="415343550" x="4589503.027342155" y="5822593.766828417" desc="Alfa Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="416076803" x="4588048.638652311" y="5813075.067052122" desc="Il Mulino">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="417128850" x="4592339.281264426" y="5818128.849976457" desc="Hotel Pension Delta">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="417346627" x="4594506.250955188" y="5820283.486385902" desc="Checkpoint Charlie">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="417529567" x="4596033.435393691" y="5821833.004042938" desc="Urania-Weltzeituhr">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="419002710" x="4591802.339611369" y="5824623.6250881255" desc="Jugendgästehaus Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="419002712" x="4591842.425834878" y="5824667.609129131" desc="Smarthostel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4196906236" x="4591245.8948368225" y="5825564.099966023" desc="Rehberge">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="419912417" x="4593188.046470239" y="5824050.122712137" desc="Hotel Graf Pückler">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="42042166" x="4587614.439015283" y="5820115.643080675" desc="Ringhotel Seehof Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4211905" x="4595717.27890575" y="5821505.448058965" desc="Rotes Rathaus">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="42163095" x="4597162.530972342" y="5820611.533373024" desc="Ibis Berlin Ostbahnhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4220012305" x="4592598.987387409" y="5824253.039741079" desc="Arena Inn">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="422215868" x="4593799.731480641" y="5823109.203004293" desc="Innside By Meliá Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="422394300" x="4594016.522798195" y="5822898.088919819" desc="HSH Hotel Apartments Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="422394317" x="4594034.320135104" y="5822914.4368377" desc="i31 Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="422422543" x="4594062.993754173" y="5822647.936767" desc="Brecht-Haus">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="422628059" x="4593852.887872192" y="5822838.595867615" desc="Mercure Hotel Berlin City">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4226857702" x="4594902.5803649565" y="5823592.997234953" desc="Raja Jooseppi Resort">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="422928024" x="4594100.644151537" y="5821906.341981027" desc="Allegra">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="42296857" x="4590787.857123761" y="5818657.45706784" desc="Atrium">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="42298478" x="4590469.545491849" y="5818112.222750977" desc="NH Berlin City West">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4230430071" x="4596820.865399495" y="5822988.080581136" desc="Hotel Transit Loft">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="42347269" x="4590794.488246674" y="5818429.766843218" desc="Hotel City Gallery Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="423871581" x="4593997.730218045" y="5824948.297402699" desc="AC Hotel Berlin Humboldthain Park">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="423971811" x="4592686.922514566" y="5822671.924970955" desc="AuO Berlin Hauptbahnhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="424064502" x="4592163.919353367" y="5821635.67574078" desc="Motel One Berlin-Bellevue">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="425327567" x="4594325.684632898" y="5822322.755166064" desc="Arcotel Velvet Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="42555217" x="4605236.670409283" y="5815920.703121098" desc="FEZ-Berlin, Bungalowdorf Nord">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4255703690" x="4591736.46498576" y="5819422.0098689925" desc="Hotel Zu Hause">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="426091249" x="4590949.445854148" y="5824166.730560345" desc="Virchow-Gästehaus der Charité">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="426559385" x="4590203.684694536" y="5824004.712033103" desc="Jugendgästehaus Nordufer">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4265717292" x="4598125.643577853" y="5819052.228725526" desc="JETpak ALTERNATIVE">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="427502956" x="4594030.932060451" y="5823186.50358607" desc="Cube Lodges">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="427793839" x="4589210.632238827" y="5819362.897590389" desc="Come Inn Berlin Kurfürstendamm Opera">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="429566432" x="4593527.641942487" y="5820664.362263189" desc="Berlin Marriott Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="429740890" x="4594711.023525136" y="5820408.163695668" desc="Mercure Hotel + Residenz Berlin Checkpoint Charlie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="430281301" x="4588109.887749773" y="5819135.275937745" desc="Ku’ Damm 101 Design-Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="43063205" x="4603933.64145154" y="5816024.14208366" desc="Modellpark Berlin-Brandenburg">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="430842032" x="4593773.595740418" y="5818635.509974058" desc="Ginn City u Lounge Yorck Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="43106382" x="4605136.689688547" y="5815473.582539308" desc="Parkbühne Wuhlheide">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="4317227893" x="4597292.602208001" y="5819335.001876229" desc="36 Rooms">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="43173495" x="4594254.372528701" y="5821763.80162844" desc="Tränenpalast">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="43347270" x="4594653.2685123775" y="5820869.359865837" desc="Deutscher Dom">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="4350656489" x="4596973.45876885" y="5819346.170359327" desc="4Seasons">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4351511599" x="4591747.574886208" y="5824107.94446593" desc="Flugsimulator Berlin">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="4351511602" x="4593567.052460991" y="5825485.48803812" desc="Hotel am Luisenbad">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="43723722" x="4592967.519011329" y="5820362.070424686" desc="Kulturforum">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="43767919" x="4605856.587050667" y="5820772.806152479" desc="Schloss Biesdorf">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="4382450197" x="4590031.7699102145" y="5819878.924159447" desc="nh hotel kurfurstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="43906841" x="4591353.4539689515" y="5823211.4779115" desc="Main Station Hotel u Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4392550841" x="4598628.958039232" y="5820872.839465212" desc="Hotel 26">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="44019110" x="4607704.669632425" y="5820072.56580461" desc="HW Hotel Haus am Niederfeld">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="44019194" x="4607524.898331057" y="5820077.549274814" desc="Hotel B1">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4412853199" x="4590638.523880483" y="5813041.437336636">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="442388892" x="4594222.489487753" y="5814867.468996553" desc="Pension Oase">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="442879072" x="4599897.559006613" y="5818174.773118884" desc="Sowjetisches Ehrenmal">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="443252302" x="4599041.508589983" y="5825001.73058779" desc="Hotel Albertin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="443294717" x="4598114.705536196" y="5815676.921803104" desc="OYO Hotel Bohemia">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4447" x="4591890.092650414" y="5819804.991824793" desc="Hotel Berlin, Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="44608896" x="4597025.794338186" y="5817107.6536627095" desc="Mercure Hotel Berlin Tempelhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="447288615" x="4590747.7482467955" y="5820965.858674708" desc="Novotel Berlin Am Tiergarten">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="447901512" x="4590153.411637179" y="5819917.861832478" desc="Hampton by Hilton Berlin City West">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4484594589" x="4591267.961224085" y="5819493.858737008" desc="Mercure Berlin Wittenbergplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="449318658" x="4595358.186410991" y="5824229.596236439" desc="Legale Graffiti Wand Mauerpark">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="450882982" x="4596915.657549827" y="5822604.307024236" desc="Märchenbrunnen">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="45117809" x="4599652.285435885" y="5820988.240809753" desc="ibis Styles Berlin City Ost">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4531573193" x="4600251.310501285" y="5820477.412826163" desc="Labyrintoom">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="45570779" x="4602603.532311598" y="5824733.281504409" desc="Garni Hotel Molks">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="456409627" x="4599600.233630077" y="5812565.786008982" desc="Leonardo Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4564235689" x="4595775.100582933" y="5823599.078809513" desc="Gls">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4580264745" x="4590312.051813112" y="5822201.878305549" desc="Excellent Apartments">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4582978" x="4593807.444851027" y="5821168.219071551" desc="Adlon Kempinski">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="46096321" x="4594354.35612303" y="5820428.632237283" desc="Gat Point Charlie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="46100261" x="4603354.238737081" y="5819674.852732346" desc="Abacus Tierpark Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4611889" x="4594042.462680816" y="5818954.598565033" desc="Wohnanlage ehem. Gertraudenhospital">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="4612831606" x="4588779.691201295" y="5819625.5882125385" desc="12Monkeys">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="464524861" x="4596398.629190969" y="5822244.506852162" desc="Hampton by Hilton Berlin City Centre Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4646615194" x="4598135.063969242" y="5821031.625087606" desc="Lehmbackofen">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="4675675367" x="4603754.368869478" y="5817861.095416203" desc="Die Botschaft">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4687610336" x="4590622.913869261" y="5819925.951166091" desc="Motel One">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="47080628" x="4594317.394196864" y="5819544.20274686" desc="Rewari Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="472419567" x="4599556.83271546" y="5812569.392909639" desc="Hotel Atlantic">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="47360193" x="4591239.554226312" y="5819353.032323484" desc="Axel Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="474111581" x="4595621.527473062" y="5821756.873965112" desc="St. Marienkirche">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="474620658" x="4598932.675447299" y="5825596.192107574" desc="Derag Livinghotel Königin Luise">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4809132621" x="4587708.66313482" y="5816641.894417839">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="481694341" x="4599870.327894344" y="5821038.866822772" desc="U Inn Berlin Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4827813424" x="4594077.172887228" y="5820140.830518281" desc="Topographie des Terrors">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="4844728421" x="4593546.474438132" y="5820531.55059252">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="488491965" x="4606175.105890289" y="5824587.863961622" desc="Bockwindmühle Marzahn">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="491555229" x="4591467.027019108" y="5821965.537697111" desc="Ameron Hotel Abion Spreebogen Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4943607521" x="4590477.667377877" y="5818295.6452607075" desc="TWO Hotel by Axel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="496396330" x="4588774.101228945" y="5821959.985210033" desc="Econtel Berlin Charlottenburg">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="49733547" x="4595831.401635117" y="5823198.967656833" desc="EastSeven Berlin Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4976293448" x="4590931.39049124" y="5825869.947119912" desc="Hotel de France">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="4978140072" x="4593876.359867184" y="5824898.912706481" desc="Citylight Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="49810915" x="4601769.745420139" y="5821665.591400683" desc="Accordo Apartmenthaus Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="49973931" x="4588643.619922809" y="5818871.293582077" desc="yggotel Ravn">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5011909322" x="4595612.867624674" y="5822871.049083708" desc="Pension Mädchenkammer">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5015764765" x="4589103.991667631" y="5812416.6110642515" desc="Soeht7">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5018674948" x="4595809.83416925" y="5824721.414356658" desc="Schall u Rauch">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5025101921" x="4596020.1813545935" y="5820154.184477112" desc="Ehemaliger Grenzübergang Heinrich-Heine-Straße">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="50261762" x="4590068.997188064" y="5820204.079239195" desc="Carmer 16">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="50286994" x="4591478.044590301" y="5830793.9350465955" desc="Hotel Rheinsberg am See">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="506743681" x="4597620.191521808" y="5820433.322344962" desc="Meininger Hotel Berlin East Side Gallery">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="508640813" x="4586966.846010532" y="5829190.397850287" desc="Alt Tegel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="509448182" x="4596170.564065896" y="5821419.68725158" desc="BuB Hotel Berlin-Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5097602328" x="4586170.966000977" y="5820340.70801429" desc="Hotel VITA Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="51774910" x="4595946.170232924" y="5819945.329924353" desc="Motel One Berlin-Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="518071791" x="4593627.328026107" y="5821242.492922423" desc="Brandenburger Tor">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="51892795" x="4600000.985906658" y="5820008.91232887" desc="Jugendherberge Berlin-Ostkreuz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="52008272" x="4587212.538098124" y="5817566.209938131" desc="Studentenhotel Hubertusallee">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5223291532" x="4595697.674327651" y="5824091.177760219" desc="Linnen">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5246363522" x="4595269.022600012" y="5819095.086394093" desc="Schiffstouren Reederei Riedel">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="5265748223" x="4592415.610060522" y="5818228.6164881345" desc="Meisenbach Höfe">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="5268753601" x="4589415.650880122" y="5819367.498000341" desc="Midi-Inn City West">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5295444732" x="4597901.965317243" y="5819376.900242013">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5310034544" x="4592642.948653628" y="5822543.621977545" desc="Rossi">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5333151777" x="4588883.410990645" y="5819001.691125347" desc="Novum Hotel Lichtburg am Kurfürstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="53493698" x="4593759.733510187" y="5823002.95434952" desc="Mittes Backpacker Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="53576716" x="4595228.361046236" y="5823875.587956681" desc="Hotel 4 Youth">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="53772103" x="4590720.76300138" y="5819274.250874694" desc="Sana Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5389604694" x="4593812.561894945" y="5823913.983304642" desc="East West Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="540901489" x="4595257.999417386" y="5822674.018499667" desc="easyHotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="540914067" x="4595396.135267135" y="5822335.324857962" desc="Hotel Casa Camper Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5431053321" x="4596325.258143218" y="5819712.2045691" desc="Orania">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="543332300" x="4605967.8291937085" y="5823677.9195195" desc="Hotel-Engelke">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5435251" x="4599290.219880473" y="5816545.046700083" desc="Estrel Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="544502012" x="4596620.484948271" y="5818114.568625178" desc="Hotel Ludwig van Beethoven">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="54525147" x="4592401.884726292" y="5818746.25978428" desc="Hochbunker">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="5479192054" x="4595374.339761009" y="5816970.590800057" desc="Übungsflugzeug der Flughafenfeuerwehr">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="548579681" x="4591367.7189097805" y="5820049.317241668" desc="Hotel Pullman Berlin Schweizerhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5486308620" x="4598304.773670271" y="5819381.638001775" desc="Die Fabrik">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5495541305" x="4603161.7740720725" y="5820291.329473925" desc="Pension am Anger">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5503181816" x="4588391.800782773" y="5822251.8568505" desc="Aparotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="551325554" x="4601466.931803954" y="5824697.278208543" desc="Hotel Alte Feuerwache">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5542698116" x="4590002.465818802" y="5819778.0096279085" desc="Hommage à Magritte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5557258162" x="4593633.185863985" y="5818367.322694835" desc="Berlin Surf Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="556435241" x="4595770.503037343" y="5821789.84732629" desc="Berliner Fernsehturm">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="5578856948" x="4591598.030762311" y="5821503.882902518" desc="Summloch">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="558158766" x="4601160.733403222" y="5824080.588272305" desc="Sowjetisches Ehrenmal">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="558863058" x="4595979.677927172" y="5821678.441442211" desc="Motel One">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5637127164" x="4603619.647990096" y="5819423.905839987" desc="Schwarzschwanz-Präriehund">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="5637127166" x="4603628.699044302" y="5819421.570134209" desc="Nordamerikanischer Baumstachler">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="5646230856" x="4596953.924401818" y="5823106.387356182" desc="Old Town Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5656522306" x="4595790.252405576" y="5822210.55087585" desc="Lux 11">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5684271" x="4591377.819215269" y="5817700.085540181" desc="Rathaus Schöneberg">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="571427439" x="4599735.692686402" y="5821102.258138582" desc="Kiez Pension">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="57493" x="4607187.316335584" y="5813633.7799148215" desc="Rathaus Köpenick">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="5769452453" x="4597292.645431516" y="5825544.2318481235" desc="Pension Bigus">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5787896214" x="4595167.778285248" y="5819354.923931628" desc="The Yard">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="5844370740" x="4591341.649500756" y="5822331.964740774" desc="Meininger Hotel Berlin Tiergarten">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="58467591" x="4595680.979554" y="5820746.732256281" desc="Park Plaza Wallstreet">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="585473092" x="4595928.772679811" y="5820981.197543583" desc="Historischer Hafen Berlin">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="58608090" x="4594791.898181922" y="5821207.488925359" desc="St. Hedwigs-Kathedrale Berlin">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="59033975" x="4595633.818437103" y="5816476.611314791" desc="VORTAC">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="591421247" x="4604934.732823264" y="5815592.937231268" desc="Ponyreiten">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="5934640636" x="4607242.48914356" y="5813706.34413621" desc="Altstadt Köpenick">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="5976573882" x="4597470.117279722" y="5820451.280827488" desc="Hotel Schulz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="60105926" x="4595746.184486138" y="5820835.361980372" desc="Living Hotel Großer Kurfürst">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="60105927" x="4595850.549422904" y="5820870.237689819" desc="art’otel Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="60105928" x="4595709.97001588" y="5820816.066043271" desc="Living Hotel Berlin-Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="60237649" x="4598260.258642999" y="5819901.422936209" desc="East Side Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="60240143" x="4595325.9525167495" y="5821636.194335444" desc="Radisson Collection Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="60240155" x="4595500.1577957645" y="5820932.725690467" desc="Novotel Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="604271481" x="4602452.293210829" y="5824437.374379432" desc="Apart-Hotel Ferdinand">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6052683128" x="4597961.049662324" y="5820059.824769787" desc="Hotel Indigo">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="60706750" x="4594551.109965479" y="5827982.975704337" desc="Solitaire Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="60845776" x="4591521.809772304" y="5821916.115181146" desc="Abion Villa">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6137529" x="4595276.165008606" y="5822025.327295654" desc="Hackescher Markt">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="6152955033" x="4607453.503746639" y="5823602.049615498" desc="Natur-Bobbahn">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="6157289431" x="4593511.260229359" y="5826483.947009623" desc="Pension Lette Eck">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="61670661" x="4595950.128531532" y="5821219.704943705" desc="Holiday Inn Express Alexanderplatz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="617112620" x="4590219.354227926" y="5823047.145581931" desc="Sickinger Hof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="617205442" x="4606288.054132897" y="5819518.463992507" desc="East West Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="618746050" x="4594169.361743373" y="5822909.138107848" desc="Garden Boutique Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="621444224" x="4595464.289887805" y="5825428.4758890625" desc="Corner Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="622129784" x="4589916.56695929" y="5814493.322721305" desc="Hotel Steglitz International">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="626305361" x="4594250.964876517" y="5820608.229972601" desc="Café-Hotel M68">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6279298220" x="4593437.0031816" y="5819855.896449464" desc="High Park">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6300867052" x="4596835.682819824" y="5818221.060556764" desc="The Cat's Pajamas Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6317940905" x="4607442.961985684" y="5813873.459251235" desc="Hotel Kubrat an der Spree">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="632237135" x="4600266.46884943" y="5820820.292896192" desc="Georghof Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="632356743" x="4597307.036933374" y="5817499.688377021" desc="Erlanger Hof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="632964201" x="4595432.2159562055" y="5825143.103881757" desc="Frosch-Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="639164561" x="4597524.892354111" y="5817504.6015715" desc="Rixpack Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="639670245" x="4601813.860197425" y="5820639.30862616" desc="Hotel Nova">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="646574192" x="4591324.634247146" y="5819680.6307390835" desc="Hotel Classic">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="647907950" x="4601352.285585238" y="5819795.3621939095" desc="Pension Adamshof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="647907953" x="4601357.883362843" y="5819811.785518811" desc="Pension Zum Lichtenberger">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6504618663" x="4597966.281383246" y="5820081.512786343" desc="Hampton by Hilton Berlin City East Side Gallery">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="650534687" x="4589195.317374121" y="5818232.14661977" desc="SensCity Hotel Albergo">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="658444507" x="4591523.622811155" y="5823985.567276509" desc="Gästehaus Axel Springer">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6613026" x="4589930.1492298525" y="5822615.560278075" desc="Siemens KWU">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="663065744" x="4590382.345825642" y="5819993.662105154" desc="Motel One Berlin-Ku'Damm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="663225353" x="4598496.250816968" y="5819940.651959231" desc="Plus Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="663317344" x="4596705.534932757" y="5822533.140776329" desc="Leonardo Royal Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="667211354" x="4586322.183486307" y="5820474.428582955" desc="Hotel Aster an der Messe">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="667799989" x="4599227.385238508" y="5821302.205628007" desc="Hotel Bolgerini Inn">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="66917101" x="4594331.411917902" y="5821971.168793711" desc="Hotel Neuer Fritz Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="66917107" x="4594347.240049053" y="5821820.44739968" desc="Meliá Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="66917193" x="4594380.108118717" y="5821624.416812143" desc="NH Collection">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="66917205" x="4594288.171131827" y="5821472.601400045" desc="Maritim proArte Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6700335785" x="4592560.2593372185" y="5826338.02046628">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="670658024" x="4590015.299432157" y="5819757.119013024" desc="Hecker's Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="670842248" x="4603923.461304549" y="5822542.9292043885" desc="Ibis Budget">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="671776288" x="4585663.628675626" y="5820312.921321581" desc="Hotel Rotdorn">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6743790785" x="4593759.969090586" y="5822673.2691351855" desc="Miniloft Mitte Apartment Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6761434848" x="4592912.777973879" y="5822106.296766791" desc="Meininger">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6766887919" x="4599900.042427653" y="5815479.685407837" desc="Hostel Classic Plus">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="682327973" x="4591137.891390844" y="5823171.767163814" desc="Hotel garni Aaberna">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="683461673" x="4591966.798190174" y="5819420.962733074" desc="numa | Drift Rooms u Apartments">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="6835710242" x="4597599.241744707" y="5817331.553272522" desc="Aparthotel Thüringer Hof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="68363380" x="4596952.684296826" y="5818099.992733793" desc="Grand Hostel Berlin Urban">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="690204908" x="4590263.0509743765" y="5820244.255568802" desc="Hotel Indigo Berlin Ku'damm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="692167746" x="4589842.842861529" y="5819264.151169282" desc="Adagio Berlin Kurfürstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="692167782" x="4589428.691080172" y="5819965.2635955" desc="EnergieHotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="69226077" x="4594405.471637048" y="5820618.025179637" desc="NH Collection Berlin Mitte am Checkpoint Charlie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="69226092" x="4593290.19793255" y="5820336.964190517" desc="Grand Hyatt Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="69547558" x="4587657.602475896" y="5824019.031383298" desc="Waldhochseilgarten-Jungfernheide">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="695646332" x="4594987.689114499" y="5821147.040628716" desc="Arcotel John F Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="697714223" x="4595719.659965803" y="5823263.169783961" desc="Jurine">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="700080644" x="4591013.364598725" y="5819929.373464194" desc="Palace Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="702534190" x="4590196.466189651" y="5821686.232177946" desc="Novum Style Hotel Berlin-Centrum">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="703983970" x="4607417.545858601" y="5813590.477290546" desc="Hotel Alter Markt">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="703983971" x="4606856.544403532" y="5813322.768111949" desc="Hotel am Schloss Köpenick">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="708151155" x="4602694.296837515" y="5821274.181444511" desc="Gedenkstätte der Sozialisten">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="708431655" x="4587826.935830688" y="5813088.197756162" desc="Hotel-Pension Dahlem">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="7092814585" x="4597965.948674026" y="5825238.51018106" desc="Odin Pension Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="709847168" x="4600663.872470522" y="5818464.69838243" desc="Jugendbegegnungsstätte Spreeinsel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="718035022" x="4591758.042722439" y="5821010.861819272" desc="Siegessäule">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="718143817" x="4587971.579195069" y="5820100.519996655" desc="Ivbergs Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="722386119" x="4593545.930429444" y="5820347.144685061">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="7233815620" x="4594196.885274264" y="5817806.523766538" desc="Columbia">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="72638660" x="4598215.159616326" y="5816159.202058808" desc="2A Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="7271650904" x="4593531.978242099" y="5826603.8238005955" desc="On Hotel 24">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="727335235" x="4598661.39864678" y="5820487.758187722" desc="Hotel Klassik Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="7287573670" x="4600312.866155588" y="5821142.762715873" desc="The niu">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="730173527" x="4596941.955115294" y="5826457.122043805" desc="Hotel Sedes">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="7328021785" x="4593478.374813983" y="5826245.614940235" desc="New Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="73690770" x="4591263.921166148" y="5819843.913847565" desc="Air in Berlin Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="73690778" x="4591259.790487775" y="5819863.315893785" desc="City Ansbach">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="739082794" x="4591627.951575571" y="5819666.785595906" desc="Motel One Berlin-Tiergarten">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="7430297888" x="4593122.596490565" y="5822938.990396974" desc="Auguste-Victoria Glocke">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="7447185" x="4600354.119733474" y="5823310.794591859" desc="Holiday Inn Berlin City East">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="746311191" x="4592058.672569789" y="5816972.369191704" desc="the niu Dwarf">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="747493599" x="4590673.860463531" y="5818323.675767183" desc="Hotel Pension Güntzel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="757871339" x="4593471.661986348" y="5820586.64715098" desc="The Ritz-Carlton">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="7600028683" x="4593546.068828842" y="5819449.113169411" desc="aletto Hotel Potsdamer Platz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="7646337" x="4587021.135534813" y="5820083.39343753" desc="Ibis Berlin Messe">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="768917724" x="4588675.007684735" y="5820764.529140327" desc="Leonardo Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="775862456" x="4590020.252078108" y="5819817.393666352" desc="NH Berlin Kurfürstendamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="77750297" x="4590253.585544325" y="5827090.836786635" desc="Hotel Larat">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="77788067" x="4590356.036456528" y="5826462.631374298" desc="Dorint Airport Hotel - Berlin Tegel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="779355298" x="4594043.415068169" y="5818995.294949481" desc="Wohnanlage ehem. Gertraudenhospital">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="779355299" x="4593979.766208462" y="5818947.0137103675" desc="Wohnanlage ehem. Gertraudenhospital">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="78372598" x="4586687.314832216" y="5817100.831249926" desc="Schlosshotel im Grunewald">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="785054753" x="4599239.988277632" y="5821017.720060559" desc="Hotel Lohwasser">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="7860761959" x="4589543.307802235" y="5819491.840708919" desc="I love Ku'damm">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="78716034" x="4594288.756075154" y="5819327.3213396035" desc="Happy Bed Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="79836147" x="4589528.494216393" y="5818137.892384324" desc="Ibis Hotel Berlin City West">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="7997184" x="4598578.198255302" y="5822949.701172623" desc="Velodrom">
+		<activity type="attraction">
+		</activity>
+		<activity type="leisure">
+		</activity>
+	</facility>
+	<facility id="80339681" x="4594715.136465642" y="5822307.302184539" desc="Heckmann Höfe">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="8080757" x="4584555.324760826" y="5820404.553718773" desc="Corbusierhaus">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="8102166" x="4591829.5255171" y="5814673.0986245945" desc="Planetarium am Insulaner">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="810590617" x="4587997.651093336" y="5819388.752888577" desc="Aspria Spa + Sporting Club + Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="81361942" x="4595270.421957789" y="5822184.045516915" desc="Haus Schwarzenberg">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="81456696" x="4593485.089912248" y="5819949.817295779" desc="Scandic Berlin Potsdamer Platz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="814663159" x="4596987.8273559185" y="5824813.381436575" desc="Holiday Inn Berlin City Center East - Prenzlauer Allee">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="815670035" x="4587822.8231813675" y="5822050.043680319" desc="Schlosspark Charlottenburg">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="82889487" x="4594548.56700234" y="5831047.623629878" desc="Geologische Wand">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="8289619045" x="4597279.923954017" y="5820570.126081907" desc="AMANO">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="831375024" x="4588808.287346657" y="5820057.4068034785" desc="Hotel Domicil">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="843204466" x="4588934.027745484" y="5818163.070063797" desc="villa konstanz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="844087825" x="4590340.632811856" y="5826923.776887121" desc="Days Inn Berlin West">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="844740667" x="4594623.339783498" y="5820964.926662831" desc="Gendarmenmarkt">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="84644772" x="4594119.625644452" y="5819979.299402429" desc="Ibis Budget">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="84644779" x="4594035.1493030265" y="5819949.21724522" desc="Suite Novotel Berlin City Potsdamer Platz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="8465478517" x="4589805.985179772" y="5821293.383753329" desc="Illuminati Escape - Escape Room Berlin">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="84656858" x="4595075.942498325" y="5825558.845956793" desc="Platz des 9. November 1989">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="8564372024" x="4590073.873969929" y="5826566.635633968" desc="Hostel am Kurti">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="86001788" x="4594368.190648051" y="5821212.416931989" desc="The Westin Grand Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="86001799" x="4594514.641057544" y="5821150.199108382" desc="Regent Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="86001831" x="4594571.49619117" y="5820733.825626374" desc="Hotel Gendarm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="86001840" x="4594643.426469111" y="5820797.669626534" desc="Hilton Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="8668202517" x="4591925.334388672" y="5825239.385661479" desc="Berg-Mammutbaum">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="86813081" x="4598626.3844850445" y="5819650.780581571" desc="nhow Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="8687424511" x="4590409.6845154995" y="5818583.95800075" desc="Hotel Pension Spree">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="872308129" x="4596388.146550096" y="5819480.887988211" desc="Comebackpackers">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="876726265" x="4597059.8151092" y="5819465.712823792" desc="baxpax Kreuzberg Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="877334123" x="4595505.806268839" y="5821831.127878136" desc="Citystay Hostel Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="877635909" x="4594447.460512498" y="5819782.754885074" desc="Select Hotel Checkpoint Charlie">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="879531118" x="4594009.159961784" y="5822736.068979357" desc="H+ Hotel Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="8850098207" x="4596842.694002272" y="5822748.099465177" desc="Gold Palais Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="8868375328" x="4589072.874092673" y="5818792.976902348" desc="W22">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="890894437" x="4586857.353386147" y="5818003.111475751" desc="Hotel St.-Michaels-Heim">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="893956651" x="4605573.060133612" y="5824249.129313851">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="894366507" x="4594359.441118257" y="5823427.56188444" desc="Hotel Grenzfall Berlin-Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="895348763" x="4591355.060068002" y="5830129.874908938" desc="Hotel Garni Wilhelmsruher Damm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="895396826" x="4594239.1186363865" y="5819228.092122682" desc="Meininger Hotel Berlin Tempelhofer Ufer">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9024689571" x="4590763.212547711" y="5820486.007550184" desc="Traktor">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9024702266" x="4590916.154934135" y="5820321.834104188" desc="Adlerschlucht">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9024702267" x="4590900.280282259" y="5820195.55055399" desc="Antilopenhaus">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="910426645" x="4593525.757521365" y="5823416.964675135" desc="City 54 Hotel und Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="910651" x="4593014.656041641" y="5822203.342975002" desc="Berlin Hauptbahnhof">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="914249367" x="4590830.162900125" y="5822534.679599097" desc="Amstel House Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9157063993" x="4594509.434774324" y="5822074.309890451" desc="St. Christopher's Inns">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="920644189" x="4596806.938491283" y="5818806.682363465" desc="Schokoladenfabrik">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9214315227" x="4592001.903755459" y="5819258.325980985">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="92335625" x="4594027.116880283" y="5819614.365709505" desc="Crowne Plaza Berlin Potsdamer Platz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="927149108" x="4603280.193510018" y="5821432.079809267" desc="Ağa's Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9272803417" x="4594559.830749031" y="5820625.596218361" desc="VR Nation">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9310534784" x="4597375.148524907" y="5817252.524383859" desc="Karibuni">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="932342536" x="4589905.528081548" y="5820403.759319824" desc="Hotel Otto">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="932342543" x="4589906.156449367" y="5820430.239685938" desc="Novum Hotel Gates">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9468742106" x="4607566.149604509" y="5814745.49816594" desc="Gedenkstätte Köpenicker Blutwoche">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9492257618" x="4590131.808360098" y="5821566.567259496" desc="the niu Flash">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9492257619" x="4590135.642595748" y="5821575.909669043" desc="acora Berlin Living the City">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9500078548" x="4589288.781659786" y="5819110.673843556" desc="Hotel - Pension Bregenz">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="95024285" x="4589089.451511804" y="5821171.108868145" desc="Arktur City Hotel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="951268573" x="4593594.665624413" y="5822597.34045815" desc="Adina Apartment Hotel Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9531153625" x="4603183.078074235" y="5814555.69696993" desc="Hotel - Pension Schäfer">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9549827153" x="4591109.254464696" y="5820125.463791342" desc="Nachttierhaus">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9558385246" x="4591088.007994642" y="5820381.901106381" desc="Pinguinwelt">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9558385247" x="4590846.697033787" y="5820508.468022773" desc="Welt der Vögel">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9558385248" x="4590847.015142079" y="5820398.902508275" desc="Flusspferdehaus">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9558385249" x="4590985.307589717" y="5820227.347178919" desc="Panda Garden">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9558385250" x="4591128.899773122" y="5820150.516845601" desc="Reich der Jäger">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9558385251" x="4590901.900530335" y="5820102.627446721" desc="Affenhaus">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="958347848" x="4590662.627052246" y="5818701.4902024" desc="Hyperion Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9592974367" x="4607399.247309595" y="5823575.322990016" desc="offene Sicht auf Stahlknoten">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9592974384" x="4607026.269904526" y="5823746.63108302" desc="Chin Ying Yang">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9592974399" x="4606979.167635799" y="5823787.358435251">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9592974529" x="4607189.805592593" y="5823966.646650402">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9592974607" x="4606620.037267072" y="5823826.661818692">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9592974863" x="4607151.812466424" y="5824096.449799451">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9592974871" x="4607161.778440204" y="5824093.57311279" desc="Spendenbox">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9592974963" x="4606583.182043105" y="5823793.766311623" desc="chinese arrt">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9592974993" x="4606674.156001772" y="5823747.845533486">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="960740201" x="4590513.986450406" y="5819592.9171476">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9623829508" x="4593530.351839815" y="5826599.128801185" desc="On Hostel 24">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9623870016" x="4593536.080778712" y="5826394.10373799" desc="Nena Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="96318971" x="4584686.119139538" y="5820188.526858204" desc="Michels Apart Hotel Berlin">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="963196967" x="4594609.973004099" y="5822377.47836637" desc="Hotel Augustinenhof">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9644838819" x="4604283.9787736" y="5820541.1263346905" desc="Himalaya-Gebirgswelt">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9729459" x="4594295.76290061" y="5822323.053205403" desc="Amo by Amano">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9737036234" x="4587440.723340854" y="5820543.7298265565" desc="Pension am Kaiserdamm">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9756859275" x="4594178.355296021" y="5825563.849887351" desc="Wyndham Garden Berlin Mitte">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9764251117" x="4596005.498511949" y="5822454.004376868" desc="Rosa Luxemburg">
+		<activity type="attraction">
+		</activity>
+	</facility>
+	<facility id="9781500619" x="4594239.224178034" y="5815968.470848496" desc="Big City Hostel">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9831368068" x="4604821.3623951925" y="5814892.58772234" desc="Jugendgästehaus Köpenicker Kanusportclub">
+		<activity type="hotel">
+		</activity>
+	</facility>
+	<facility id="9858724279" x="4596377.389980995" y="5816260.7685748" desc="Schachspiele">
+		<activity type="attraction">
+		</activity>
+	</facility>
+</facilities>
