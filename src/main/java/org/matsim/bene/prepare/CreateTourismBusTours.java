@@ -209,14 +209,6 @@ public class CreateTourismBusTours {
 				newPerson.addPlan(plan);
 				population.addPerson(newPerson);
 			}
-			
-			Activity tourEnd = populationFactory.createActivityFromActivityFacilityId("tourEnd" + (i+1), hotelFacility.getId());
-			scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams("tourEnd" + (i+1)).setTypicalDuration(0.25*3600).setOpeningTime(10. *3600).setClosingTime(24. * 3600. ) );
-			tourEnd.setMaximumDuration(0.5*3600);
-			plan.addActivity(tourEnd);
-			
-			newPerson.addPlan(plan);
-			population.addPerson(newPerson);
 		}
 	}
 
