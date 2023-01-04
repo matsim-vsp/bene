@@ -19,7 +19,10 @@
  * *********************************************************************** */
 package org.matsim.bene.prepare;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.TreeMap;
 
@@ -33,6 +36,8 @@ import org.matsim.api.core.v01.population.Person;
 import org.matsim.api.core.v01.population.Plan;
 import org.matsim.api.core.v01.population.Population;
 import org.matsim.api.core.v01.population.PopulationFactory;
+import org.matsim.application.options.ShpOptions;
+import org.matsim.application.options.ShpOptions.Index;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.ControlerConfigGroup;
@@ -42,6 +47,7 @@ import org.matsim.core.controler.OutputDirectoryHierarchy;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
 import org.matsim.core.population.PopulationUtils;
 import org.matsim.core.scenario.ScenarioUtils;
+import org.matsim.core.utils.geometry.transformations.TransformationFactory;
 import org.matsim.facilities.ActivityFacilities;
 import org.matsim.facilities.ActivityFacility;
 import org.matsim.facilities.MatsimFacilitiesReader;
@@ -59,7 +65,10 @@ public class CreateTourismBusTours {
 		String facilityCRS = TransformationFactory.DHDN_GK4;
 		String output = "output/"+java.time.LocalDate.now().toString() + "_" + java.time.LocalTime.now().toSecondOfDay();
 		String network = "../public-svn/matsim/scenarios/countries/de/berlin/berlin-v5.5-10pct/input/berlin-v5.5-network.xml.gz";
-		int numberOfTours = 100;
+		Path shapeFileZonePath = Path.of("original-input-data/shp/bezirke/bezirksgrenzen.shp");
+		String shapeCRS = "EPSG:4326";
+		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
+		int numberOfTours = 526;
 		
 		HashMap<String, Integer> busStartDistribution = new HashMap<>();
 		createBusStartDistribution(busStartDistribution, numberOfTours);
@@ -69,7 +78,7 @@ public class CreateTourismBusTours {
         MatsimFacilitiesReader matsimFacilitiesReader = new MatsimFacilitiesReader(scenario);
         matsimFacilitiesReader.readFile(facilitiesFile);
 
-        generateTours(scenario, numberOfTours);
+        generateTours(scenario, busStartDistribution, shpZones, facilityCRS);
 		PopulationUtils.writePopulation(scenario.getPopulation(), output + "/plans.xml.gz");
 
         Controler controler = new Controler(scenario);
@@ -129,44 +138,76 @@ public class CreateTourismBusTours {
 		return config;
 	}
 	
-	private static void generateTours(Scenario scenario, int numberOfTours) {
+	private static void generateTours(Scenario scenario, HashMap<String, Integer> busStartDistribution, ShpOptions shpZones, String facilityCRS) {
 		Population population = scenario.getPopulation();
 		PopulationFactory populationFactory = population.getFactory();
 		
+		HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>> hotelFacilitiesPerArea = new HashMap <String, TreeMap<Id<ActivityFacility>, ActivityFacility>>();
+		createHotelFacilitiesPerArea(scenario, hotelFacilitiesPerArea, shpZones, facilityCRS);
 		ActivityFacilities allFacilities = scenario.getActivityFacilities();
-		TreeMap<Id<ActivityFacility>, ActivityFacility> hotelFacilities = allFacilities.getFacilitiesForActivityType("hotel");
-		TreeMap<Id<ActivityFacility>, ActivityFacility> attractionFacilities = allFacilities.getFacilitiesForActivityType("attraction");
-		ArrayList<Id<ActivityFacility>> hotelKeyList = new ArrayList<Id<ActivityFacility>>(hotelFacilities.keySet());
-		ArrayList<Id<ActivityFacility>> attractionKeyList = new ArrayList<Id<ActivityFacility>>(attractionFacilities.keySet());
 
-		for (int i = 0; i < numberOfTours; i++) {
-			Person newPerson = populationFactory.createPerson(Id.createPersonId("busdriver_" + (i+1)));
-			Plan plan = populationFactory.createPlan();
-			Random random = new Random();
-			ActivityFacility hotelFacility = hotelFacilities.get(hotelKeyList.get(random.nextInt(hotelFacilities.size())));
-			Activity tourStart = populationFactory.createActivityFromActivityFacilityId("TourStart_" + (i+1), hotelFacility.getId());
-			tourStart.setEndTime(random.nextDouble(10*3600, 14*3600));
-			tourStart.setMaximumDuration(0.5*3600);
-			scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams("TourStart_" + (i+1)).setTypicalDuration(0.5*3600).setOpeningTime(10. *3600).setClosingTime(20. * 3600. ) );
-			plan.addActivity(tourStart);
-			Leg legActivity = populationFactory.createLeg("car");
-			plan.addLeg(legActivity);
-			int numberOfStops = random.nextInt(1,4); 
-			for (int j = 0; j < numberOfStops; j++) {
-				ActivityFacility attractionFacility = attractionFacilities.get(attractionKeyList.get(random.nextInt(attractionFacilities.size())));
-				Activity tourStopGetOff = populationFactory.createActivityFromActivityFacilityId("TourStopGetOff_"+(i+1)+"_"+(j+1), attractionFacility.getId());
-				scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams("TourStopGetOff_"+(i+1)+"_"+(j+1)).setTypicalDuration(2*3600).setOpeningTime(10. *3600).setClosingTime(20. * 3600.));
-				tourStopGetOff.setMaximumDuration(2*3600);
-				plan.addActivity(tourStopGetOff);
-				legActivity = populationFactory.createLeg("car");
+		TreeMap<Id<ActivityFacility>, ActivityFacility> attractionFacilities = allFacilities.getFacilitiesForActivityType("attraction");
+
+		ArrayList<Id<ActivityFacility>> attractionKeyList = new ArrayList<Id<ActivityFacility>>(attractionFacilities.keySet());
+		int i = 0;
+		for (String area : busStartDistribution.keySet()) {
+			ArrayList<Id<ActivityFacility>> hotelKeyList = new ArrayList<Id<ActivityFacility>>(hotelFacilitiesPerArea.get(area).keySet());
+			for (int k = 0; k < busStartDistribution.get(area); k++) {
+				i++;
+				Person newPerson = populationFactory.createPerson(Id.createPersonId("tour_" + (i + 1)));
+				Plan plan = populationFactory.createPlan();
+				Random random = new Random();
+				ActivityFacility hotelFacility = hotelFacilitiesPerArea.get(area)
+						.get(hotelKeyList.get(random.nextInt(hotelFacilitiesPerArea.get(area).size())));
+				Activity tourStart = populationFactory.createActivityFromActivityFacilityId("TourStart_" + (i + 1),
+						hotelFacility.getId());
+				tourStart.setEndTime(random.nextDouble(10 * 3600, 14 * 3600));
+				tourStart.setMaximumDuration(0.5 * 3600);
+				scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams("TourStart_" + (i + 1))
+						.setTypicalDuration(0.5 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
+				plan.addActivity(tourStart);
+				Leg legActivity = populationFactory.createLeg("car");
 				plan.addLeg(legActivity);
-				
-				Activity tourStopGetIn = populationFactory.createActivityFromActivityFacilityId("TourStopGetIn_"+(i+1)+"_"+(j+1), attractionFacility.getId());
-				scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams("TourStopGetIn_"+(i+1)+"_"+(j+1)).setTypicalDuration(0.25*3600).setOpeningTime(10. *3600).setClosingTime(20. * 3600.));
-				tourStopGetIn.setMaximumDuration(0.25*3600);
-				plan.addActivity(tourStopGetIn);
-				legActivity = populationFactory.createLeg("car");
-				plan.addLeg(legActivity);
+				int numberOfStops = random.nextInt(2, 5);
+				for (int j = 0; j < numberOfStops; j++) {
+					ActivityFacility attractionFacility = attractionFacilities.get(attractionKeyList.get(random.nextInt(attractionFacilities.size())));
+					if (j == 2)
+						attractionFacility = attractionFacilities.get(Id.create("Museumsinsel", ActivityFacility.class));
+					Activity tourStopGetOff = populationFactory.createActivityFromActivityFacilityId(
+							"TourStop_" + (j + 1) + "_GetOff_" + attractionFacility.getId() + "_" + newPerson.getId(),
+							attractionFacility.getId());
+					scenario.getConfig().planCalcScore()
+							.addActivityParams(new ActivityParams("TourStop_" + (j + 1) + "_GetOff_"
+									+ attractionFacility.getId() + "_" + newPerson.getId()).setTypicalDuration(2 * 3600)
+									.setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
+					tourStopGetOff.setMaximumDuration(2 * 3600);
+					plan.addActivity(tourStopGetOff);
+					legActivity = populationFactory.createLeg("car");
+					plan.addLeg(legActivity);
+
+					Activity tourStopGetIn = populationFactory.createActivityFromActivityFacilityId(
+							"TourStop_" + (j + 1) + "_GetIn_" + attractionFacility.getId() + "_tour_" + (i + 1),
+							attractionFacility.getId());
+					scenario.getConfig().planCalcScore()
+							.addActivityParams(new ActivityParams(
+									"TourStop_" + (j + 1) + "_GetIn_" + attractionFacility.getId() + "_tour_" + (i + 1))
+									.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600)
+									.setClosingTime(20. * 3600.));
+					tourStopGetIn.setMaximumDuration(0.25 * 3600);
+					plan.addActivity(tourStopGetIn);
+					legActivity = populationFactory.createLeg("car");
+					plan.addLeg(legActivity);
+				}
+
+				Activity tourEnd = populationFactory.createActivityFromActivityFacilityId("tourEnd" + (i + 1),
+						hotelFacility.getId());
+				scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams("tourEnd" + (i + 1))
+						.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
+				tourEnd.setMaximumDuration(0.5 * 3600);
+				plan.addActivity(tourEnd);
+
+				newPerson.addPlan(plan);
+				population.addPerson(newPerson);
 			}
 			
 			Activity tourEnd = populationFactory.createActivityFromActivityFacilityId("tourEnd" + (i+1), hotelFacility.getId());
@@ -176,6 +217,19 @@ public class CreateTourismBusTours {
 			
 			newPerson.addPlan(plan);
 			population.addPerson(newPerson);
+		}
+	}
+
+	private static void createHotelFacilitiesPerArea(Scenario scenario, HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>> hotelFacilitiesPerArea, ShpOptions shpZones, String facilityCRS) {
+		
+		Index indexZones = shpZones.createIndex(shpZones.getShapeCrs(), "Gemeinde_n");
+		ActivityFacilities allFacilities = scenario.getActivityFacilities();
+
+		TreeMap<Id<ActivityFacility>, ActivityFacility> hotelFacilities = allFacilities.getFacilitiesForActivityType("hotel");
+		for (ActivityFacility hotelFacility : hotelFacilities.values()) {
+			String area = indexZones.query(shpZones.createTransformation(facilityCRS).transform(hotelFacility.getCoord()));
+			if (area != null)
+				hotelFacilitiesPerArea.computeIfAbsent(area, (k) -> new TreeMap<>()).put(hotelFacility.getId(), hotelFacility);
 		}
 		
 	}
