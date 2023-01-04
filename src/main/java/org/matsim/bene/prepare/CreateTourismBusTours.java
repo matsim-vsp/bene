@@ -61,6 +61,8 @@ public class CreateTourismBusTours {
 		String network = "../public-svn/matsim/scenarios/countries/de/berlin/berlin-v5.5-10pct/input/berlin-v5.5-network.xml.gz";
 		int numberOfTours = 100;
 		
+		HashMap<String, Integer> busStartDistribution = new HashMap<>();
+		createBusStartDistribution(busStartDistribution, numberOfTours);
 		Config config = prepareConfig(output, network);
 		Scenario scenario = ScenarioUtils.loadScenario(config);
 
@@ -73,7 +75,44 @@ public class CreateTourismBusTours {
         Controler controler = new Controler(scenario);
         controler.run();
         
-        System.out.println();
+        
+	}
+
+	private static void createBusStartDistribution(HashMap<String, Integer> busStartDistribution, int numberOfTours) {
+		
+		HashMap<String, Double> busStartPercetages = new HashMap<String, Double>();
+		busStartPercetages.put("Reinickendorf", 0.0158);
+		busStartPercetages.put("Charlottenburg-Wilmersdorf", 0.1932);
+		busStartPercetages.put("Treptow-Koepenick", 0.0215);
+		busStartPercetages.put("Pankow", 0.0367);
+		busStartPercetages.put("Neukoelln", 0.0292);
+		busStartPercetages.put("Lichtenberg", 0.0371);
+		busStartPercetages.put("Marzahn-Hellersdorf", 0.0066);
+		busStartPercetages.put("Spandau", 0.0194);
+		busStartPercetages.put("Steglitz-Zehlendorf", 0.0152);
+		busStartPercetages.put("Mitte", 0.4347);
+		busStartPercetages.put("Friedrichshain-Kreuzberg", 0.1304);
+		busStartPercetages.put("Tempelhof-Schoeneberg", 0.0601);
+
+		int sumTours = 0;
+		for (String area : busStartPercetages.keySet()) {
+			int toursForArea = (int) Math.round(numberOfTours * busStartPercetages.get(area));
+			sumTours += toursForArea;
+			busStartDistribution.put(area, toursForArea);
+		}
+		while (sumTours != numberOfTours) {
+
+			if (sumTours > numberOfTours) {
+				busStartDistribution.replace("Mitte", busStartDistribution.get("Mitte") - 1);
+				sumTours--;
+				continue;
+			}
+			if (sumTours < numberOfTours) {
+				busStartDistribution.replace("Mitte", busStartDistribution.get("Mitte") + 1);
+				sumTours++;
+				continue;
+			}
+		}
 	}
 
 	private static Config prepareConfig(String output, String network) {
