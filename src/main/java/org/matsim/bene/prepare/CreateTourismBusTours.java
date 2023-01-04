@@ -55,7 +55,8 @@ public class CreateTourismBusTours {
 
 	public static void main(String[] args) {
 		
-		String facilitiesFile = "scenarios/tourismFacilities/tourismFacilities.xml";
+		String facilitiesFile = "scenarios/tourismFacilities/tourismFacilities_new.xml";
+		String facilityCRS = TransformationFactory.DHDN_GK4;
 		String output = "output/"+java.time.LocalDate.now().toString() + "_" + java.time.LocalTime.now().toSecondOfDay();
 		String network = "../public-svn/matsim/scenarios/countries/de/berlin/berlin-v5.5-10pct/input/berlin-v5.5-network.xml.gz";
 		int numberOfTours = 100;
