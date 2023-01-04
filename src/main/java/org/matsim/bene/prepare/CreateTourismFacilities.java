@@ -41,7 +41,7 @@ public class CreateTourismFacilities {
 
 		String osmFile = "../../Downloads/export.osm";
 
-		String outputBase = "output/facilities/";
+		String outputBase = "output/";
 
 		String facilityFile = outputBase + "tourismFacilities.xml";
 //		String attributeFile = outputBase + "hotelFacilitiy_attributes.xml";
