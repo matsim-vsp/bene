@@ -28,6 +28,9 @@ import org.apache.log4j.Logger;
 import org.matsim.contrib.accessibility.FacilityTypes;
 import org.matsim.contrib.accessibility.osm.CombinedOsmReader;
 import org.matsim.core.utils.geometry.transformations.TransformationFactory;
+import org.matsim.facilities.ActivityFacility;
+import org.matsim.facilities.ActivityFacilityImpl;
+import org.matsim.facilities.ActivityOptionImpl;
 
 /**
  * @author Ricardo
@@ -39,7 +42,7 @@ public class CreateTourismFacilities {
 
 	public static void main(String[] args) {
 
-		String osmFile = "../../Downloads/export.osm";
+		String osmFile = "../../Downloads/export (4).osm";
 
 		String outputBase = "output/";
 
@@ -59,6 +62,17 @@ public class CreateTourismFacilities {
 				buildOsmTourismToMatsimTypeMap(), new LinkedList<String>(), buildingTypeFromVicinityRange);
 		try {
 			combinedOsmReader.parseFile(osmFile);
+			combinedOsmReader.getActivityFacilities().getFacilities().values()
+					.forEach(activity -> {
+						ActivityFacilityImpl activityImpl = (ActivityFacilityImpl) activity;
+						activityImpl.getActivityOptions().remove("work");
+						if (activityImpl.getActivityOptions().containsKey("shop")) {
+							activityImpl.getActivityOptions().remove("shop");
+							activityImpl.getActivityOptions().put("attraction", new ActivityOptionImpl("attraction"));
+						}
+						if (activityImpl.getDesc() != null)
+							activityImpl.setDesc(activityImpl.getDesc().replace(" ", ""));
+					});
 			combinedOsmReader.writeFacilities(facilityFile);
 //			combinedOsmReader.writeFacilityAttributes(attributeFile);
 		} catch (FileNotFoundException e) {
@@ -86,9 +100,10 @@ public class CreateTourismFacilities {
 		map.put("hotel", FacilityTypes.HOTEL);
 		map.put("information", FacilityTypes.IGNORE);
 		map.put("motel", FacilityTypes.HOTEL);
-
-		map.put("museum", FacilityTypes.IGNORE);
-
+		map.put("church", FacilityTypes.ATTRACTION);
+		map.put("museum", FacilityTypes.ATTRACTION);
+		map.put("mall", FacilityTypes.ATTRACTION);
+		map.put("shop", FacilityTypes.ATTRACTION);
 		map.put("picnic_site", FacilityTypes.IGNORE);
 
 		map.put("theme_park", FacilityTypes.IGNORE);
@@ -97,7 +112,7 @@ public class CreateTourismFacilities {
 
 		map.put("wilderness_hut", FacilityTypes.IGNORE);
 
-		map.put("zoo", FacilityTypes.IGNORE);
+		map.put("zoo", FacilityTypes.ATTRACTION);
 
 		return map;
 	}
