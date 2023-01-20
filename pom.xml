@@ -11,7 +11,7 @@
 
 	<properties>
 		<!-- release -->
-		<matsim.version>14.0</matsim.version>
+		<matsim.version>15.0-2022w30</matsim.version>
 
 		<!-- PR (= pull request) release -->
 		<!--		<matsim.version>13.1-PR1536</matsim.version> -->
@@ -129,11 +129,12 @@
 			<artifactId>bicycle</artifactId>
 			<version>${matsim.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.matsim.contrib</groupId>
-			<artifactId>emissions</artifactId>
-			<version>${matsim.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.matsim.contrib</groupId>
+            <artifactId>emissions</artifactId>
+            <version>${matsim.version}</version>
+            <scope>compile</scope>
+        </dependency>
 		<dependency>
 			<groupId>org.matsim.contrib</groupId>
 			<artifactId>application</artifactId>
@@ -142,6 +143,11 @@
 		<dependency>
 			<groupId>org.matsim.contrib</groupId>
 			<artifactId>accessibility</artifactId>
+			<version>${matsim.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.matsim.contrib</groupId>
+			<artifactId>parking</artifactId>
 			<version>${matsim.version}</version>
 		</dependency>
 

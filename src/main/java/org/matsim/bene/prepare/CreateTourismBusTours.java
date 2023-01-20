@@ -21,6 +21,7 @@ package org.matsim.bene.prepare;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,7 @@ import org.matsim.api.core.v01.population.Population;
 import org.matsim.api.core.v01.population.PopulationFactory;
 import org.matsim.application.options.ShpOptions;
 import org.matsim.application.options.ShpOptions.Index;
+import org.matsim.bene.analysis.emissions.RunOfflineAirPollutionAnalysisByVehicleCategory;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.ControlerConfigGroup;
@@ -58,7 +60,6 @@ import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.core.utils.geometry.CoordinateTransformation;
 import org.matsim.core.utils.geometry.geotools.MGC;
 import org.matsim.core.utils.geometry.transformations.TransformationFactory;
-import org.matsim.core.utils.io.IOUtils;
 import org.matsim.facilities.ActivityFacilities;
 import org.matsim.facilities.ActivityFacilitiesFactory;
 import org.matsim.facilities.ActivityFacilitiesFactoryImpl;
@@ -175,8 +176,9 @@ public class CreateTourismBusTours {
 		}
 
 		CoordinateTransformation ts = TransformationFactory.getCoordinateTransformation(hotspotsCRS, globalCRS);
-		CSVParser parse = CSVFormat.DEFAULT.withDelimiter('\t').withFirstRecordAsHeader()
-				.parse(IOUtils.getBufferedReader(loactionHotspotsInformation));
+		CSVParser parse = new CSVParser(Files.newBufferedReader(Path.of(loactionHotspotsInformation)),
+				CSVFormat.Builder.create(CSVFormat.TDF).setHeader().setSkipHeaderRecord(true).build());
+
 		for (CSVRecord record : parse) {
 			Coord hotspotCoord = new Coord(Double.valueOf(record.get("Laengengrad")),
 					Double.valueOf(record.get("Breitengrad")));
