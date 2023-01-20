@@ -115,6 +115,26 @@ public class CreateTourismBusTours {
 		Controler controler = new Controler(scenario);
 		controler.run();
 
+		RunOfflineAirPollutionAnalysisByVehicleCategory.main(new String[] { scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId()});
+		
+		
+	}
+
+	private static Config prepareConfig(String output, String network) {
+	
+		Config config = ConfigUtils.createConfig();
+		config.controler().setRunId("bus");	
+		config.global().setCoordinateSystem("EPSG:31468");
+		config.network().setInputFile(network);
+		config.controler().setOutputDirectory(output.toString());
+		config.controler().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
+		config.controler().setLastIteration(0);
+		config.global().setRandomSeed(4177);
+		config.vehicles().setVehiclesFile("scenarios/vehicleTypes.xml");
+		new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
+				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
+		config.controler().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
+		return config;
 	}
 
 	private static void hotspotLookup(Scenario scenario, HashMap<Coord, Integer> stopsPerHotspotDistribution,
@@ -257,20 +277,6 @@ public class CreateTourismBusTours {
 				continue;
 			}
 		}
-	}
-
-	private static Config prepareConfig(String output, String network) {
-		Config config = ConfigUtils.createConfig();
-		config.global().setCoordinateSystem("EPSG:31468");
-		config.network().setInputFile(network);
-		config.controler().setOutputDirectory(output.toString());
-		config.controler().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
-		config.controler().setLastIteration(0);
-		config.global().setRandomSeed(4177);
-		new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
-				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
-		config.controler().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
-		return config;
 	}
 
 	private static void generateTours(Scenario scenario, HashMap<String, Integer> busStartDistribution,
