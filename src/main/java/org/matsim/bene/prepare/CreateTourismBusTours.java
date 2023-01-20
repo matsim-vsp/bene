@@ -67,6 +67,9 @@ import org.matsim.facilities.ActivityFacility;
 import org.matsim.facilities.ActivityFacilityImpl;
 import org.matsim.facilities.ActivityOptionImpl;
 import org.matsim.facilities.MatsimFacilitiesReader;
+import org.matsim.vehicles.Vehicle;
+import org.matsim.vehicles.VehicleType;
+import org.matsim.vehicles.VehicleUtils;
 
 /**
  * @author Ricardo
@@ -301,6 +304,13 @@ public class CreateTourismBusTours {
 					.get(area); generatedToursForThisArea++) {
 				tourCount++;
 				Person newPerson = populationFactory.createPerson(Id.createPersonId("Tour_" + (tourCount)));
+				VehicleUtils.insertVehicleIdsIntoAttributes(newPerson, (new HashMap<String, Id<Vehicle>>() {
+					{
+						put("car", (Id.createVehicleId(newPerson.getId().toString())));
+					}
+				}));
+				Vehicle newVehicle = VehicleUtils.createVehicle(Id.createVehicleId(newPerson.getId().toString()), scenario.getVehicles().getVehicleTypes().get(Id.create("bus_heavy", VehicleType.class)));
+				scenario.getVehicles().addVehicle(newVehicle);
 				Plan plan = populationFactory.createPlan();
 
 				ActivityFacilityImpl hotelFacility = (ActivityFacilityImpl) hotelFacilitiesPerArea.get(area)
