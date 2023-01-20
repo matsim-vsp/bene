@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vehicleDefinitions xmlns="http://www.matsim.org/files/dtd"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.matsim.org/files/dtd http://www.matsim.org/files/dtd/vehicleDefinitions_v2.0.xsd">
+	<vehicleType id="car_average">
+		<length meter="7.5"/>
+		<width meter="1.0"/>
+		<engineInformation>
+			<attributes>
+				<attribute name="HbefaVehicleCategory" class="java.lang.String">PASSENGER_CAR</attribute>
+				<attribute name="HbefaTechnology" class="java.lang.String">average</attribute>
+				<attribute name="HbefaSizeClass" class="java.lang.String">average</attribute>
+				<attribute name="HbefaEmissionsConcept" class="java.lang.String">average</attribute>
+			</attributes>
+		</engineInformation>
+	</vehicleType>
+
+	<vehicleType id="bus_heavy">
+		<description>
+			BEGIN_EMISSIONSHEAVY_GOODS_VEHICLE;average;average;averageEND_EMISSIONS
+		</description>
+		<length meter="7.5"/>
+		<width meter="1.0"/>
+		<engineInformation>
+			<attributes>
+				<attribute name="HbefaVehicleCategory" class="java.lang.String">coach</attribute>
+				<attribute name="HbefaTechnology" class="java.lang.String">average</attribute>
+				<attribute name="HbefaSizeClass" class="java.lang.String">average</attribute>
+				<attribute name="HbefaEmissionsConcept" class="java.lang.String">average</attribute>
+			</attributes>
+		</engineInformation>
+	</vehicleType>
+</vehicleDefinitions>
