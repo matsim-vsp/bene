@@ -166,7 +166,7 @@ public class CreateTourismBusTours {
 		config.controler().setLastIteration(0);
 		config.global().setRandomSeed(4177);
 		config.vehicles().setVehiclesFile("scenarios/vehicleTypes.xml");
-		config.facilities().setInputFile("output/parkingFacilities.xml");
+		config.facilities().setInputFile("scenarios/base/parkingFacilities.xml");
 		config.qsim().setSimStarttimeInterpretation(StarttimeInterpretation.onlyUseStarttime);		
 		config.qsim().setSnapshotStyle(SnapshotStyle.kinematicWaves);
 		new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
