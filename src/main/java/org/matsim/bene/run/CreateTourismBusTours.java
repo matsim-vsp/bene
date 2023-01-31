@@ -132,7 +132,7 @@ public class CreateTourismBusTours {
 		
 		hotspotLookup(scenario, stopsPerHotspotDistribution, attractionsForHotspots);
 		generateTours(scenario, busStartDistribution, attractionsForHotspots, stopsPerHotspotDistribution, stopsPerTourDistribution, shpZones, facilityCRS);
-		PopulationUtils.writePopulation(scenario.getPopulation(), output + "/plans.xml.gz");
+		PopulationUtils.writePopulation(scenario.getPopulation(), output + "/" + config.controler().getRunId() +".output_plans_generated.xml.gz");
 
 		Controler controler = new Controler(scenario);
 
