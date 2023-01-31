@@ -48,6 +48,11 @@ import org.matsim.api.core.v01.population.PopulationFactory;
 import org.matsim.application.options.ShpOptions;
 import org.matsim.application.options.ShpOptions.Index;
 import org.matsim.bene.analysis.emissions.RunOfflineAirPollutionAnalysisByVehicleCategory;
+import org.matsim.contrib.parking.parkingsearch.ParkingSearchStrategy;
+import org.matsim.contrib.parking.parkingsearch.ParkingUtils;
+import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
+import org.matsim.contrib.parking.parkingsearch.sim.ParkingSearchConfigGroup;
+import org.matsim.contrib.parking.parkingsearch.sim.SetupParking;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.ControlerConfigGroup;
@@ -81,6 +86,9 @@ public class CreateTourismBusTours {
 
 	public static void main(String[] args) throws IOException {
 
+		Configurator.setLevel("org.matsim.contrib.parking.parkingsearch.manager.FacilityBasedParkingManager", Level.WARN);
+		Configurator.setLevel("org.matsim.core.utils.geometry.geotools.MGC", Level.ERROR);
+		
 		String facilitiesFile = "scenarios/tourismFacilities/tourismFacilities.xml";
 		String facilityCRS = TransformationFactory.DHDN_GK4;
 		String output = "output/" + java.time.LocalDate.now().toString() + "_"
@@ -117,6 +125,18 @@ public class CreateTourismBusTours {
 		PopulationUtils.writePopulation(scenario.getPopulation(), output + "/plans.xml.gz");
 
 		Controler controler = new Controler(scenario);
+
+		controler.addOverridingModule(new AbstractModule() {
+
+			@Override
+			public void install() {
+				ParkingSlotVisualiser visualiser = new ParkingSlotVisualiser(scenario);
+				addEventHandlerBinding().toInstance(visualiser);
+				addControlerListenerBinding().toInstance(visualiser);
+			}
+		});
+		SetupParking.installParkingModules(controler);
+		
 		controler.run();
 
 		RunOfflineAirPollutionAnalysisByVehicleCategory.main(new String[] { scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId()});
@@ -126,7 +146,11 @@ public class CreateTourismBusTours {
 
 	private static Config prepareConfig(String output, String network) {
 	
-		Config config = ConfigUtils.createConfig();
+		Config config = ConfigUtils.createConfig(new ParkingSearchConfigGroup());
+		ParkingSearchConfigGroup configGroup = (ParkingSearchConfigGroup) config.getModules()
+				.get(ParkingSearchConfigGroup.GROUP_NAME);
+		configGroup.setParkingSearchStrategy(ParkingSearchStrategy.DistanceMemory);
+
 		config.controler().setRunId("bus");	
 		config.global().setCoordinateSystem("EPSG:31468");
 		config.network().setInputFile(network);
@@ -135,6 +159,9 @@ public class CreateTourismBusTours {
 		config.controler().setLastIteration(0);
 		config.global().setRandomSeed(4177);
 		config.vehicles().setVehiclesFile("scenarios/vehicleTypes.xml");
+		config.facilities().setInputFile("output/parkingFacilities.xml");
+		config.qsim().setSimStarttimeInterpretation(StarttimeInterpretation.onlyUseStarttime);		
+		config.qsim().setSnapshotStyle(SnapshotStyle.kinematicWaves);
 		new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
 				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
 		config.controler().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
@@ -341,11 +368,21 @@ public class CreateTourismBusTours {
 					Activity tourStopGetOff = populationFactory.createActivityFromActivityFacilityId(getOffActivityName,
 							attractionFacility.getId());
 					scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getOffActivityName)
-							.setTypicalDuration(2 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
-					tourStopGetOff.setMaximumDuration(2 * 3600);
+							.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
+					tourStopGetOff.setMaximumDuration(0.25 * 3600);
 					plan.addActivity(tourStopGetOff);
-
 					plan.addLeg(legActivity);
+
+					Activity parkingActivity = populationFactory.createActivityFromCoord(ParkingUtils.PARKACTIVITYTYPE, attractionFacility.getCoord());
+					parkingActivity.setMaximumDuration(2 * 3600);
+					if (!scenario.getConfig().planCalcScore().getActivityParams()
+							.contains(ParkingUtils.PARKACTIVITYTYPE))
+						scenario.getConfig().planCalcScore()
+								.addActivityParams(new ActivityParams(ParkingUtils.PARKACTIVITYTYPE).setTypicalDuration(2 * 3600)
+										.setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
+					plan.addActivity(parkingActivity);
+					plan.addLeg(legActivity);
+					
 					String getInActivityName = stopActivityName + "_GetIn";
 					
 					Activity tourStopGetIn = populationFactory.createActivityFromActivityFacilityId(getInActivityName,
@@ -360,15 +397,33 @@ public class CreateTourismBusTours {
 				String endActivityName = tourName + "_End_" + hotelFacility.getDesc();
 				Activity tourEnd = populationFactory.createActivityFromActivityFacilityId(endActivityName,
 						hotelFacility.getId());
+				tourEnd.setLinkId(nearastLink);
 				scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(endActivityName)
 						.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
-				tourEnd.setMaximumDuration(0.5 * 3600);
+				tourEnd.setMaximumDurationUndefined();
 				plan.addActivity(tourEnd);
 
 				newPerson.addPlan(plan);
 				population.addPerson(newPerson);
 			}
 		}
+	}
+
+	private static Id<Link> getNearstLink(List<Link> links, Coord coord) {
+		
+
+		double minDistance = Double.MAX_VALUE;
+		Id<Link> newLink = null;
+		for (Link possibleLink : links) {
+			double distance = NetworkUtils.getEuclideanDistance(coord,
+					possibleLink.getCoord());
+			if (distance < minDistance) {
+				newLink = possibleLink.getId();
+				minDistance = distance;
+			}
+		}
+		return newLink;
+		
 	}
 
 	private static Id<ActivityFacility> findAttractionLocation(Scenario scenario,
