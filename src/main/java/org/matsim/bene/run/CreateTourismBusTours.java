@@ -17,7 +17,7 @@
  *   See also COPYING, LICENSE and WARRANTY file                           *
  *                                                                         *
  * *********************************************************************** */
-package org.matsim.bene.prepare;
+package org.matsim.bene.run;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -25,8 +25,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.SplittableRandom;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -39,6 +41,7 @@ import org.locationtech.jts.geom.Point;
 import org.matsim.api.core.v01.Coord;
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.Scenario;
+import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Activity;
 import org.matsim.api.core.v01.population.Leg;
 import org.matsim.api.core.v01.population.Person;
@@ -57,9 +60,13 @@ import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.ControlerConfigGroup;
 import org.matsim.core.config.groups.PlanCalcScoreConfigGroup.ActivityParams;
+import org.matsim.core.config.groups.QSimConfigGroup.SnapshotStyle;
+import org.matsim.core.config.groups.QSimConfigGroup.StarttimeInterpretation;
+import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryHierarchy;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
+import org.matsim.core.network.NetworkUtils;
 import org.matsim.core.population.PopulationUtils;
 import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.core.utils.geometry.CoordinateTransformation;
@@ -101,13 +108,12 @@ public class CreateTourismBusTours {
 
 		int numberOfTours = 526;
 
-		Configurator.setLevel("org.matsim.core.utils.geometry.geotools.MGC", Level.ERROR);
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
 
 		Config config = prepareConfig(output, network);
 		Scenario scenario = ScenarioUtils.loadScenario(config);
-		random = new SplittableRandom(config.global().getRandomSeed());
-
+		random = new SplittableRandom(config.global().getRandomSeed());		
+	
 		HashMap<String, Integer> busStartDistribution = new HashMap<>();
 		HashMap<Integer, Integer> stopsPerTourDistribution = new HashMap<>();
 		HashMap<Coord, Integer> stopsPerHotspotDistribution = new HashMap<>();
@@ -218,20 +224,23 @@ public class CreateTourismBusTours {
 			stopsPerHotspotDistribution.put(hotspotCoord, numberOfStopsForHotspot);
 			totalNumberOfStopsInTours += numberOfStopsForHotspot;
 		}
-
+		boolean addneededStops = false;
 		while (totalNumberOfStopsInTours != totalNumberOfStops) {
 			ArrayList<Coord> listOfHotspotCoord = new ArrayList<Coord>(stopsPerHotspotDistribution.keySet());
 			Coord hotspotCoord = listOfHotspotCoord.get(random.nextInt(listOfHotspotCoord.size()));
 			int stopsForCoord = stopsPerHotspotDistribution.get(hotspotCoord);
 
-			if (stopsForCoord == 0)
+			
+			if (totalNumberOfStopsInTours == 0)
+				addneededStops = true;
+			if (stopsForCoord == 0 && !addneededStops)
 				continue;
 			if (totalNumberOfStopsInTours > totalNumberOfStops) {
 				stopsPerHotspotDistribution.replace(hotspotCoord, stopsPerHotspotDistribution.get(hotspotCoord) - 1);
 				totalNumberOfStopsInTours--;
 				continue;
 			}
-			if (totalNumberOfStopsInTours < totalNumberOfStops) {
+			if (totalNumberOfStopsInTours < totalNumberOfStops || addneededStops) {
 				stopsPerHotspotDistribution.replace(hotspotCoord, stopsPerHotspotDistribution.get(hotspotCoord) + 1);
 				totalNumberOfStopsInTours++;
 				continue;
@@ -257,7 +266,7 @@ public class CreateTourismBusTours {
 			int numberOfStopsPerTour = differentNumbersOfStops.get(random.nextInt(differentNumbersOfStops.size()));
 			int numberOfToursWithThisNumberOfStops = stopsPerTourDistribution.get(numberOfStopsPerTour);
 
-			if (numberOfToursWithThisNumberOfStops == 0)
+			if (numberOfToursWithThisNumberOfStops == 0 &&  numberOfToursWithStops != 0)
 				continue;
 			if (numberOfToursWithStops > numberOfTours) {
 				stopsPerTourDistribution.replace(numberOfStopsPerTour,
@@ -315,7 +324,8 @@ public class CreateTourismBusTours {
 			HashMap<Coord, ArrayList<Id<ActivityFacility>>> attractionsForHotspots, HashMap<Coord, Integer> stopsPerHotspotDistribution, HashMap<Integer, Integer> stopsPerTourDistribution, ShpOptions shpZones, String facilityCRS) {
 		Population population = scenario.getPopulation();
 		PopulationFactory populationFactory = population.getFactory();
-
+		List<Link> links = scenario.getNetwork().getLinks().values().stream().filter(l -> l.getAllowedModes().contains("car"))
+				.collect(Collectors.toList());
 		HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>> hotelFacilitiesPerArea = new HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>>();
 		createHotelFacilitiesPerArea(scenario, hotelFacilitiesPerArea, shpZones, facilityCRS);
 		ActivityFacilities allFacilities = scenario.getActivityFacilities();
@@ -340,12 +350,21 @@ public class CreateTourismBusTours {
 				scenario.getVehicles().addVehicle(newVehicle);
 				Plan plan = populationFactory.createPlan();
 
+				Id<ActivityFacility> activityId = hotelKeyList.get(random.nextInt(hotelFacilitiesPerArea.get(area).size()));
 				ActivityFacilityImpl hotelFacility = (ActivityFacilityImpl) hotelFacilitiesPerArea.get(area)
-						.get(hotelKeyList.get(random.nextInt(hotelFacilitiesPerArea.get(area).size())));
+						.get(activityId);
 				String tourName = newPerson.getId().toString();
 				String startActivityName = tourName + "_Start_" + hotelFacility.getDesc();
 				Activity tourStart = populationFactory.createActivityFromActivityFacilityId(startActivityName,
 						hotelFacility.getId());
+				Id<Link> nearastLink = getNearstLink(links, hotelFacility.getCoord());
+				
+				ActivityFacilityImpl parkingFacility = (ActivityFacilityImpl) scenario.getActivityFacilities().getFacilities().get(Id.create("noParking_" + nearastLink.toString(),
+						ActivityFacility.class));
+				parkingFacility.getActivityOptions().get(ParkingUtils.PARKACTIVITYTYPE).setCapacity(1);
+				
+				tourStart.setLinkId(getNearstLink(links, hotelFacility.getCoord()));
+				tourStart.setCoord(hotelFacility.getCoord());
 				tourStart.setEndTime(random.nextDouble(10 * 3600, 14 * 3600));
 				tourStart.setMaximumDuration(0.5 * 3600);
 				scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(startActivityName)
@@ -354,7 +373,7 @@ public class CreateTourismBusTours {
 
 				Leg legActivity = populationFactory.createLeg("car");
 				plan.addLeg(legActivity);
-
+//				Activity parkingActivity = populationFactory.create
 				int numberOfStops = getNumberOfStopsForThisTour(stopsPerTourDistribution);
 				for (int j = 0; j < numberOfStops; j++) {
 					Id<ActivityFacility> attractionFacilityID = findAttractionLocation(scenario, attractionsForHotspots, stopsPerHotspotDistribution);
