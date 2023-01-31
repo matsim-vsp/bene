@@ -141,6 +141,11 @@ public class RunOfflineAirPollutionAnalysisByVehicleCategory implements MATSimAp
 		log.info("Writing emissions per link [g/m] to: {}", linkEmissionPerMOutputFile);
 		final String linkEmissionOutputFile = analysisOutputDirectory + runId + ".emissionsPerLink.csv";
 		log.info("Writing emissions to: {}", linkEmissionOutputFile);
+		
+		final String linkEmissionPerMOutputFile_parking = analysisOutputDirectory + runId + ".emissionsPerLinkPerM_parking.csv";
+		log.info("Writing emissions per link [g/m] to: {}", linkEmissionPerMOutputFile_parking);
+		final String linkEmissionOutputFile_parking = analysisOutputDirectory + runId + ".emissionsPerLink_parking.csv";
+		log.info("Writing emissions to: {}", linkEmissionOutputFile_parking);
 
 		Scenario scenario = ScenarioUtils.loadScenario(config);
 		
@@ -186,19 +191,32 @@ public class RunOfflineAirPollutionAnalysisByVehicleCategory implements MATSimAp
 			
 			File linkEmissionPerMAnalysisFile = new File(linkEmissionPerMOutputFile);
 			File linkEmissionAnalysisFile = new File(linkEmissionOutputFile);
+			File linkEmissionPerMAnalysisFile_parking = new File(linkEmissionPerMOutputFile_parking);
+			File linkEmissionAnalysisFile_parking = new File(linkEmissionOutputFile_parking);
 			
 			BufferedWriter absolutWriter  = new BufferedWriter(new FileWriter(linkEmissionAnalysisFile));
 			BufferedWriter perMeterWriter = new BufferedWriter(new FileWriter(linkEmissionPerMAnalysisFile));
 
+			BufferedWriter absolutWriter_parking  = new BufferedWriter(new FileWriter(linkEmissionAnalysisFile_parking));
+			BufferedWriter perMeterWriter_parking = new BufferedWriter(new FileWriter(linkEmissionPerMAnalysisFile_parking));
+			
 			absolutWriter.write("linkId");
 			perMeterWriter.write("linkId");
 
+			absolutWriter_parking.write("linkId");
+			perMeterWriter_parking.write("linkId");
+			
 			for (Pollutant pollutant : pollutants2Output) {
 				absolutWriter.write(";" + pollutant);
 				perMeterWriter.write(";" + pollutant + " [g/m]");
+				
+				absolutWriter_parking.write(";" + pollutant);
+				perMeterWriter_parking.write(";" + pollutant + " [g/m]");
 			}
 			absolutWriter.newLine();
 			perMeterWriter.newLine();
+			absolutWriter_parking.newLine();
+			perMeterWriter_parking.newLine();
 
 			Map<Id<Link>, Map<Pollutant, Double>> link2pollutants = emissionsOnLinkEventHandler.getLink2pollutants();
 
@@ -223,9 +241,33 @@ public class RunOfflineAirPollutionAnalysisByVehicleCategory implements MATSimAp
 				absolutWriter.newLine();
 				perMeterWriter.newLine();
 			}
+			Map<Id<Link>, Map<Pollutant, Double>> link2pollutants_parking = emissionsOnLinkEventHandler.getLink2pollutantsParking();
+			for (Id<Link> linkId : link2pollutants_parking.keySet()) {
+				absolutWriter_parking.write(linkId.toString());
+				perMeterWriter_parking.write(linkId.toString());
+
+				for (Pollutant pollutant : pollutants2Output) {
+					double emissionValue = 0.;
+					if (link2pollutants_parking.get(linkId).get(pollutant) != null) {
+						emissionValue = link2pollutants_parking.get(linkId).get(pollutant);
+					}
+					absolutWriter_parking.write(";" + emissionValue);
+					double emissionPerM = Double.NaN;
+					Link link = scenario.getNetwork().getLinks().get(linkId);
+					if (link != null) {
+						emissionPerM = emissionValue / link.getLength();
+					}
+
+					perMeterWriter_parking.write(";" + emissionPerM);
+				}
+				absolutWriter_parking.newLine();
+				perMeterWriter_parking.newLine();
+			}
 
 			perMeterWriter.close();
 			absolutWriter.close();
+			perMeterWriter_parking.close();
+			absolutWriter_parking.close();
 			log.info("Done");
 			log.info("All output written to " + analysisOutputDirectory);
 			log.info("-------------------------------------------------");
