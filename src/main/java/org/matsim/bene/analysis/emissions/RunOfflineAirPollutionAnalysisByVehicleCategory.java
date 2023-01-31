@@ -97,7 +97,7 @@ public class RunOfflineAirPollutionAnalysisByVehicleCategory implements MATSimAp
 					runId,
 					hbefaFileWarm,
 					hbefaFileCold,
-					runDirectory + "emission-analysis-offline");
+					runDirectory + "simwrapper_analysis");
 			try {
 				analysis.call();
 			} catch (Exception e) {
