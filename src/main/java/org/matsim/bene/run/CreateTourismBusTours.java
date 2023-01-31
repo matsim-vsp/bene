@@ -107,8 +107,8 @@ public class CreateTourismBusTours {
 		String loactionHotspotsInformation = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspots.csv";
 		String hotspotsCRS = "EPSG:4326";
 
-		int numberOfTours = 526;
-
+		int numberOfTours = 1; //526;
+		boolean setParkingCapacitiesToZero= true;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
 
 		Config config = prepareConfig(output, network);
@@ -127,6 +127,9 @@ public class CreateTourismBusTours {
 		MatsimFacilitiesReader matsimFacilitiesReader = new MatsimFacilitiesReader(scenario);
 		matsimFacilitiesReader.readFile(facilitiesFile);
 
+		if (setParkingCapacitiesToZero)
+			changeParkingCapacities(scenario);
+		
 		hotspotLookup(scenario, stopsPerHotspotDistribution, attractionsForHotspots);
 		generateTours(scenario, busStartDistribution, attractionsForHotspots, stopsPerHotspotDistribution, stopsPerTourDistribution, shpZones, facilityCRS);
 		PopulationUtils.writePopulation(scenario.getPopulation(), output + "/plans.xml.gz");
@@ -149,6 +152,30 @@ public class CreateTourismBusTours {
 		RunOfflineAirPollutionAnalysisByVehicleCategory.main(new String[] { scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId()});
 		RunLinkDemandAnalysis.main(new String[] { scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId()});
 		
+	}
+
+	private static void changeParkingCapacities(Scenario scenario) {
+
+		ActivityFacilitiesFactory activityFacilityFactory = new ActivityFacilitiesFactoryImpl();
+		ArrayList<Id<Link>> linksWithCoachParking = new ArrayList<Id<Link>>();
+
+		scenario.getActivityFacilities().getFacilities().values().forEach(f -> {
+			linksWithCoachParking.add(f.getLinkId());
+		});
+		for (Link link : scenario.getNetwork().getLinks().values()) {
+			if (link.getAllowedModes().contains("car") && !linksWithCoachParking.contains(link.getId())) {
+
+				Id<ActivityFacility> facilityId = Id.create("noParking_" + link.getId().toString(),
+						ActivityFacility.class);
+				ActivityFacilityImpl newActivityFacility = (ActivityFacilityImpl) activityFacilityFactory
+						.createActivityFacility(facilityId, link.getCoord());
+
+				newActivityFacility.createAndAddActivityOption(ParkingUtils.PARKACTIVITYTYPE).setCapacity(0.);
+				newActivityFacility.setLinkId(link.getId());
+				scenario.getActivityFacilities().addActivityFacility(newActivityFacility);
+			}
+		}
+
 	}
 
 	private static Config prepareConfig(String output, String network) {
