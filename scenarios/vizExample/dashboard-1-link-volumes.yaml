@@ -1,0 +1,38 @@
+header:
+  tab: "Road volumes"
+  title: "something"
+  title_en: "Vehicle volumes per road segment"
+  title_de: "Fahrzeugaufkommen pro Straßenabschnitt"
+  description_en: "Note that public transport is disregarded. By default, the difference to the base case is displayed for the daily volumes. You can also display values for specific time windows. For each visualization individually, you can configure the width/color to show the absolute scenario values."
+  description_de: "Beachten Sie, dass der öffentliche Verkehr unberücksichtigt bleibt. Standardmäßig wird die Differenz zum Basisfall für die Tagesmengen angezeigt. Sie können auch Werte für spezifische Zeitfenster anzeigen lassen. Sie können für jede Visualisierung einzeln die Breite und Farbe konfigurieren, um bspw. die absoluten Szenariowerte anzuzeigen.  Passen Sie den Skalierungsfaktor für die Breite entsprechend an!"
+
+layout:
+  Reallab2030:
+    - type: "links"
+      title: "Coach Services Berlin"
+      description: ""
+      #width: 4
+      height: 15
+      props:
+ #       thumbnail: "thumbnails/thumbnail-accident-costs.png"
+        network: ../bus.output_network.xml.gz
+        projection: EPSG:31468
+  #      showDifferences: false
+        center: 13.4010, 52.51892
+        zoom: 11
+#        sampleRate: 1
+        datasets:
+            csvBase: bus.link_volume.csv
+        display:
+            color:
+                dataset: csvBase
+                columnName: demandPerDay
+                colorRamp:
+                    ramp: Viridis
+                    reverse: false
+                    steps: 7
+            width:
+                dataset: csvBase
+                columnName: demandPerDay
+                scaleFactor: 500
+

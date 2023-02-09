@@ -1,0 +1,70 @@
+# Topsheet Test
+title: Coach emissions
+title_en: Coach emissions
+title_de: Coach emissions
+description: 'description'
+
+# Input files -------------------------
+files:
+  base:
+    file: "bus.emissionsPerLink.csv"
+  parking:
+    file: "bus.emissionsPerLink_parking.csv"
+
+# These are text entry boxes in the UI
+    
+# Calculations ------------------------
+# these are evaluated top down!
+calculations: 
+  total_CO2: '{base.CO2_TOTAL} / 1000'
+  total_NOx: '{base.NOx} / 1000' 
+  total_PM_n_exhaust: '({base.PM_non_exhaust}) / 1000'
+  total_PM_exhaust: '({base.PM}) / 1000'
+  
+  parking_CO2: '{parking.CO2_TOTAL} / 1000'
+  parking_NOx: '{parking.NOx} / 1000' 
+  parking_PM_n_exhaust: '({parking.PM_non_exhaust}) / 1000'
+  parking_PM_exhaust: '({parking.PM}) / 1000'
+
+  parking_CO2_pct: 'round(parking_CO2 / total_CO2 *100)'
+  parking_NOx_pct: 'round(parking_NOx / total_NOx *100)'
+  parking_PM_n_exhaust_pct: 'round(parking_PM_n_exhaust / total_PM_n_exhaust *100)'
+  parking_PM_exhaust_pct: 'round(parking_PM_exhaust / total_PM_exhaust *100)'
+# Table rows
+outputs:
+  - title_en: Total CO2 emissions [t]
+    title_de: Summe CO2 Emissionen [t]
+    value: total_CO2
+  - title_en: Parking CO2 emissions [t]
+    title_de: Parking CO2 Emissionen [t]
+    value: parking_CO2
+  - title_en: Parking CO2 emissions [%]
+    title_de: Parking CO2 Emissionen [%]
+    value: parking_CO2_pct
+  - title_en: Total PM non exhaust emissions [t]
+    title_de: Summe PM Emissionen Abrieb etc [t]
+    value: total_PM_n_exhaust
+  - title_en: Parking PM non exhaust emissions [t]
+    title_de: Parking PM Emissionen Abrieb etc [t]
+    value: parking_PM_n_exhaust
+  - title_en: Parking PM non exhaust emissions [%]
+    title_de: Parking PM Emissionen Abrieb etc [%]
+    value: parking_PM_n_exhaust_pct
+  - title_en: Total PM exhaust emissions [t]
+    title_de: Summe PM Emissionen Auspuff [t]
+    value: total_PM_exhaust
+  - title_en: Parking PM exhaust emissions [t]
+    title_de: Parking PM Emissionen Auspuff [t]
+    value: parking_PM_exhaust
+  - title_en: Parking PM exhaust emissions [%]
+    title_de: Parking PM Emissionen Auspuff [%]
+    value: parking_PM_exhaust_pct
+  - title_en: Total NOX emissions [t]
+    title_de: Summe NOX Emissionen [t]
+    value: total_NOx
+  - title_en: Parking NOX emissions [t]
+    title_de: Parking NOX Emissionen [t]
+    value: parking_NOx
+  - title_en: Parking NOX emissions [%]
+    title_de: Parking NOX Emissionen [%]
+    value: parking_NOx_pct

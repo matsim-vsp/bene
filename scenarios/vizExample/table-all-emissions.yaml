@@ -1,0 +1,45 @@
+# Topsheet Test
+title: Emission Costs per day
+title_en: Total emission costs per day
+title_de: Emissionskosten pro Tag
+description: 'For cost rates, see also https://www.umweltbundesamt.de/sites/default/files/medien/378/publikationen/uba_methodenkonvention_2.0_-_anhang_b_0.pdf'
+
+# Input files -------------------------
+files:
+  base: 
+    file: "bus.emissionsPerLink.csv"
+  parking:
+    file: "bus.emissionsPerLink_parking.csv"
+
+# These are text entry boxes in the UI
+userEntries:
+  CO2_cost_rate:
+    title_en: CO2 cost rate [€/t]
+    title_de: CO2 Kosten [€/t]
+    value: 100.0
+  NOx_cost_rate:
+    title_en: NOx cost rate [€/t]
+    title_de: NOx Kosten [€/t]
+    value: 15400.0
+  PM_exhaust_cost_rate:
+    title_en: PM exhaust cost rate [€/t]
+    title_de: PM Auspuff Kosten [€/t]
+    value: 33700.0
+  PM_n_exhaust_cost_rate:
+    title_en: PM non-exhaust cost rate [€/t]
+    title_de: PM Abrieb etc Kosten [€/t]
+    value: 364100.0
+    
+# Calculations ------------------------
+# these are evaluated top down!
+calculations: 
+    #base_costs: '({base.CO2_TOTAL}*CO2_cost_rate)/1000'
+  base_costs: '({base.CO2_TOTAL}*CO2_cost_rate + {base.NOx}*NOx_cost_rate + {base.PM}*PM_exhaust_cost_rate + {base.PM_non_exhaust}*PM_n_exhaust_cost_rate)/1000'
+  parking_costs: '({parking.CO2_TOTAL}*CO2_cost_rate + {parking.NOx}*NOx_cost_rate + {parking.PM}*PM_exhaust_cost_rate + {parking.PM_non_exhaust}*PM_n_exhaust_cost_rate)/1000'
+
+# Table rows
+outputs:
+  - title: Base [€]
+    value: base_costs
+  - title: Parking [€]
+    value: parking_costs

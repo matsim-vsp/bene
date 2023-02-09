@@ -19,6 +19,7 @@
  * *********************************************************************** */
 package org.matsim.bene.run;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -110,6 +112,7 @@ public class CreateTourismBusTours {
 
 		int numberOfTours = 1; //526;
 		boolean setParkingCapacitiesToZero= true;
+		boolean infiniteParkingCapacitiesAtParkingSpaces = true;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
 
 		String output = "output/" + java.time.LocalDate.now().toString() + "_"
@@ -126,12 +129,14 @@ public class CreateTourismBusTours {
 		createStopsPerTourDistribution(stopsPerTourDistribution, numberOfTours);
 		createStopsPerHotspotDistribution(stopsPerHotspotDistribution, stopsPerTourDistribution,
 				loactionHotspotsInformation, hotspotsCRS, config.global().getCoordinateSystem());
-
-		MatsimFacilitiesReader matsimFacilitiesReader = new MatsimFacilitiesReader(scenario);
-		matsimFacilitiesReader.readFile(facilitiesFile);
+		if (infiniteParkingCapacitiesAtParkingSpaces)
+			setCapacitiesForSpacesToInfinite(scenario);
 
 		if (setParkingCapacitiesToZero)
 			changeParkingCapacities(scenario);
+		
+		MatsimFacilitiesReader matsimFacilitiesReader = new MatsimFacilitiesReader(scenario);
+		matsimFacilitiesReader.readFile(facilitiesFile);
 		
 		hotspotLookup(scenario, stopsPerHotspotDistribution, attractionsForHotspots);
 		generateTours(scenario, busStartDistribution, attractionsForHotspots, stopsPerHotspotDistribution, stopsPerTourDistribution, shpZones, facilityCRS);
@@ -155,6 +160,18 @@ public class CreateTourismBusTours {
 
 		RunOfflineAirPollutionAnalysisByVehicleCategory.main(new String[] { scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId()});
 		RunLinkDemandAnalysis.main(new String[] { scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId()});
+        try {
+            FileUtils.copyDirectory(new File("scenarios/vizExample"), new File(scenario.getConfig().controler().getOutputDirectory()+"/simwrapper_analysis"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+
+	
+	private static void setCapacitiesForSpacesToInfinite(Scenario scenario) {
+		for (ActivityFacility parkingFacility : scenario.getActivityFacilities().getFacilitiesForActivityType("parking").values()) {
+			parkingFacility.getActivityOptions().get("parking").setCapacity(600);
+		}
 		
 	}
 
