@@ -38,6 +38,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.locationtech.jts.geom.Point;
+import org.matsim.analysis.TransportPlanningMainModeIdentifier;
 import org.matsim.api.core.v01.Coord;
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.Scenario;
@@ -69,6 +70,7 @@ import org.matsim.core.controler.OutputDirectoryHierarchy;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
 import org.matsim.core.network.NetworkUtils;
 import org.matsim.core.population.PopulationUtils;
+import org.matsim.core.router.AnalysisMainModeIdentifier;
 import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.core.utils.geometry.CoordinateTransformation;
 import org.matsim.core.utils.geometry.geotools.MGC;
@@ -140,6 +142,7 @@ public class CreateTourismBusTours {
 
 			@Override
 			public void install() {
+				bind(AnalysisMainModeIdentifier.class).to(TransportPlanningMainModeIdentifier.class);
 				ParkingSlotVisualiser visualiser = new ParkingSlotVisualiser(scenario);
 				addEventHandlerBinding().toInstance(visualiser);
 				addControlerListenerBinding().toInstance(visualiser);
