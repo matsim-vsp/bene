@@ -2,10 +2,8 @@ package org.matsim.bene.analysis.emissions;
 
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.events.ActivityEndEvent;
-import org.matsim.api.core.v01.events.GenericEvent;
 import org.matsim.api.core.v01.events.PersonEntersVehicleEvent;
 import org.matsim.api.core.v01.events.handler.ActivityEndEventHandler;
-import org.matsim.api.core.v01.events.handler.GenericEventHandler;
 import org.matsim.api.core.v01.events.handler.PersonEntersVehicleEventHandler;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Person;
@@ -21,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmissionEventHandler, ActivityEndEventHandler, PersonEntersVehicleEventHandler, GenericEventHandler {
+public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmissionEventHandler, ActivityEndEventHandler, PersonEntersVehicleEventHandler {
 
     private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutants = new HashMap<>();
     private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutantsParking = new HashMap<>();
@@ -51,16 +49,13 @@ public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmi
     public void handleEvent(PersonEntersVehicleEvent event) {
         personIdVehicleIdConnection.put(event.getPersonId(), event.getVehicleId());
     }
-    @Override
-    public void handleEvent(GenericEvent event) {
-    	if (event.getEventType().equals("started parkingSearch"))
-        vehicleIsLookingForParking.add(event.getAttributes().get("vehicle"));
-    }
 
     @Override
     public void handleEvent(ActivityEndEvent event) {
     	if (event.getActType().contains("_GetIn"))
         vehicleIsLookingForParking.remove(personIdVehicleIdConnection.get(event.getPersonId()).toString());
+    	if (event.getActType().contains("_GetOff"))
+            vehicleIsLookingForParking.add(personIdVehicleIdConnection.get(event.getPersonId()).toString());
     }
 
 	private void handleEmissionEvent(double time, Id<Link> linkId, Map<Pollutant, Double> emissions,
