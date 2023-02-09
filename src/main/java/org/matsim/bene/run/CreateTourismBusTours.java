@@ -101,8 +101,7 @@ public class CreateTourismBusTours {
 		
 		String facilitiesFile = "scenarios/tourismFacilities/tourismFacilities.xml";
 		String facilityCRS = TransformationFactory.DHDN_GK4;
-		String output = "output/" + java.time.LocalDate.now().toString() + "_"
-				+ java.time.LocalTime.now().toSecondOfDay();
+
 		String network = "../public-svn/matsim/scenarios/countries/de/berlin/berlin-v5.5-10pct/input/berlin-v5.5-network.xml.gz";
 		Path shapeFileZonePath = Path.of("original-input-data/shp/bezirke/bezirksgrenzen.shp");
 		String shapeCRS = "EPSG:4326";
@@ -113,6 +112,8 @@ public class CreateTourismBusTours {
 		boolean setParkingCapacitiesToZero= true;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
 
+		String output = "output/" + java.time.LocalDate.now().toString() + "_"
+				+ java.time.LocalTime.now().toSecondOfDay()+ "_" + numberOfTours + "busses";
 		Config config = prepareConfig(output, network);
 		Scenario scenario = ScenarioUtils.loadScenario(config);
 		random = new SplittableRandom(config.global().getRandomSeed());		
