@@ -114,7 +114,7 @@ public class CreateTourismBusTours {
 		boolean setParkingCapacitiesToZero= true;
 		boolean infiniteParkingCapacitiesAtParkingSpaces = true;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
-
+		GenerationMode usedGenerationMode = GenerationMode.plans;
 		String output = "output/" + java.time.LocalDate.now().toString() + "_"
 				+ java.time.LocalTime.now().toSecondOfDay()+ "_" + numberOfTours + "busses";
 		Config config = prepareConfig(output, network);
@@ -139,11 +139,23 @@ public class CreateTourismBusTours {
 		matsimFacilitiesReader.readFile(facilitiesFile);
 		
 		hotspotLookup(scenario, stopsPerHotspotDistribution, attractionsForHotspots);
-		generateTours(scenario, busStartDistribution, attractionsForHotspots, stopsPerHotspotDistribution, stopsPerTourDistribution, shpZones, facilityCRS);
-		PopulationUtils.writePopulation(scenario.getPopulation(), output + "/" + config.controler().getRunId() +".output_plans_generated.xml.gz");
+		if (usedGenerationMode == GenerationMode.plans)
+			generateTours(scenario, busStartDistribution, attractionsForHotspots, stopsPerHotspotDistribution,
+					stopsPerTourDistribution, shpZones, facilityCRS);
+		else
+			generateToursCarriers(scenario, busStartDistribution, attractionsForHotspots, stopsPerHotspotDistribution,
+					stopsPerTourDistribution, shpZones, facilityCRS);
 
+		PopulationUtils.writePopulation(scenario.getPopulation(),
+				output + "/" + config.controler().getRunId() + ".output_plans_generated.xml.gz");
+		if (usedGenerationMode == GenerationMode.jsprit) {
+			FreightUtils.runJsprit(scenario);
+			new CarrierPlanWriter(FreightUtils.addOrGetCarriers(scenario)).write(
+					scenario.getConfig().controler().getOutputDirectory() + "/output_CarrierDemandWithPlans.xml");
+		}
 		Controler controler = new Controler(scenario);
-
+		if (usedGenerationMode == GenerationMode.jsprit)
+			controler.addOverridingModule(new CarrierModule());
 		controler.addOverridingModule(new AbstractModule() {
 
 			@Override
@@ -167,7 +179,6 @@ public class CreateTourismBusTours {
         }
 	}
 
-	
 	private static void setCapacitiesForSpacesToInfinite(Scenario scenario) {
 		for (ActivityFacility parkingFacility : scenario.getActivityFacilities().getFacilitiesForActivityType("parking").values()) {
 			parkingFacility.getActivityOptions().get("parking").setCapacity(600);
@@ -206,9 +217,10 @@ public class CreateTourismBusTours {
 				.get(ParkingSearchConfigGroup.GROUP_NAME);
 		configGroup.setParkingSearchStrategy(ParkingSearchStrategy.DistanceMemory);
 
-		config.controler().setRunId("bus");	
-		config.global().setCoordinateSystem("EPSG:31468");
-		config.network().setInputFile(network);
+		FreightConfigGroup freightConfigGroup = ConfigUtils.addOrGetModule(config, FreightConfigGroup.class);
+		freightConfigGroup.setCarriersVehicleTypesFile("scenarios/vehicleTypes.xml");
+		
+		config.controler().setRunId("bus");
 		config.controler().setOutputDirectory(output.toString());
 		config.controler().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
 		config.controler().setLastIteration(0);
@@ -476,7 +488,164 @@ public class CreateTourismBusTours {
 			}
 		}
 	}
+	
+	private static void generateToursCarriers(Scenario scenario, HashMap<String, Integer> busStartDistribution,
+			HashMap<Coord, ArrayList<Id<ActivityFacility>>> attractionsForHotspots, HashMap<Coord, Integer> stopsPerHotspotDistribution, HashMap<Integer, Integer> stopsPerTourDistribution, ShpOptions shpZones, String facilityCRS) {
+		Carriers carriers = FreightUtils.addOrGetCarriers(scenario);
+		List<Link> links = scenario.getNetwork().getLinks().values().stream().filter(l -> l.getAllowedModes().contains("car"))
+				.collect(Collectors.toList());
+		HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>> hotelFacilitiesPerArea = new HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>>();
+		createHotelFacilitiesPerArea(scenario, hotelFacilitiesPerArea, shpZones, facilityCRS);
+		ActivityFacilities allFacilities = scenario.getActivityFacilities();
 
+		TreeMap<Id<ActivityFacility>, ActivityFacility> attractionFacilities = allFacilities
+				.getFacilitiesForActivityType("attraction");
+
+		int tourCount = 0;
+		for (String area : busStartDistribution.keySet()) {
+			ArrayList<Id<ActivityFacility>> hotelKeyList = new ArrayList<Id<ActivityFacility>>(
+					hotelFacilitiesPerArea.get(area).keySet());
+			TreeMap<Id<ActivityFacility>, ActivityFacility> activityFacilities = scenario.getActivityFacilities().getFacilitiesForActivityType(ParkingUtils.PARKACTIVITYTYPE);
+			for (int generatedToursForThisArea = 0; generatedToursForThisArea < busStartDistribution
+					.get(area); generatedToursForThisArea++) {
+				tourCount++;
+				Carrier newCarrier = CarrierUtils.createCarrier(Id.create("Tour_" + (tourCount), Carrier.class));
+				
+				Id<ActivityFacility> activityId = hotelKeyList.get(random.nextInt(hotelFacilitiesPerArea.get(area).size()));
+				ActivityFacilityImpl hotelFacility = (ActivityFacilityImpl) hotelFacilitiesPerArea.get(area)
+						.get(activityId);
+				String tourName = newCarrier.getId().toString();
+				Id<CarrierService> startActivityName = Id.create(tourName + "_Start_" + hotelFacility.getDesc(), CarrierService.class);
+				Id<Link> hotelLinkId = getNearstLink(links, hotelFacility.getCoord());
+
+				double startTimeStart = random.nextDouble(10 * 3600, 14 * 3600);
+				double startDuration = 0.5 * 3600;
+				double endTimeStart = startTimeStart + startDuration;
+				CarrierService tourStart = CarrierService.Builder.newInstance(startActivityName, hotelLinkId)
+						.setServiceDuration(startDuration).setServiceStartTimeWindow(TimeWindow.newInstance(startTimeStart, endTimeStart)).build();
+
+				Builder tour = Tour.Builder.newInstance();
+				tour.scheduleStart(hotelLinkId);
+				tour.addLeg(tour.createLeg());
+				newCarrier.getServices().put(tourStart.getId(), tourStart);
+				tour.scheduleService(tourStart);
+				
+				//add 1 parking slot for every bus at hotel
+				if (!hotelFacility.getActivityOptions().containsKey("parking"))
+					hotelFacility.createAndAddActivityOption("parking").setCapacity(1.);
+				else
+					hotelFacility.getActivityOptions().get("parking").setCapacity(hotelFacility.getActivityOptions().get("parking").getCapacity()+1);
+				hotelFacility.setLinkId(hotelLinkId);
+
+				tour.addLeg(tour.createLeg());
+				
+				int numberOfStops = getNumberOfStopsForThisTour(stopsPerTourDistribution);
+				for (int j = 0; j < numberOfStops; j++) {
+					Id<ActivityFacility> attractionFacilityID = findAttractionLocation(scenario, attractionsForHotspots, stopsPerHotspotDistribution);
+					ActivityFacilityImpl attractionFacility	= (ActivityFacilityImpl) attractionFacilities.get(attractionFacilityID);
+					String stopActivityName;
+					if (attractionFacility.getDesc() != null)
+						stopActivityName = tourName + "_Stop_" + (j + 1) + "_" + attractionFacility.getDesc();
+					else
+						stopActivityName = tourName + "_Stop_" + (j + 1);
+					Id<CarrierService> getOffActivityName = Id.create(stopActivityName + "_GetOff", CarrierService.class);
+					double gettOfDuration = 0.25 * 3600;
+				
+					Id<Link> linkIdTourStop = getNearstLink(links, attractionFacility.getCoord());
+					attractionFacility.setLinkId(linkIdTourStop);
+					CarrierService tourStopGetOff = CarrierService.Builder.newInstance(getOffActivityName, linkIdTourStop)
+							.setServiceDuration(gettOfDuration).build();
+					
+					// add one parking slot at activity 
+					if (!attractionFacility.getActivityOptions().containsKey("parking"))
+						attractionFacility.createAndAddActivityOption("parking").setCapacity(1.);
+
+					newCarrier.getServices().put(tourStopGetOff.getId(), tourStopGetOff);
+					tour.scheduleService(tourStopGetOff);
+					tour.addLeg(tour.createLeg());
+					
+					ActivityFacility nearstParkingFacility = findNearestParkingFacility(attractionFacility.getCoord(), activityFacilities);
+					
+					Id<CarrierService> parkingActivityId = Id.create("parking_stop_" + (j + 1), CarrierService.class);
+					double parkingDuration = 2 * 3600;
+					CarrierService parkingActivity = CarrierService.Builder.newInstance(parkingActivityId, nearstParkingFacility.getLinkId())
+							.setServiceDuration(parkingDuration).build();
+
+					newCarrier.getServices().put(parkingActivity.getId(), parkingActivity);
+					tour.scheduleService(parkingActivity);
+					tour.addLeg(tour.createLeg());
+					
+					Id<CarrierService> getInActivityName = Id.create(stopActivityName + "_GetIn", CarrierService.class);
+					double getInDuration = 0.25 * 3600;
+					CarrierService tourStopGetIn = CarrierService.Builder.newInstance(getInActivityName, linkIdTourStop)
+							.setServiceDuration(getInDuration).build();
+
+					newCarrier.getServices().put(tourStopGetIn.getId(), tourStopGetIn);
+					tour.scheduleService(tourStopGetIn);
+					tour.addLeg(tour.createLeg());
+				}
+				Id<CarrierService> endActivityName = Id.create(tourName + "_End_" + hotelFacility.getDesc(), CarrierService.class);
+				double endDuration = 0.25 * 3600;
+				CarrierService tourEnd = CarrierService.Builder.newInstance(endActivityName, hotelLinkId)
+						.setServiceDuration(endDuration).build();
+				newCarrier.getServices().put(tourEnd.getId(), tourEnd);
+				tour.scheduleService(tourEnd);
+				tour.addLeg(tour.createLeg());
+				tour.scheduleEnd(hotelLinkId);
+				CarrierVehicle vehicle = addAndGetCarrierVehicle(scenario, newCarrier, hotelLinkId);
+				ScheduledTour plan = ScheduledTour.newInstance(tour.build(), vehicle, startTimeStart);
+				Collection<ScheduledTour> scheduledTours  = new ArrayList<ScheduledTour>();
+				scheduledTours.add(plan);
+				
+				CarrierPlan carrierPlan = new CarrierPlan(newCarrier, scheduledTours);
+				newCarrier.getPlans().add(carrierPlan);
+				carriers.addCarrier(newCarrier);
+				CarrierUtils.setJspritIterations(newCarrier, 1);
+			}
+		}
+	}
+	private static CarrierVehicle addAndGetCarrierVehicle(Scenario scenario, Carrier newCarrier, Id<Link> hotelLinkId) {
+		CarrierCapabilities carrierCapabilities = CarrierCapabilities.Builder.newInstance().setFleetSize(FleetSize.FINITE).build();
+		for (VehicleType vehicleType : scenario.getVehicles().getVehicleTypes().values()) {
+			CostInformation costInformation = vehicleType.getCostInformation();
+			costInformation.setCostsPerMeter(0.001);
+			costInformation.setCostsPerSecond(0.008);//TODO update costs
+			costInformation.setFixedCost(100.);
+			VehicleUtils.setCostsPerSecondInService(costInformation, costInformation.getCostsPerSecond());
+			VehicleUtils.setCostsPerSecondWaiting(costInformation, costInformation.getCostsPerSecond());
+		}
+		VehicleType thisType = scenario.getVehicles().getVehicleTypes().get(Id.create("bus_heavy", VehicleType.class));
+		CarrierVehicle newCarrierVehicle = CarrierVehicle.Builder
+				.newInstance(Id.create("vehicle_"+ newCarrier.getId().toString(), Vehicle.class),
+						Id.createLinkId(hotelLinkId), thisType).build(); //TODO ADD times
+		carrierCapabilities.getCarrierVehicles().put(newCarrierVehicle.getId(), newCarrierVehicle);
+		if (!carrierCapabilities.getVehicleTypes().contains(thisType))
+			carrierCapabilities.getVehicleTypes().add(thisType);
+		newCarrier.setCarrierCapabilities(carrierCapabilities);
+		FreightUtils.getCarrierVehicleTypes(scenario).getVehicleTypes().put(thisType.getId(), thisType);
+		return newCarrierVehicle;
+	}
+
+
+	private static ActivityFacility findNearestParkingFacility(Coord coordLink, TreeMap<Id<ActivityFacility>, ActivityFacility> activityFacilities) {
+		ActivityFacility nearstActivityFacility = null;
+		double minDistance = Double.MAX_VALUE;
+		for (ActivityFacility activityFacility : activityFacilities.values()) {
+			if (activityFacility.getId().toString().contains("attractionParking")
+					|| activityFacility.getId().toString().contains("hotel"))
+				continue;
+			double distance = Double.MAX_VALUE;
+			Coord facilityCoord = activityFacility.getCoord();
+			distance = NetworkUtils.getEuclideanDistance(facilityCoord, coordLink);
+			if (distance < minDistance) {
+				nearstActivityFacility = activityFacility;
+				minDistance = distance;
+			}
+
+		}
+
+		return nearstActivityFacility;
+	}
 	private static Id<Link> getNearstLink(List<Link> links, Coord coord) {
 		
 
