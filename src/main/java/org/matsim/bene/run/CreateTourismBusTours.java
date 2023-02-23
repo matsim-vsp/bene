@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.SplittableRandom;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import org.apache.commons.csv.CSVFormat;
@@ -55,8 +56,22 @@ import org.matsim.application.options.ShpOptions;
 import org.matsim.application.options.ShpOptions.Index;
 import org.matsim.bene.analysis.emissions.RunOfflineAirPollutionAnalysisByVehicleCategory;
 import org.matsim.bene.analysis.linkDemand.RunLinkDemandAnalysis;
-import org.matsim.contrib.parking.parkingsearch.ParkingSearchStrategy;
-import org.matsim.contrib.parking.parkingsearch.ParkingUtils;
+import org.matsim.contrib.freight.FreightConfigGroup;
+import org.matsim.contrib.freight.carrier.Carrier;
+import org.matsim.contrib.freight.carrier.CarrierCapabilities;
+import org.matsim.contrib.freight.carrier.CarrierCapabilities.FleetSize;
+import org.matsim.contrib.freight.carrier.CarrierPlan;
+import org.matsim.contrib.freight.carrier.CarrierPlanWriter;
+import org.matsim.contrib.freight.carrier.CarrierService;
+import org.matsim.contrib.freight.carrier.CarrierUtils;
+import org.matsim.contrib.freight.carrier.CarrierVehicle;
+import org.matsim.contrib.freight.carrier.Carriers;
+import org.matsim.contrib.freight.carrier.ScheduledTour;
+import org.matsim.contrib.freight.carrier.TimeWindow;
+import org.matsim.contrib.freight.carrier.Tour;
+import org.matsim.contrib.freight.carrier.Tour.Builder;
+import org.matsim.contrib.freight.controler.CarrierModule;
+import org.matsim.contrib.freight.utils.FreightUtils;
 import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
 import org.matsim.contrib.parking.parkingsearch.sim.ParkingSearchConfigGroup;
 import org.matsim.contrib.parking.parkingsearch.sim.SetupParking;
@@ -95,8 +110,11 @@ import org.matsim.vehicles.VehicleUtils;
 public class CreateTourismBusTours {
 	private static final Logger log = LogManager.getLogger(CreateTourismBusTours.class);
 	static SplittableRandom random;
+	private enum GenerationMode {
+		jsprit, plans
+	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
 
 		Configurator.setLevel("org.matsim.contrib.parking.parkingsearch.manager.FacilityBasedParkingManager", Level.WARN);
 		Configurator.setLevel("org.matsim.core.utils.geometry.geotools.MGC", Level.ERROR);
@@ -125,6 +143,7 @@ public class CreateTourismBusTours {
 		HashMap<Integer, Integer> stopsPerTourDistribution = new HashMap<>();
 		HashMap<Coord, Integer> stopsPerHotspotDistribution = new HashMap<>();
 		HashMap<Coord, ArrayList<Id<ActivityFacility>>> attractionsForHotspots = new HashMap<>();
+		
 		createBusStartDistribution(busStartDistribution, numberOfTours);
 		createStopsPerTourDistribution(stopsPerTourDistribution, numberOfTours);
 		createStopsPerHotspotDistribution(stopsPerHotspotDistribution, stopsPerTourDistribution,
@@ -137,7 +156,7 @@ public class CreateTourismBusTours {
 		
 		MatsimFacilitiesReader matsimFacilitiesReader = new MatsimFacilitiesReader(scenario);
 		matsimFacilitiesReader.readFile(facilitiesFile);
-		
+
 		hotspotLookup(scenario, stopsPerHotspotDistribution, attractionsForHotspots);
 		if (usedGenerationMode == GenerationMode.plans)
 			generateTours(scenario, busStartDistribution, attractionsForHotspots, stopsPerHotspotDistribution,
