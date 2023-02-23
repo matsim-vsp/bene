@@ -78,9 +78,13 @@ import org.matsim.contrib.parking.parkingsearch.sim.SetupParking;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.ControlerConfigGroup;
+import org.matsim.core.config.groups.ControlerConfigGroup.RoutingAlgorithmType;
 import org.matsim.core.config.groups.PlanCalcScoreConfigGroup.ActivityParams;
-import org.matsim.core.config.groups.QSimConfigGroup.SnapshotStyle;
+import org.matsim.core.config.groups.PlansCalcRouteConfigGroup.AccessEgressType;
 import org.matsim.core.config.groups.QSimConfigGroup.StarttimeInterpretation;
+import org.matsim.core.config.groups.QSimConfigGroup.TrafficDynamics;
+import org.matsim.core.config.groups.StrategyConfigGroup.StrategySettings;
+import org.matsim.core.config.groups.VspExperimentalConfigGroup.VspDefaultsCheckingLevel;
 import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryHierarchy;
@@ -187,6 +191,7 @@ public class CreateTourismBusTours {
 		});
 		SetupParking.installParkingModules(controler);
 		
+		controler.getConfig().vspExperimental().setVspDefaultsCheckingLevel(VspDefaultsCheckingLevel.abort);
 		controler.run();
 
 		RunOfflineAirPollutionAnalysisByVehicleCategory.main(new String[] { scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId()});
@@ -241,13 +246,26 @@ public class CreateTourismBusTours {
 		
 		config.controler().setRunId("bus");
 		config.controler().setOutputDirectory(output.toString());
-		config.controler().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
+		config.controler().setOverwriteFileSetting(OverwriteFileSetting.failIfDirectoryExists);
 		config.controler().setLastIteration(0);
+		config.controler().setRoutingAlgorithmType(RoutingAlgorithmType.SpeedyALT);
+		config.plans().setRemovingUnneccessaryPlanAttributes(true);
+		config.global().setCoordinateSystem("EPSG:31468");
 		config.global().setRandomSeed(4177);
+		config.global().setInsistingOnDeprecatedConfigVersion(false);
+		config.network().setInputFile(network);
 		config.vehicles().setVehiclesFile("scenarios/vehicleTypes.xml");
 		config.facilities().setInputFile("scenarios/base/parkingFacilities.xml");
-		config.qsim().setSimStarttimeInterpretation(StarttimeInterpretation.onlyUseStarttime);		
-		config.qsim().setSnapshotStyle(SnapshotStyle.kinematicWaves);
+		config.plansCalcRoute().setAccessEgressType(AccessEgressType.none);
+		config.planCalcScore().setFractionOfIterationsToStartScoreMSA(0.8);
+		config.qsim().setSimStarttimeInterpretation(StarttimeInterpretation.onlyUseStarttime);
+		config.qsim().setUsingTravelTimeCheckInTeleportation(true);
+		config.qsim().setTrafficDynamics(TrafficDynamics.kinematicWaves);
+		config.qsim().setUsePersonIdForMissingVehicleId(true);
+		config.strategy().setFractionOfIterationsToDisableInnovation(0.8);
+		StrategySettings strategySettings = new StrategySettings().setStrategyName("ChangeExpBeta").setWeight(1.);
+		config.strategy().addStrategySettings(strategySettings);
+
 		new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
 				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
 		config.controler().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
