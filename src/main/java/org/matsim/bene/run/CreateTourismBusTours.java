@@ -455,15 +455,11 @@ public class CreateTourismBusTours {
 				String startActivityName = tourName + "_Start_" + hotelFacility.getDesc();
 				Activity tourStart = populationFactory.createActivityFromActivityFacilityId(startActivityName,
 						hotelFacility.getId());
-				Id<Link> nearastLink = getNearstLink(links, hotelFacility.getCoord());
-				
-				ActivityFacilityImpl parkingFacility = (ActivityFacilityImpl) scenario.getActivityFacilities().getFacilities().get(Id.create("noParking_" + nearastLink.toString(),
-						ActivityFacility.class));
-				parkingFacility.getActivityOptions().get(ParkingUtils.PARKACTIVITYTYPE).setCapacity(1);
-				
-				tourStart.setLinkId(getNearstLink(links, hotelFacility.getCoord()));
-				tourStart.setCoord(hotelFacility.getCoord());
-				tourStart.setEndTime(random.nextDouble(10 * 3600, 14 * 3600));
+			
+				tourStart.getAttributes().putAttribute("parking", "noParking"); //TODO parking nur bei festgelegten Aktivitäten
+				tourStart.setLinkId(hotelLinkId);
+//				tourStart.setCoord(hotelFacility.getCoord());
+				tourStart.setEndTime(startTime);
 				tourStart.setMaximumDuration(0.5 * 3600);
 				scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(startActivityName)
 						.setTypicalDuration(0.5 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
@@ -506,6 +502,7 @@ public class CreateTourismBusTours {
 							attractionFacility.getId());
 					scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getInActivityName)
 							.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
+					tourStopGetIn.getAttributes().putAttribute("parking", "noParking");
 					tourStopGetIn.setMaximumDuration(0.25 * 3600);
 					plan.addActivity(tourStopGetIn);
 
@@ -517,6 +514,7 @@ public class CreateTourismBusTours {
 				tourEnd.setLinkId(nearastLink);
 				scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(endActivityName)
 						.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
+				tourEnd.getAttributes().putAttribute("parking", "noParking");
 				tourEnd.setMaximumDurationUndefined();
 				plan.addActivity(tourEnd);
 
