@@ -25,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.SplittableRandom;
@@ -73,8 +74,6 @@ import org.matsim.contrib.freight.carrier.Tour.Builder;
 import org.matsim.contrib.freight.controler.CarrierModule;
 import org.matsim.contrib.freight.utils.FreightUtils;
 import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
-import org.matsim.contrib.parking.parkingsearch.sim.ParkingSearchConfigGroup;
-import org.matsim.contrib.parking.parkingsearch.sim.SetupParking;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.ControlerConfigGroup;
@@ -103,6 +102,11 @@ import org.matsim.facilities.ActivityFacility;
 import org.matsim.facilities.ActivityFacilityImpl;
 import org.matsim.facilities.ActivityOptionImpl;
 import org.matsim.facilities.MatsimFacilitiesReader;
+import org.matsim.parking.parkingsearch.ParkingSearchStrategy;
+import org.matsim.parking.parkingsearch.ParkingUtils;
+import org.matsim.parking.parkingsearch.sim.ParkingSearchConfigGroup;
+import org.matsim.parking.parkingsearch.sim.SetupParking_new;
+import org.matsim.vehicles.CostInformation;
 import org.matsim.vehicles.Vehicle;
 import org.matsim.vehicles.VehicleType;
 import org.matsim.vehicles.VehicleUtils;
@@ -133,8 +137,8 @@ public class CreateTourismBusTours {
 		String hotspotsCRS = "EPSG:4326";
 
 		int numberOfTours = 1; //526;
-		boolean setParkingCapacitiesToZero= true;
-		boolean infiniteParkingCapacitiesAtParkingSpaces = true;
+		boolean setParkingCapacityToZeroForNonParkingLinks= false;
+		boolean infiniteParkingCapacitiesAtParkingSpaces = false;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
 		GenerationMode usedGenerationMode = GenerationMode.plans;
 		String output = "output/" + java.time.LocalDate.now().toString() + "_"
@@ -155,8 +159,8 @@ public class CreateTourismBusTours {
 		if (infiniteParkingCapacitiesAtParkingSpaces)
 			setCapacitiesForSpacesToInfinite(scenario);
 
-		if (setParkingCapacitiesToZero)
-			changeParkingCapacities(scenario);
+		if (setParkingCapacityToZeroForNonParkingLinks)
+			setParkingCapacityToZeroForNonParkingLinks(scenario);
 		
 		MatsimFacilitiesReader matsimFacilitiesReader = new MatsimFacilitiesReader(scenario);
 		matsimFacilitiesReader.readFile(facilitiesFile);
@@ -189,7 +193,7 @@ public class CreateTourismBusTours {
 				addControlerListenerBinding().toInstance(visualiser);
 			}
 		});
-		SetupParking.installParkingModules(controler);
+		SetupParking_new.installParkingModules(controler);
 		
 		controler.getConfig().vspExperimental().setVspDefaultsCheckingLevel(VspDefaultsCheckingLevel.abort);
 		controler.run();
@@ -210,7 +214,7 @@ public class CreateTourismBusTours {
 		
 	}
 
-	private static void changeParkingCapacities(Scenario scenario) {
+	private static void setParkingCapacityToZeroForNonParkingLinks(Scenario scenario) {
 
 		ActivityFacilitiesFactory activityFacilityFactory = new ActivityFacilitiesFactoryImpl();
 		ArrayList<Id<Link>> linksWithCoachParking = new ArrayList<Id<Link>>();
@@ -231,7 +235,6 @@ public class CreateTourismBusTours {
 				scenario.getActivityFacilities().addActivityFacility(newActivityFacility);
 			}
 		}
-
 	}
 
 	private static Config prepareConfig(String output, String network) {
@@ -269,6 +272,10 @@ public class CreateTourismBusTours {
 		new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
 				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
 		config.controler().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
+		config.planCalcScore().addActivityParams(new ActivityParams(ParkingUtils.PARKACTIVITYTYPE)
+				.setTypicalDuration(2 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
+		config.planCalcScore().addActivityParams(new ActivityParams(ParkingUtils.PARKACTIVITYTYPE + "_activity")
+				.setTypicalDuration(2 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
 		return config;
 	}
 
@@ -435,6 +442,7 @@ public class CreateTourismBusTours {
 		for (String area : busStartDistribution.keySet()) {
 			ArrayList<Id<ActivityFacility>> hotelKeyList = new ArrayList<Id<ActivityFacility>>(
 					hotelFacilitiesPerArea.get(area).keySet());
+			TreeMap<Id<ActivityFacility>, ActivityFacility> activityFacilities = scenario.getActivityFacilities().getFacilitiesForActivityType(ParkingUtils.PARKACTIVITYTYPE);
 			for (int generatedToursForThisArea = 0; generatedToursForThisArea < busStartDistribution
 					.get(area); generatedToursForThisArea++) {
 				tourCount++;
@@ -451,6 +459,8 @@ public class CreateTourismBusTours {
 				Id<ActivityFacility> activityId = hotelKeyList.get(random.nextInt(hotelFacilitiesPerArea.get(area).size()));
 				ActivityFacilityImpl hotelFacility = (ActivityFacilityImpl) hotelFacilitiesPerArea.get(area)
 						.get(activityId);
+				Id<Link> hotelLinkId = getNearstLink(links, hotelFacility.getCoord());
+				hotelFacility.setLinkId(hotelLinkId);
 				String tourName = newPerson.getId().toString();
 				String startActivityName = tourName + "_Start_" + hotelFacility.getDesc();
 				Activity tourStart = populationFactory.createActivityFromActivityFacilityId(startActivityName,
@@ -467,7 +477,7 @@ public class CreateTourismBusTours {
 
 				Leg legActivity = populationFactory.createLeg("car");
 				plan.addLeg(legActivity);
-//				Activity parkingActivity = populationFactory.create
+
 				int numberOfStops = getNumberOfStopsForThisTour(stopsPerTourDistribution);
 				for (int j = 0; j < numberOfStops; j++) {
 					Id<ActivityFacility> attractionFacilityID = findAttractionLocation(scenario, attractionsForHotspots, stopsPerHotspotDistribution);
@@ -482,17 +492,17 @@ public class CreateTourismBusTours {
 							attractionFacility.getId());
 					scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getOffActivityName)
 							.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
+					tourStopGetOff.getAttributes().putAttribute("parking", "noParking");
 					tourStopGetOff.setMaximumDuration(0.25 * 3600);
+					tourStopGetOff.setLinkId(linkIdTourStop);
 					plan.addActivity(tourStopGetOff);
 					plan.addLeg(legActivity);
-
-					Activity parkingActivity = populationFactory.createActivityFromCoord(ParkingUtils.PARKACTIVITYTYPE, attractionFacility.getCoord());
+					
+					ActivityFacility nearstParkingFacility = findNearestParkingFacility(attractionFacility.getCoord(), activityFacilities);
+					Activity parkingActivity = populationFactory.createActivityFromActivityFacilityId(ParkingUtils.PARKACTIVITYTYPE + "_activity", nearstParkingFacility.getId());
 					parkingActivity.setMaximumDuration(2 * 3600);
-					if (!scenario.getConfig().planCalcScore().getActivityParams()
-							.contains(ParkingUtils.PARKACTIVITYTYPE))
-						scenario.getConfig().planCalcScore()
-								.addActivityParams(new ActivityParams(ParkingUtils.PARKACTIVITYTYPE).setTypicalDuration(2 * 3600)
-										.setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
+					parkingActivity.setLinkId(nearstParkingFacility.getLinkId());
+					parkingActivity.getAttributes().putAttribute("parking", "withParking");
 					plan.addActivity(parkingActivity);
 					plan.addLeg(legActivity);
 					
@@ -504,6 +514,7 @@ public class CreateTourismBusTours {
 							.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
 					tourStopGetIn.getAttributes().putAttribute("parking", "noParking");
 					tourStopGetIn.setMaximumDuration(0.25 * 3600);
+					tourStopGetIn.setLinkId(linkIdTourStop);
 					plan.addActivity(tourStopGetIn);
 
 					plan.addLeg(legActivity);
@@ -511,7 +522,7 @@ public class CreateTourismBusTours {
 				String endActivityName = tourName + "_End_" + hotelFacility.getDesc();
 				Activity tourEnd = populationFactory.createActivityFromActivityFacilityId(endActivityName,
 						hotelFacility.getId());
-				tourEnd.setLinkId(nearastLink);
+				tourEnd.setLinkId(hotelLinkId);
 				scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(endActivityName)
 						.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
 				tourEnd.getAttributes().putAttribute("parking", "noParking");
