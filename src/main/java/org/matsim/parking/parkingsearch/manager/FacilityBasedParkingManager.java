@@ -43,7 +43,10 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 
 	protected Map<Id<Link>, Integer> capacity = new HashMap<>();
 	protected Map<Id<ActivityFacility>, MutableLong> occupation = new HashMap<>();
-	protected 	Map<Id<ActivityFacility>, ActivityFacility> parkingFacilities;
+	protected Map<Id<ActivityFacility>, MutableLong> reservationsRequests = new HashMap<>();
+	protected Map<Id<ActivityFacility>, MutableLong> rejectedReservations = new HashMap<>();
+	protected Map<Id<ActivityFacility>, MutableLong> numberOfParkedVehicles = new HashMap<>();
+	protected Map<Id<ActivityFacility>, ActivityFacility> parkingFacilities;
 	protected Map<Id<Vehicle>, Id<ActivityFacility>> parkingLocations = new HashMap<>();
 	protected Map<Id<Vehicle>, Id<ActivityFacility>> parkingReservation = new HashMap<>();
 	protected Map<Id<Vehicle>, Id<Link>> parkingLocationsOutsideFacilities = new HashMap<>();
@@ -67,7 +70,9 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 			parkingOnLink.add(fac.getId());
 			this.facilitiesPerLink.put(linkId, parkingOnLink);
 			this.occupation.put(fac.getId(), new MutableLong(0));
-
+			this.reservationsRequests.put(fac.getId(), new MutableLong(0));
+			this.rejectedReservations.put(fac.getId(), new MutableLong(0));
+			this.numberOfParkedVehicles.put(fac.getId(), new MutableLong(0));
 		}
 	}
 
@@ -100,6 +105,7 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 		for (Id<ActivityFacility> fac : parkingFacilitiesAtLink) {
 			double cap = this.parkingFacilities.get(fac).getActivityOptions().get(ParkingUtils.PARKACTIVITYTYPE)
 					.getCapacity();
+			this.reservationsRequests.get(fac).increment();
 			if (this.occupation.get(fac).doubleValue() < cap) {
 				// LogManager.getLogger(getClass()).info("occ:
 				// "+this.occupation.get(fac).toString()+" cap: "+cap);
@@ -108,6 +114,7 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 
 				return true;
 			}
+			this.rejectedReservations.get(fac).increment();
 		}
 		return false;
 	}
@@ -136,13 +143,13 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 			Id<ActivityFacility> fac = this.parkingReservation.remove(vehicleId);
 			if (fac != null) {
 				this.parkingLocations.put(vehicleId, fac);
+				this.numberOfParkedVehicles.get(fac).increment();
 				return true;
 			} else {
 				throw new RuntimeException("no parking reservation found for vehicle " + vehicleId.toString()
 						+ "arrival on link " + linkId + " with parking restriction");
 			}
 		}
-
 	}
 
 	@Override
@@ -166,7 +173,7 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 			Id<Link> linkId = this.parkingFacilities.get(e.getKey()).getLinkId();
 			double capacity = this.parkingFacilities.get(e.getKey()).getActivityOptions()
 					.get(ParkingUtils.PARKACTIVITYTYPE).getCapacity();
-			String s = linkId.toString() + ";" + e.getKey().toString() + ";" + capacity + ";" + e.getValue().toString();
+			String s = linkId.toString() + ";" + e.getKey().toString() + ";" + capacity + ";" + e.getValue().toString() + ";" + this.reservationsRequests.get(e.getKey()).toString() + ";" + this.numberOfParkedVehicles.get(e.getKey()).toString() + ";" + this.rejectedReservations.get(e.getKey()).toString();
 			stats.add(s);
 		}
 		return stats;
