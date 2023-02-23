@@ -25,7 +25,6 @@ package org.matsim.parking.parkingsearch.sim;
 import org.matsim.api.core.v01.TransportMode;
 import org.matsim.api.core.v01.network.Network;
 import org.matsim.contrib.dvrp.router.DvrpGlobalRoutingNetworkProvider;
-import org.matsim.contrib.dvrp.router.DvrpModeRoutingModule;
 import org.matsim.contrib.dvrp.router.TimeAsTravelDisutility;
 import org.matsim.contrib.dvrp.run.DvrpConfigGroup;
 import org.matsim.contrib.dvrp.run.DvrpModes;
@@ -36,15 +35,12 @@ import org.matsim.contrib.parking.parkingsearch.manager.vehicleteleportationlogi
 import org.matsim.contrib.parking.parkingsearch.manager.vehicleteleportationlogic.VehicleTeleportationToNearbyParking;
 import org.matsim.contrib.parking.parkingsearch.routing.ParkingRouter;
 import org.matsim.contrib.parking.parkingsearch.routing.WithinDayParkingRouter;
-import org.matsim.contrib.parking.parkingsearch.sim.ParkingSearchPopulationModule;
-import org.matsim.contrib.parking.parkingsearch.sim.ParkingSearchQSimModule;
 import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.mobsim.qsim.PopulationModule;
 import org.matsim.core.mobsim.qsim.components.QSimComponentsConfig;
 import org.matsim.core.mobsim.qsim.components.StandardQSimComponentConfigurator;
 import org.matsim.core.router.costcalculators.TravelDisutilityFactory;
-import org.matsim.core.router.speedy.SpeedyALTFactory;
 import org.matsim.core.router.util.TravelTime;
 import org.matsim.parking.parkingsearch.manager.FacilityBasedParkingManager;
 
@@ -95,7 +91,6 @@ public class SetupParking_new {
 				new StandardQSimComponentConfigurator(controler.getConfig()).configure(components);
 				components.removeNamedComponent(PopulationModule.COMPONENT_NAME);
 				components.addNamedComponent(ParkingSearchPopulationModule.COMPONENT_NAME);
-
 				bind(QSimComponentsConfig.class).toInstance(components);
 			}
 		});
