@@ -56,9 +56,9 @@ import org.matsim.vehicles.Vehicle;
  * @author Ricardo Ewert
  *
  */
-public class NearestParkingAgentLogic extends ParkingAgentLogic {
+public class NearestParkingSpotAgentLogic extends ParkingAgentLogic {
 
-	public NearestParkingAgentLogic(Plan plan, ParkingSearchManager parkingManager, RoutingModule walkRouter, Network network,
+	public NearestParkingSpotAgentLogic(Plan plan, ParkingSearchManager parkingManager, RoutingModule walkRouter, Network network,
 			ParkingRouter parkingRouter, EventsManager events, ParkingSearchLogic parkingLogic, MobsimTimer timer,
 			VehicleTeleportationLogic teleportationLogic, ParkingSearchConfigGroup configGroup) {
 		super(plan, parkingManager, walkRouter, network, parkingRouter, events, parkingLogic, timer, teleportationLogic, configGroup);
