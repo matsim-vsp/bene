@@ -10,7 +10,7 @@ import org.matsim.core.api.experimental.events.EventsManager;
 import org.matsim.core.mobsim.framework.MobsimTimer;
 import org.matsim.core.population.routes.NetworkRoute;
 import org.matsim.parking.parkingsearch.events.StartParkingSearchEvent;
-import org.matsim.parking.parkingsearch.search.NearestSpaceParkingSearchLogic;
+import org.matsim.parking.parkingsearch.search.NearestParkingSpotSearchLogic;
 import org.matsim.vehicles.Vehicle;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 				return null;
 			} else {
 				// need to find the next link
-				Id<Link> nextLinkId = ((NearestSpaceParkingSearchLogic) this.logic).getNextLink(currentLinkId, route.getEndLinkId(), vehicleId, mode, timer.getTimeOfDay());
+				Id<Link> nextLinkId = ((NearestParkingSpotSearchLogic) this.logic).getNextLink(currentLinkId, route.getEndLinkId(), vehicleId, mode, timer.getTimeOfDay());
 				return nextLinkId;
 			}
 		}

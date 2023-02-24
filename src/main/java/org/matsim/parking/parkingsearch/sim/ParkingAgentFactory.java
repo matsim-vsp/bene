@@ -48,7 +48,7 @@ import org.matsim.parking.parkingsearch.DynAgent.agentLogic.MemoryBasedParkingAg
 import org.matsim.parking.parkingsearch.DynAgent.agentLogic.NearestParkingAgentLogic;
 import org.matsim.parking.parkingsearch.DynAgent.agentLogic.ParkingAgentLogic;
 import org.matsim.parking.parkingsearch.search.BenensonParkingSearchLogic;
-import org.matsim.parking.parkingsearch.search.NearestSpaceParkingSearchLogic;
+import org.matsim.parking.parkingsearch.search.NearestParkingSpotSearchLogic;
 
 import com.google.inject.name.Named;
 
@@ -112,7 +112,7 @@ public class ParkingAgentFactory implements AgentFactory {
 					parkingRouter, events, parkingLogic,  ((QSim) qsim).getSimTimer(),teleportationLogic, psConfigGroup);
 			break;
 		case NearestParkingSpot:
-			parkingLogic  = new NearestSpaceParkingSearchLogic(network, config, parkingRouter, parkingManager);
+			parkingLogic  = new NearestParkingSpotSearchLogic(network, config, parkingRouter, parkingManager);
 			agentLogic = new NearestParkingAgentLogic(p.getSelectedPlan(), parkingManager, walkRouter, network,
 					parkingRouter, events, parkingLogic,  ((QSim) qsim).getSimTimer(),teleportationLogic, psConfigGroup);
 			break;

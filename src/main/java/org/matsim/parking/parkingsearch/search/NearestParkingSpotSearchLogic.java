@@ -44,7 +44,7 @@ import java.util.Map;
  *
  */
 
-public class NearestSpaceParkingSearchLogic implements ParkingSearchLogic {
+public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 
 	private Network network;
 	private Map<Id<ActivityFacility>, ActivityFacility> activityFacilities;
@@ -60,7 +60,7 @@ public class NearestSpaceParkingSearchLogic implements ParkingSearchLogic {
 	 * @param parkingManager 
 	 * 
 	 */
-	public NearestSpaceParkingSearchLogic(Network network, Config config, ParkingRouter parkingRouter, ParkingSearchManager parkingManager) {
+	public NearestParkingSpotSearchLogic(Network network, Config config, ParkingRouter parkingRouter, ParkingSearchManager parkingManager) {
 		this.network = network;
 		this.parkingRouter = parkingRouter;
 		this.parkingManager = parkingManager;
