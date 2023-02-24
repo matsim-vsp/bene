@@ -46,7 +46,7 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 	protected Map<Id<ActivityFacility>, MutableLong> reservationsRequests = new HashMap<>();
 	protected Map<Id<ActivityFacility>, MutableLong> rejectedReservations = new HashMap<>();
 	protected Map<Id<ActivityFacility>, MutableLong> numberOfParkedVehicles = new HashMap<>();
-	protected Map<Id<ActivityFacility>, ActivityFacility> parkingFacilities;
+	protected 	Map<Id<ActivityFacility>, ActivityFacility> parkingFacilities;
 	protected Map<Id<Vehicle>, Id<ActivityFacility>> parkingLocations = new HashMap<>();
 	protected Map<Id<Vehicle>, Id<ActivityFacility>> parkingReservation = new HashMap<>();
 	protected Map<Id<Vehicle>, Id<Link>> parkingLocationsOutsideFacilities = new HashMap<>();
@@ -204,7 +204,9 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 		return allFreeSpaces;
 	}
 
-
+	public Map<Id<ActivityFacility>, ActivityFacility> getParkingFacilities() {
+		return this.parkingFacilities;
+	}
 	@Override
 	public void reset(int iteration) {
 	}
