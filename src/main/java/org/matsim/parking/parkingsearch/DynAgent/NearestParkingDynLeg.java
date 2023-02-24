@@ -28,7 +28,7 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 															ParkingSearchManager parkingManager, Id<Vehicle> vehicleId, MobsimTimer timer, EventsManager events) {
 		super(mode, route, logic, parkingManager, vehicleId, timer, events);
 		if (folowingPlanElement.getAttributes().getAsMap().containsKey("parking") && folowingPlanElement.getAttributes().getAttribute("parking").equals("noParking"))
-			parkingAtEndOfLeg = false; //TODO Fall hinzufügen, dass Attribute nicht vorhanden
+			parkingAtEndOfLeg = false;
 	}
 	
 	@Override
@@ -59,7 +59,6 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 			if (currentLinkIdx == linkIds.size() - 1) {
 				return route.getEndLinkId();
 			}
-
 			return linkIds.get(currentLinkIdx + 1);
 
 		} else {
@@ -67,7 +66,6 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 				// easy, we can just park where at our destination link
 				return null;
 			} else {
-
 				// need to find the next link
 				Id<Link> nextLinkId = ((NearestSpaceParkingSearchLogic) this.logic).getNextLink(currentLinkId, route.getEndLinkId(), vehicleId, mode, timer.getTimeOfDay());
 				return nextLinkId;
