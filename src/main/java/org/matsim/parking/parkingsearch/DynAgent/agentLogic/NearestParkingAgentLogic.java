@@ -74,13 +74,7 @@ public class NearestParkingAgentLogic extends ParkingAgentLogic {
 		// ordinary activity: get next Leg, if car: go to car, otherwise add ordinary leg by other mode
 		// walk-leg to car: add unpark activity
 		// unpark activity: find the way to the next route & start leg
-		boolean isParkingNeeded = false;
-		
-//		if (planElemIter.next() instanceof Activity) {
-//			Activity nextPlanElement = (Activity) planElemIter.next();
-//			if (nextPlanElement.getAttributes().getAttribute("parking").equals("withParking"))
-//				isParkingNeeded = true;
-//		}
+
 		switch (lastParkActionState){
 		case ACTIVITY:
 			return nextStateAfterActivity(oldAction, now);
@@ -152,9 +146,8 @@ public class NearestParkingAgentLogic extends ParkingAgentLogic {
 	@Override
 	protected DynAction nextStateAfterActivity(DynAction oldAction, double now) {
 		// we could either depart by car or not next
-//		if (planElemIter.hasNext()){
+
 		if (plan.getPlanElements().size() >= planIndex+1){
-//		this.currentPlanElement = planElemIter.next();
 		planIndex++;
 		this.currentPlanElement = plan.getPlanElements().get(planIndex);
 		Leg currentLeg = (Leg) currentPlanElement;
@@ -185,7 +178,6 @@ public class NearestParkingAgentLogic extends ParkingAgentLogic {
     		}
     		else
     		{
-//    			planIndex--;
     			return nextStateAfterWalkToPark(oldAction, now);
     		}
 		}

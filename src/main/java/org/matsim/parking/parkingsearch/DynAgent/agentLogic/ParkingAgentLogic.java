@@ -122,9 +122,7 @@ public class ParkingAgentLogic implements DynAgentLogic {
 		this.agent = adapterAgent;
 		this.lastParkActionState = LastParkActionState.ACTIVITY;
 		planIndex = 0;
-//		this.currentPlanElement = planElemIter.next();
 		this.currentPlanElement = plan.getPlanElements().get(planIndex);
-//		this.currentPlanElement_new = plan.getPlanElements().get(planIndex);
 		Activity act = (Activity) currentPlanElement;
 		//TODO: assume something different regarding initial parking location
 
@@ -221,7 +219,6 @@ public class ParkingAgentLogic implements DynAgentLogic {
 
 	protected DynAction nextStateAfterNonCarTrip(DynAction oldAction, double now) {
 		// switch back to activity
-//		this.currentPlanElement = planElemIter.next();
 		planIndex++;
 		this.currentPlanElement = plan.getPlanElements().get(planIndex);
 		Activity nextPlannedActivity = (Activity) this.currentPlanElement;
@@ -255,7 +252,6 @@ public class ParkingAgentLogic implements DynAgentLogic {
 	protected DynAction nextStateAfterActivity(DynAction oldAction, double now) {
 		// we could either depart by car or not next
 		if (plan.getPlanElements().size() >= planIndex+1){
-//		this.currentPlanElement = planElemIter.next();
 		planIndex++;
 		this.currentPlanElement = plan.getPlanElements().get(planIndex);
 		Leg currentLeg = (Leg) currentPlanElement;

@@ -112,7 +112,7 @@ public class ParkingAgentFactory implements AgentFactory {
 					parkingRouter, events, parkingLogic,  ((QSim) qsim).getSimTimer(),teleportationLogic, psConfigGroup);
 			break;
 		case NearestParkingSpot:
-			parkingLogic  = new NearestSpaceParkingSearchLogic(network, config, parkingRouter);
+			parkingLogic  = new NearestSpaceParkingSearchLogic(network, config, parkingRouter, parkingManager);
 			agentLogic = new NearestParkingAgentLogic(p.getSelectedPlan(), parkingManager, walkRouter, network,
 					parkingRouter, events, parkingLogic,  ((QSim) qsim).getSimTimer(),teleportationLogic, psConfigGroup);
 			break;
