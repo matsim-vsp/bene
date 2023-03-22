@@ -68,7 +68,7 @@ public class RunOfflineAirPollutionAnalysisByVehicleCategory implements MATSimAp
 	private final String hbefaWarmFile;
 	private final String hbefaColdFile;
 	private final String analysisOutputDirectory;
-	static List<Pollutant> pollutants2Output = Arrays.asList(CO2_TOTAL, NOx, PM, PM_non_exhaust);
+	static List<Pollutant> pollutants2Output = Arrays.asList(CO2_TOTAL, NOx, PM, PM_non_exhaust, FC);
 	
 	public RunOfflineAirPollutionAnalysisByVehicleCategory(String runDirectory, String runId, String hbefaFileWarm, String hbefaFileCold, String analysisOutputDirectory) {
 		this.runDirectory = runDirectory;
