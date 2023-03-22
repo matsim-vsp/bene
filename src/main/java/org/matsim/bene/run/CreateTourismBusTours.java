@@ -141,10 +141,11 @@ public class CreateTourismBusTours {
 		boolean infiniteParkingCapacitiesAtParkingSpaces = false;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
 		GenerationMode usedGenerationMode = GenerationMode.plans;
-		String output = "output/" + java.time.LocalDate.now().toString() + "_"
-				+ java.time.LocalTime.now().toSecondOfDay()+ "_" + numberOfTours + "busses";
-		Config config = prepareConfig(output, network);
+		Config config = prepareConfig(numberOfTours, network);
 		Scenario scenario = ScenarioUtils.loadScenario(config);
+
+//		Network filteredNetwork = scenario.getNetwork();
+//		new TransportModeNetworkFilter(NetworkUtils.readNetwork(config.network().getInputFile())).filter(filteredNetwork, new HashSet<>(Arrays.asList("car")));
 		random = new SplittableRandom(config.global().getRandomSeed());		
 	
 		HashMap<String, Integer> busStartDistribution = new HashMap<>();
@@ -174,7 +175,7 @@ public class CreateTourismBusTours {
 					stopsPerTourDistribution, shpZones, facilityCRS);
 
 		PopulationUtils.writePopulation(scenario.getPopulation(),
-				output + "/" + config.controler().getRunId() + ".output_plans_generated.xml.gz");
+				config.controler().getOutputDirectory() + "/" + config.controler().getRunId() + ".output_plans_generated.xml.gz");
 		if (usedGenerationMode == GenerationMode.jsprit) {
 			FreightUtils.runJsprit(scenario);
 			new CarrierPlanWriter(FreightUtils.addOrGetCarriers(scenario)).write(
@@ -217,11 +218,9 @@ public class CreateTourismBusTours {
 	private static void setParkingCapacityToZeroForNonParkingLinks(Scenario scenario) {
 
 		ActivityFacilitiesFactory activityFacilityFactory = new ActivityFacilitiesFactoryImpl();
-		ArrayList<Id<Link>> linksWithCoachParking = new ArrayList<Id<Link>>();
+		ArrayList<Id<Link>> linksWithCoachParking = new ArrayList<>();
 
-		scenario.getActivityFacilities().getFacilities().values().forEach(f -> {
-			linksWithCoachParking.add(f.getLinkId());
-		});
+		scenario.getActivityFacilities().getFacilities().values().forEach(f -> linksWithCoachParking.add(f.getLinkId()));
 		for (Link link : scenario.getNetwork().getLinks().values()) {
 			if (link.getAllowedModes().contains("car") && !linksWithCoachParking.contains(link.getId())) {
 
@@ -237,7 +236,7 @@ public class CreateTourismBusTours {
 		}
 	}
 
-	private static Config prepareConfig(String output, String network) {
+	private static Config prepareConfig(int numberOfTours, String network) {
 	
 		Config config = ConfigUtils.createConfig(new ParkingSearchConfigGroup());
 		ParkingSearchConfigGroup configGroup = (ParkingSearchConfigGroup) config.getModules()
@@ -248,7 +247,10 @@ public class CreateTourismBusTours {
 		freightConfigGroup.setCarriersVehicleTypesFile("scenarios/vehicleTypes.xml");
 		
 		config.controler().setRunId("bus");
-		config.controler().setOutputDirectory(output.toString());
+		String output = "output/" + config.controler().getRunId()+ "." + java.time.LocalDate.now() + "_"
+				+ java.time.LocalTime.now().toSecondOfDay()+ "_" + numberOfTours + "busses";
+		
+		config.controler().setOutputDirectory(output);
 		config.controler().setOverwriteFileSetting(OverwriteFileSetting.failIfDirectoryExists);
 		config.controler().setLastIteration(0);
 		config.controler().setRoutingAlgorithmType(RoutingAlgorithmType.SpeedyALT);
@@ -321,17 +323,17 @@ public class CreateTourismBusTours {
 				CSVFormat.Builder.create(CSVFormat.TDF).setHeader().setSkipHeaderRecord(true).build());
 
 		for (CSVRecord record : parse) {
-			Coord hotspotCoord = new Coord(Double.valueOf(record.get("Laengengrad")),
-					Double.valueOf(record.get("Breitengrad")));
+			Coord hotspotCoord = new Coord(Double.parseDouble(record.get("Laengengrad")),
+					Double.parseDouble(record.get("Breitengrad")));
 			hotspotCoord = ts.transform(hotspotCoord);
 			int numberOfStopsForHotspot = (int) Math
-					.round(totalNumberOfStops * Double.valueOf(record.get("Anteil")) / 100);
+					.round(totalNumberOfStops * Double.parseDouble(record.get("Anteil")) / 100);
 			stopsPerHotspotDistribution.put(hotspotCoord, numberOfStopsForHotspot);
 			totalNumberOfStopsInTours += numberOfStopsForHotspot;
 		}
 		boolean addneededStops = false;
 		while (totalNumberOfStopsInTours != totalNumberOfStops) {
-			ArrayList<Coord> listOfHotspotCoord = new ArrayList<Coord>(stopsPerHotspotDistribution.keySet());
+			ArrayList<Coord> listOfHotspotCoord = new ArrayList<>(stopsPerHotspotDistribution.keySet());
 			Coord hotspotCoord = listOfHotspotCoord.get(random.nextInt(listOfHotspotCoord.size()));
 			int stopsForCoord = stopsPerHotspotDistribution.get(hotspotCoord);
 
@@ -348,7 +350,6 @@ public class CreateTourismBusTours {
 			if (totalNumberOfStopsInTours < totalNumberOfStops || addneededStops) {
 				stopsPerHotspotDistribution.replace(hotspotCoord, stopsPerHotspotDistribution.get(hotspotCoord) + 1);
 				totalNumberOfStopsInTours++;
-				continue;
 			}
 		}
 	}
@@ -367,7 +368,7 @@ public class CreateTourismBusTours {
 			numberOfToursWithStops += numberOfToursWithThisNumberOfStops;
 		}
 		while (numberOfToursWithStops != numberOfTours) {
-			ArrayList<Integer> differentNumbersOfStops = new ArrayList<Integer>(stopsPerTourDistribution.keySet());
+			ArrayList<Integer> differentNumbersOfStops = new ArrayList<>(stopsPerTourDistribution.keySet());
 			int numberOfStopsPerTour = differentNumbersOfStops.get(random.nextInt(differentNumbersOfStops.size()));
 			int numberOfToursWithThisNumberOfStops = stopsPerTourDistribution.get(numberOfStopsPerTour);
 
@@ -383,14 +384,13 @@ public class CreateTourismBusTours {
 				stopsPerTourDistribution.replace(numberOfStopsPerTour,
 						stopsPerTourDistribution.get(numberOfStopsPerTour) + 1);
 				numberOfToursWithStops++;
-				continue;
 			}
 		}
 	}
 
 	private static void createBusStartDistribution(HashMap<String, Integer> busStartDistribution, int numberOfTours) {
 
-		HashMap<String, Double> busStartPercetages = new HashMap<String, Double>();
+		HashMap<String, Double> busStartPercetages = new HashMap<>();
 		busStartPercetages.put("Reinickendorf", 0.0158);
 		busStartPercetages.put("Charlottenburg-Wilmersdorf", 0.1932);
 		busStartPercetages.put("Treptow-Koepenick", 0.0215);
@@ -420,7 +420,6 @@ public class CreateTourismBusTours {
 			if (sumTours < numberOfTours) {
 				busStartDistribution.replace("Mitte", busStartDistribution.get("Mitte") + 1);
 				sumTours++;
-				continue;
 			}
 		}
 	}
@@ -431,7 +430,7 @@ public class CreateTourismBusTours {
 		PopulationFactory populationFactory = population.getFactory();
 		List<Link> links = scenario.getNetwork().getLinks().values().stream().filter(l -> l.getAllowedModes().contains("car"))
 				.collect(Collectors.toList());
-		HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>> hotelFacilitiesPerArea = new HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>>();
+		HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>> hotelFacilitiesPerArea = new HashMap<>();
 		createHotelFacilitiesPerArea(scenario, hotelFacilitiesPerArea, shpZones, facilityCRS);
 		ActivityFacilities allFacilities = scenario.getActivityFacilities();
 
@@ -440,14 +439,14 @@ public class CreateTourismBusTours {
 
 		int tourCount = 0;
 		for (String area : busStartDistribution.keySet()) {
-			ArrayList<Id<ActivityFacility>> hotelKeyList = new ArrayList<Id<ActivityFacility>>(
+			ArrayList<Id<ActivityFacility>> hotelKeyList = new ArrayList<>(
 					hotelFacilitiesPerArea.get(area).keySet());
-			TreeMap<Id<ActivityFacility>, ActivityFacility> activityFacilities = scenario.getActivityFacilities().getFacilitiesForActivityType(ParkingUtils.PARKACTIVITYTYPE);
+//			TreeMap<Id<ActivityFacility>, ActivityFacility> activityFacilities = scenario.getActivityFacilities().getFacilitiesForActivityType(ParkingUtils.PARKACTIVITYTYPE);
 			for (int generatedToursForThisArea = 0; generatedToursForThisArea < busStartDistribution
 					.get(area); generatedToursForThisArea++) {
 				tourCount++;
 				Person newPerson = populationFactory.createPerson(Id.createPersonId("Tour_" + (tourCount)));
-				VehicleUtils.insertVehicleIdsIntoAttributes(newPerson, (new HashMap<String, Id<Vehicle>>() {
+				VehicleUtils.insertVehicleIdsIntoAttributes(newPerson, (new HashMap<>() {
 					{
 						put("car", (Id.createVehicleId(newPerson.getId().toString())));
 					}
@@ -480,7 +479,7 @@ public class CreateTourismBusTours {
 
 				int numberOfStops = getNumberOfStopsForThisTour(stopsPerTourDistribution);
 				for (int j = 0; j < numberOfStops; j++) {
-					Id<ActivityFacility> attractionFacilityID = findAttractionLocation(scenario, attractionsForHotspots, stopsPerHotspotDistribution);
+					Id<ActivityFacility> attractionFacilityID = findAttractionLocation(attractionsForHotspots, stopsPerHotspotDistribution);
 					ActivityFacilityImpl attractionFacility	= (ActivityFacilityImpl) attractionFacilities.get(attractionFacilityID);
 					String stopActivityName;
 					if (attractionFacility.getDesc() != null)
@@ -498,8 +497,9 @@ public class CreateTourismBusTours {
 					plan.addActivity(tourStopGetOff);
 					plan.addLeg(legActivity);
 					
-					ActivityFacility nearstParkingFacility = findNearestParkingFacility(attractionFacility.getCoord(), activityFacilities);
-					Activity parkingActivity = populationFactory.createActivityFromActivityFacilityId(ParkingUtils.PARKACTIVITYTYPE + "_activity", nearstParkingFacility.getId());
+//					ActivityFacility nearstParkingFacility = findNearestParkingFacility(attractionFacility.getCoord(), activityFacilities);
+					Activity parkingActivity = populationFactory.createActivityFromLinkId(ParkingUtils.PARKACTIVITYTYPE + "_activity", linkIdTourStop);
+//					Activity parkingActivity = populationFactory.createActivityFromActivityFacilityId(ParkingUtils.PARKACTIVITYTYPE + "_activity", nearstParkingFacility.getId());
 					parkingActivity.setMaximumDuration(2 * 3600);
 					parkingActivity.setLinkId(nearstParkingFacility.getLinkId());
 					parkingActivity.getAttributes().putAttribute("parking", "withParking");
@@ -540,7 +540,7 @@ public class CreateTourismBusTours {
 		Carriers carriers = FreightUtils.addOrGetCarriers(scenario);
 		List<Link> links = scenario.getNetwork().getLinks().values().stream().filter(l -> l.getAllowedModes().contains("car"))
 				.collect(Collectors.toList());
-		HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>> hotelFacilitiesPerArea = new HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>>();
+		HashMap<String, TreeMap<Id<ActivityFacility>, ActivityFacility>> hotelFacilitiesPerArea = new HashMap<>();
 		createHotelFacilitiesPerArea(scenario, hotelFacilitiesPerArea, shpZones, facilityCRS);
 		ActivityFacilities allFacilities = scenario.getActivityFacilities();
 
@@ -549,7 +549,7 @@ public class CreateTourismBusTours {
 
 		int tourCount = 0;
 		for (String area : busStartDistribution.keySet()) {
-			ArrayList<Id<ActivityFacility>> hotelKeyList = new ArrayList<Id<ActivityFacility>>(
+			ArrayList<Id<ActivityFacility>> hotelKeyList = new ArrayList<>(
 					hotelFacilitiesPerArea.get(area).keySet());
 			TreeMap<Id<ActivityFacility>, ActivityFacility> activityFacilities = scenario.getActivityFacilities().getFacilitiesForActivityType(ParkingUtils.PARKACTIVITYTYPE);
 			for (int generatedToursForThisArea = 0; generatedToursForThisArea < busStartDistribution
@@ -587,7 +587,7 @@ public class CreateTourismBusTours {
 				
 				int numberOfStops = getNumberOfStopsForThisTour(stopsPerTourDistribution);
 				for (int j = 0; j < numberOfStops; j++) {
-					Id<ActivityFacility> attractionFacilityID = findAttractionLocation(scenario, attractionsForHotspots, stopsPerHotspotDistribution);
+					Id<ActivityFacility> attractionFacilityID = findAttractionLocation(attractionsForHotspots, stopsPerHotspotDistribution);
 					ActivityFacilityImpl attractionFacility	= (ActivityFacilityImpl) attractionFacilities.get(attractionFacilityID);
 					String stopActivityName;
 					if (attractionFacility.getDesc() != null)
@@ -640,7 +640,7 @@ public class CreateTourismBusTours {
 				tour.scheduleEnd(hotelLinkId);
 				CarrierVehicle vehicle = addAndGetCarrierVehicle(scenario, newCarrier, hotelLinkId);
 				ScheduledTour plan = ScheduledTour.newInstance(tour.build(), vehicle, startTimeStart);
-				Collection<ScheduledTour> scheduledTours  = new ArrayList<ScheduledTour>();
+				Collection<ScheduledTour> scheduledTours  = new ArrayList<>();
 				scheduledTours.add(plan);
 				
 				CarrierPlan carrierPlan = new CarrierPlan(newCarrier, scheduledTours);
@@ -680,9 +680,8 @@ public class CreateTourismBusTours {
 			if (activityFacility.getId().toString().contains("attractionParking")
 					|| activityFacility.getId().toString().contains("hotel"))
 				continue;
-			double distance = Double.MAX_VALUE;
 			Coord facilityCoord = activityFacility.getCoord();
-			distance = NetworkUtils.getEuclideanDistance(facilityCoord, coordLink);
+			double distance = NetworkUtils.getEuclideanDistance(facilityCoord, coordLink);
 			if (distance < minDistance) {
 				nearstActivityFacility = activityFacility;
 				minDistance = distance;
@@ -709,13 +708,12 @@ public class CreateTourismBusTours {
 		
 	}
 
-	private static Id<ActivityFacility> findAttractionLocation(Scenario scenario,
-			HashMap<Coord, ArrayList<Id<ActivityFacility>>> attractionsForHotspots,
-			HashMap<Coord, Integer> stopsPerHotspotDistribution) {
+	private static Id<ActivityFacility> findAttractionLocation(HashMap<Coord, ArrayList<Id<ActivityFacility>>> attractionsForHotspots,
+															   HashMap<Coord, Integer> stopsPerHotspotDistribution) {
 
 		Coord hotspotCoord = selectOneHotspot(stopsPerHotspotDistribution);
 
-		ArrayList<Id<ActivityFacility>> attractionsAtThisHotspot = new ArrayList<Id<ActivityFacility>>(
+		ArrayList<Id<ActivityFacility>> attractionsAtThisHotspot = new ArrayList<>(
 				attractionsForHotspots.get(hotspotCoord));
 		Id<ActivityFacility> selectedAttraction = attractionsAtThisHotspot.get(random.nextInt(attractionsAtThisHotspot.size()));
 
@@ -724,7 +722,7 @@ public class CreateTourismBusTours {
 
 
 	private static Coord selectOneHotspot(HashMap<Coord, Integer> stopsPerHotspotDistribution) {
-		ArrayList<Coord> coordsOfHotSpots = new ArrayList<Coord>(stopsPerHotspotDistribution.keySet());
+		ArrayList<Coord> coordsOfHotSpots = new ArrayList<>(stopsPerHotspotDistribution.keySet());
 		Coord selectedCoord = null;
 		int stopsInThisHotspot = 0;
 		
@@ -737,7 +735,7 @@ public class CreateTourismBusTours {
 	}
 
 	private static int getNumberOfStopsForThisTour(HashMap<Integer, Integer> stopsPerTourDistribution) {
-		ArrayList<Integer> differentNumbersOfStops = new ArrayList<Integer>(stopsPerTourDistribution.keySet());
+		ArrayList<Integer> differentNumbersOfStops = new ArrayList<>(stopsPerTourDistribution.keySet());
 		int numberOfToursWithThisNumberOfStops = 0;
 		int numberOfStopsPerTour = 0;
 
