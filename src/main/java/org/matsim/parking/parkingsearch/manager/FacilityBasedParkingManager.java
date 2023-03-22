@@ -209,6 +209,11 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 	}
 	@Override
 	public void reset(int iteration) {
+		for (Id<ActivityFacility> fac : this.rejectedReservations.keySet()) {
+			this.rejectedReservations.get(fac).setValue(0);
+			this.reservationsRequests.get(fac).setValue(0);
+			this.numberOfParkedVehicles.get(fac).setValue(0);
+		}
 	}
 
 	

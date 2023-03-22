@@ -55,6 +55,7 @@ public class ParkingListener implements IterationEndsListener {
 	@Override
 	public void notifyIterationEnds(IterationEndsEvent event) {
 		writeStats(manager.produceStatistics(), event.getIteration());
+		manager.reset(event.getIteration());
 	}
 
 	/**
