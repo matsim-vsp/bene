@@ -9,7 +9,7 @@
 		<engineInformation>
 			<attributes>
 				<attribute name="HbefaVehicleCategory" class="java.lang.String">PASSENGER_CAR</attribute>
-				<attribute name="HbefaTechnology" class="java.lang.String">average</attribute>
+				<attribute name="HbefaTechnology" class="java.lang.String">petrol</attribute>
 				<attribute name="HbefaSizeClass" class="java.lang.String">average</attribute>
 				<attribute name="HbefaEmissionsConcept" class="java.lang.String">average</attribute>
 			</attributes>
@@ -25,7 +25,7 @@
 		<engineInformation>
 			<attributes>
 				<attribute name="HbefaVehicleCategory" class="java.lang.String">coach</attribute>
-				<attribute name="HbefaTechnology" class="java.lang.String">average</attribute>
+				<attribute name="HbefaTechnology" class="java.lang.String">diesel</attribute>
 				<attribute name="HbefaSizeClass" class="java.lang.String">average</attribute>
 				<attribute name="HbefaEmissionsConcept" class="java.lang.String">average</attribute>
 			</attributes>
