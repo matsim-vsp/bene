@@ -29,7 +29,6 @@ import org.matsim.api.core.v01.network.Network;
 import org.matsim.contrib.parking.parkingsearch.manager.ParkingSearchManager;
 import org.matsim.contrib.parking.parkingsearch.routing.ParkingRouter;
 import org.matsim.contrib.parking.parkingsearch.search.ParkingSearchLogic;
-import org.matsim.core.config.Config;
 import org.matsim.core.network.NetworkUtils;
 import org.matsim.core.population.routes.NetworkRoute;
 import org.matsim.facilities.ActivityFacility;
@@ -58,11 +57,10 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 
 	/**
 	 * {@link Network} the network
-	 * @param config 
-	 * @param parkingManager 
+	 * @param parkingManager
 	 * 
 	 */
-	public NearestParkingSpotSearchLogic(Network network, Config config, ParkingRouter parkingRouter, ParkingSearchManager parkingManager) {
+	public NearestParkingSpotSearchLogic(Network network, ParkingRouter parkingRouter, ParkingSearchManager parkingManager) {
 		this.network = network;
 		this.parkingRouter = parkingRouter;
 		this.parkingManager = parkingManager;
@@ -135,12 +133,10 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 		for (ActivityFacility activityFacility : activityFacilities.values()) {
 			if (triedParking.contains(activityFacility.getId()))
 				continue;
-			double distanceBaseAndFacility = Double.MAX_VALUE;
-			double distanceCurrentAndFacility = Double.MAX_VALUE;
 			Coord facilityCoord = activityFacility.getCoord();
 
-			distanceBaseAndFacility = NetworkUtils.getEuclideanDistance(facilityCoord, coordBaseLink);
-			distanceCurrentAndFacility = NetworkUtils.getEuclideanDistance(coordCurrentLink, coordBaseLink);
+			double distanceBaseAndFacility = NetworkUtils.getEuclideanDistance(facilityCoord, coordBaseLink);
+			double distanceCurrentAndFacility = NetworkUtils.getEuclideanDistance(coordCurrentLink, coordBaseLink);
 			
 			double distanceForParking = distanceBaseAndFacility + distanceCurrentAndFacility;
 			if (distanceForParking < minDistance) {
