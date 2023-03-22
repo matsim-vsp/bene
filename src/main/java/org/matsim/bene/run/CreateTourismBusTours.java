@@ -484,6 +484,13 @@ public class CreateTourismBusTours {
 //				tourStart.setCoord(hotelFacility.getCoord());
 				tourStart.setEndTime(startTime);
 				tourStart.setMaximumDuration(0.5 * 3600);
+				
+				//add 1 parking slot for every bus at hotel
+//				if (!hotelFacility.getActivityOptions().containsKey("parking"))
+//					hotelFacility.createAndAddActivityOption("parking").setCapacity(1.);
+//				else
+//					hotelFacility.getActivityOptions().get("parking").setCapacity(hotelFacility.getActivityOptions().get("parking").getCapacity()+1);
+
 				scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(startActivityName)
 						.setTypicalDuration(0.5 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
 				plan.addActivity(tourStart);
@@ -503,6 +510,12 @@ public class CreateTourismBusTours {
 					String getOffActivityName = stopActivityName + "_GetOff";
 					Activity tourStopGetOff = populationFactory.createActivityFromActivityFacilityId(getOffActivityName,
 							attractionFacility.getId());
+					Id<Link> linkIdTourStop = getNearstLink(links, attractionFacility.getCoord());
+					attractionFacility.setLinkId(linkIdTourStop);
+					
+					// add one parking slot at activity 
+//					if (!attractionFacility.getActivityOptions().containsKey("parking"))
+//						attractionFacility.createAndAddActivityOption("parking").setCapacity(1.);
 					scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getOffActivityName)
 							.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
 					tourStopGetOff.getAttributes().putAttribute("parking", "noParking");
