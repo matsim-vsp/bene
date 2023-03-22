@@ -73,7 +73,6 @@ import org.matsim.contrib.freight.carrier.Tour;
 import org.matsim.contrib.freight.carrier.Tour.Builder;
 import org.matsim.contrib.freight.controler.CarrierModule;
 import org.matsim.contrib.freight.utils.FreightUtils;
-import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.ControlerConfigGroup;
@@ -104,6 +103,8 @@ import org.matsim.facilities.ActivityOptionImpl;
 import org.matsim.facilities.MatsimFacilitiesReader;
 import org.matsim.parking.parkingsearch.ParkingSearchStrategy;
 import org.matsim.parking.parkingsearch.ParkingUtils;
+import org.matsim.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
+import org.matsim.parking.parkingsearch.evaluation.ParkingSlotVisualiserBus;
 import org.matsim.parking.parkingsearch.sim.ParkingSearchConfigGroup;
 import org.matsim.parking.parkingsearch.sim.SetupParking_new;
 import org.matsim.vehicles.CostInformation;
@@ -189,7 +190,7 @@ public class CreateTourismBusTours {
 			@Override
 			public void install() {
 				bind(AnalysisMainModeIdentifier.class).to(TransportPlanningMainModeIdentifier.class);
-				ParkingSlotVisualiser visualiser = new ParkingSlotVisualiser(scenario);
+				ParkingSlotVisualiser visualiser = new ParkingSlotVisualiserBus(scenario);
 				addEventHandlerBinding().toInstance(visualiser);
 				addControlerListenerBinding().toInstance(visualiser);
 			}
