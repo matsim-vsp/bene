@@ -25,6 +25,7 @@ import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.TransportMode;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
+import org.matsim.api.core.v01.population.Activity;
 import org.matsim.api.core.v01.population.Leg;
 import org.matsim.api.core.v01.population.Plan;
 import org.matsim.api.core.v01.population.PlanElement;
@@ -108,15 +109,18 @@ public class NearestParkingSpotAgentLogic extends ParkingAgentLogic {
 		Leg currentPlannedLeg = (Leg) currentPlanElement;
 		Route plannedRoute = currentPlannedLeg.getRoute();
 		NetworkRoute actualRoute = this.parkingRouter.getRouteFromParkingToDestination(plannedRoute.getEndLinkId(), now, agent.getCurrentLinkId());
+		actualRoute.setVehicleId(currentlyAssignedVehicleId);
+		if (!plannedRoute.getStartLinkId().equals(actualRoute.getStartLinkId()))
+			currentPlannedLeg.setRoute(actualRoute);
 		if ((this.parkingManager.unParkVehicleHere(currentlyAssignedVehicleId, agent.getCurrentLinkId(), now))||(isinitialLocation)){
 			this.lastParkActionState = LastParkActionState.CARTRIP;
 			isinitialLocation = false;
-			Leg currentLeg = (Leg) this.currentPlanElement;
-			PlanElement nextPlanElement = plan.getPlanElements().get(planIndex+1);
+//			Leg currentLeg = (Leg) this.currentPlanElement;
+			Activity nextPlanElement = (Activity) plan.getPlanElements().get(planIndex+1);
 			if (nextPlanElement.getAttributes().getAsMap().containsKey("parking") && nextPlanElement.getAttributes().getAttribute("parking").equals("noParking"))
 				this.lastParkActionState = LastParkActionState.WALKFROMPARK;
 			//this could be Car, Carsharing, Motorcylce, or whatever else mode we have, so we want our leg to reflect this.
-			return new NearestParkingDynLeg(currentLeg.getMode(), actualRoute, nextPlanElement, parkingLogic, parkingManager, currentlyAssignedVehicleId, timer, events);
+			return new NearestParkingDynLeg(currentPlannedLeg, actualRoute, nextPlanElement, parkingLogic, parkingManager, currentlyAssignedVehicleId, timer, events);
 		}
 		else throw new RuntimeException("parking location mismatch");
 		
