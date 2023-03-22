@@ -462,6 +462,19 @@ public class CreateTourismBusTours {
 				Id<Link> hotelLinkId = getNearstLink(links, hotelFacility.getCoord());
 				hotelFacility.setLinkId(hotelLinkId);
 				String tourName = newPerson.getId().toString();
+				double startTime = random.nextDouble(10 * 3600, 14 * 3600);
+//				Activity depot = populationFactory.createActivityFromLinkId("depot", hotelLinkId);
+//				depot.getAttributes().putAttribute("parking", "noParking");
+//				depot.setStartTime(0.);
+//				depot.setEndTime(startTime);
+//				if (!scenario.getConfig().planCalcScore().getActivityParams().contains(depot.getType()))
+//					scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(depot.getType())
+//							.setTypicalDuration(0.5 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
+//				plan.addActivity(depot);
+//
+//				Leg legActivity = populationFactory.createLeg("car");
+//				plan.addLeg(legActivity);
+				
 				String startActivityName = tourName + "_Start_" + hotelFacility.getDesc();
 				Activity tourStart = populationFactory.createActivityFromActivityFacilityId(startActivityName,
 						hotelFacility.getId());
