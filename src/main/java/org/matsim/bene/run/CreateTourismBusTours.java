@@ -528,7 +528,7 @@ public class CreateTourismBusTours {
 					Activity parkingActivity = populationFactory.createActivityFromLinkId(ParkingUtils.PARKACTIVITYTYPE + "_activity", linkIdTourStop);
 //					Activity parkingActivity = populationFactory.createActivityFromActivityFacilityId(ParkingUtils.PARKACTIVITYTYPE + "_activity", nearstParkingFacility.getId());
 					parkingActivity.setMaximumDuration(2 * 3600);
-					parkingActivity.setLinkId(nearstParkingFacility.getLinkId());
+//					parkingActivity.setLinkId(nearstParkingFacility.getLinkId());
 					parkingActivity.getAttributes().putAttribute("parking", "withParking");
 					plan.addActivity(parkingActivity);
 					plan.addLeg(legActivity);
