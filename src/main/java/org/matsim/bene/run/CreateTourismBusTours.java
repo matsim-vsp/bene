@@ -301,8 +301,8 @@ public class CreateTourismBusTours {
 				ActivityFacilitiesFactory activityFacilityFactory = new ActivityFacilitiesFactoryImpl();
 				ActivityFacility newActivityFacility = activityFacilityFactory.createActivityFacility(facilityId,
 						hotspotCoord);
-				
-				((ActivityFacilityImpl) newActivityFacility).addActivityOption(new ActivityOptionImpl("attraction"));
+
+				newActivityFacility.addActivityOption(new ActivityOptionImpl("attraction"));
 				scenario.getActivityFacilities().addActivityFacility(newActivityFacility);
 				attractionsForHotspots.computeIfAbsent(hotspotCoord, k -> new ArrayList<>()).add(newActivityFacility.getId());
 			}
