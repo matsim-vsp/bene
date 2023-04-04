@@ -207,9 +207,6 @@ public class ParkingSlotVisualiser implements PersonEntersVehicleEventHandler, P
 		this.finishDay();
 		this.plotSlotOccupation(path);
 	}
-
-
-	
 }
 
 class ParkingSlotManager{

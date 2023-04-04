@@ -33,7 +33,7 @@ public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements A
 
 	@Override
     public void handleEvent(StartParkingSearchEvent event) {
-		vehicleIsLookingForParking.add(event.getVehicleId().toString());
+		this.vehicleIsLookingForParking.add(event.getVehicleId().toString());
     }
 	
 	@Override
@@ -73,7 +73,7 @@ public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements A
 	@Override
 	public void handleEvent(ActivityEndEvent event) {
 		if (event.getActType().equals(ParkingUtils.PARKACTIVITYTYPE))
-			vehicleIsLookingForParking.remove(event.getPersonId().toString());
+			this.vehicleIsLookingForParking.remove(event.getPersonId().toString());
 		
 	}
 }

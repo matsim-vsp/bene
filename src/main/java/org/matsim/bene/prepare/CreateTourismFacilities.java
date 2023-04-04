@@ -19,18 +19,18 @@
  * *********************************************************************** */
 package org.matsim.bene.prepare;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.matsim.contrib.accessibility.FacilityTypes;
+import org.matsim.contrib.accessibility.osm.CombinedOsmReader;
+import org.matsim.core.utils.geometry.transformations.TransformationFactory;
+import org.matsim.facilities.ActivityFacilityImpl;
+import org.matsim.facilities.ActivityOptionImpl;
+
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
-
-import org.apache.log4j.Logger;
-import org.matsim.contrib.accessibility.FacilityTypes;
-import org.matsim.contrib.accessibility.osm.CombinedOsmReader;
-import org.matsim.core.utils.geometry.transformations.TransformationFactory;
-import org.matsim.facilities.ActivityFacility;
-import org.matsim.facilities.ActivityFacilityImpl;
-import org.matsim.facilities.ActivityOptionImpl;
 
 /**
  * @author Ricardo
@@ -38,7 +38,7 @@ import org.matsim.facilities.ActivityOptionImpl;
  */
 public class CreateTourismFacilities {
 
-	final private static Logger log = Logger.getLogger(CreateTourismFacilities.class);
+	final private static Logger log = LogManager.getLogger(CreateTourismFacilities.class);
 
 	public static void main(String[] args) {
 
@@ -47,7 +47,6 @@ public class CreateTourismFacilities {
 		String outputBase = "output/";
 
 		String facilityFile = outputBase + "tourismFacilities.xml";
-//		String attributeFile = outputBase + "hotelFacilitiy_attributes.xml";
 
 		log.info("Parsing land use from OpenStreetMap.");
 
@@ -74,7 +73,6 @@ public class CreateTourismFacilities {
 							activityImpl.setDesc(activityImpl.getDesc().replace(" ", ""));
 					});
 			combinedOsmReader.writeFacilities(facilityFile);
-//			combinedOsmReader.writeFacilityAttributes(attributeFile);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
