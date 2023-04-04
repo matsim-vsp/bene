@@ -65,9 +65,9 @@ import static org.matsim.contrib.emissions.Pollutant.*;
  * @author Ruan J. Gräbe (rgraebe)
 */
 
-public class RunAfterSimnAnalysisBene implements MATSimAppCommand {
+public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 
-	private static final Logger log = LogManager.getLogger(RunAfterSimnAnalysisBene.class);
+	private static final Logger log = LogManager.getLogger(RunAfterSimAnalysisBene.class);
 	private final String runDirectory;
 	private final String runId;
 	private final String hbefaWarmFile;
@@ -75,16 +75,16 @@ public class RunAfterSimnAnalysisBene implements MATSimAppCommand {
 	private final String analysisOutputDirectory;
 	static List<Pollutant> pollutants2Output = Arrays.asList(CO2_TOTAL, NOx, PM, PM_non_exhaust, FC);
 
-	public RunAfterSimnAnalysisBene(String runDirectory, String runId, String hbefaFileWarm, String hbefaFileCold, String analysisOutputDirectory) {
+	public RunAfterSimAnalysisBene(String runDirectory, String runId, String hbefaFileWarm, String hbefaFileCold, String analysisOutputDirectory) {
 		this.runDirectory = runDirectory;
 		this.runId = runId;
 		this.hbefaWarmFile = hbefaFileWarm;
 		this.hbefaColdFile = hbefaFileCold;
-		
+
 		if (!analysisOutputDirectory.endsWith("/")) analysisOutputDirectory = analysisOutputDirectory + "/";
 		this.analysisOutputDirectory = analysisOutputDirectory;
 	}
-	
+
 	public static void main(String[] args) {
 
 		if (args.length == 2) {
@@ -96,8 +96,8 @@ public class RunAfterSimnAnalysisBene implements MATSimAppCommand {
 
 			String hbefaFileWarm = hbefaPath + "7eff8f308633df1b8ac4d06d05180dd0c5fdf577.enc";
 			String hbefaFileCold = hbefaPath + "ColdStart_Vehcat_2020_Average_withHGVetc.csv.enc";
-			
-			RunAfterSimnAnalysisBene analysis = new RunAfterSimnAnalysisBene(
+
+			RunAfterSimAnalysisBene analysis = new RunAfterSimAnalysisBene(
 					runDirectory,
 					runId,
 					hbefaFileWarm,
@@ -152,7 +152,7 @@ public class RunAfterSimnAnalysisBene implements MATSimAppCommand {
 		config.parallelEventHandling().setNumberOfThreads(null);
 		config.parallelEventHandling().setEstimatedNumberOfEvents(null);
 		config.global().setNumberOfThreads(4);
-		
+
 		EmissionsConfigGroup eConfig = ConfigUtils.addOrGetModule(config, EmissionsConfigGroup.class);
 		eConfig.setDetailedVsAverageLookupBehavior(DetailedVsAverageLookupBehavior.directlyTryAverageTable);
 		eConfig.setAverageColdEmissionFactorsFile(this.hbefaColdFile);
@@ -160,7 +160,7 @@ public class RunAfterSimnAnalysisBene implements MATSimAppCommand {
 		eConfig.setNonScenarioVehicles(NonScenarioVehicles.ignore);
 
 		Scenario scenario = ScenarioUtils.loadScenario(config);
-		
+
 		// network
 		new VspHbefaRoadTypeMapping().addHbefaMappings(scenario.getNetwork());
 		log.info("Using integrated road types");
@@ -187,7 +187,7 @@ public class RunAfterSimnAnalysisBene implements MATSimAppCommand {
         EmissionsOnLinkHandler emissionsOnLinkEventHandler = new EmissionsOnLinkHandler();
 		eventsManager.addHandler(emissionsOnLinkEventHandler);
 		// link events handler
-		LinkDemandEventHandler linkDemandEventHandler = new LinkDemandEventHandler();
+		LinkDemandEventHandler linkDemandEventHandler = new LinkDemandEventHandler(scenario.getNetwork());
 		eventsManager.addHandler(linkDemandEventHandler);
 
         eventsManager.initProcessing();
@@ -217,22 +217,22 @@ public class RunAfterSimnAnalysisBene implements MATSimAppCommand {
 		Map<Id<Link>, AtomicLong> linkId2vehicles = linkDemandEventHandler.getLinkId2demand();
 		Map<Id<Link>, AtomicLong> linkId2vehicles_parkingSearch = linkDemandEventHandler.getLinkId2demand_parkingSearch();
 		Map<Id<Link>, AtomicLong> linkId2vehicles_parkingTotal = linkDemandEventHandler.getLinkId2demand_parkingTotal();
-			try {
-				BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-				bw.write("linkId;demandPerDay;demandPerDay_parkingSearch;demandPerDay_parkingTotal");
-				bw.newLine();
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			bw.write("linkId;demandPerDay;demandPerDay_parkingSearch;demandPerDay_parkingTotal");
+			bw.newLine();
 
-				for (Id<Link> linkId : linkId2vehicles.keySet()) {
-					int volume = linkId2vehicles.get(linkId).intValue();
-					int volume_search = linkId2vehicles_parkingSearch.getOrDefault(linkId, new AtomicLong()).intValue();
-					int volume_parkingTotal = linkId2vehicles_parkingTotal.getOrDefault(linkId, new AtomicLong()).intValue();
-					bw.write(linkId + ";" + volume + ";" + volume_search + ";" + volume_parkingTotal);
-					bw.newLine();
-				}
-				bw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			for (Id<Link> linkId : linkId2vehicles.keySet()) {
+				int volume = linkId2vehicles.get(linkId).intValue();
+				int volume_search = linkId2vehicles_parkingSearch.getOrDefault(linkId, new AtomicLong()).intValue();
+				int volume_parkingTotal = linkId2vehicles_parkingTotal.getOrDefault(linkId, new AtomicLong()).intValue();
+				bw.write(linkId + ";" + volume + ";" + volume_search + ";" + volume_parkingTotal);
+				bw.newLine();
 			}
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void createEmissionAnalysis(String linkEmissionPerMOutputFile, String linkEmissionOutputFile, String linkEmissionPerMOutputFile_parkingTotal, String linkEmissionOutputFile_parkingTotal, String linkEmissionPerMOutputFile_parkingSearch, String linkEmissionOutputFile_parkingSearch, Scenario scenario, EmissionsOnLinkHandler emissionsOnLinkEventHandler) throws IOException {
