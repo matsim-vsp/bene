@@ -9,7 +9,7 @@ files:
   base: 
     file: "bus.emissionsPerLink.csv"
   parking:
-    file: "bus.emissionsPerLink_parking.csv"
+    file: "bus.emissionsPerLink_parkingTotal.csv"
 
 # These are text entry boxes in the UI
 userEntries:
@@ -34,8 +34,8 @@ userEntries:
 # these are evaluated top down!
 calculations: 
     #base_costs: '({base.CO2_TOTAL}*CO2_cost_rate)/1000'
-  base_costs: '({base.CO2_TOTAL}*CO2_cost_rate + {base.NOx}*NOx_cost_rate + {base.PM}*PM_exhaust_cost_rate + {base.PM_non_exhaust}*PM_n_exhaust_cost_rate)/1000'
-  parking_costs: '({parking.CO2_TOTAL}*CO2_cost_rate + {parking.NOx}*NOx_cost_rate + {parking.PM}*PM_exhaust_cost_rate + {parking.PM_non_exhaust}*PM_n_exhaust_cost_rate)/1000'
+  base_costs: '({base.CO2_TOTAL}*CO2_cost_rate + {base.NOx}*NOx_cost_rate + {base.PM}*PM_exhaust_cost_rate + {base.PM_non_exhaust}*PM_n_exhaust_cost_rate)/1000000'
+  parking_costs: '({parking.CO2_TOTAL}*CO2_cost_rate + {parking.NOx}*NOx_cost_rate + {parking.PM}*PM_exhaust_cost_rate + {parking.PM_non_exhaust}*PM_n_exhaust_cost_rate)/1000000'
 
 # Table rows
 outputs:

@@ -7,7 +7,7 @@ header:
   description_de: "Beachten Sie, dass der öffentliche Verkehr unberücksichtigt bleibt. Standardmäßig wird die Differenz zum Basisfall für die Tagesmengen angezeigt. Sie können auch Werte für spezifische Zeitfenster anzeigen lassen. Sie können für jede Visualisierung einzeln die Breite und Farbe konfigurieren, um bspw. die absoluten Szenariowerte anzuzeigen.  Passen Sie den Skalierungsfaktor für die Breite entsprechend an!"
 
 layout:
-  Reallab2030:
+  Sum:
     - type: "links"
       title: "Coach Services Berlin"
       description: ""
@@ -36,3 +36,60 @@ layout:
                 columnName: demandPerDay
                 scaleFactor: 500
 
+  ParkingTotal:
+    - type: "links"
+      title: "Coach Services Berlin"
+      description: ""
+      #width: 4
+      height: 15
+      props:
+ #       thumbnail: "thumbnails/thumbnail-accident-costs.png"
+        network: ../bus.output_network.xml.gz
+        projection: EPSG:31468
+  #      showDifferences: false
+        center: 13.4010, 52.51892
+        zoom: 11
+#        sampleRate: 1
+        datasets:
+            csvBase: bus.link_volume.csv
+        display:
+            color:
+                dataset: csvBase
+                columnName: demandPerDay_parkingTotal
+                colorRamp:
+                    ramp: Viridis
+                    reverse: false
+                    steps: 7
+            width:
+                dataset: csvBase
+                columnName: demandPerDay_parkingTotal
+                scaleFactor: 500
+
+  ParkingSearch:
+    - type: "links"
+      title: "Coach Services Berlin - Parking Search"
+      description: ""
+      #width: 4
+      height: 15
+      props:
+ #       thumbnail: "thumbnails/thumbnail-accident-costs.png"
+        network: ../bus.output_network.xml.gz
+        projection: EPSG:31468
+  #      showDifferences: false
+        center: 13.4010, 52.51892
+        zoom: 11
+#        sampleRate: 1
+        datasets:
+            csvBase: bus.link_volume.csv
+        display:
+            color:
+                dataset: csvBase
+                columnName: demandPerDay_parkingSearch
+                colorRamp:
+                    ramp: Viridis
+                    reverse: false
+                    steps: 7
+            width:
+                dataset: csvBase
+                columnName: demandPerDay_parkingSearch
+                scaleFactor: 500

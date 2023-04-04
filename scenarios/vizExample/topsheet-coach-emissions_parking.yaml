@@ -7,7 +7,7 @@ description: 'description'
 # Input files -------------------------
 files:
   costTable:
-    file: "bus.emissionsPerLink_parking.csv"
+    file: "bus.emissionsPerLink_parkingTotal.csv"
 
 # These are text entry boxes in the UI
     

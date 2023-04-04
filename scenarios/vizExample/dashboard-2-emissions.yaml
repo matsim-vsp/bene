@@ -63,16 +63,16 @@ layout:
         #showDifferences: true
         #sampleRate: 10
         datasets:
-            emissionPerLinkPerM_parking: bus.emissionsPerLinkPerM_parking.csv
+            emissionPerLinkPerM_parkingTotal: bus.emissionsPerLinkPerM_parkingTotal.csv
         display:
             color:
-                dataset: emissionPerLinkPerM_parking
+                dataset: emissionPerLinkPerM_parkingTotal
                 columnName: CO2_TOTAL [g/m]
                 colorRamp:
                     ramp: Viridis
                     reverse: false
                     steps: 9
             width:
-                dataset: emissionPerLinkPerM_parking
+                dataset: emissionPerLinkPerM_parkingTotal
                 columnName: CO2_TOTAL [g/m]
                 scaleFactor: 8
