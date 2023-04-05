@@ -18,6 +18,7 @@ package org.matsim.bene.analysis;
  *                                                                         *
  * *********************************************************************** */
 
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.matsim.api.core.v01.Id;
@@ -142,6 +143,9 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 		final String linkDemandOutputFile_parkingSearch = analysisOutputDirectory + runId + ".link_volume.csv";
 		log.info("Writing volume per link to: {}", linkDemandOutputFile_parkingSearch);
 
+		final String general_resultsOutputFile = analysisOutputDirectory + runId + ".general_results.csv";
+		log.info("Writing general results to: {}", general_resultsOutputFile);
+
 		Config config = ConfigUtils.createConfig();
 		config.vehicles().setVehiclesFile(String.valueOf(globFile(Path.of(runDirectory), runId, "output_vehicles")));
 		config.network().setInputFile(String.valueOf(globFile(Path.of(runDirectory), runId, "network")));
@@ -205,10 +209,26 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 
 		createEmissionAnalysis(linkEmissionPerMOutputFile, linkEmissionOutputFile, linkEmissionPerMOutputFile_parkingTotal, linkEmissionOutputFile_parkingTotal, linkEmissionPerMOutputFile_parkingSearch, linkEmissionOutputFile_parkingSearch, scenario, emissionsOnLinkEventHandler);
 
-
 		createLinkVolumeAnalysis(linkDemandOutputFile_parkingSearch, linkDemandEventHandler);
 
+		createGeneralResults(general_resultsOutputFile, linkDemandEventHandler);
+
 		return 0;
+	}
+
+	private void createGeneralResults(String generalResultsOutputFile, LinkDemandEventHandler linkDemandEventHandler) {
+		File file = new File(generalResultsOutputFile);
+		Object2DoubleMap<String> drivenDistances = linkDemandEventHandler.getDrivenDistances();
+
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			bw.write("vehicles;drivenDistance;drivenDistance_parkingSearch;drivenDistance_parkingTotal");
+			bw.newLine();
+			bw.write(";" + drivenDistances.getDouble("total") + ";" + drivenDistances.getDouble("parkingSearch") + ";" + drivenDistances.getDouble("parkingTotal"));
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void createLinkVolumeAnalysis(String fileName, LinkDemandEventHandler linkDemandEventHandler) {

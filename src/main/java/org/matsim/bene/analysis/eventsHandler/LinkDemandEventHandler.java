@@ -19,6 +19,8 @@
  * *********************************************************************** */
 package org.matsim.bene.analysis.eventsHandler;
 
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
+import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.matsim.api.core.v01.Id;
@@ -27,6 +29,7 @@ import org.matsim.api.core.v01.events.PersonLeavesVehicleEvent;
 import org.matsim.api.core.v01.events.handler.LinkLeaveEventHandler;
 import org.matsim.api.core.v01.events.handler.PersonLeavesVehicleEventHandler;
 import org.matsim.api.core.v01.network.Link;
+import org.matsim.api.core.v01.network.Network;
 import org.matsim.parking.parkingsearch.events.ReserveParkingLocationEvent;
 import org.matsim.parking.parkingsearch.events.ReserveParkingLocationEventHandler;
 import org.matsim.parking.parkingsearch.events.SelectNewParkingLocationEvent;
@@ -51,10 +54,13 @@ public class LinkDemandEventHandler
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles = new HashMap<>();
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles_parkingTotal = new HashMap<>();
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles_parkingSearch = new HashMap<>();
+	private final Object2DoubleMap<String> drivenDistances = new Object2DoubleOpenHashMap<>();
+	private final Network network;
 	private final List<Id<Vehicle>> vehicleIsInParkingSearch = new ArrayList<>();
 	private final List<Id<Vehicle>> vehicleBetweenPassengerDropOffAndPickup = new ArrayList<>();
 
-	public LinkDemandEventHandler() {
+	public LinkDemandEventHandler(Network network) {
+		this.network = network;
 	}
 
 	@Override
@@ -64,16 +70,23 @@ public class LinkDemandEventHandler
 		this.linkId2vehicles_parkingTotal.clear();
 		this.vehicleIsInParkingSearch.clear();
 		this.vehicleBetweenPassengerDropOffAndPickup.clear();
+		this.drivenDistances.clear();
 	}
 
 	@Override
 	public void handleEvent(LinkLeaveEvent event) {
 		linkId2vehicles.computeIfAbsent(event.getLinkId(), (k) -> new AtomicLong()).getAndIncrement();
-		if (vehicleIsInParkingSearch.contains(event.getVehicleId()))
+		drivenDistances.mergeDouble("total", network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
+		if (vehicleIsInParkingSearch.contains(event.getVehicleId())) {
 			linkId2vehicles_parkingSearch.computeIfAbsent(event.getLinkId(), (k) -> new AtomicLong()).getAndIncrement();
-		if (vehicleBetweenPassengerDropOffAndPickup.contains(event.getVehicleId()))
+			drivenDistances.mergeDouble("parkingSearch", network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
+		}
+		if (vehicleBetweenPassengerDropOffAndPickup.contains(event.getVehicleId())) {
 			linkId2vehicles_parkingTotal.computeIfAbsent(event.getLinkId(), (k) -> new AtomicLong()).getAndIncrement();
+			drivenDistances.mergeDouble("parkingTotal", network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
+		}
 	}
+
 	public void handleEvent(SelectNewParkingLocationEvent event){
 		vehicleIsInParkingSearch.add(event.getVehicleId());
 		vehicleBetweenPassengerDropOffAndPickup.add(event.getVehicleId());
@@ -100,4 +113,7 @@ public class LinkDemandEventHandler
 		return linkId2vehicles_parkingTotal;
 	}
 
+	public Object2DoubleMap<String> getDrivenDistances() {
+		return drivenDistances;
+	}
 }
