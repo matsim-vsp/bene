@@ -69,7 +69,7 @@ import static org.matsim.contrib.emissions.Pollutant.*;
 public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 
 	private static final Logger log = LogManager.getLogger(RunAfterSimAnalysisBene.class);
-	private final String runDirectory;
+	private final Path runDirectory;
 	private final String runId;
 	private final String hbefaWarmFile;
 	private final String hbefaColdFile;
@@ -77,7 +77,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 	static List<Pollutant> pollutants2Output = Arrays.asList(CO2_TOTAL, NOx, PM, PM_non_exhaust, FC);
 
 	public RunAfterSimAnalysisBene(String runDirectory, String runId, String hbefaFileWarm, String hbefaFileCold, String analysisOutputDirectory) {
-		this.runDirectory = runDirectory;
+		this.runDirectory = Path.of(runDirectory);
 		this.runId = runId;
 		this.hbefaWarmFile = hbefaFileWarm;
 		this.hbefaColdFile = hbefaFileCold;
@@ -118,7 +118,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 	public Integer call() throws Exception {
 		log.info("++++++++++++++++++ Start Analysis for Bene simulations ++++++++++++++++++++++++++++");
 
-		final String eventsFile = globFile(Path.of(runDirectory), runId, "output_events");
+		final String eventsFile = globFile(runDirectory, runId, "output_events");
 		File dir = new File(analysisOutputDirectory);
 		if ( !dir.exists() ) { dir.mkdir(); }
 		final String emissionEventOutputFile = analysisOutputDirectory + runId + ".emission.events.offline.xml.gz";
@@ -147,8 +147,8 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 		log.info("Writing general results to: {}", general_resultsOutputFile);
 
 		Config config = ConfigUtils.createConfig();
-		config.vehicles().setVehiclesFile(String.valueOf(globFile(Path.of(runDirectory), runId, "output_vehicles")));
-		config.network().setInputFile(String.valueOf(globFile(Path.of(runDirectory), runId, "network")));
+		config.vehicles().setVehiclesFile(String.valueOf(globFile(runDirectory, runId, "output_vehicles")));
+		config.network().setInputFile(String.valueOf(globFile(runDirectory, runId, "network")));
 
 		config.global().setCoordinateSystem(TransformationFactory.DHDN_GK4);
 		log.info("Using coordinate system '{}'", config.global().getCoordinateSystem());
