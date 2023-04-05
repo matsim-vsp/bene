@@ -10,6 +10,9 @@ import org.matsim.contrib.parking.parkingsearch.search.ParkingSearchLogic;
 import org.matsim.core.api.experimental.events.EventsManager;
 import org.matsim.core.mobsim.framework.MobsimTimer;
 import org.matsim.core.population.routes.NetworkRoute;
+import org.matsim.core.utils.collections.Tuple;
+import org.matsim.parking.parkingsearch.events.ReserveParkingLocationEvent;
+import org.matsim.parking.parkingsearch.events.SelectNewParkingLocationEvent;
 import org.matsim.parking.parkingsearch.events.StartParkingSearchEvent;
 import org.matsim.parking.parkingsearch.search.NearestParkingSpotSearchLogic;
 import org.matsim.vehicles.Vehicle;
@@ -26,6 +29,7 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 	private boolean reachedDestinationWithoutParking = false;
 	private final Activity followingActivity;
 	private final Leg currentPlannedLeg;
+	private Id<Link> nextSelectedParkingLink = null;
 	
 	public NearestParkingDynLeg(Leg currentPlannedLeg, NetworkRoute route, Activity followingActivity, ParkingSearchLogic logic,
 															ParkingSearchManager parkingManager, Id<Vehicle> vehicleId, MobsimTimer timer, EventsManager events) {	
@@ -49,10 +53,14 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 					this.events
 							.processEvent(new StartParkingSearchEvent(timer.getTimeOfDay(), vehicleId, currentLinkId));
 					hasFoundParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, currentLinkId);
+					if (hasFoundParking)
+						this.events.processEvent(new ReserveParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, currentLinkId));
 				}
 			}
 		} else if (followingActivity.getLinkId().equals(newLinkId)){
 			hasFoundParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, currentLinkId);
+			if (hasFoundParking)
+				this.events.processEvent(new ReserveParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, currentLinkId));
 		}
 	}
 
@@ -78,11 +86,21 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 				this.logic.reset();
 				return null;
 			} else {
+				if (this.currentAndNextParkLink != null) {
+					if (currentAndNextParkLink.getFirst().equals(currentLinkId)) {
+						// we already calculated this
+						return currentAndNextParkLink.getSecond();
+					}
+				}
 				// need to find the next link
 				Id<Link> nextLinkId = ((NearestParkingSpotSearchLogic) this.logic).getNextLink(currentLinkId, route.getEndLinkId(), vehicleId, mode, timer.getTimeOfDay());
 				Id<Link> nextPlanedParkingLink = ((NearestParkingSpotSearchLogic) this.logic).getNextParkingLocation();
-//				if (nextLinkId.toString().equals("324"))
-//					System.out.println("");
+				if (nextSelectedParkingLink == null || !nextSelectedParkingLink.equals(nextPlanedParkingLink)){
+					nextSelectedParkingLink = nextPlanedParkingLink;
+					this.events
+							.processEvent(new SelectNewParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, nextSelectedParkingLink));
+				}
+				currentAndNextParkLink = new Tuple<Id<Link>, Id<Link>>(currentLinkId, nextLinkId);
 				followingActivity.setLinkId(nextPlanedParkingLink);
 				currentPlannedLeg.setRoute(((NearestParkingSpotSearchLogic) this.logic).getNextRoute());
 				return nextLinkId;
