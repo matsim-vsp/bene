@@ -11,8 +11,8 @@ layout:
     - type: "links"
       title: "Coach Services Berlin"
       description: ""
-      #width: 4
-      height: 15
+      width: 2
+      height: 8
       props:
  #       thumbnail: "thumbnails/thumbnail-accident-costs.png"
         network: ../bus.output_network.xml.gz
@@ -35,7 +35,11 @@ layout:
                 dataset: csvBase
                 columnName: demandPerDay
                 scaleFactor: 500
-
+    - title: "General results"
+      description: "TODO"
+      type: 'topsheet'
+      props:
+        configFile: "topsheet-coach-links.yaml"
   ParkingTotal:
     - type: "links"
       title: "Coach Services Berlin"

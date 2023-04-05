@@ -1,0 +1,48 @@
+# Topsheet Test
+title: General results
+title_en: Results
+title_de: Ergebnisse
+description: 'description'
+
+# Input files -------------------------
+files:
+  base:
+    file: "bus.general_results.csv"
+  #parkingTotal:
+    #file: "bus.emissionsPerLink_parkingTotal.csv"
+
+# These are text entry boxes in the UI
+    
+# Calculations ------------------------
+# these are evaluated top down!
+calculations: 
+  total_m: '{base.drivenDistance}'
+  total_km: 'round(total_m/100)/10'
+  parkingSearch_m: '{base.drivenDistance_parkingSearch}'
+  parkingSearch_km: 'round(parkingSearch_m/100)/10'
+  parkingTotal_m: '{base.drivenDistance_parkingTotal}'
+  parkingTotal_km: 'round(parkingTotal_m/100)/10'
+
+  parkingSearch_pct: 'round(parkingSearch_m / total_m *1000)/10'
+  parkingTotal_pct: 'round(parkingTotal_m / total_m *1000)/10'
+  parkingSearchOfParking_pct: 'round(parkingSearch_m / parkingTotal_m *1000)/10'
+# Table rows
+outputs:
+  - title_en: Total driven distance [km]
+    title_de: Gefahrene Strecke [km]
+    value: total_km
+  - title_en: Distance parking search [km]
+    title_de: Strecke Parkplatzsuche [km]
+    value: parkingSearch_km
+  - title_en: Share of parking search [%]
+    title_de: Anteil der Parkplatzsuche [%]
+    value: parkingSearch_pct
+  - title_en: Distance parking total [km]
+    title_de: Strecke Parkplatzsuche (gesamt) [km]
+    value: parkingTotal_km
+  - title_en: Share of parking total [%]
+    title_de: Anteil der Parkplatzsuche (gesamt) [%]
+    value: parkingTotal_pct
+  - title_en: Share of parking search while Parking [%]
+    title_de: Anteil der Parkplatzsuche (Parken) [%]
+    value: parkingSearchOfParking_pct
