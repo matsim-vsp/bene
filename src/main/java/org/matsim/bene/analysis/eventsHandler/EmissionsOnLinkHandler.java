@@ -44,8 +44,6 @@ public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmi
             map.put( entry.getKey(), entry.getValue() ) ;
         }
         handleEmissionEvent(event.getTime(), event.getLinkId(), map, event.getVehicleId() );
-		if (event.getTime() == 47800.)
-			System.out.println();
     }
 
     @Override
@@ -105,7 +103,6 @@ public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmi
 	public Map<Id<Link>, Map<Pollutant, Double>> getLink2pollutants() {
 		return link2pollutants;
 	}
-	
 	public Map<Id<Link>, Map<Pollutant, Double>> getLink2pollutantsParkingSearch() {
 		return link2pollutantsParkingSearch;
 	}

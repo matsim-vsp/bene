@@ -36,7 +36,7 @@ import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.*;
 import org.matsim.application.options.ShpOptions;
 import org.matsim.application.options.ShpOptions.Index;
-import org.matsim.bene.analysis.RunAfterSimnAnalysisBene;
+import org.matsim.bene.analysis.RunAfterSimAnalysisBene;
 import org.matsim.contrib.freight.FreightConfigGroup;
 import org.matsim.contrib.freight.carrier.*;
 import org.matsim.contrib.freight.carrier.CarrierCapabilities.FleetSize;
@@ -107,7 +107,7 @@ public class CreateTourismBusTours {
 		String network = "../public-svn/matsim/scenarios/countries/de/berlin/berlin-v5.5-10pct/input/berlin-v5.5-network.xml.gz";
 		Path shapeFileZonePath = Path.of("original-input-data/shp/bezirke/bezirksgrenzen.shp");
 		String shapeCRS = "EPSG:4326";
-		String loactionHotspotsInformation = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspots.csv";
+		String locationHotspotsInformation = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspots.csv";
 		String hotspotsCRS = "EPSG:4326";
 
 		int numberOfTours = 1; //526;
@@ -130,7 +130,7 @@ public class CreateTourismBusTours {
 		createBusStartDistribution(busStartDistribution, numberOfTours);
 		createStopsPerTourDistribution(stopsPerTourDistribution, numberOfTours);
 		createStopsPerHotspotDistribution(stopsPerHotspotDistribution, stopsPerTourDistribution,
-				loactionHotspotsInformation, hotspotsCRS, config.global().getCoordinateSystem());
+				locationHotspotsInformation, hotspotsCRS, config.global().getCoordinateSystem());
 		if (infiniteParkingCapacitiesAtParkingSpaces)
 			setCapacitiesForSpacesToInfinite(scenario);
 
@@ -173,8 +173,7 @@ public class CreateTourismBusTours {
 		controler.getConfig().vspExperimental().setVspDefaultsCheckingLevel(VspDefaultsCheckingLevel.abort);
 		controler.run();
 
-		RunOfflineAirPollutionAnalysisByVehicleCategory.main(new String[] { scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId()});
-		RunLinkDemandAnalysis.main(new String[] { scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId()});
+		RunAfterSimAnalysisBene.main(new String[] { scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId()});
         try {
             FileUtils.copyDirectory(new File("scenarios/vizExample"), new File(scenario.getConfig().controler().getOutputDirectory()+"/simwrapper_analysis"));
         } catch (IOException e) {
@@ -215,7 +214,7 @@ public class CreateTourismBusTours {
 		Config config = ConfigUtils.createConfig(new ParkingSearchConfigGroup());
 		ParkingSearchConfigGroup configGroup = (ParkingSearchConfigGroup) config.getModules()
 				.get(ParkingSearchConfigGroup.GROUP_NAME);
-		configGroup.setParkingSearchStrategy(ParkingSearchStrategy.DistanceMemory);
+		configGroup.setParkingSearchStrategy(ParkingSearchStrategy.NearestParkingSpot);
 
 		FreightConfigGroup freightConfigGroup = ConfigUtils.addOrGetModule(config, FreightConfigGroup.class);
 		freightConfigGroup.setCarriersVehicleTypesFile("scenarios/vehicleTypes.xml");
@@ -283,7 +282,7 @@ public class CreateTourismBusTours {
 	}
 
 	private static void createStopsPerHotspotDistribution(HashMap<Coord, Integer> stopsPerHotspotDistribution,
-			HashMap<Integer, Integer> createStopsPerTourDistribution, String loactionHotspotsInformation,
+			HashMap<Integer, Integer> createStopsPerTourDistribution, String locationHotspotsInformation,
 			String hotspotsCRS, String globalCRS) throws IOException {
 
 		int totalNumberOfStops = 0;
@@ -293,7 +292,7 @@ public class CreateTourismBusTours {
 		}
 
 		CoordinateTransformation ts = TransformationFactory.getCoordinateTransformation(hotspotsCRS, globalCRS);
-		CSVParser parse = new CSVParser(Files.newBufferedReader(Path.of(loactionHotspotsInformation)),
+		CSVParser parse = new CSVParser(Files.newBufferedReader(Path.of(locationHotspotsInformation)),
 				CSVFormat.Builder.create(CSVFormat.TDF).setHeader().setSkipHeaderRecord(true).build());
 
 		for (CSVRecord record : parse) {
@@ -305,7 +304,7 @@ public class CreateTourismBusTours {
 			stopsPerHotspotDistribution.put(hotspotCoord, numberOfStopsForHotspot);
 			totalNumberOfStopsInTours += numberOfStopsForHotspot;
 		}
-		boolean addneededStops = false;
+		boolean addNeededStops = false;
 		while (totalNumberOfStopsInTours != totalNumberOfStops) {
 			ArrayList<Coord> listOfHotspotCoord = new ArrayList<>(stopsPerHotspotDistribution.keySet());
 			Coord hotspotCoord = listOfHotspotCoord.get(random.nextInt(listOfHotspotCoord.size()));
@@ -313,15 +312,15 @@ public class CreateTourismBusTours {
 
 			
 			if (totalNumberOfStopsInTours == 0)
-				addneededStops = true;
-			if (stopsForCoord == 0 && !addneededStops)
+				addNeededStops = true;
+			if (stopsForCoord == 0 && !addNeededStops)
 				continue;
 			if (totalNumberOfStopsInTours > totalNumberOfStops) {
 				stopsPerHotspotDistribution.replace(hotspotCoord, stopsPerHotspotDistribution.get(hotspotCoord) - 1);
 				totalNumberOfStopsInTours--;
 				continue;
 			}
-			if (totalNumberOfStopsInTours < totalNumberOfStops || addneededStops) {
+			if (totalNumberOfStopsInTours < totalNumberOfStops || addNeededStops) {
 				stopsPerHotspotDistribution.replace(hotspotCoord, stopsPerHotspotDistribution.get(hotspotCoord) + 1);
 				totalNumberOfStopsInTours++;
 			}
@@ -364,23 +363,23 @@ public class CreateTourismBusTours {
 
 	private static void createBusStartDistribution(HashMap<String, Integer> busStartDistribution, int numberOfTours) {
 
-		HashMap<String, Double> busStartPercetages = new HashMap<>();
-		busStartPercetages.put("Reinickendorf", 0.0158);
-		busStartPercetages.put("Charlottenburg-Wilmersdorf", 0.1932);
-		busStartPercetages.put("Treptow-Koepenick", 0.0215);
-		busStartPercetages.put("Pankow", 0.0367);
-		busStartPercetages.put("Neukoelln", 0.0292);
-		busStartPercetages.put("Lichtenberg", 0.0371);
-		busStartPercetages.put("Marzahn-Hellersdorf", 0.0066);
-		busStartPercetages.put("Spandau", 0.0194);
-		busStartPercetages.put("Steglitz-Zehlendorf", 0.0152);
-		busStartPercetages.put("Mitte", 0.4347);
-		busStartPercetages.put("Friedrichshain-Kreuzberg", 0.1304);
-		busStartPercetages.put("Tempelhof-Schoeneberg", 0.0601);
+		HashMap<String, Double> busStartPercentages = new HashMap<>();
+		busStartPercentages.put("Reinickendorf", 0.0158);
+		busStartPercentages.put("Charlottenburg-Wilmersdorf", 0.1932);
+		busStartPercentages.put("Treptow-Koepenick", 0.0215);
+		busStartPercentages.put("Pankow", 0.0367);
+		busStartPercentages.put("Neukoelln", 0.0292);
+		busStartPercentages.put("Lichtenberg", 0.0371);
+		busStartPercentages.put("Marzahn-Hellersdorf", 0.0066);
+		busStartPercentages.put("Spandau", 0.0194);
+		busStartPercentages.put("Steglitz-Zehlendorf", 0.0152);
+		busStartPercentages.put("Mitte", 0.4347);
+		busStartPercentages.put("Friedrichshain-Kreuzberg", 0.1304);
+		busStartPercentages.put("Tempelhof-Schoeneberg", 0.0601);
 
 		int sumTours = 0;
-		for (String area : busStartPercetages.keySet()) {
-			int toursForArea = (int) Math.round(numberOfTours * busStartPercetages.get(area));
+		for (String area : busStartPercentages.keySet()) {
+			int toursForArea = (int) Math.round(numberOfTours * busStartPercentages.get(area));
 			sumTours += toursForArea;
 			busStartDistribution.put(area, toursForArea);
 		}
@@ -432,7 +431,7 @@ public class CreateTourismBusTours {
 				Id<ActivityFacility> activityId = hotelKeyList.get(random.nextInt(hotelFacilitiesPerArea.get(area).size()));
 				ActivityFacilityImpl hotelFacility = (ActivityFacilityImpl) hotelFacilitiesPerArea.get(area)
 						.get(activityId);
-				Id<Link> hotelLinkId = getNearstLink(links, hotelFacility.getCoord());
+				Id<Link> hotelLinkId = getNearestLink(links, hotelFacility.getCoord());
 				hotelFacility.setLinkId(hotelLinkId);
 				String tourName = newPerson.getId().toString();
 				double startTime = random.nextDouble(10 * 3600, 14 * 3600);
@@ -483,7 +482,7 @@ public class CreateTourismBusTours {
 					String getOffActivityName = stopActivityName + "_GetOff";
 					Activity tourStopGetOff = populationFactory.createActivityFromActivityFacilityId(getOffActivityName,
 							attractionFacility.getId());
-					Id<Link> linkIdTourStop = getNearstLink(links, attractionFacility.getCoord());
+					Id<Link> linkIdTourStop = getNearestLink(links, attractionFacility.getCoord());
 					attractionFacility.setLinkId(linkIdTourStop);
 					
 					// add one parking slot at activity 
@@ -497,11 +496,11 @@ public class CreateTourismBusTours {
 					plan.addActivity(tourStopGetOff);
 					plan.addLeg(legActivity);
 					
-//					ActivityFacility nearstParkingFacility = findNearestParkingFacility(attractionFacility.getCoord(), activityFacilities);
+//					ActivityFacility nearestParkingFacility = findNearestParkingFacility(attractionFacility.getCoord(), activityFacilities);
 					Activity parkingActivity = populationFactory.createActivityFromLinkId(ParkingUtils.PARKACTIVITYTYPE + "_activity", linkIdTourStop);
-//					Activity parkingActivity = populationFactory.createActivityFromActivityFacilityId(ParkingUtils.PARKACTIVITYTYPE + "_activity", nearstParkingFacility.getId());
+//					Activity parkingActivity = populationFactory.createActivityFromActivityFacilityId(ParkingUtils.PARKACTIVITYTYPE + "_activity", nearestParkingFacility.getId());
 					parkingActivity.setMaximumDuration(2 * 3600);
-//					parkingActivity.setLinkId(nearstParkingFacility.getLinkId());
+//					parkingActivity.setLinkId(nearestParkingFacility.getLinkId());
 					parkingActivity.getAttributes().putAttribute("parking", "withParking");
 					plan.addActivity(parkingActivity);
 					plan.addLeg(legActivity);
@@ -562,7 +561,7 @@ public class CreateTourismBusTours {
 						.get(activityId);
 				String tourName = newCarrier.getId().toString();
 				Id<CarrierService> startActivityName = Id.create(tourName + "_Start_" + hotelFacility.getDesc(), CarrierService.class);
-				Id<Link> hotelLinkId = getNearstLink(links, hotelFacility.getCoord());
+				Id<Link> hotelLinkId = getNearestLink(links, hotelFacility.getCoord());
 
 				double startTimeStart = random.nextDouble(10 * 3600, 14 * 3600);
 				double startDuration = 0.5 * 3600;
@@ -570,7 +569,7 @@ public class CreateTourismBusTours {
 				CarrierService tourStart = CarrierService.Builder.newInstance(startActivityName, hotelLinkId)
 						.setServiceDuration(startDuration).setServiceStartTimeWindow(TimeWindow.newInstance(startTimeStart, endTimeStart)).build();
 
-				Builder tour = Tour.Builder.newInstance();
+				Builder tour = Builder.newInstance(Id.create(newCarrier.getId().toString(), Tour.class));
 				tour.scheduleStart(hotelLinkId);
 				tour.addLeg(tour.createLeg());
 				newCarrier.getServices().put(tourStart.getId(), tourStart);
@@ -595,12 +594,12 @@ public class CreateTourismBusTours {
 					else
 						stopActivityName = tourName + "_Stop_" + (j + 1);
 					Id<CarrierService> getOffActivityName = Id.create(stopActivityName + "_GetOff", CarrierService.class);
-					double gettOfDuration = 0.25 * 3600;
+					double getOfDuration = 0.25 * 3600;
 				
-					Id<Link> linkIdTourStop = getNearstLink(links, attractionFacility.getCoord());
+					Id<Link> linkIdTourStop = getNearestLink(links, attractionFacility.getCoord());
 					attractionFacility.setLinkId(linkIdTourStop);
 					CarrierService tourStopGetOff = CarrierService.Builder.newInstance(getOffActivityName, linkIdTourStop)
-							.setServiceDuration(gettOfDuration).build();
+							.setServiceDuration(getOfDuration).build();
 					
 					// add one parking slot at activity 
 					if (!attractionFacility.getActivityOptions().containsKey("parking"))
@@ -610,11 +609,11 @@ public class CreateTourismBusTours {
 					tour.scheduleService(tourStopGetOff);
 					tour.addLeg(tour.createLeg());
 					
-					ActivityFacility nearstParkingFacility = findNearestParkingFacility(attractionFacility.getCoord(), activityFacilities);
+					ActivityFacility nearestParkingFacility = findNearestParkingFacility(attractionFacility.getCoord(), activityFacilities);
 					
 					Id<CarrierService> parkingActivityId = Id.create("parking_stop_" + (j + 1), CarrierService.class);
 					double parkingDuration = 2 * 3600;
-					CarrierService parkingActivity = CarrierService.Builder.newInstance(parkingActivityId, nearstParkingFacility.getLinkId())
+					CarrierService parkingActivity = CarrierService.Builder.newInstance(parkingActivityId, nearestParkingFacility.getLinkId())
 							.setServiceDuration(parkingDuration).build();
 
 					newCarrier.getServices().put(parkingActivity.getId(), parkingActivity);
@@ -691,7 +690,7 @@ public class CreateTourismBusTours {
 
 		return nearstActivityFacility;
 	}
-	private static Id<Link> getNearstLink(List<Link> links, Coord coord) {
+	private static Id<Link> getNearestLink(List<Link> links, Coord coord) {
 		
 
 		double minDistance = Double.MAX_VALUE;

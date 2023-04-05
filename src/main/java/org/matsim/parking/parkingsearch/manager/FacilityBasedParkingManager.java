@@ -123,10 +123,7 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 	public Id<Link> getVehicleParkingLocation(Id<Vehicle> vehicleId) {
 		if (this.parkingLocations.containsKey(vehicleId)) {
 			return this.parkingFacilities.get(this.parkingLocations.get(vehicleId)).getLinkId();
-		} else if (this.parkingLocationsOutsideFacilities.containsKey(vehicleId)) {
-			return this.parkingLocationsOutsideFacilities.get(vehicleId);
-		} else
-			return null;
+		} else return this.parkingLocationsOutsideFacilities.getOrDefault(vehicleId, null);
 	}
 
 	@Override

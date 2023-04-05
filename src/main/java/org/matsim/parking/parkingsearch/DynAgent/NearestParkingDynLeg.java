@@ -52,21 +52,14 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 				}
 			}
 		} else if (followingActivity.getLinkId().equals(newLinkId)){
-//			if (currentLinkId.toString().equals("157058") && vehicleId.toString().equals("Tour_194"))
-//				System.out.println("");
 			hasFoundParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, currentLinkId);
 		}
 	}
 
 	@Override
 	public Id<Link> getNextLinkId() {
-//		if (vehicleId.toString().equals("Tour_97"))
-//			System.out.println("");
-//		if (parkingAtEndOfLeg == true)
-//			System.out.println("");
-		if (!parkingMode && parkingAtEndOfLeg) {
 
-//		if (!parkingMode && route.getStartLinkId().equals(route.getEndLinkId())) {
+		if (!parkingMode && parkingAtEndOfLeg) {
 			parkingMode = true;
 			this.events
 			.processEvent(new StartParkingSearchEvent(timer.getTimeOfDay(), vehicleId, currentLinkId));
@@ -91,12 +84,7 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 //				if (nextLinkId.toString().equals("324"))
 //					System.out.println("");
 				followingActivity.setLinkId(nextPlanedParkingLink);
-//				System.out.println("The next planed parking spot for vehicle " + vehicleId + " is on link: "+nextPlanedParkingLink);
-//				route.setLinkIds(nextLinkId, null, nextLinkId);
 				currentPlannedLeg.setRoute(((NearestParkingSpotSearchLogic) this.logic).getNextRoute());
-//				route.getLinkIds().;
-//				route = (NetworkRoute) currentPlannedLeg.getRoute();
-//				route.setLinkIds(currentPlannedLeg.getRoute().getStartLinkId(), currentPlannedLeg.getRoute(), currentPlannedLeg.getRoute().getEndLinkId());
 				return nextLinkId;
 			}
 		}

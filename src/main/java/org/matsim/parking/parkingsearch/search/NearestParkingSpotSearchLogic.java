@@ -17,9 +17,7 @@
  *                                                                         *
  * *********************************************************************** */
 
-/**
- * 
- */
+
 package org.matsim.parking.parkingsearch.search;
 
 import org.matsim.api.core.v01.Coord;
@@ -45,13 +43,12 @@ import java.util.Map;
 
 public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 
-	private Network network;
-	private Map<Id<ActivityFacility>, ActivityFacility> activityFacilities;
-	private ParkingRouter parkingRouter;
-	private ParkingSearchManager parkingManager;
+	private final Network network;
+	private final Map<Id<ActivityFacility>, ActivityFacility> activityFacilities;
+	private final ParkingRouter parkingRouter;
 	private NetworkRoute actualRoute = null;
 	private int currentLinkIdx;
-	private HashSet <Id<ActivityFacility>> triedParking;
+	private final HashSet <Id<ActivityFacility>> triedParking;
 	private int counter;
 	private Id<Link> nextLink;
 
@@ -63,8 +60,7 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 	public NearestParkingSpotSearchLogic(Network network, ParkingRouter parkingRouter, ParkingSearchManager parkingManager) {
 		this.network = network;
 		this.parkingRouter = parkingRouter;
-		this.parkingManager = parkingManager;
-		activityFacilities = ((FacilityBasedParkingManager) this.parkingManager).getParkingFacilities();
+		activityFacilities = ((FacilityBasedParkingManager) parkingManager).getParkingFacilities();
 		currentLinkIdx = 0;
 		triedParking = new HashSet<>();
 		counter = 0;
@@ -144,6 +140,7 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 				minDistance = distanceForParking;
 			}
 		}
+		assert nearstActivityFacility != null;
 		triedParking.add(nearstActivityFacility.getId());
 		return nearstActivityFacility;
 	}
