@@ -46,19 +46,23 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 	private final Network network;
 	private final Map<Id<ActivityFacility>, ActivityFacility> activityFacilities;
 	private final ParkingRouter parkingRouter;
+	private final ParkingSearchManager parkingManager;
 	private NetworkRoute actualRoute = null;
+	private boolean canReserveParkingSlot;
 	private int currentLinkIdx;
 	private final HashSet <Id<ActivityFacility>> triedParking;
 	private Id<Link> nextLink;
 
 	/**
 	 * {@link Network} the network
+	 *
 	 * @param parkingManager
-	 * 
 	 */
-	public NearestParkingSpotSearchLogic(Network network, ParkingRouter parkingRouter, ParkingSearchManager parkingManager) {
+	public NearestParkingSpotSearchLogic(Network network, ParkingRouter parkingRouter, ParkingSearchManager parkingManager, boolean canReserveParkingSlot) {
 		this.network = network;
 		this.parkingRouter = parkingRouter;
+		this.parkingManager = parkingManager;
+		this.canReserveParkingSlot = canReserveParkingSlot;
 		activityFacilities = ((FacilityBasedParkingManager) parkingManager).getParkingFacilities();
 		currentLinkIdx = 0;
 		triedParking = new HashSet<>();
@@ -73,25 +77,26 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 		if (actualRoute == null) {
 			Coord coordBaseLink = network.getLinks().get(baseLinkId).getCoord();
 			Coord coordCurrentLink = network.getLinks().get(currentLinkId).getCoord();
-			ActivityFacility nearstActivityFacility = findNearestParkingFacility(coordBaseLink, coordCurrentLink);
+			ActivityFacility nearstActivityFacility = findNearestParkingFacility(coordBaseLink, coordCurrentLink, canReserveParkingSlot);
 			actualRoute = this.parkingRouter.getRouteFromParkingToDestination(nearstActivityFacility.getLinkId(), now,
 					currentLinkId);
 			actualRoute.setVehicleId(vehicleId);
+			triedParking.clear();
 		} else if (currentLinkId.equals(actualRoute.getEndLinkId())) {
 			currentLinkIdx = 0;
 			Coord coordBaseLink = network.getLinks().get(baseLinkId).getCoord();
 			Coord coordCurrentLink = network.getLinks().get(currentLinkId).getCoord();
-			ActivityFacility nearstActivityFacility = findNearestParkingFacility(coordBaseLink, coordCurrentLink);
+			ActivityFacility nearstActivityFacility = findNearestParkingFacility(coordBaseLink, coordCurrentLink, canReserveParkingSlot);
 			actualRoute = this.parkingRouter.getRouteFromParkingToDestination(nearstActivityFacility.getLinkId(), now,
 					currentLinkId);
 			actualRoute.setVehicleId(vehicleId);
 		}
 
-			if (currentLinkIdx == actualRoute.getLinkIds().size() ) {
-				return actualRoute.getEndLinkId();
-			}
-			nextLink = actualRoute.getLinkIds().get(currentLinkIdx);
-			currentLinkIdx++;
+		if (currentLinkIdx == actualRoute.getLinkIds().size() ) {
+			return actualRoute.getEndLinkId();
+		}
+		nextLink = actualRoute.getLinkIds().get(currentLinkIdx);
+		currentLinkIdx++;
 
 		return nextLink;
 
@@ -104,8 +109,11 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 	public NetworkRoute getNextRoute(){
 		return actualRoute;
 	}
-	
-//	public NetworkRoute getRouteToNextParkingLocation(Id<Link> currentLinkId, Id<Link> baseLinkId, Id<Vehicle> vehicleId, String mode, double now) {
+
+	public boolean canReserveParkingSlot() {
+		return canReserveParkingSlot;
+	}
+	//	public NetworkRoute getRouteToNextParkingLocation(Id<Link> currentLinkId, Id<Link> baseLinkId, Id<Vehicle> vehicleId, String mode, double now) {
 //		Coord coordBaseLink = network.getLinks().get(baseLinkId).getCoord();
 //		Coord coordCurrentLink = network.getLinks().get(currentLinkId).getCoord();
 //		ActivityFacility nearestActivityFacility = findNearestParkingFacility(coordBaseLink, coordCurrentLink);
@@ -115,12 +123,16 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 //		return actualRoute;
 //	}
 	
-	private ActivityFacility findNearestParkingFacility(Coord coordBaseLink, Coord coordCurrentLink) {
+	private ActivityFacility findNearestParkingFacility(Coord coordBaseLink, Coord coordCurrentLink, boolean canReserveParkingSlot) {
 		ActivityFacility nearstActivityFacility = null;
 		double minDistance = Double.MAX_VALUE;
 		for (ActivityFacility activityFacility : activityFacilities.values()) {
 			if (triedParking.contains(activityFacility.getId()))
 				continue;
+			if (canReserveParkingSlot){
+				if(((FacilityBasedParkingManager) parkingManager).getNrOfFreeParkingSpacesOnLink(activityFacility.getLinkId()) < 1)
+					continue;
+			}
 			Coord facilityCoord = activityFacility.getCoord();
 
 			double distanceBaseAndFacility = NetworkUtils.getEuclideanDistance(facilityCoord, coordBaseLink);
@@ -132,6 +144,8 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 				minDistance = distanceForParking;
 			}
 		}
+		if (nearstActivityFacility == null)
+			System.out.println();
 		assert nearstActivityFacility != null;
 		triedParking.add(nearstActivityFacility.getId());
 		return nearstActivityFacility;

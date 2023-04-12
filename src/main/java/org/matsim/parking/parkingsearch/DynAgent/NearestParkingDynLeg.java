@@ -27,28 +27,30 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 
 	private boolean parkingAtEndOfLeg = true;
 	private boolean reachedDestinationWithoutParking = false;
+	private boolean allreadyReservedParking = false;
 	private final Activity followingActivity;
 	private final Leg currentPlannedLeg;
 	private Id<Link> nextSelectedParkingLink = null;
-	
+
 	public NearestParkingDynLeg(Leg currentPlannedLeg, NetworkRoute route, Activity followingActivity, ParkingSearchLogic logic,
-															ParkingSearchManager parkingManager, Id<Vehicle> vehicleId, MobsimTimer timer, EventsManager events) {	
+								ParkingSearchManager parkingManager, Id<Vehicle> vehicleId, MobsimTimer timer, EventsManager events) {
 		super(currentPlannedLeg.getMode(), route, logic, parkingManager, vehicleId, timer, events);
 		this.followingActivity = followingActivity;
 		this.currentPlannedLeg = currentPlannedLeg;
 		if (followingActivity.getAttributes().getAsMap().containsKey("parking") && followingActivity.getAttributes().getAttribute("parking").equals("noParking"))
 			parkingAtEndOfLeg = false;
 	}
-	
+
 	@Override
 	public void movedOverNode(Id<Link> newLinkId) {
+
 		currentLinkIdx++;
 		currentLinkId = newLinkId;
 		if (!parkingMode) {
 			if (currentLinkId.equals(this.getDestinationLinkId())) {
 				if (!parkingAtEndOfLeg) {
 					reachedDestinationWithoutParking = true;
-				} else {
+				} else{
 					this.parkingMode = true;
 					this.events
 							.processEvent(new StartParkingSearchEvent(timer.getTimeOfDay(), vehicleId, currentLinkId));
@@ -58,9 +60,13 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 				}
 			}
 		} else if (followingActivity.getLinkId().equals(newLinkId)){
-			hasFoundParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, currentLinkId);
-			if (hasFoundParking)
-				this.events.processEvent(new ReserveParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, currentLinkId));
+			if (allreadyReservedParking)
+				hasFoundParking = true;
+			else {
+				hasFoundParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, currentLinkId);
+				if (hasFoundParking)
+					this.events.processEvent(new ReserveParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, currentLinkId));
+			}
 		}
 	}
 
@@ -69,8 +75,7 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 
 		if (!parkingMode && parkingAtEndOfLeg) {
 			parkingMode = true;
-			this.events
-			.processEvent(new StartParkingSearchEvent(timer.getTimeOfDay(), vehicleId, currentLinkId));
+			this.events.processEvent(new StartParkingSearchEvent(timer.getTimeOfDay(), vehicleId, currentLinkId));
 		}
 		if (!parkingMode && !reachedDestinationWithoutParking) {
 			List<Id<Link>> linkIds = route.getLinkIds();
@@ -93,13 +98,21 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 					}
 				}
 				// need to find the next link
-				Id<Link> nextLinkId = ((NearestParkingSpotSearchLogic) this.logic).getNextLink(currentLinkId, route.getEndLinkId(), vehicleId, mode, timer.getTimeOfDay());
+				Id<Link> nextLinkId = ((NearestParkingSpotSearchLogic) this.logic).getNextLink(currentLinkId, route.getEndLinkId(), vehicleId, mode,
+						timer.getTimeOfDay());
 				Id<Link> nextPlanedParkingLink = ((NearestParkingSpotSearchLogic) this.logic).getNextParkingLocation();
-				if (nextSelectedParkingLink == null || !nextSelectedParkingLink.equals(nextPlanedParkingLink)){
+				if (nextSelectedParkingLink == null || !nextSelectedParkingLink.equals(nextPlanedParkingLink)) {
 					nextSelectedParkingLink = nextPlanedParkingLink;
-					this.events
-							.processEvent(new SelectNewParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, nextSelectedParkingLink));
+					if (((NearestParkingSpotSearchLogic) this.logic).canReserveParkingSlot()) {
+						allreadyReservedParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, nextSelectedParkingLink);
+						this.events.processEvent(
+								new ReserveParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, nextSelectedParkingLink));
+					} else {
+						this.events.processEvent(
+								new SelectNewParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, nextSelectedParkingLink));
+					}
 				}
+
 				currentAndNextParkLink = new Tuple<Id<Link>, Id<Link>>(currentLinkId, nextLinkId);
 				followingActivity.setLinkId(nextPlanedParkingLink);
 				currentPlannedLeg.setRoute(((NearestParkingSpotSearchLogic) this.logic).getNextRoute());
@@ -107,5 +120,5 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 			}
 		}
 	}
-	
+
 }

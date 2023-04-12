@@ -22,5 +22,6 @@ public enum ParkingSearchStrategy {
 	Random,
 	Benenson,
 	DistanceMemory,
-	NearestParkingSpot
+	NearestParkingSpot,
+	NearestParkingSpotWithReservation
 }
