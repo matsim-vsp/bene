@@ -255,7 +255,6 @@ public class CreateTourismBusTours {
 		config.global().setInsistingOnDeprecatedConfigVersion(false);
 		config.network().setInputFile(network);
 		config.vehicles().setVehiclesFile("scenarios/vehicleTypes.xml");
-		config.facilities().setInputFile("scenarios/base/parkingFacilities.xml");
 		config.plansCalcRoute().setAccessEgressType(AccessEgressType.none);
 		config.planCalcScore().setFractionOfIterationsToStartScoreMSA(0.8);
 		config.qsim().setSimStarttimeInterpretation(StarttimeInterpretation.onlyUseStarttime);
@@ -263,8 +262,10 @@ public class CreateTourismBusTours {
 		config.qsim().setTrafficDynamics(TrafficDynamics.kinematicWaves);
 		config.qsim().setUsePersonIdForMissingVehicleId(true);
 		config.strategy().setFractionOfIterationsToDisableInnovation(0.8);
-		StrategySettings strategySettings = new StrategySettings().setStrategyName("ChangeExpBeta").setWeight(1.);
-		config.strategy().addStrategySettings(strategySettings);
+		StrategySettings strategyChangeBeta = new StrategySettings().setStrategyName("ChangeExpBeta").setWeight(0.5);
+		config.strategy().addStrategySettings(strategyChangeBeta);
+		StrategySettings strategyReRoute = new StrategySettings().setStrategyName("ReRoute").setWeight(0.5);
+		config.strategy().addStrategySettings(strategyReRoute);
 
 		new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
 				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
@@ -436,7 +437,6 @@ public class CreateTourismBusTours {
 		for (String area : busStartDistribution.keySet()) {
 			ArrayList<Id<ActivityFacility>> hotelKeyList = new ArrayList<>(
 					hotelFacilitiesPerArea.get(area).keySet());
-//			TreeMap<Id<ActivityFacility>, ActivityFacility> activityFacilities = scenario.getActivityFacilities().getFacilitiesForActivityType(ParkingUtils.PARKACTIVITYTYPE);
 			for (int generatedToursForThisArea = 0; generatedToursForThisArea < busStartDistribution
 					.get(area); generatedToursForThisArea++) {
 				tourCount++;
@@ -473,17 +473,11 @@ public class CreateTourismBusTours {
 				Activity tourStart = populationFactory.createActivityFromActivityFacilityId(startActivityName,
 						hotelFacility.getId());
 			
-				tourStart.getAttributes().putAttribute("parking", "noParking"); //TODO parking nur bei festgelegten Aktivitäten
+				tourStart.getAttributes().putAttribute("parking", "noParking");
 				tourStart.setLinkId(hotelLinkId);
 //				tourStart.setCoord(hotelFacility.getCoord());
 				tourStart.setEndTime(startTime);
 				tourStart.setMaximumDuration(0.5 * 3600);
-				
-				//add 1 parking slot for every bus at hotel
-//				if (!hotelFacility.getActivityOptions().containsKey("parking"))
-//					hotelFacility.createAndAddActivityOption("parking").setCapacity(1.);
-//				else
-//					hotelFacility.getActivityOptions().get("parking").setCapacity(hotelFacility.getActivityOptions().get("parking").getCapacity()+1);
 
 				scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(startActivityName)
 						.setTypicalDuration(0.5 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
@@ -507,9 +501,7 @@ public class CreateTourismBusTours {
 					Id<Link> linkIdTourStop = getNearestLink(links, attractionFacility.getCoord());
 					attractionFacility.setLinkId(linkIdTourStop);
 					
-					// add one parking slot at activity 
-//					if (!attractionFacility.getActivityOptions().containsKey("parking"))
-//						attractionFacility.createAndAddActivityOption("parking").setCapacity(1.);
+					// add one parking slot at activity
 					scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getOffActivityName)
 							.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
 					tourStopGetOff.getAttributes().putAttribute("parking", "noParking");
@@ -518,11 +510,8 @@ public class CreateTourismBusTours {
 					plan.addActivity(tourStopGetOff);
 					plan.addLeg(legActivity);
 					
-//					ActivityFacility nearestParkingFacility = findNearestParkingFacility(attractionFacility.getCoord(), activityFacilities);
 					Activity parkingActivity = populationFactory.createActivityFromLinkId(ParkingUtils.PARKACTIVITYTYPE + "_activity", linkIdTourStop);
-//					Activity parkingActivity = populationFactory.createActivityFromActivityFacilityId(ParkingUtils.PARKACTIVITYTYPE + "_activity", nearestParkingFacility.getId());
-					parkingActivity.setMaximumDuration(2 * 3600);
-//					parkingActivity.setLinkId(nearestParkingFacility.getLinkId());
+					parkingActivity.setMaximumDuration(1 * 3600); //TODO Variation aus Umfrage einbauen
 					parkingActivity.getAttributes().putAttribute("parking", "withParking");
 					plan.addActivity(parkingActivity);
 					plan.addLeg(legActivity);
