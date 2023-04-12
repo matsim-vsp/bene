@@ -95,6 +95,9 @@ public class CreateTourismBusTours {
 	private enum GenerationMode {
 		jsprit, plans
 	}
+	private enum ScenarioChoice {
+		base, case1, case2
+	}
 
 	public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
 
@@ -110,12 +113,15 @@ public class CreateTourismBusTours {
 		String locationHotspotsInformation = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspots.csv";
 		String hotspotsCRS = "EPSG:4326";
 
-		int numberOfTours = 1; //526;
+		int numberOfTours = 315; //526 (315 = 60% von 526 Touren);
 		boolean setParkingCapacityToZeroForNonParkingLinks= false;
 		boolean infiniteParkingCapacitiesAtParkingSpaces = false;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
+
 		GenerationMode usedGenerationMode = GenerationMode.plans;
-		Config config = prepareConfig(numberOfTours, network);
+		ScenarioChoice selectedScenario = ScenarioChoice.case2;
+
+		Config config = prepareConfig(numberOfTours, network, selectedScenario);
 		Scenario scenario = ScenarioUtils.loadScenario(config);
 
 //		Network filteredNetwork = scenario.getNetwork();
@@ -209,20 +215,36 @@ public class CreateTourismBusTours {
 		}
 	}
 
-	private static Config prepareConfig(int numberOfTours, String network) {
+	private static Config prepareConfig(int numberOfTours, String network, ScenarioChoice selectedScenario) {
 	
 		Config config = ConfigUtils.createConfig(new ParkingSearchConfigGroup());
 		ParkingSearchConfigGroup configGroup = (ParkingSearchConfigGroup) config.getModules()
 				.get(ParkingSearchConfigGroup.GROUP_NAME);
-		configGroup.setParkingSearchStrategy(ParkingSearchStrategy.NearestParkingSpot);
+
 
 		FreightConfigGroup freightConfigGroup = ConfigUtils.addOrGetModule(config, FreightConfigGroup.class);
 		freightConfigGroup.setCarriersVehicleTypesFile("scenarios/vehicleTypes.xml");
-		
-		config.controler().setRunId("bus");
+
+		switch (selectedScenario){
+			case base -> {
+				configGroup.setParkingSearchStrategy(ParkingSearchStrategy.NearestParkingSpot);
+				config.facilities().setInputFile("scenarios/parkingFacilities/parkingFacilities_base.xml");
+				config.controler().setRunId("base");
+			}
+			case case1 -> {
+				configGroup.setParkingSearchStrategy(ParkingSearchStrategy.NearestParkingSpotWithReservation);
+				config.facilities().setInputFile("scenarios/parkingFacilities/parkingFacilities_base.xml");
+				config.controler().setRunId("case1");
+			}
+			case case2 -> {
+				configGroup.setParkingSearchStrategy(ParkingSearchStrategy.NearestParkingSpot);
+				config.facilities().setInputFile("scenarios/parkingFacilities/parkingFacilities_case2.xml");
+				config.controler().setRunId("case2");
+			}
+		}
 		String output = "output/" + config.controler().getRunId()+ "." + java.time.LocalDate.now() + "_"
 				+ java.time.LocalTime.now().toSecondOfDay()+ "_" + numberOfTours + "busses";
-		
+		config.controler().setRunId("bus");
 		config.controler().setOutputDirectory(output);
 		config.controler().setOverwriteFileSetting(OverwriteFileSetting.failIfDirectoryExists);
 		config.controler().setLastIteration(0);
