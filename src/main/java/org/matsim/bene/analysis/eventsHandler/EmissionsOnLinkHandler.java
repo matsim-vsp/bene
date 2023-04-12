@@ -9,10 +9,7 @@ import org.matsim.contrib.emissions.events.ColdEmissionEvent;
 import org.matsim.contrib.emissions.events.ColdEmissionEventHandler;
 import org.matsim.contrib.emissions.events.WarmEmissionEvent;
 import org.matsim.contrib.emissions.events.WarmEmissionEventHandler;
-import org.matsim.parking.parkingsearch.events.ReserveParkingLocationEvent;
-import org.matsim.parking.parkingsearch.events.ReserveParkingLocationEventHandler;
-import org.matsim.parking.parkingsearch.events.SelectNewParkingLocationEvent;
-import org.matsim.parking.parkingsearch.events.SelectNewParkingLocationEventHandler;
+import org.matsim.parking.parkingsearch.events.*;
 import org.matsim.vehicles.Vehicle;
 
 import java.util.ArrayList;
@@ -20,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmissionEventHandler,  ReserveParkingLocationEventHandler, SelectNewParkingLocationEventHandler, PersonLeavesVehicleEventHandler {
+public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmissionEventHandler,  StartParkingSearchEventHandler, PersonLeavesVehicleEventHandler {
 
     private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutants = new HashMap<>();
     private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutantsParkingSearch = new HashMap<>();
@@ -52,22 +49,18 @@ public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmi
     }
 
 	@Override
-	public void handleEvent(SelectNewParkingLocationEvent event){
+	public void handleEvent(StartParkingSearchEvent event){
 		vehicleIsInParkingSearch.add(event.getVehicleId());
 		vehicleBetweenPassengerDropOffAndPickup.add(event.getVehicleId());
 	}
 
-	public void handleEvent(ReserveParkingLocationEvent event){
-		if (!vehicleIsInParkingSearch.contains(event.getVehicleId())) {
-			vehicleIsInParkingSearch.add(event.getVehicleId());
-			vehicleBetweenPassengerDropOffAndPickup.add(event.getVehicleId());
-		}
-	}
-    @Override
-    public void handleEvent(PersonLeavesVehicleEvent event) {
-		if (!vehicleIsInParkingSearch.remove(event.getVehicleId()))
+	@Override
+	public void handleEvent(PersonLeavesVehicleEvent event) {
+		if (vehicleIsInParkingSearch.contains(event.getVehicleId()))
+			vehicleIsInParkingSearch.remove(event.getVehicleId());
+		else
 			vehicleBetweenPassengerDropOffAndPickup.remove(event.getVehicleId());
-    }
+	}
 
 	private void handleEmissionEvent(double time, Id<Link> linkId, Map<Pollutant, Double> emissions,
 			Id<Vehicle> vehicleId) {
