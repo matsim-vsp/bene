@@ -24,12 +24,18 @@ import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.matsim.api.core.v01.Id;
+import org.matsim.api.core.v01.events.ActivityEndEvent;
+import org.matsim.api.core.v01.events.ActivityStartEvent;
 import org.matsim.api.core.v01.events.LinkLeaveEvent;
 import org.matsim.api.core.v01.events.PersonLeavesVehicleEvent;
+import org.matsim.api.core.v01.events.handler.ActivityEndEventHandler;
+import org.matsim.api.core.v01.events.handler.ActivityStartEventHandler;
 import org.matsim.api.core.v01.events.handler.LinkLeaveEventHandler;
 import org.matsim.api.core.v01.events.handler.PersonLeavesVehicleEventHandler;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
+import org.matsim.parking.parkingsearch.events.StartParkingSearchEvent;
+import org.matsim.parking.parkingsearch.events.StartParkingSearchEventHandler;
 import org.matsim.parking.parkingsearch.events.ReserveParkingLocationEvent;
 import org.matsim.parking.parkingsearch.events.ReserveParkingLocationEventHandler;
 import org.matsim.parking.parkingsearch.events.SelectNewParkingLocationEvent;
@@ -47,17 +53,20 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  */
 public class LinkDemandEventHandler
-		implements LinkLeaveEventHandler, PersonLeavesVehicleEventHandler, ReserveParkingLocationEventHandler, SelectNewParkingLocationEventHandler
+		implements LinkLeaveEventHandler, PersonLeavesVehicleEventHandler, StartParkingSearchEventHandler, ActivityStartEventHandler, ActivityEndEventHandler
 {
 	private static final Logger log = LogManager.getLogger(LinkDemandEventHandler.class);
 
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles = new HashMap<>();
+	private final Map<Id<Vehicle>, Object2DoubleMap<String>> tourInformation = new HashMap<>();
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles_parkingTotal = new HashMap<>();
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles_parkingSearch = new HashMap<>();
-	private final Object2DoubleMap<String> drivenDistances = new Object2DoubleOpenHashMap<>();
+	private final Map<Id<Vehicle>, Double> parkingStartTimes = new HashMap<>();
+	private final Map<Id<Vehicle>, Double> parkingSearchTimes = new HashMap<>();
+	private final Map<Id<Vehicle>, Double> tourStartTimes = new HashMap<>();
 	private final Network network;
-	private final List<Id<Vehicle>> vehicleIsInParkingSearch = new ArrayList<>();
-	private final List<Id<Vehicle>> vehicleBetweenPassengerDropOffAndPickup = new ArrayList<>();
+	private final Map<Id<Vehicle>, Double> vehicleIsInParkingSearch = new HashMap<>();
+	private final Map<Id<Vehicle>, Double> vehicleBetweenPassengerDropOffAndPickup = new HashMap<>();
 
 	public LinkDemandEventHandler(Network network) {
 		this.network = network;
@@ -70,50 +79,83 @@ public class LinkDemandEventHandler
 		this.linkId2vehicles_parkingTotal.clear();
 		this.vehicleIsInParkingSearch.clear();
 		this.vehicleBetweenPassengerDropOffAndPickup.clear();
-		this.drivenDistances.clear();
+		this.tourInformation.clear();
 	}
 
 	@Override
 	public void handleEvent(LinkLeaveEvent event) {
 		linkId2vehicles.computeIfAbsent(event.getLinkId(), (k) -> new AtomicLong()).getAndIncrement();
-		drivenDistances.mergeDouble("total", network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
-		if (vehicleIsInParkingSearch.contains(event.getVehicleId())) {
+		tourInformation.computeIfAbsent(event.getVehicleId(), (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("drivenDistance",network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
+		if (vehicleIsInParkingSearch.containsKey(event.getVehicleId())) {
 			linkId2vehicles_parkingSearch.computeIfAbsent(event.getLinkId(), (k) -> new AtomicLong()).getAndIncrement();
-			drivenDistances.mergeDouble("parkingSearch", network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
+			tourInformation.computeIfAbsent(event.getVehicleId(), (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("DistanceParkingSearch",network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
 		}
-		if (vehicleBetweenPassengerDropOffAndPickup.contains(event.getVehicleId())) {
+		if (vehicleBetweenPassengerDropOffAndPickup.containsKey(event.getVehicleId())) {
 			linkId2vehicles_parkingTotal.computeIfAbsent(event.getLinkId(), (k) -> new AtomicLong()).getAndIncrement();
-			drivenDistances.mergeDouble("parkingTotal", network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
+			tourInformation.computeIfAbsent(event.getVehicleId(), (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("DistanceParkingTotal",network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
 		}
 	}
 
-	public void handleEvent(SelectNewParkingLocationEvent event){
-		vehicleIsInParkingSearch.add(event.getVehicleId());
-		vehicleBetweenPassengerDropOffAndPickup.add(event.getVehicleId());
+	@Override
+	public void handleEvent(StartParkingSearchEvent event){
+		vehicleIsInParkingSearch.put(event.getVehicleId(), event.getTime());
+		vehicleBetweenPassengerDropOffAndPickup.put(event.getVehicleId(), event.getTime());
 	}
 
-	public void handleEvent(ReserveParkingLocationEvent event){
-		if (!vehicleIsInParkingSearch.contains(event.getVehicleId())) {
-			vehicleIsInParkingSearch.add(event.getVehicleId());
-			vehicleBetweenPassengerDropOffAndPickup.add(event.getVehicleId());
-		}
-	}
 	@Override
 	public void handleEvent(PersonLeavesVehicleEvent event) {
-		if (!vehicleIsInParkingSearch.remove(event.getVehicleId()))
+		if (vehicleIsInParkingSearch.containsKey(event.getVehicleId())) {
+			double parkingSearchDuration = event.getTime() - vehicleIsInParkingSearch.get(event.getVehicleId());
+			tourInformation.get(event.getVehicleId()).mergeDouble("parkingSearchDurations", parkingSearchDuration, Double::sum);
+			vehicleIsInParkingSearch.remove(event.getVehicleId());
+		}
+		else
 			vehicleBetweenPassengerDropOffAndPickup.remove(event.getVehicleId());
 	}
+
+	@Override
+	public void handleEvent(ActivityStartEvent event) {
+		Id<Vehicle> vehicleId = Id.createVehicleId(event.getPersonId().toString());
+		if(event.getActType().equals("parking_activity")) {
+			tourInformation.get(vehicleId).mergeDouble("numberParkingActivities", 1, Double::sum);
+			parkingStartTimes.put(vehicleId, event.getTime());
+		}
+		if(event.getActType().contains("_GetOff")) {
+			tourInformation.get(vehicleId).mergeDouble("numberOfStops", 1, Double::sum);
+		}
+		if(event.getActType().contains("_End_")) {
+			double tourDuration = event.getTime() - tourStartTimes.get(vehicleId);
+			tourInformation.get(vehicleId).mergeDouble("tourDurations", tourDuration, Double::sum);
+		}
+	}
+
+	@Override
+	public void handleEvent(ActivityEndEvent event) {
+		Id<Vehicle> vehicleId = Id.createVehicleId(event.getPersonId().toString());
+		if(event.getActType().equals("parking_activity")) {
+			double parkingDuration = event.getTime() - parkingStartTimes.get(vehicleId);
+			tourInformation.get(vehicleId).mergeDouble("parkingDurations", parkingDuration, Double::sum);
+		}
+		if(event.getActType().contains("_Start_")) {
+			tourStartTimes.put(vehicleId, event.getTime());
+		}
+	}
+
 	public Map<Id<Link>, AtomicLong> getLinkId2demand() {
 		return linkId2vehicles;
 	}
+
 	public Map<Id<Link>, AtomicLong> getLinkId2demand_parkingSearch() {
 		return linkId2vehicles_parkingSearch;
 	}
+
 	public Map<Id<Link>, AtomicLong> getLinkId2demand_parkingTotal() {
 		return linkId2vehicles_parkingTotal;
 	}
 
-	public Object2DoubleMap<String> getDrivenDistances() {
-		return drivenDistances;
+	public Map<Id<Vehicle>, Object2DoubleMap<String>> getTourInformation() {
+		return tourInformation;
 	}
+
+
 }
