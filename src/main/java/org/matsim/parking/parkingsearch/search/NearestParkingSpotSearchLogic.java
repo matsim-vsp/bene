@@ -49,7 +49,7 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 	private final ParkingRouter parkingRouter;
 	private final ParkingSearchManager parkingManager;
 	private NetworkRoute actualRoute = null;
-	private boolean canReserveParkingSlot;
+	private final boolean canReserveParkingSlot;
 	private int currentLinkIdx;
 	private final HashSet <Id<ActivityFacility>> triedParking;
 	private Id<Link> nextLink;
@@ -94,11 +94,11 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 		return nextLink;
 
 	}
-	
+
 	public Id<Link> getNextParkingLocation(){
 		return actualRoute.getEndLinkId();
 	}
-	
+
 	public NetworkRoute getNextRoute(){
 		return actualRoute;
 	}
@@ -161,12 +161,12 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 		actualRoute = selectedRoute;
 		return actualRoute;
 	}
-	
+
 	@Override
 	public Id<Link> getNextLink(Id<Link> currentLinkId, Id<Vehicle> vehicleId, String mode) {
 		throw new RuntimeException("shouldn't happen - method not implemented");
 	}
-	
+
 	@Override
 	public void reset() {
 		actualRoute = null;

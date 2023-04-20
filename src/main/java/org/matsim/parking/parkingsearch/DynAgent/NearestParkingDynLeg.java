@@ -116,8 +116,7 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 								new SelectNewParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, nextSelectedParkingLink));
 					}
 				}
-
-				currentAndNextParkLink = new Tuple<Id<Link>, Id<Link>>(currentLinkId, nextLinkId);
+				currentAndNextParkLink = new Tuple<>(currentLinkId, nextLinkId);
 				followingActivity.setLinkId(nextPlanedParkingLink);
 				currentPlannedLeg.setRoute(((NearestParkingSpotSearchLogic) this.logic).getNextRoute());
 				return nextLinkId;
