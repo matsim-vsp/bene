@@ -26,14 +26,14 @@ layout:
         display:
             color:
                 dataset: csvBase
-                columnName: demandPerDay
+                columnName: volume
                 colorRamp:
                     ramp: Viridis
                     reverse: false
                     steps: 7
             width:
                 dataset: csvBase
-                columnName: demandPerDay
+                columnName: volume
                 scaleFactor: 500
     - title: "General results"
       description: "TODO"
@@ -59,14 +59,14 @@ layout:
         display:
             color:
                 dataset: csvBase
-                columnName: demandPerDay_parkingTotal
+                columnName: volume_parkingTotal
                 colorRamp:
                     ramp: Viridis
                     reverse: false
                     steps: 7
             width:
                 dataset: csvBase
-                columnName: demandPerDay_parkingTotal
+                columnName: volume_parkingTotal
                 scaleFactor: 500
 
   ParkingSearch:
@@ -88,12 +88,12 @@ layout:
         display:
             color:
                 dataset: csvBase
-                columnName: demandPerDay_parkingSearch
+                columnName: volume_parkingSearch
                 colorRamp:
                     ramp: Viridis
                     reverse: false
                     steps: 7
             width:
                 dataset: csvBase
-                columnName: demandPerDay_parkingSearch
+                columnName: volume_parkingSearch
                 scaleFactor: 500
