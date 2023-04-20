@@ -88,6 +88,10 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 		} else {
 			if (hasFoundParking || reachedDestinationWithoutParking) {
 				// easy, we can just park where at our destination link
+				if (hasFoundParking) {
+					double parkingDuration = followingActivity.getMaximumDuration().seconds() - 2* (timer.getTimeOfDay() - currentPlannedLeg.getDepartureTime().seconds());
+					followingActivity.setMaximumDuration(parkingDuration); //integrate this into plan
+				}
 				this.logic.reset();
 				return null;
 			} else {
