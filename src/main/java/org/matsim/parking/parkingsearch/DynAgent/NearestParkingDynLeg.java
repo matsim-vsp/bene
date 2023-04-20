@@ -27,7 +27,7 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 
 	private boolean parkingAtEndOfLeg = true;
 	private boolean reachedDestinationWithoutParking = false;
-	private boolean allreadyReservedParking = false;
+	private boolean alreadyReservedParking = false;
 	private final Activity followingActivity;
 	private final Leg currentPlannedLeg;
 	private Id<Link> nextSelectedParkingLink = null;
@@ -60,7 +60,7 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 				}
 			}
 		} else if (followingActivity.getLinkId().equals(newLinkId)){
-			if (allreadyReservedParking)
+			if (alreadyReservedParking)
 				hasFoundParking = true;
 			else {
 				hasFoundParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, currentLinkId);
@@ -104,7 +104,7 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 				if (nextSelectedParkingLink == null || !nextSelectedParkingLink.equals(nextPlanedParkingLink)) {
 					nextSelectedParkingLink = nextPlanedParkingLink;
 					if (((NearestParkingSpotSearchLogic) this.logic).canReserveParkingSlot()) {
-						allreadyReservedParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, nextSelectedParkingLink);
+						alreadyReservedParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, nextSelectedParkingLink);
 						this.events.processEvent(
 								new ReserveParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, nextSelectedParkingLink));
 					} else {
