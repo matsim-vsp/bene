@@ -117,12 +117,8 @@ public class ParkingSlotVisualiser implements PersonEntersVehicleEventHandler, P
 	
 	@Override
 	public void handleEvent(PersonLeavesVehicleEvent event) {
-//		if (event.getVehicleId().toString().equals("Tour_57"))
-//			System.out.println("");
 		ParkingSlotManager manager = this.vehiclesResponsibleManager.remove(event.getVehicleId());
 		if(manager != null){
-//			if (event.getVehicleId().toString().equals("Tour_57"))
-//				System.out.println("");
 			Tuple<Coord,Double> parkingTuple = manager.processParking(event.getTime(), event.getVehicleId());
 			this.parkings.add(manager.getLinkId() + ";" + parkingTuple.getSecond() + ";" + event.getTime() + ";" +
 					parkingTuple.getFirst().getX() + ";" + parkingTuple.getFirst().getY() + ";" + "free");

@@ -38,8 +38,6 @@ public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements A
 	
 	@Override
 	public void handleEvent(VehicleLeavesTrafficEvent event) {
-//		if (event.getVehicleId().toString().equals("Tour_57"))
-//			System.out.println("");
 		if(this.vehicleIsLookingForParking.contains(event.getPersonId().toString()) && this.slotsOnLink.containsKey(event.getLinkId())){
 			this.vehiclesResponsibleManager.put(event.getVehicleId(), this.slotsOnLink.get(event.getLinkId()));
 		}	
@@ -47,8 +45,6 @@ public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements A
 	
 	@Override
 	public void handleEvent(VehicleEntersTrafficEvent event) {
-//		if (event.getLinkId().toString().equals("2955"))
-//			System.out.println("");
 		if (this.midnightParkers.containsKey(event.getVehicleId())){
 			if(this.vehicleIsLookingForParking.contains(event.getPersonId().toString()) && this.slotsOnLink.containsKey(event.getLinkId())){
 				ParkingSlotManager manager = this.slotsOnLink.get(event.getLinkId());
