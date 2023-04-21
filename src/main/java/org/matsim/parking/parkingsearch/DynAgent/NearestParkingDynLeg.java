@@ -58,6 +58,8 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 					hasFoundParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, currentLinkId);
 					if (hasFoundParking)
 						this.events.processEvent(new ReserveParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, currentLinkId));
+					else
+						((FacilityBasedParkingManager) parkingManager).registerRejectedReservation(timer.getTimeOfDay());
 				}
 			}
 		} else if (followingActivity.getLinkId().equals(newLinkId)){
@@ -67,6 +69,8 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 				hasFoundParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, currentLinkId);
 				if (hasFoundParking)
 					this.events.processEvent(new ReserveParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, currentLinkId));
+				else
+					((FacilityBasedParkingManager) parkingManager).registerRejectedReservation(timer.getTimeOfDay());
 			}
 		}
 	}
@@ -110,8 +114,11 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 					nextSelectedParkingLink = nextPlanedParkingLink;
 					if (((NearestParkingSpotSearchLogic) this.logic).canReserveParkingSlot()) {
 						alreadyReservedParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, nextSelectedParkingLink);
-						this.events.processEvent(
+						if (alreadyReservedParking)
+							this.events.processEvent(
 								new ReserveParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, nextSelectedParkingLink));
+						else
+							((FacilityBasedParkingManager) parkingManager).registerRejectedReservation(timer.getTimeOfDay());
 					} else {
 						this.events.processEvent(
 								new SelectNewParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, nextSelectedParkingLink));

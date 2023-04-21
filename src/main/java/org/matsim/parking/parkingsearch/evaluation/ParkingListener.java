@@ -23,17 +23,17 @@
 package org.matsim.parking.parkingsearch.evaluation;
 
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.util.List;
-
+import com.google.inject.Inject;
 import org.matsim.contrib.parking.parkingsearch.manager.ParkingSearchManager;
 import org.matsim.core.controler.OutputDirectoryHierarchy;
 import org.matsim.core.controler.events.IterationEndsEvent;
 import org.matsim.core.controler.listener.IterationEndsListener;
 import org.matsim.core.utils.io.IOUtils;
+import org.matsim.parking.parkingsearch.manager.FacilityBasedParkingManager;
 
-import com.google.inject.Inject;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author  jbischoff
@@ -55,8 +55,29 @@ public class ParkingListener implements IterationEndsListener {
 	@Override
 	public void notifyIterationEnds(IterationEndsEvent event) {
 		writeStats(manager.produceStatistics(), event.getIteration());
+		writeStatsByTimesteps(((FacilityBasedParkingManager)manager).produceBeneStatistics(), event.getIteration());
 		manager.reset(event.getIteration());
 	}
+
+	private void writeStatsByTimesteps(List<String> produceBeneStatistics, int iteration) {
+		BufferedWriter bw = IOUtils.getBufferedWriter(output.getIterationFilename(iteration, "parkingStatsPerTimeSteps.csv"));
+		try {
+
+			String header = "time;rejectedReservations;foundParking;unpark";
+			bw.write(header);
+			bw.newLine();
+			for (String s : produceBeneStatistics){
+				bw.write(s);
+				bw.newLine();
+			}
+			bw.flush();
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 	/**
 	 * @param produceStatistics
