@@ -14,6 +14,7 @@ import org.matsim.core.utils.collections.Tuple;
 import org.matsim.parking.parkingsearch.events.ReserveParkingLocationEvent;
 import org.matsim.parking.parkingsearch.events.SelectNewParkingLocationEvent;
 import org.matsim.parking.parkingsearch.events.StartParkingSearchEvent;
+import org.matsim.parking.parkingsearch.manager.FacilityBasedParkingManager;
 import org.matsim.parking.parkingsearch.search.NearestParkingSpotSearchLogic;
 import org.matsim.vehicles.Vehicle;
 
@@ -103,7 +104,7 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 				}
 				// need to find the next link
 				Id<Link> nextLinkId = ((NearestParkingSpotSearchLogic) this.logic).getNextLink(currentLinkId, route.getEndLinkId(), vehicleId, mode,
-						timer.getTimeOfDay());
+						timer.getTimeOfDay(), followingActivity.getMaximumDuration().seconds());
 				Id<Link> nextPlanedParkingLink = ((NearestParkingSpotSearchLogic) this.logic).getNextParkingLocation();
 				if (nextSelectedParkingLink == null || !nextSelectedParkingLink.equals(nextPlanedParkingLink)) {
 					nextSelectedParkingLink = nextPlanedParkingLink;
