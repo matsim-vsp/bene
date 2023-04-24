@@ -1,6 +1,6 @@
 /* *********************************************************************** *
  * project: org.matsim.*
- * Controler.java
+ * CreateTourismBusTours.java
  *                                                                         *
  * *********************************************************************** *
  *                                                                         *
@@ -34,6 +34,7 @@ import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.*;
+import org.matsim.application.MATSimAppCommand;
 import org.matsim.application.options.ShpOptions;
 import org.matsim.application.options.ShpOptions.Index;
 import org.matsim.bene.analysis.RunAfterSimAnalysisBene;
@@ -46,12 +47,7 @@ import org.matsim.contrib.freight.controler.FreightUtils;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.ControlerConfigGroup;
-import org.matsim.core.config.groups.ControlerConfigGroup.RoutingAlgorithmType;
 import org.matsim.core.config.groups.PlanCalcScoreConfigGroup.ActivityParams;
-import org.matsim.core.config.groups.PlansCalcRouteConfigGroup.AccessEgressType;
-import org.matsim.core.config.groups.QSimConfigGroup.StarttimeInterpretation;
-import org.matsim.core.config.groups.QSimConfigGroup.TrafficDynamics;
-import org.matsim.core.config.groups.StrategyConfigGroup.StrategySettings;
 import org.matsim.core.config.groups.VspExperimentalConfigGroup.VspDefaultsCheckingLevel;
 import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
@@ -65,7 +61,6 @@ import org.matsim.core.utils.geometry.CoordinateTransformation;
 import org.matsim.core.utils.geometry.geotools.MGC;
 import org.matsim.core.utils.geometry.transformations.TransformationFactory;
 import org.matsim.facilities.*;
-import org.matsim.parking.parkingsearch.ParkingSearchStrategy;
 import org.matsim.parking.parkingsearch.ParkingUtils;
 import org.matsim.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
 import org.matsim.parking.parkingsearch.evaluation.ParkingSlotVisualiserBus;
@@ -75,6 +70,7 @@ import org.matsim.vehicles.CostInformation;
 import org.matsim.vehicles.Vehicle;
 import org.matsim.vehicles.VehicleType;
 import org.matsim.vehicles.VehicleUtils;
+import picocli.CommandLine;
 
 import java.io.File;
 import java.io.IOException;
@@ -89,17 +85,30 @@ import java.util.stream.Collectors;
  * @author Ricardo Ewert
  *
  */
-public class CreateTourismBusTours {
+
+@CommandLine.Command(name = "BENE-bus-tours-creation", description = "Creates and simulates the ", showDefaultValues = true)
+public class CreateTourismBusTours implements MATSimAppCommand {
 	private static final Logger log = LogManager.getLogger(CreateTourismBusTours.class);
 	static SplittableRandom random;
 	private enum GenerationMode {
-		jsprit, plans
+		jsprit, plans, existingPLans
 	}
-	private enum ScenarioChoice {
-		base, case1, case2
+	@CommandLine.Parameters(arity = "1", defaultValue = "scenarios/config/config_base.xml",paramLabel = "INPUT", description = "Path to the config")
+	private static Path pathToConfig;
+	@CommandLine.Option(names = "--generationMode", defaultValue = "plans", description = "Set option of the generation of 'plans' or using 'jsprit'")
+	private GenerationMode usedGenerationMode;
+	@CommandLine.Option(names = "--numberOfTours", defaultValue = "315", description = "Set the number of created tours")
+	private int numberOfTours; //526 (315 = 60% von 526 Touren);
+	@CommandLine.Option(names = "--PathOutput", description = "Path for the output")
+	private Path output;
+	public static void main(String[] args) {
+		System.exit(new CommandLine(new CreateTourismBusTours()).execute(args));
 	}
-
-	public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
+	//TODO beachte Schließzeiten von Parkplätzen, Höchstparkdauern
+	//TODO Auswertung Parkplatzbelegung nach Zeit
+	//TODO zeitliche Verteilung der Rejected, Requests etc.
+	@Override
+	public Integer call() throws IOException, ExecutionException, InterruptedException {
 
 		Configurator.setLevel("org.matsim.contrib.parking.parkingsearch.manager.FacilityBasedParkingManager", Level.WARN);
 		Configurator.setLevel("org.matsim.core.utils.geometry.geotools.MGC", Level.ERROR);
@@ -107,60 +116,61 @@ public class CreateTourismBusTours {
 		String facilitiesFile = "scenarios/tourismFacilities/tourismFacilities.xml";
 		String facilityCRS = TransformationFactory.DHDN_GK4;
 
-		String network = "../public-svn/matsim/scenarios/countries/de/berlin/berlin-v5.5-10pct/input/berlin-v5.5-network.xml.gz";
 		Path shapeFileZonePath = Path.of("original-input-data/shp/bezirke/bezirksgrenzen.shp");
 		String shapeCRS = "EPSG:4326";
 		String locationHotspotsInformation = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspots.csv";
 		String hotspotsCRS = "EPSG:4326";
 
-		int numberOfTours = 315; //526 (315 = 60% von 526 Touren);
 		boolean setParkingCapacityToZeroForNonParkingLinks= false;
 		boolean infiniteParkingCapacitiesAtParkingSpaces = false;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
 
-		GenerationMode usedGenerationMode = GenerationMode.plans;
-		ScenarioChoice selectedScenario = ScenarioChoice.case2;
-
-		Config config = prepareConfig(numberOfTours, network, selectedScenario);
+		Config config = prepareConfig(numberOfTours, output);
 		Scenario scenario = ScenarioUtils.loadScenario(config);
 
 //		Network filteredNetwork = scenario.getNetwork();
 //		new TransportModeNetworkFilter(NetworkUtils.readNetwork(config.network().getInputFile())).filter(filteredNetwork, new HashSet<>(Arrays.asList("car")));
 		random = new SplittableRandom(config.global().getRandomSeed());		
-	
-		HashMap<String, Integer> busStartDistribution = new HashMap<>();
-		HashMap<Integer, Integer> stopsPerTourDistribution = new HashMap<>();
-		HashMap<Coord, Integer> stopsPerHotspotDistribution = new HashMap<>();
-		HashMap<Coord, ArrayList<Id<ActivityFacility>>> attractionsForHotspots = new HashMap<>();
-		
-		createBusStartDistribution(busStartDistribution, numberOfTours);
-		createStopsPerTourDistribution(stopsPerTourDistribution, numberOfTours);
-		createStopsPerHotspotDistribution(stopsPerHotspotDistribution, stopsPerTourDistribution,
-				locationHotspotsInformation, hotspotsCRS, config.global().getCoordinateSystem());
-		if (infiniteParkingCapacitiesAtParkingSpaces)
-			setCapacitiesForSpacesToInfinite(scenario);
 
-		if (setParkingCapacityToZeroForNonParkingLinks)
-			setParkingCapacityToZeroForNonParkingLinks(scenario);
-		
-		MatsimFacilitiesReader matsimFacilitiesReader = new MatsimFacilitiesReader(scenario);
-		matsimFacilitiesReader.readFile(facilitiesFile);
+		if(scenario.getPopulation().getPersons().size() == 0) {
 
-		hotspotLookup(scenario, stopsPerHotspotDistribution, attractionsForHotspots);
-		if (usedGenerationMode == GenerationMode.plans)
-			generateTours(scenario, busStartDistribution, attractionsForHotspots, stopsPerHotspotDistribution,
-					stopsPerTourDistribution, shpZones, facilityCRS);
-		else
-			generateToursCarriers(scenario, busStartDistribution, attractionsForHotspots, stopsPerHotspotDistribution,
-					stopsPerTourDistribution, shpZones, facilityCRS);
+			HashMap<String, Integer> busStartDistribution = new HashMap<>();
+			HashMap<Integer, Integer> stopsPerTourDistribution = new HashMap<>();
+			HashMap<Coord, Integer> stopsPerHotspotDistribution = new HashMap<>();
+			HashMap<Coord, ArrayList<Id<ActivityFacility>>> attractionsForHotspots = new HashMap<>();
 
-		PopulationUtils.writePopulation(scenario.getPopulation(),
-				config.controler().getOutputDirectory() + "/" + config.controler().getRunId() + ".output_plans_generated.xml.gz");
-		if (usedGenerationMode == GenerationMode.jsprit) {
-			FreightUtils.runJsprit(scenario);
-			new CarrierPlanWriter(FreightUtils.addOrGetCarriers(scenario)).write(
-					scenario.getConfig().controler().getOutputDirectory() + "/output_CarrierDemandWithPlans.xml");
+			createBusStartDistribution(busStartDistribution, numberOfTours);
+			createStopsPerTourDistribution(stopsPerTourDistribution, numberOfTours);
+			createStopsPerHotspotDistribution(stopsPerHotspotDistribution, stopsPerTourDistribution,
+					locationHotspotsInformation, hotspotsCRS, config.global().getCoordinateSystem());
+			if (infiniteParkingCapacitiesAtParkingSpaces)
+				setCapacitiesForSpacesToInfinite(scenario);
+
+			if (setParkingCapacityToZeroForNonParkingLinks)
+				setParkingCapacityToZeroForNonParkingLinks(scenario);
+
+			MatsimFacilitiesReader matsimFacilitiesReader = new MatsimFacilitiesReader(scenario);
+			matsimFacilitiesReader.readFile(facilitiesFile);
+
+			hotspotLookup(scenario, stopsPerHotspotDistribution, attractionsForHotspots);
+			if (usedGenerationMode == GenerationMode.plans)
+				generateTours(scenario, busStartDistribution, attractionsForHotspots, stopsPerHotspotDistribution,
+						stopsPerTourDistribution, shpZones, facilityCRS);
+			else
+				generateToursCarriers(scenario, busStartDistribution, attractionsForHotspots, stopsPerHotspotDistribution,
+						stopsPerTourDistribution, shpZones, facilityCRS);
+
+			PopulationUtils.writePopulation(scenario.getPopulation(),
+					config.controler().getOutputDirectory() + "/" + config.controler().getRunId() + ".output_plans_generated.xml.gz");
+			if (usedGenerationMode == GenerationMode.jsprit) {
+				FreightUtils.runJsprit(scenario);
+				new CarrierPlanWriter(FreightUtils.addOrGetCarriers(scenario)).write(
+						scenario.getConfig().controler().getOutputDirectory() + "/output_CarrierDemandWithPlans.xml");
+			}
 		}
+		else
+			log.warn("The given input plans used. No new demand created.");
+
 		Controler controler = new Controler(scenario);
 		if (usedGenerationMode == GenerationMode.jsprit)
 			controler.addOverridingModule(new CarrierModule());
@@ -185,6 +195,7 @@ public class CreateTourismBusTours {
         } catch (IOException e) {
             e.printStackTrace();
         }
+	return 0;
 	}
 
 	private static void setCapacitiesForSpacesToInfinite(Scenario scenario) {
@@ -215,60 +226,22 @@ public class CreateTourismBusTours {
 		}
 	}
 
-	private static Config prepareConfig(int numberOfTours, String network, ScenarioChoice selectedScenario) {
-	
-		Config config = ConfigUtils.createConfig(new ParkingSearchConfigGroup());
-		ParkingSearchConfigGroup configGroup = (ParkingSearchConfigGroup) config.getModules()
-				.get(ParkingSearchConfigGroup.GROUP_NAME);
+	private static Config prepareConfig(int numberOfTours, Path output) {
 
+		Config config = ConfigUtils.loadConfig(pathToConfig.toString());
+		ConfigUtils.addOrGetModule (config, ParkingSearchConfigGroup.class);
 
 		FreightConfigGroup freightConfigGroup = ConfigUtils.addOrGetModule(config, FreightConfigGroup.class);
 		freightConfigGroup.setCarriersVehicleTypesFile("scenarios/vehicleTypes.xml");
-
-		switch (selectedScenario){
-			case base -> {
-				configGroup.setParkingSearchStrategy(ParkingSearchStrategy.NearestParkingSpot);
-				config.facilities().setInputFile("scenarios/parkingFacilities/parkingFacilities_base.xml");
-				config.controler().setRunId("base");
-			}
-			case case1 -> {
-				configGroup.setParkingSearchStrategy(ParkingSearchStrategy.NearestParkingSpotWithReservation);
-				config.facilities().setInputFile("scenarios/parkingFacilities/parkingFacilities_base.xml");
-				config.controler().setRunId("case1");
-			}
-			case case2 -> {
-				configGroup.setParkingSearchStrategy(ParkingSearchStrategy.NearestParkingSpot);
-				config.facilities().setInputFile("scenarios/parkingFacilities/parkingFacilities_case2.xml");
-				config.controler().setRunId("case2");
-			}
-		}
-		String output = "output/" + config.controler().getRunId()+ "." + java.time.LocalDate.now() + "_"
-				+ java.time.LocalTime.now().toSecondOfDay()+ "_" + numberOfTours + "busses";
-		config.controler().setRunId("bus");
-		config.controler().setOutputDirectory(output);
-		config.controler().setOverwriteFileSetting(OverwriteFileSetting.failIfDirectoryExists);
-		config.controler().setLastIteration(0);
-		config.controler().setRoutingAlgorithmType(RoutingAlgorithmType.SpeedyALT);
-		config.plans().setRemovingUnneccessaryPlanAttributes(true);
-		config.global().setCoordinateSystem("EPSG:31468");
-		config.global().setRandomSeed(4177);
-		config.global().setInsistingOnDeprecatedConfigVersion(false);
-		config.network().setInputFile(network);
-		config.vehicles().setVehiclesFile("scenarios/vehicleTypes.xml");
-		config.plansCalcRoute().setAccessEgressType(AccessEgressType.none);
-		config.planCalcScore().setFractionOfIterationsToStartScoreMSA(0.8);
-		config.qsim().setSimStarttimeInterpretation(StarttimeInterpretation.onlyUseStarttime);
-		config.qsim().setUsingTravelTimeCheckInTeleportation(true);
-		config.qsim().setTrafficDynamics(TrafficDynamics.kinematicWaves);
-		config.qsim().setUsePersonIdForMissingVehicleId(true);
-		config.strategy().setFractionOfIterationsToDisableInnovation(0.8);
-		StrategySettings strategyChangeBeta = new StrategySettings().setStrategyName("ChangeExpBeta").setWeight(0.5);
-		config.strategy().addStrategySettings(strategyChangeBeta);
-		StrategySettings strategyReRoute = new StrategySettings().setStrategyName("ReRoute").setWeight(0.5);
-		config.strategy().addStrategySettings(strategyReRoute);
+		if (output == null)
+			config.controler().setOutputDirectory("output/" + config.controler().getRunId()+ "." + java.time.LocalDate.now() + "_"
+					+ java.time.LocalTime.now().toSecondOfDay()+ "_" + numberOfTours + "busses");
+		else
+			config.controler().setOutputDirectory(output.toString());
 
 		new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
 				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
+		config.controler().setRunId("bus");
 		config.controler().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
 		config.planCalcScore().addActivityParams(new ActivityParams(ParkingUtils.PARKACTIVITYTYPE)
 				.setTypicalDuration(2 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
