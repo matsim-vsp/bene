@@ -1,0 +1,110 @@
+header:
+  tab: "Parking"
+  title: "something"
+  title_en: "Vehicle volumes per road segment"
+  title_de: "Fahrzeugaufkommen pro Straßenabschnitt"
+  description_en: "Note that public transport is disregarded. By default, the difference to the base case is displayed for the daily volumes. You can also display values for specific time windows. For each visualization individually, you can configure the width/color to show the absolute scenario values."
+  description_de: "Beachten Sie, dass der öffentliche Verkehr unberücksichtigt bleibt. Standardmäßig wird die Differenz zum Basisfall für die Tagesmengen angezeigt. Sie können auch Werte für spezifische Zeitfenster anzeigen lassen. Sie können für jede Visualisierung einzeln die Breite und Farbe konfigurieren, um bspw. die absoluten Szenariowerte anzuzeigen.  Passen Sie den Skalierungsfaktor für die Breite entsprechend an!"
+
+layout:
+  Sum:
+    - type: "links"
+      title: "Coach Services Berlin"
+      description: ""
+      width: 2
+      height: 8
+      props:
+ #       thumbnail: "thumbnails/thumbnail-accident-costs.png"
+        network: ../bus.output_network.xml.gz
+        projection: EPSG:31468
+        showDifferences: false
+        center: 13.4010, 52.51892
+        zoom: 11
+#        sampleRate: 1
+        datasets:
+            csvBase: ../ITERS/it.0/bus.0.parkingStats.csv
+        display:
+            color:
+                dataset: csvBase
+                columnName: rejectedReservations
+                colorRamp:
+                    ramp: Viridis
+                    reverse: false
+                    steps: 7
+            width:
+                dataset: csvBase
+                columnName: rejectedReservations
+                scaleFactor: 1
+    - title: "General results"
+      description: "TODO"
+      type: 'topsheet'
+      props:
+        configFile: "topsheet-coach-parking.yaml"
+  ParkingSlots:
+    - type: "line"
+      title: "Darstellung der Parkplatzsuche"
+      description: "Anzahl an Vorgängen des entsprechenden Typs."
+      width: 4
+      height: 6
+      props:
+        dataset: "../ITERS/it.0/bus.0.parkingStatsPerTimeSteps.csv"
+        x: "time"
+        xAxisName: "time"
+        yAxisName: "Anzahl"
+  ParkingTotal:
+    - type: "links"
+      title: "Coach Services Berlin"
+      description: ""
+      #width: 4
+      height: 15
+      props:
+ #       thumbnail: "thumbnails/thumbnail-accident-costs.png"
+        network: ../bus.output_network.xml.gz
+        projection: EPSG:31468
+        showDifferences: false
+        center: 13.4010, 52.51892
+        zoom: 11
+#        sampleRate: 1
+        datasets:
+            csvBase: ../ITERS/it.0/bus.0.parkingStats.csv
+        display:
+            color:
+                dataset: csvBase
+                columnName: numberOfParkedVehicles
+                colorRamp:
+                    ramp: Viridis
+                    reverse: false
+                    steps: 7
+            width:
+                dataset: csvBase
+                columnName: numberOfParkedVehicles
+                scaleFactor: 1
+
+  ParkingSearch:
+    - type: "links"
+      title: "Coach Services Berlin - Parking Search"
+      description: ""
+      #width: 4
+      height: 15
+      props:
+ #       thumbnail: "thumbnails/thumbnail-accident-costs.png"
+        network: ../bus.output_network.xml.gz
+        projection: EPSG:31468
+  #      showDifferences: false
+        center: 13.4010, 52.51892
+        zoom: 11
+#        sampleRate: 1
+        datasets:
+            csvBase: ../ITERS/it.0/bus.0.parkingStats.csv
+        display:
+            color:
+                dataset: csvBase
+                columnName: reservationsRequests
+                colorRamp:
+                    ramp: Viridis
+                    reverse: false
+                    steps: 7
+            width:
+                dataset: csvBase
+                columnName: reservationsRequests
+                scaleFactor: 1
