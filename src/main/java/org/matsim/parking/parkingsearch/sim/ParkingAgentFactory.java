@@ -108,14 +108,10 @@ public class ParkingAgentFactory implements AgentFactory {
 			}
 			case NearestParkingSpot, NearestParkingSpotWithReservation -> {
 
-				switch (psConfigGroup.getParkingSearchStrategy()) {
-					case NearestParkingSpotWithReservation -> {
-						parkingLogic = new NearestParkingSpotSearchLogic(network, parkingRouter, parkingManager, true);
-						break;
-					}
-					default -> {
-						parkingLogic = new NearestParkingSpotSearchLogic(network, parkingRouter, parkingManager, false);
-					}
+				if (Objects.requireNonNull(psConfigGroup.getParkingSearchStrategy()) == ParkingSearchStrategy.NearestParkingSpotWithReservation) {
+					parkingLogic = new NearestParkingSpotSearchLogic(network, parkingRouter, parkingManager, true);
+				} else {
+					parkingLogic = new NearestParkingSpotSearchLogic(network, parkingRouter, parkingManager, false);
 				}
 				agentLogic = new NearestParkingSpotAgentLogic(p.getSelectedPlan(), parkingManager, walkRouter,
 						network, parkingRouter, events, parkingLogic, ((QSim) qsim).getSimTimer(),
@@ -126,8 +122,7 @@ public class ParkingAgentFactory implements AgentFactory {
 		if (startLinkId == null) {
 			throw new NullPointerException(" No start link found. Should not happen.");
 		}
-		DynAgent agent = new DynAgent(p.getId(), startLinkId, events, agentLogic);
-		return agent;
+		return new DynAgent(p.getId(), startLinkId, events, agentLogic);
 	}
 
 }
