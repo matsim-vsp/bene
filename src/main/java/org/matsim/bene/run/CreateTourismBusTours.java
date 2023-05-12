@@ -33,6 +33,7 @@ import org.matsim.api.core.v01.Coord;
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.network.Link;
+import org.matsim.api.core.v01.network.Network;
 import org.matsim.api.core.v01.population.*;
 import org.matsim.application.MATSimAppCommand;
 import org.matsim.application.options.ShpOptions;
@@ -54,8 +55,10 @@ import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryHierarchy;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
 import org.matsim.core.network.NetworkUtils;
+import org.matsim.core.network.algorithms.TransportModeNetworkFilter;
 import org.matsim.core.population.PopulationUtils;
 import org.matsim.core.router.AnalysisMainModeIdentifier;
+import org.matsim.core.scenario.MutableScenario;
 import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.core.utils.geometry.CoordinateTransformation;
 import org.matsim.core.utils.geometry.geotools.MGC;
@@ -133,9 +136,11 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
 		Config config = prepareConfig(numberOfTours, output, changeFactorOfParkingCapacity);
 		Scenario scenario = ScenarioUtils.loadScenario(config);
-
-//		Network filteredNetwork = scenario.getNetwork();
-//		new TransportModeNetworkFilter(NetworkUtils.readNetwork(config.network().getInputFile())).filter(filteredNetwork, new HashSet<>(Arrays.asList("car")));
+		Network filteredNetwork = NetworkUtils.createNetwork();
+		Map<String, Object> networkAttributes = scenario.getNetwork().getAttributes().getAsMap();
+		new TransportModeNetworkFilter(scenario.getNetwork()).filter(filteredNetwork, new HashSet<>(Arrays.asList("car")));
+		networkAttributes.forEach((k,v) ->filteredNetwork.getAttributes().putAttribute(k,v) );
+		((MutableScenario)scenario).setNetwork(filteredNetwork);
 		random = new SplittableRandom(config.global().getRandomSeed());		
 
 		if(scenario.getPopulation().getPersons().size() == 0) {
