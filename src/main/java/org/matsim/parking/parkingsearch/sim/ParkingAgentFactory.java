@@ -44,10 +44,13 @@ import org.matsim.parking.parkingsearch.DynAgent.agentLogic.BenensonParkingAgent
 import org.matsim.parking.parkingsearch.DynAgent.agentLogic.MemoryBasedParkingAgentLogic;
 import org.matsim.parking.parkingsearch.DynAgent.agentLogic.NearestParkingSpotAgentLogic;
 import org.matsim.parking.parkingsearch.DynAgent.agentLogic.ParkingAgentLogic;
+import org.matsim.parking.parkingsearch.ParkingSearchStrategy;
 import org.matsim.parking.parkingsearch.search.BenensonParkingSearchLogic;
 import org.matsim.parking.parkingsearch.search.NearestParkingSpotSearchLogic;
 
 import com.google.inject.name.Named;
+
+import java.util.Objects;
 
 /**
  * @author jbischoff
