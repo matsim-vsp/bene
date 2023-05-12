@@ -8,33 +8,26 @@ header:
 
 layout:
   Sum:
-    - type: "links"
-      title: "Coach Services Berlin"
+    - type: "map"
+      title: "Basisfall"
       description: ""
       width: 2
       height: 8
-      props:
- #       thumbnail: "thumbnails/thumbnail-accident-costs.png"
-        network: ../bus.output_network.xml.gz
-        projection: EPSG:31468
-        showDifferences: false
-        center: 13.4010, 52.51892
-        zoom: 11
-#        sampleRate: 1
-        datasets:
-            csvBase: ../ITERS/it.0/bus.0.parkingStats.csv
-        display:
-            color:
-                dataset: csvBase
-                columnName: rejectedReservations
-                colorRamp:
-                    ramp: Viridis
-                    reverse: false
-                    steps: 7
-            width:
-                dataset: csvBase
-                columnName: rejectedReservations
-                scaleFactor: 1
+      center: 13.4010, 52.51892
+      zoom: 11
+      projection: 'EPSG:31468'
+      shapes:
+        file: 'shp/base_parking.shp'
+        join: linkId
+      datasets:
+        parkingData:
+          file: 'base/bus.0.parkingStats.csv'
+      display:
+        lineWidth:
+          dataset: parkingData
+          columnName: reservationsRequests
+          join: linkId
+          scaleFactor: 10
     - title: "General results"
       description: "TODO"
       type: 'topsheet'
