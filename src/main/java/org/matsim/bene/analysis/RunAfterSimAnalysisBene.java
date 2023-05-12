@@ -203,11 +203,18 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         // link events handler
         LinkDemandEventHandler linkDemandEventHandler = new LinkDemandEventHandler(scenario.getNetwork());
         eventsManager.addHandler(linkDemandEventHandler);
-
+        EmissionsOnLinkHandler emissionsOnLinkEventHandler = null;
+        if (analyseEmissions) {
+            emissionsOnLinkEventHandler = new EmissionsOnLinkHandler();
+            eventsManager.addHandler(emissionsOnLinkEventHandler);
+            createEmissionAnalysis(linkEmissionPerMOutputFile, linkEmissionOutputFile,
+                    linkEmissionPerMOutputFile_parkingTotal, linkEmissionOutputFile_parkingTotal,
+                    linkEmissionPerMOutputFile_parkingSearch, linkEmissionOutputFile_parkingSearch, scenario,
+                    emissionsOnLinkEventHandler);
+        }
         eventsManager.initProcessing();
-//        MatsimEventsReader matsimEventsReader = new MatsimEventsReader(eventsManager);
         new BeneEventsReader(eventsManager).readFile(eventsFile);
-//		matsimEventsReader.readFile(eventsFile);
+
         log.info("-------------------------------------------------");
         log.info("Done reading the events file");
         log.info("Finish processing...");
@@ -216,16 +223,15 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         emissionEventWriter.closeFile();
         log.info("Done");
         log.info("Writing (more) output...");
+
+        createLinkVolumeAnalysis(linkDemandOutputFile_parkingSearch, linkDemandEventHandler);
+
         if (analyseEmissions) {
-            EmissionsOnLinkHandler emissionsOnLinkEventHandler = new EmissionsOnLinkHandler();
-            eventsManager.addHandler(emissionsOnLinkEventHandler);
             createEmissionAnalysis(linkEmissionPerMOutputFile, linkEmissionOutputFile,
                     linkEmissionPerMOutputFile_parkingTotal, linkEmissionOutputFile_parkingTotal,
                     linkEmissionPerMOutputFile_parkingSearch, linkEmissionOutputFile_parkingSearch, scenario,
                     emissionsOnLinkEventHandler);
         }
-        createLinkVolumeAnalysis(linkDemandOutputFile_parkingSearch, linkDemandEventHandler);
-
         createGeneralResults(general_resultsOutputFile, linkDemandEventHandler);
 
         return 0;
