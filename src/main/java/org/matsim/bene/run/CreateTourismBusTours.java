@@ -99,33 +99,39 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 	private GenerationMode usedGenerationMode;
 	@CommandLine.Option(names = "--numberOfTours", defaultValue = "315", description = "Set the number of created tours")
 	private int numberOfTours; //526 (315 = 60% von 526 Touren);
-	@CommandLine.Option(names = "--PathOutput", description = "Path for the output")
+	@CommandLine.Option(names = "--changeFactorOfParkingCapacity", defaultValue = "1.0", description = "Sets the percentage of change of the existing parking Capacity")
+	private double changeFactorOfParkingCapacity;
+	@CommandLine.Option(names = "--pathTourismFacilitiesFile", description = "Path for the used tourism facilities", defaultValue = "scenarios/tourismFacilities/tourismFacilities.xml")
+	private Path facilitiesFileLocation;
+	@CommandLine.Option(names = "--pathShpFile", description = "Path for the used shp file", defaultValue = "original-input-data/shp/bezirke/bezirksgrenzen.shp")
+	private Path shapeFileZonePath;
+	@CommandLine.Option(names = "--pathHotspotFile", description = "Path for the used hotspot information", defaultValue = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspotsV2.csv")
+	private Path pathHotspotFile;
+	@CommandLine.Option(names = "--pathOutput", description = "Path for the output")
 	private Path output;
+	@CommandLine.Option(names = "--runAnalysisAtEnde", description = "Run the analysis at the end of the run.", defaultValue = "true")
+	private boolean runAnalysis;
 	public static void main(String[] args) {
 		System.exit(new CommandLine(new CreateTourismBusTours()).execute(args));
 	}
 	//TODO beachte Schließzeiten von Parkplätzen, Höchstparkdauern
-	//TODO Auswertung Parkplatzbelegung nach Zeit
-	//TODO zeitliche Verteilung der Rejected, Requests etc.
+	//TODO set NetworkChangeEvents
 	@Override
 	public Integer call() throws IOException, ExecutionException, InterruptedException {
 
 		Configurator.setLevel("org.matsim.contrib.parking.parkingsearch.manager.FacilityBasedParkingManager", Level.WARN);
 		Configurator.setLevel("org.matsim.core.utils.geometry.geotools.MGC", Level.ERROR);
 		
-		String facilitiesFile = "scenarios/tourismFacilities/tourismFacilities.xml";
 		String facilityCRS = TransformationFactory.DHDN_GK4;
 
-		Path shapeFileZonePath = Path.of("original-input-data/shp/bezirke/bezirksgrenzen.shp");
 		String shapeCRS = "EPSG:4326";
-		String locationHotspotsInformation = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspots.csv";
 		String hotspotsCRS = "EPSG:4326";
 
 		boolean setParkingCapacityToZeroForNonParkingLinks= false;
 		boolean infiniteParkingCapacitiesAtParkingSpaces = false;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
 
-		Config config = prepareConfig(numberOfTours, output);
+		Config config = prepareConfig(numberOfTours, output, changeFactorOfParkingCapacity);
 		Scenario scenario = ScenarioUtils.loadScenario(config);
 
 //		Network filteredNetwork = scenario.getNetwork();
@@ -142,15 +148,15 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 			createBusStartDistribution(busStartDistribution, numberOfTours);
 			createStopsPerTourDistribution(stopsPerTourDistribution, numberOfTours);
 			createStopsPerHotspotDistribution(stopsPerHotspotDistribution, stopsPerTourDistribution,
-					locationHotspotsInformation, hotspotsCRS, config.global().getCoordinateSystem());
-			if (infiniteParkingCapacitiesAtParkingSpaces)
-				setCapacitiesForSpacesToInfinite(scenario);
+					pathHotspotFile, hotspotsCRS, config.global().getCoordinateSystem());
+			if (changeFactorOfParkingCapacity != 1.)
+				changeParkingCapacity(scenario, changeFactorOfParkingCapacity);
 
 			if (setParkingCapacityToZeroForNonParkingLinks)
 				setParkingCapacityToZeroForNonParkingLinks(scenario);
 
 			MatsimFacilitiesReader matsimFacilitiesReader = new MatsimFacilitiesReader(scenario);
-			matsimFacilitiesReader.readFile(facilitiesFile);
+			matsimFacilitiesReader.readFile(String.valueOf(facilitiesFileLocation));
 
 			hotspotLookup(scenario, stopsPerHotspotDistribution, attractionsForHotspots);
 			if (usedGenerationMode == GenerationMode.plans)
@@ -228,7 +234,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		}
 	}
 
-	private static Config prepareConfig(int numberOfTours, Path output) {
+	private static Config prepareConfig(int numberOfTours, Path output, double changeFactorOfParkingCapacity) {
 
 		Config config = ConfigUtils.loadConfig(pathToConfig.toString());
 		ConfigUtils.addOrGetModule (config, ParkingSearchConfigGroup.class);
@@ -237,7 +243,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		freightConfigGroup.setCarriersVehicleTypesFile("scenarios/vehicleTypes.xml");
 		if (output == null)
 			config.controler().setOutputDirectory("output/" + config.controler().getRunId()+ "." + java.time.LocalDate.now() + "_"
-					+ java.time.LocalTime.now().toSecondOfDay()+ "_" + numberOfTours + "busses");
+					+ java.time.LocalTime.now().toSecondOfDay() + "_" + numberOfTours + "busses" + "_" + changeFactorOfParkingCapacity);
 		else
 			config.controler().setOutputDirectory(output.toString());
 
@@ -245,10 +251,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
 		config.controler().setRunId("bus");
 		config.controler().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
-		config.planCalcScore().addActivityParams(new ActivityParams(ParkingUtils.PARKACTIVITYTYPE)
-				.setTypicalDuration(2 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
-		config.planCalcScore().addActivityParams(new ActivityParams(ParkingUtils.PARKACTIVITYTYPE + "_activity")
-				.setTypicalDuration(2 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
 		return config;
 	}
 
