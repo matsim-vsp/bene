@@ -189,7 +189,10 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 			Id<Link> linkId = this.parkingFacilities.get(e.getKey()).getLinkId();
 			double capacity = this.parkingFacilities.get(e.getKey()).getActivityOptions()
 					.get(ParkingUtils.PARKACTIVITYTYPE).getCapacity();
-			String s = linkId.toString() + ";" + e.getKey().toString() + ";" + capacity + ";" + e.getValue().toString() + ";" + this.reservationsRequests.get(e.getKey()).toString() + ";" + this.numberOfParkedVehicles.get(e.getKey()).toString() + ";" + this.rejectedReservations.get(e.getKey()).toString();
+			double x = this.parkingFacilities.get(e.getKey()).getCoord().getX();
+			double y = this.parkingFacilities.get(e.getKey()).getCoord().getY();
+
+			String s = linkId.toString() + ";" + x + ";" + y + ";" + e.getKey().toString() + ";" + capacity + ";" + e.getValue().toString() + ";" + this.reservationsRequests.get(e.getKey()).toString() + ";" + this.numberOfParkedVehicles.get(e.getKey()).toString() + ";" + this.rejectedReservations.get(e.getKey()).toString();
 			stats.add(s);
 		}
 		return stats;
