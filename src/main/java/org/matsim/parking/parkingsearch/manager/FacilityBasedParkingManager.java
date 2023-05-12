@@ -219,7 +219,7 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 		}
 		return allSpaces;
 	}
-	
+
 	public double getNrOfFreeParkingSpacesOnLink (Id<Link> linkId){
 		double allFreeSpaces = 0;
 		Set<Id<ActivityFacility>> parkingFacilitiesAtLink = this.facilitiesPerLink.get(linkId);
@@ -267,6 +267,4 @@ public class FacilityBasedParkingManager implements ParkingSearchManager {
 			this.numberOfParkedVehicles.get(fac).setValue(0);
 		}
 	}
-
-	
 }
