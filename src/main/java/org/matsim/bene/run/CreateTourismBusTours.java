@@ -131,7 +131,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		String hotspotsCRS = "EPSG:4326";
 
 		boolean setParkingCapacityToZeroForNonParkingLinks= false;
-		boolean infiniteParkingCapacitiesAtParkingSpaces = false;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
 
 		Config config = prepareConfig(numberOfTours, output, changeFactorOfParkingCapacity);
@@ -211,11 +210,29 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		return 0;
 	}
 
-	private static void setCapacitiesForSpacesToInfinite(Scenario scenario) {
+	private static void changeParkingCapacity(Scenario scenario, double changeFactorOfParkingCapacity) {
+
+		double roundingError = 0.;
+		int initialSumParkingCapacity = 0;
+		int resultingSumParkingCapacity = 0;
 		for (ActivityFacility parkingFacility : scenario.getActivityFacilities().getFacilitiesForActivityType("parking").values()) {
-			parkingFacility.getActivityOptions().get("parking").setCapacity(600);
+			double initialParkingCapacity = parkingFacility.getActivityOptions().get("parking").getCapacity();
+			initialSumParkingCapacity = (int) (initialSumParkingCapacity + initialParkingCapacity);
+			double changedParkingCapacity = initialParkingCapacity*changeFactorOfParkingCapacity;
+			double roundedParkingCapacity = Math.round(changedParkingCapacity);
+			roundingError = roundingError + (changedParkingCapacity - roundedParkingCapacity);
+			if (roundingError >= 1.) {
+				roundedParkingCapacity++;
+				roundingError--;
+			}
+			else if (roundingError <= -1 && roundedParkingCapacity > 0) {
+				roundedParkingCapacity--;
+				roundingError++;
+			}
+			resultingSumParkingCapacity = (int) (resultingSumParkingCapacity + roundedParkingCapacity);
+			parkingFacility.getActivityOptions().get("parking").setCapacity(roundedParkingCapacity);
 		}
-		
+		log.warn("Changed the initial parkingCapacity by the factor " + changeFactorOfParkingCapacity + " from " + initialSumParkingCapacity + " to " + resultingSumParkingCapacity + "parking slots.");
 	}
 
 	private static void setParkingCapacityToZeroForNonParkingLinks(Scenario scenario) {
