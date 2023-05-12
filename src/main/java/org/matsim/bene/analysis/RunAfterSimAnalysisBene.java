@@ -77,13 +77,15 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
     private final String hbefaWarmFile;
     private final String hbefaColdFile;
     private final String analysisOutputDirectory;
+    private final boolean analyseEmissions;
 
     public RunAfterSimAnalysisBene(String runDirectory, String runId, String hbefaFileWarm, String hbefaFileCold,
-                                   String analysisOutputDirectory) {
+                                   String analysisOutputDirectory, boolean analyseEmissions) {
         this.runDirectory = Path.of(runDirectory);
         this.runId = runId;
         this.hbefaWarmFile = hbefaFileWarm;
         this.hbefaColdFile = hbefaFileCold;
+        this.analyseEmissions = analyseEmissions;
 
         if (!analysisOutputDirectory.endsWith("/")) analysisOutputDirectory = analysisOutputDirectory + "/";
         this.analysisOutputDirectory = analysisOutputDirectory;
@@ -91,11 +93,14 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 
     public static void main(String[] args) {
 
-        if (args.length == 2) {
+        if (args.length > 0) {
             String runDirectory = args[0];
             if (!runDirectory.endsWith("/")) runDirectory = runDirectory + "/";
 
-            final String runId = args[1]; // based on the simulation output available in this project
+            final String runId = args[1];
+            boolean analyseEmissions = true;
+            if(args.length > 2 && args[2] != null)
+                analyseEmissions = Boolean.parseBoolean(args[2]);// based on the simulation output available in this project
             final String hbefaPath = "../public-svn/3507bb3997e5657ab9da76dbedbb13c9b5991d3e/0e73947443d68f95202b71a156b337f7f71604ae/";
 
             String hbefaFileWarm = hbefaPath + "7eff8f308633df1b8ac4d06d05180dd0c5fdf577.enc";
@@ -106,7 +111,8 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                     runId,
                     hbefaFileWarm,
                     hbefaFileCold,
-                    runDirectory + "simwrapper_analysis");
+                    runDirectory + "simwrapper_analysis",
+                    analyseEmissions);
             try {
                 analysis.call();
             } catch (Exception e) {
@@ -194,9 +200,6 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         EventWriterXML emissionEventWriter = new EventWriterXML(emissionEventOutputFile);
         emissionModule.getEmissionEventsManager().addHandler(emissionEventWriter);
 
-        // necessary for link emissions [g/m] output
-        EmissionsOnLinkHandler emissionsOnLinkEventHandler = new EmissionsOnLinkHandler();
-        eventsManager.addHandler(emissionsOnLinkEventHandler);
         // link events handler
         LinkDemandEventHandler linkDemandEventHandler = new LinkDemandEventHandler(scenario.getNetwork());
         eventsManager.addHandler(linkDemandEventHandler);
@@ -213,12 +216,14 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         emissionEventWriter.closeFile();
         log.info("Done");
         log.info("Writing (more) output...");
-
-        createEmissionAnalysis(linkEmissionPerMOutputFile, linkEmissionOutputFile,
-                linkEmissionPerMOutputFile_parkingTotal, linkEmissionOutputFile_parkingTotal,
-                linkEmissionPerMOutputFile_parkingSearch, linkEmissionOutputFile_parkingSearch, scenario,
-                emissionsOnLinkEventHandler);
-
+        if (analyseEmissions) {
+            EmissionsOnLinkHandler emissionsOnLinkEventHandler = new EmissionsOnLinkHandler();
+            eventsManager.addHandler(emissionsOnLinkEventHandler);
+            createEmissionAnalysis(linkEmissionPerMOutputFile, linkEmissionOutputFile,
+                    linkEmissionPerMOutputFile_parkingTotal, linkEmissionOutputFile_parkingTotal,
+                    linkEmissionPerMOutputFile_parkingSearch, linkEmissionOutputFile_parkingSearch, scenario,
+                    emissionsOnLinkEventHandler);
+        }
         createLinkVolumeAnalysis(linkDemandOutputFile_parkingSearch, linkDemandEventHandler);
 
         createGeneralResults(general_resultsOutputFile, linkDemandEventHandler);

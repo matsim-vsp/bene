@@ -189,13 +189,15 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		controler.getConfig().vspExperimental().setVspDefaultsCheckingLevel(VspDefaultsCheckingLevel.abort);
 		controler.run();
 
-		RunAfterSimAnalysisBene.main(new String[] { scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId()});
-        try {
-            FileUtils.copyDirectory(new File("scenarios/vizExample"), new File(scenario.getConfig().controler().getOutputDirectory()+"/simwrapper_analysis"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	return 0;
+		if (runAnalysis)
+			RunAfterSimAnalysisBene.main(new String[]{scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId(), "true"});
+				try {
+					FileUtils.copyDirectory(new File("scenarios/vizExample"),
+							new File(scenario.getConfig().controler().getOutputDirectory() + "/simwrapper_analysis"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		return 0;
 	}
 
 	private static void setCapacitiesForSpacesToInfinite(Scenario scenario) {
