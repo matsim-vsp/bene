@@ -194,12 +194,13 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         };
 
         com.google.inject.Injector injector = Injector.createInjector(config, module);
+        EventWriterXML emissionEventWriter = null;
+        if (analyseEmissions) {
+            EmissionModule emissionModule = injector.getInstance(EmissionModule.class);
 
-        EmissionModule emissionModule = injector.getInstance(EmissionModule.class);
-
-        EventWriterXML emissionEventWriter = new EventWriterXML(emissionEventOutputFile);
-        emissionModule.getEmissionEventsManager().addHandler(emissionEventWriter);
-
+            emissionEventWriter = new EventWriterXML(emissionEventOutputFile);
+            emissionModule.getEmissionEventsManager().addHandler(emissionEventWriter);
+        }
         // link events handler
         LinkDemandEventHandler linkDemandEventHandler = new LinkDemandEventHandler(scenario.getNetwork());
         eventsManager.addHandler(linkDemandEventHandler);
@@ -220,7 +221,8 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         log.info("Finish processing...");
         eventsManager.finishProcessing();
         log.info("Closing events file...");
-        emissionEventWriter.closeFile();
+        if (analyseEmissions)
+            emissionEventWriter.closeFile();
         log.info("Done");
         log.info("Writing (more) output...");
 
