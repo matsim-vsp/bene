@@ -310,8 +310,8 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 	}
 
 	private static void createStopsPerHotspotDistribution(HashMap<Coord, Integer> stopsPerHotspotDistribution,
-			HashMap<Integer, Integer> createStopsPerTourDistribution, String locationHotspotsInformation,
-			String hotspotsCRS, String globalCRS) throws IOException {
+														  HashMap<Integer, Integer> createStopsPerTourDistribution, Path locationHotspotsInformation,
+														  String hotspotsCRS, String globalCRS) throws IOException {
 
 		int totalNumberOfStops = 0;
 		int totalNumberOfStopsInTours = 0;
