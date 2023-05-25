@@ -33,7 +33,6 @@ import org.matsim.api.core.v01.Coord;
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.network.Link;
-import org.matsim.api.core.v01.network.Network;
 import org.matsim.api.core.v01.population.*;
 import org.matsim.application.MATSimAppCommand;
 import org.matsim.application.options.ShpOptions;
@@ -55,10 +54,8 @@ import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryHierarchy;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
 import org.matsim.core.network.NetworkUtils;
-import org.matsim.core.network.algorithms.TransportModeNetworkFilter;
 import org.matsim.core.population.PopulationUtils;
 import org.matsim.core.router.AnalysisMainModeIdentifier;
-import org.matsim.core.scenario.MutableScenario;
 import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.core.utils.geometry.CoordinateTransformation;
 import org.matsim.core.utils.geometry.geotools.MGC;
@@ -89,7 +86,7 @@ import java.util.stream.Collectors;
  *
  */
 
-@CommandLine.Command(name = "BENE-bus-tours-creation", description = "Creates and simulates the ", showDefaultValues = true)
+@CommandLine.Command(name = "BENE-bus-tours-creation", description = "Creates and simulates the bus tours related to the BENE project ", showDefaultValues = true)
 public class CreateTourismBusTours implements MATSimAppCommand {
 	private static final Logger log = LogManager.getLogger(CreateTourismBusTours.class);
 	static SplittableRandom random;
@@ -111,7 +108,9 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 	@CommandLine.Option(names = "--pathHotspotFile", description = "Path for the used hotspot information", defaultValue = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspotsV2.csv")
 	private Path pathHotspotFile;
 	@CommandLine.Option(names = "--pathOutput", description = "Path for the output")
-	private Path output;
+	private Path output; //TODO make this and using runParameter in name
+//	@CommandLine.Option(names = "--pathNetworkChangeEvents", description = "Path for the networkChangeEvents", defaultValue = "../networkChangeEvents.xml.gz")
+	private Path pathNetworkChangeEvents;
 	@CommandLine.Option(names = "--runAnalysisAtEnde", description = "Run the analysis at the end of the run.", defaultValue = "true")
 	private boolean runAnalysis;
 	public static void main(String[] args) {
@@ -133,13 +132,13 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		boolean setParkingCapacityToZeroForNonParkingLinks= false;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
 
-		Config config = prepareConfig(numberOfTours, output, changeFactorOfParkingCapacity);
+		Config config = prepareConfig(numberOfTours, output, changeFactorOfParkingCapacity, pathNetworkChangeEvents);
 		Scenario scenario = ScenarioUtils.loadScenario(config);
-		Network filteredNetwork = NetworkUtils.createNetwork();
-		Map<String, Object> networkAttributes = scenario.getNetwork().getAttributes().getAsMap();
-		new TransportModeNetworkFilter(scenario.getNetwork()).filter(filteredNetwork, new HashSet<>(Arrays.asList("car")));
-		networkAttributes.forEach((k,v) ->filteredNetwork.getAttributes().putAttribute(k,v) );
-		((MutableScenario)scenario).setNetwork(filteredNetwork);
+//		Network filteredNetwork = NetworkUtils.createNetwork();
+//		Map<String, Object> networkAttributes = scenario.getNetwork().getAttributes().getAsMap();
+//		new TransportModeNetworkFilter(scenario.getNetwork()).filter(filteredNetwork, new HashSet<>(Arrays.asList("car")));
+//		networkAttributes.forEach((k,v) ->filteredNetwork.getAttributes().putAttribute(k,v) );
+//		((MutableScenario)scenario).setNetwork(filteredNetwork);
 		random = new SplittableRandom(config.global().getRandomSeed());		
 
 		if(scenario.getPopulation().getPersons().size() == 0) {
@@ -258,7 +257,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		}
 	}
 
-	private static Config prepareConfig(int numberOfTours, Path output, double changeFactorOfParkingCapacity) {
+	private static Config prepareConfig(int numberOfTours, Path output, double changeFactorOfParkingCapacity, Path pathNetworkChangeEvents) {
 
 		Config config = ConfigUtils.loadConfig(pathToConfig.toString());
 		ConfigUtils.addOrGetModule (config, ParkingSearchConfigGroup.class);
@@ -275,6 +274,11 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
 		config.controler().setRunId("bus");
 		config.controler().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
+
+		if(pathNetworkChangeEvents != null) {
+			config.network().setTimeVariantNetwork(true);
+			config.network().setChangeEventsInputFile(pathNetworkChangeEvents.toString());
+		}
 		return config;
 	}
 
