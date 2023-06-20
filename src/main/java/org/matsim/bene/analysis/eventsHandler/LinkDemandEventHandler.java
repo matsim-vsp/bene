@@ -36,15 +36,9 @@ import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
 import org.matsim.parking.parkingsearch.events.StartParkingSearchEvent;
 import org.matsim.parking.parkingsearch.events.StartParkingSearchEventHandler;
-import org.matsim.parking.parkingsearch.events.ReserveParkingLocationEvent;
-import org.matsim.parking.parkingsearch.events.ReserveParkingLocationEventHandler;
-import org.matsim.parking.parkingsearch.events.SelectNewParkingLocationEvent;
-import org.matsim.parking.parkingsearch.events.SelectNewParkingLocationEventHandler;
 import org.matsim.vehicles.Vehicle;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -62,7 +56,6 @@ public class LinkDemandEventHandler
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles_parkingTotal = new HashMap<>();
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles_parkingSearch = new HashMap<>();
 	private final Map<Id<Vehicle>, Double> parkingStartTimes = new HashMap<>();
-	private final Map<Id<Vehicle>, Double> parkingSearchTimes = new HashMap<>();
 	private final Map<Id<Vehicle>, Double> tourStartTimes = new HashMap<>();
 	private final Network network;
 	private final Map<Id<Vehicle>, Double> vehicleIsInParkingSearch = new HashMap<>();

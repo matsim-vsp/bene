@@ -650,9 +650,15 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 			}
 		}
 	}
-	
+
+	/*
+	@Deprecated method is not updated at the moment
+	 */
+	@Deprecated
 	private static void generateToursCarriers(Scenario scenario, HashMap<String, Integer> busStartDistribution,
-			HashMap<Coord, ArrayList<Id<ActivityFacility>>> attractionsForHotspots, HashMap<Coord, Integer> stopsPerHotspotDistribution, HashMap<Integer, Integer> stopsPerTourDistribution, ShpOptions shpZones, String facilityCRS) {
+											  HashMap<Coord, ArrayList<Id<ActivityFacility>>> attractionsForHotspots,
+											  HashMap<Coord, Integer> stopsPerHotspotDistribution, HashMap<Integer, Integer> stopsPerTourDistribution,
+											  ShpOptions shpZones, String facilityCRS) {
 		Carriers carriers = FreightUtils.addOrGetCarriers(scenario);
 		List<Link> links = scenario.getNetwork().getLinks().values().stream().filter(l -> l.getAllowedModes().contains("car"))
 				.collect(Collectors.toList());
