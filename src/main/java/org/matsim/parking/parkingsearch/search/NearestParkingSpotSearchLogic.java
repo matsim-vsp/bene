@@ -74,7 +74,7 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 	/**
 	 * @param baseLinkId linkId of the origin destination where the parkingSearch starts
 	 */
-	public Id<Link> getNextLink(Id<Link> currentLinkId, Id<Link> baseLinkId, Id<Vehicle> vehicleId, String mode, double now, double maxParkingDuration) {
+	public Id<Link> getNextLink(Id<Link> currentLinkId, Id<Link> baseLinkId, Id<Vehicle> vehicleId, String mode, double now, double maxParkingDuration, double nextPickupTime) {
 
 		if (actualRoute == null) {
 			actualRoute = findRouteToNearestParkingFacility(baseLinkId, currentLinkId, canReserveParkingSlot, now, maxParkingDuration);
@@ -193,7 +193,12 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 		actualRoute = selectedRoute;
 		return actualRoute;
 	}
-
+	public double getExpectedTravelDuration(Id<Link> destinationLinkId, double now,
+											Id<Link> currentLinkId){
+		NetworkRoute possibleRoute = this.parkingRouter.getRouteFromParkingToDestination(destinationLinkId, now,
+				currentLinkId);
+		return possibleRoute.getTravelTime().seconds();
+	}
 	@Override
 	public Id<Link> getNextLink(Id<Link> currentLinkId, Id<Vehicle> vehicleId, String mode) {
 		throw new RuntimeException("shouldn't happen - method not implemented");

@@ -102,8 +102,10 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 			if (hasFoundParking || reachedDestinationWithoutParking) {
 				// easy, we can just park where at our destination link
 				if (hasFoundParking) {
-					double parkingDuration = followingActivity.getMaximumDuration().seconds() - 2* (timer.getTimeOfDay() - currentPlannedLeg.getDepartureTime().seconds());
-					followingActivity.setMaximumDuration(parkingDuration); //integrate this into plan
+					double expectedDrivingDurationToPickup = ((NearestParkingSpotSearchLogic) this.logic).getExpectedTravelDuration(currentPlannedLeg.getRoute().getStartLinkId(), timer.getTimeOfDay(), currentLinkId);
+					double drivingDurationFromDropOff = timer.getTimeOfDay() - currentPlannedLeg.getDepartureTime().seconds();
+					double parkingDuration = followingActivity.getMaximumDuration().seconds() - drivingDurationFromDropOff - expectedDrivingDurationToPickup;
+					followingActivity.setMaximumDuration(parkingDuration);
 				}
 				this.logic.reset();
 				return null;
