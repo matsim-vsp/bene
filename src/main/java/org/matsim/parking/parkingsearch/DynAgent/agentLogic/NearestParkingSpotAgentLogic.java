@@ -115,11 +115,12 @@ public class NearestParkingSpotAgentLogic extends ParkingAgentLogic {
 			this.lastParkActionState = LastParkActionState.CARTRIP;
 			isinitialLocation = false;
 //			Leg currentLeg = (Leg) this.currentPlanElement;
-			Activity nextPlanElement = (Activity) plan.getPlanElements().get(planIndex+1);
+			int planIndexNextActivity = planIndex+1;
+			Activity nextPlanElement = (Activity) plan.getPlanElements().get(planIndexNextActivity);
 			if (nextPlanElement.getAttributes().getAsMap().containsKey("parking") && nextPlanElement.getAttributes().getAttribute("parking").equals("noParking"))
 				this.lastParkActionState = LastParkActionState.WALKFROMPARK;
 			//this could be Car, Carsharing, Motorcylce, or whatever else mode we have, so we want our leg to reflect this.
-			return new NearestParkingDynLeg(currentPlannedLeg, actualRoute, nextPlanElement, parkingLogic, parkingManager, currentlyAssignedVehicleId, timer, events);
+			return new NearestParkingDynLeg(currentPlannedLeg, actualRoute, plan, planIndexNextActivity,  parkingLogic, parkingManager, currentlyAssignedVehicleId, timer, events);
 		}
 		else throw new RuntimeException("parking location mismatch");
 		

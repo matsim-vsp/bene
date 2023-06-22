@@ -4,6 +4,7 @@ import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Activity;
 import org.matsim.api.core.v01.population.Leg;
+import org.matsim.api.core.v01.population.Plan;
 import org.matsim.contrib.parking.parkingsearch.DynAgent.ParkingDynLeg;
 import org.matsim.contrib.parking.parkingsearch.manager.ParkingSearchManager;
 import org.matsim.contrib.parking.parkingsearch.search.ParkingSearchLogic;
@@ -31,13 +32,18 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 	private boolean alreadyReservedParking = false;
 	private final Activity followingActivity;
 	private final Leg currentPlannedLeg;
+	private final int planIndexNextActivity;
+	private Plan plan;
 	private Id<Link> nextSelectedParkingLink = null;
 
-	public NearestParkingDynLeg(Leg currentPlannedLeg, NetworkRoute route, Activity followingActivity, ParkingSearchLogic logic,
+	public NearestParkingDynLeg(Leg currentPlannedLeg, NetworkRoute route, Plan plan, int planIndexNextActivity, ParkingSearchLogic logic,
 								ParkingSearchManager parkingManager, Id<Vehicle> vehicleId, MobsimTimer timer, EventsManager events) {
 		super(currentPlannedLeg.getMode(), route, logic, parkingManager, vehicleId, timer, events);
-		this.followingActivity = followingActivity;
+		this.followingActivity = (Activity) plan.getPlanElements().get(planIndexNextActivity);
+		followingActivity.setStartTime(timer.getTimeOfDay());
 		this.currentPlannedLeg = currentPlannedLeg;
+		this.plan = plan;
+		this.planIndexNextActivity = planIndexNextActivity;
 		if (followingActivity.getAttributes().getAsMap().containsKey("parking") && followingActivity.getAttributes().getAttribute("parking").equals("noParking"))
 			parkingAtEndOfLeg = false;
 	}
