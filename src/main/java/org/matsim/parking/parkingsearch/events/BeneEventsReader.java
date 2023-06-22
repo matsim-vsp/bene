@@ -22,6 +22,7 @@ public class BeneEventsReader extends MatsimXmlParser {
         delegate.addCustomEventMapper(StartParkingSearchEvent.EVENT_TYPE, getStartParkingSearchEventMapper());
         delegate.addCustomEventMapper(SelectNewParkingLocationEvent.EVENT_TYPE, getSelectNewParkingLocationEvent());
         delegate.addCustomEventMapper(ReserveParkingLocationEvent.EVENT_TYPE, getReserveParkingLocationEventMapper());
+        delegate.addCustomEventMapper(RemoveParkingActivityEvent.EVENT_TYPE, getRemoveParkingActivityEventMapper());
     }
     private MatsimEventsReader.CustomEventMapper getStartParkingSearchEventMapper() {
         return event -> {
@@ -53,6 +54,16 @@ public class BeneEventsReader extends MatsimXmlParser {
             Id<Link> currentLinkId = Id.createLinkId(attributes.get(ReserveParkingLocationEvent.ATTRIBUTE_Current_LINK));
             Id<Link> parkingLinkId = Id.createLinkId(attributes.get(ReserveParkingLocationEvent.ATTRIBUTE_Parking_LINK));
             return new ReserveParkingLocationEvent(time, vehicle, currentLinkId, parkingLinkId);
+        };
+    }
+    private MatsimEventsReader.CustomEventMapper getRemoveParkingActivityEventMapper() {
+        return event -> {
+            Map<String, String> attributes = event.getAttributes();
+
+            double time = Double.parseDouble(attributes.get(RemoveParkingActivityEvent.ATTRIBUTE_TIME));
+            Id<Vehicle> vehicle = Id.createVehicleId(attributes.get(RemoveParkingActivityEvent.ATTRIBUTE_VEHICLE));
+            Id<Link> currentLinkId = Id.createLinkId(attributes.get(RemoveParkingActivityEvent.ATTRIBUTE_Current_LINK));
+            return new RemoveParkingActivityEvent(time, vehicle, currentLinkId);
         };
     }
     @Override

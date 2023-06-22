@@ -246,7 +246,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             bw.write(
-                    "vehicle;drivenDistance;drivenDistance_parkingSearch;drivenDistance_parkingTotal;numberOfStops;numberParkingActivities;tourDurations;parkingDurations;parkingSearchDurations");
+                    "vehicle;drivenDistance;drivenDistance_parkingSearch;drivenDistance_parkingTotal;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations");
             bw.newLine();
             for (Id<Vehicle> vehcileId : tourInformation.keySet()) {
                 Object2DoubleMap<String> tourData = tourInformation.get(vehcileId);
@@ -254,7 +254,8 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                         "DistanceParkingSearch") + ";" + tourData.getDouble(
                         "DistanceParkingTotal") + ";" + (int) tourData.getDouble(
                         "numberOfStops") + ";" + (int) tourData.getDouble(
-                        "numberParkingActivities") + ";" + Time.writeTime(tourData.getDouble(
+                        "numberParkingActivities") + ";" + (int) tourData.getDouble(
+                        "removedParking") + ";" + Time.writeTime(tourData.getDouble(
                         "tourDurations"), Time.TIMEFORMAT_SSSS) + ";" + Time.writeTime(
                         tourData.getDouble("parkingDurations"), Time.TIMEFORMAT_SSSS)+ ";" + Time.writeTime(
                         tourData.getDouble("parkingSearchDurations"), Time.TIMEFORMAT_SSSS));

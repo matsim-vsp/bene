@@ -34,6 +34,8 @@ import org.matsim.api.core.v01.events.handler.LinkLeaveEventHandler;
 import org.matsim.api.core.v01.events.handler.PersonLeavesVehicleEventHandler;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
+import org.matsim.parking.parkingsearch.events.RemoveParkingActivityEvent;
+import org.matsim.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
 import org.matsim.parking.parkingsearch.events.StartParkingSearchEvent;
 import org.matsim.parking.parkingsearch.events.StartParkingSearchEventHandler;
 import org.matsim.vehicles.Vehicle;
@@ -47,7 +49,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  */
 public class LinkDemandEventHandler
-		implements LinkLeaveEventHandler, PersonLeavesVehicleEventHandler, StartParkingSearchEventHandler, ActivityStartEventHandler, ActivityEndEventHandler
+		implements LinkLeaveEventHandler, PersonLeavesVehicleEventHandler, StartParkingSearchEventHandler, ActivityStartEventHandler, ActivityEndEventHandler, RemoveParkingActivityEventHandler
 {
 	private static final Logger log = LogManager.getLogger(LinkDemandEventHandler.class);
 
@@ -93,6 +95,10 @@ public class LinkDemandEventHandler
 	public void handleEvent(StartParkingSearchEvent event){
 		vehicleIsInParkingSearch.put(event.getVehicleId(), event.getTime());
 		vehicleBetweenPassengerDropOffAndPickup.put(event.getVehicleId(), event.getTime());
+	}
+
+	public void handleEvent(RemoveParkingActivityEvent event){
+		tourInformation.get(event.getVehicleId()).mergeDouble("removedParking", 1, Double::sum);
 	}
 
 	@Override
