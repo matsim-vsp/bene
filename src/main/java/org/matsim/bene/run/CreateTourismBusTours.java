@@ -108,7 +108,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 	@CommandLine.Option(names = "--pathHotspotFile", description = "Path for the used hotspot information", defaultValue = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspotsV2.csv")
 	private Path pathHotspotFile;
 	@CommandLine.Option(names = "--pathOutput", description = "Path for the output")
-	private Path output; //TODO make this and using runParameter in name
+	private Path output;
 //	@CommandLine.Option(names = "--pathNetworkChangeEvents", description = "Path for the networkChangeEvents", defaultValue = "../networkChangeEvents.xml.gz")
 	private Path pathNetworkChangeEvents;
 	@CommandLine.Option(names = "--runAnalysisAtEnde", description = "Run the analysis at the end of the run.", defaultValue = "true")
@@ -268,7 +268,8 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 			config.controler().setOutputDirectory("output/" + config.controler().getRunId()+ "." + java.time.LocalDate.now() + "_"
 					+ java.time.LocalTime.now().toSecondOfDay() + "_" + numberOfTours + "busses" + "_" + changeFactorOfParkingCapacity);
 		else
-			config.controler().setOutputDirectory(output.toString());
+			config.controler().setOutputDirectory(output.toString() + "/" + config.controler().getRunId()+ "." + java.time.LocalDate.now() + "_"
+					+ java.time.LocalTime.now().toSecondOfDay() + "_" + numberOfTours + "busses" + "_" + changeFactorOfParkingCapacity);
 
 		new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
 				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
