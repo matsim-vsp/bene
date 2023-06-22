@@ -75,6 +75,10 @@ public class NearestParkingSpotAgentLogic extends ParkingAgentLogic {
 		// walk-leg to car: add unpark activity
 		// unpark activity: find the way to the next route & start leg
 
+		//if a parking activity was skipped we need no change the nexParkActionState
+		if (lastParkActionState.equals(LastParkActionState.CARTRIP) && ((NearestParkingDynLeg)oldAction).driveToBaseWithoutParking())
+			this.lastParkActionState = LastParkActionState.WALKFROMPARK;
+
 		switch (lastParkActionState){
 		case ACTIVITY:
 			return nextStateAfterActivity(oldAction, now);
@@ -104,7 +108,7 @@ public class NearestParkingSpotAgentLogic extends ParkingAgentLogic {
 	@Override
 	protected DynAction nextStateAfterUnParkActivity(DynAction oldAction, double now) {
 		// we have unparked, now we need to get going by car again.
-		
+
 		Leg currentPlannedLeg = (Leg) currentPlanElement;
 		Route plannedRoute = currentPlannedLeg.getRoute();
 		NetworkRoute actualRoute = this.parkingRouter.getRouteFromParkingToDestination(plannedRoute.getEndLinkId(), now, agent.getCurrentLinkId());
