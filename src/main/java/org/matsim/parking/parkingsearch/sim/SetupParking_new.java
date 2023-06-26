@@ -19,6 +19,8 @@
 
 package org.matsim.parking.parkingsearch.sim;
 
+import com.google.inject.Key;
+import com.google.inject.name.Names;
 import org.matsim.api.core.v01.TransportMode;
 import org.matsim.api.core.v01.network.Network;
 import org.matsim.contrib.dvrp.router.DvrpGlobalRoutingNetworkProvider;
@@ -40,9 +42,6 @@ import org.matsim.core.router.costcalculators.TravelDisutilityFactory;
 import org.matsim.core.router.util.TravelTime;
 import org.matsim.parking.parkingsearch.evaluation.ParkingListener;
 import org.matsim.parking.parkingsearch.manager.FacilityBasedParkingManager;
-
-import com.google.inject.Key;
-import com.google.inject.name.Names;
 
 /**
  * @author jbischoff
@@ -77,7 +76,7 @@ public class SetupParking_new {
 				addControlerListenerBinding().to(ParkingListener.class);
 				bind(ParkingRouter.class).to(WithinDayParkingRouter.class);
 				bind(VehicleTeleportationLogic.class).to(VehicleTeleportationToNearbyParking.class);
-			
+
 			}
 		});
 
@@ -92,7 +91,5 @@ public class SetupParking_new {
 				bind(QSimComponentsConfig.class).toInstance(components);
 			}
 		});
-
 	}
-
 }
