@@ -66,6 +66,7 @@ import org.matsim.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
 import org.matsim.parking.parkingsearch.evaluation.ParkingSlotVisualiserBus;
 import org.matsim.parking.parkingsearch.sim.ParkingSearchConfigGroup;
 import org.matsim.parking.parkingsearch.sim.SetupParking_new;
+import org.matsim.simwrapper.SimWrapperModule;
 import org.matsim.vehicles.CostInformation;
 import org.matsim.vehicles.Vehicle;
 import org.matsim.vehicles.VehicleType;
@@ -185,6 +186,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		Controler controler = new Controler(scenario);
 		if (usedGenerationMode == GenerationMode.jsprit)
 			controler.addOverridingModule(new CarrierModule());
+		controler.addOverridingModule(new SimWrapperModule());
 		controler.addOverridingModule(new AbstractModule() {
 
 			@Override
