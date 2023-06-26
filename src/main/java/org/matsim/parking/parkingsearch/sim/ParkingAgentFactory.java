@@ -19,7 +19,7 @@
 
 package org.matsim.parking.parkingsearch.sim;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.TransportMode;
