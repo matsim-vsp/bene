@@ -19,6 +19,7 @@ package org.matsim.bene.analysis;
  * *********************************************************************** */
 
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
+import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.matsim.api.core.v01.Id;
@@ -72,6 +73,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 
     private static final Logger log = LogManager.getLogger(RunAfterSimAnalysisBene.class);
     static List<Pollutant> pollutants2Output = Arrays.asList(CO2_TOTAL, NOx, PM, PM_non_exhaust, FC);
+    private final String timeformatForOutput = Time.TIMEFORMAT_SSSS;
     private final Path runDirectory;
     private final String runId;
     private final String hbefaWarmFile;
@@ -159,6 +161,9 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         final String general_resultsOutputFile = analysisOutputDirectory + runId + ".general_results.csv";
         log.info("Writing general results to: {}", general_resultsOutputFile);
 
+        final String general_OverviewOutputFile = analysisOutputDirectory + runId + ".general_Overview.csv";
+        log.info("Writing overview to: {}", general_OverviewOutputFile);
+
         Config config = ConfigUtils.createConfig();
         config.vehicles().setVehiclesFile(String.valueOf(globFile(runDirectory, runId, "output_vehicles")));
         config.network().setInputFile(String.valueOf(globFile(runDirectory, runId, "network")));
@@ -234,17 +239,20 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                     linkEmissionPerMOutputFile_parkingSearch, linkEmissionOutputFile_parkingSearch, scenario,
                     emissionsOnLinkEventHandler);
         }
-        createGeneralResults(general_resultsOutputFile, linkDemandEventHandler);
+        createGeneralResults(general_resultsOutputFile, general_OverviewOutputFile, linkDemandEventHandler);
 
         return 0;
     }
 
-    private void createGeneralResults(String generalResultsOutputFile, LinkDemandEventHandler linkDemandEventHandler) {
-        File file = new File(generalResultsOutputFile);
+    private void createGeneralResults(String generalResultsOutputFile, String general_OverviewOutputFile, LinkDemandEventHandler linkDemandEventHandler) {
+        File tourDataFile = new File(generalResultsOutputFile);
+        File overViewFile = new File(general_OverviewOutputFile);
+        Object2DoubleMap<String> overviewData = new Object2DoubleOpenHashMap<>();
         Map<Id<Vehicle>, Object2DoubleMap<String>> tourInformation = linkDemandEventHandler.getTourInformation();
+        overviewData.put("numberOfTours", tourInformation.keySet().size());
 
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(tourDataFile));
             bw.write(
                     "vehicle;drivenDistance;drivenDistance_parkingSearch;drivenDistance_parkingTotal;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations");
             bw.newLine();
@@ -256,11 +264,52 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                         "numberOfStops") + ";" + (int) tourData.getDouble(
                         "numberParkingActivities") + ";" + (int) tourData.getDouble(
                         "removedParking") + ";" + Time.writeTime(tourData.getDouble(
-                        "tourDurations"), Time.TIMEFORMAT_SSSS) + ";" + Time.writeTime(
-                        tourData.getDouble("parkingDurations"), Time.TIMEFORMAT_SSSS)+ ";" + Time.writeTime(
-                        tourData.getDouble("parkingSearchDurations"), Time.TIMEFORMAT_SSSS));
+                        "tourDurations"), timeformatForOutput) + ";" + Time.writeTime(
+                        tourData.getDouble("parkingDurations"), timeformatForOutput)+ ";" + Time.writeTime(
+                        tourData.getDouble("parkingSearchDurations"), timeformatForOutput));
                 bw.newLine();
+
+                //sum data for overview
+                overviewData.mergeDouble("drivenDistance",tourData.getDouble("drivenDistance"), Double::sum);
+                overviewData.mergeDouble("DistanceParkingSearch",tourData.getDouble("DistanceParkingSearch"), Double::sum);
+                overviewData.mergeDouble("DistanceParkingTotal",tourData.getDouble("DistanceParkingTotal"), Double::sum);
+                overviewData.mergeDouble("numberOfStops",tourData.getDouble("numberOfStops"), Double::sum);
+                overviewData.mergeDouble("numberParkingActivities",tourData.getDouble("numberParkingActivities"), Double::sum);
+                overviewData.mergeDouble("removedParking",tourData.getDouble("removedParking"), Double::sum);
+                overviewData.mergeDouble("tourDurations",tourData.getDouble("tourDurations"), Double::sum);
+                overviewData.mergeDouble("parkingDurations",tourData.getDouble("parkingDurations"), Double::sum);
+                overviewData.mergeDouble("parkingSearchDurations",tourData.getDouble("parkingSearchDurations"), Double::sum);
             }
+
+            bw.write( (int) overviewData.getDouble("numberOfTours") + ";" + overviewData.getDouble("drivenDistance") + ";" + overviewData.getDouble(
+                    "DistanceParkingSearch") + ";" + overviewData.getDouble(
+                    "DistanceParkingTotal") + ";" + (int) overviewData.getDouble(
+                    "numberOfStops") + ";" + (int) overviewData.getDouble(
+                    "numberParkingActivities") + ";" + (int) overviewData.getDouble(
+                    "removedParking") + ";" + Time.writeTime(overviewData.getDouble(
+                    "tourDurations"), timeformatForOutput) + ";" + Time.writeTime(
+                    overviewData.getDouble("parkingDurations"), timeformatForOutput)+ ";" + Time.writeTime(
+                    overviewData.getDouble("parkingSearchDurations"), timeformatForOutput));
+
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(overViewFile));
+            bw.write(
+                    "case;numberOfVehicles;drivenDistance;drivenDistance_parkingSearch;drivenDistance_parkingTotal;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations");
+            bw.newLine();
+            bw.write( runId + ";" + (int) overviewData.getDouble("numberOfTours") + ";" + overviewData.getDouble("drivenDistance") + ";" + overviewData.getDouble(
+                    "DistanceParkingSearch") + ";" + overviewData.getDouble(
+                    "DistanceParkingTotal") + ";" + (int) overviewData.getDouble(
+                    "numberOfStops") + ";" + (int) overviewData.getDouble(
+                    "numberParkingActivities") + ";" + (int) overviewData.getDouble(
+                    "removedParking") + ";" + Time.writeTime(overviewData.getDouble(
+                    "tourDurations"), timeformatForOutput) + ";" + Time.writeTime(
+                    overviewData.getDouble("parkingDurations"), timeformatForOutput)+ ";" + Time.writeTime(
+                    overviewData.getDouble("parkingSearchDurations"), timeformatForOutput));
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
