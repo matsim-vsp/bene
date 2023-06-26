@@ -45,7 +45,7 @@
 	</module>
 	<module name="facilities" >
 		<!-- This defines how facilities should be created. Possible values: none fromFile setInScenario onePerActivityLinkInPlansFile onePerActivityLinkInPlansFileExceptWhenCoordinatesAreGiven onePerActivityLocationInPlansFile  -->
-		<param name="facilitiesSource" value="none" />
+		<param name="facilitiesSource" value="fromFile" />
 		<!-- A prefix to be used for auto-generated IDs. -->
 		<param name="idPrefix" value="f_auto_" />
 		<!-- The Coordinates Reference System in which the coordinates are expressed in the input file. At import, the coordinates will be converted to the coordinate system defined in "global", and willbe converted back at export. If not specified, no conversion happens. -->
@@ -53,18 +53,6 @@
 		<param name="inputFacilitiesFile" value="../parkingFacilities/parkingFacilities_case2.xml" />
 		<param name="inputFacilityAttributesFile" value="null" />
 		<param name="insistingOnUsingDeprecatedFacilitiesAttributeFile" value="false" />
-	</module>
-	<module name="freight" >
-		<!-- Freight Carriers File, according to MATSim freight contrib -->
-		<param name="carriersFile" value="null" />
-		<!-- Carrier Vehicle Types file, according to MATSim freight contrib -->
-		<param name="carriersVehicleTypeFile" value="scenarios/vehicleTypes.xml" />
-		<!-- time slice width used for calculation of travel times in seconds. The smaller the value, the more precise the calculation of routing costs but the longer the computation time. Default value is 1800 seconds. -->
-		<param name="travelTimeSliceWidth" value="1800" />
-		<!-- Use distance constraint within the tour planning phase. This does NOT ensure that the tours in MATSim will respect this limitation -->
-		<param name="useDistanceConstraintForTourPlanning" value="noDistanceConstraint" />
-		<!-- (Optional) Vehicle Routing Algorithm File, according to jsprit library. Empty value "" means a default algorithm is used. -->
-		<param name="vehicleRoutingAlgorithmFile" value="null" />
 	</module>
 	<module name="global" >
 		<param name="coordinateSystem" value="EPSG:31468" />
@@ -86,7 +74,7 @@
 		<param name="avgParkingSlotLength" value="10.0" />
 		<param name="parkDuration" value="60.0" />
 		<!-- Possible values: Random,Benenson,DistanceMemory,NearestParkingSpot,NearestParkingSpotWithReservation -->
-		<param name="parkingSearchStrategy" value="NearestParkingSpotWithReservation" />
+		<param name="parkingSearchStrategy" value="NearestParkingSpot" />
 		<param name="unparkDuration" value="60.0" />
 	</module>
 	<module name="planCalcScore" >
@@ -112,11 +100,11 @@
 			<param name="waitingPt" value="-6.0" />
 			<parameterset type="activityParams" >
 				<param name="activityType" value="parking" />
-				<param name="closingTime" value="24:00:00" />
+				<param name="closingTime" value="undefined" />
 				<param name="earliestEndTime" value="undefined" />
 				<param name="latestStartTime" value="undefined" />
 				<param name="minimalDuration" value="undefined" />
-				<param name="openingTime" value="00:00:00" />
+				<param name="openingTime" value="undefined" />
 				<param name="priority" value="1.0" />
 				<param name="scoringThisActivityAtAll" value="true" />
 				<param name="typicalDuration" value="00:01:00" />
@@ -124,11 +112,11 @@
 			</parameterset>
 			<parameterset type="activityParams" >
 				<param name="activityType" value="parking_activity" />
-				<param name="closingTime" value="24:00:00" />
+				<param name="closingTime" value="undefined" />
 				<param name="earliestEndTime" value="undefined" />
 				<param name="latestStartTime" value="undefined" />
 				<param name="minimalDuration" value="undefined" />
-				<param name="openingTime" value="00:00:00" />
+				<param name="openingTime" value="undefined" />
 				<param name="priority" value="1.0" />
 				<param name="scoringThisActivityAtAll" value="true" />
 				<param name="typicalDuration" value="01:00:00" />
@@ -145,7 +133,7 @@
 				<!-- [utils/m] utility of traveling (e.g. walking or driving) per m, normally negative.  this is on top of the time (dis)utility. -->
 				<param name="marginalUtilityOfDistance_util_m" value="0.0" />
 				<!-- [utils/hr] additional marginal utility of traveling.  normally negative.  this comes on top of the opportunity cost of time -->
-				<param name="marginalUtilityOfTraveling_util_hr" value="-6.0" />
+				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
 				<param name="mode" value="car" />
 				<!-- [unit_of_money/m] conversion of distance into money. Normally negative. -->
 				<param name="monetaryDistanceRate" value="0.0" />
@@ -155,7 +143,7 @@
 				<param name="dailyMonetaryConstant" value="0.0" />
 				<param name="dailyUtilityConstant" value="0.0" />
 				<param name="marginalUtilityOfDistance_util_m" value="0.0" />
-				<param name="marginalUtilityOfTraveling_util_hr" value="-6.0" />
+				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
 				<param name="mode" value="pt" />
 				<param name="monetaryDistanceRate" value="0.0" />
 			</parameterset>
@@ -164,7 +152,7 @@
 				<param name="dailyMonetaryConstant" value="0.0" />
 				<param name="dailyUtilityConstant" value="0.0" />
 				<param name="marginalUtilityOfDistance_util_m" value="0.0" />
-				<param name="marginalUtilityOfTraveling_util_hr" value="-6.0" />
+				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
 				<param name="mode" value="walk" />
 				<param name="monetaryDistanceRate" value="0.0" />
 			</parameterset>
@@ -173,7 +161,7 @@
 				<param name="dailyMonetaryConstant" value="0.0" />
 				<param name="dailyUtilityConstant" value="0.0" />
 				<param name="marginalUtilityOfDistance_util_m" value="0.0" />
-				<param name="marginalUtilityOfTraveling_util_hr" value="-6.0" />
+				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
 				<param name="mode" value="bike" />
 				<param name="monetaryDistanceRate" value="0.0" />
 			</parameterset>
@@ -182,7 +170,7 @@
 				<param name="dailyMonetaryConstant" value="0.0" />
 				<param name="dailyUtilityConstant" value="0.0" />
 				<param name="marginalUtilityOfDistance_util_m" value="0.0" />
-				<param name="marginalUtilityOfTraveling_util_hr" value="-6.0" />
+				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
 				<param name="mode" value="ride" />
 				<param name="monetaryDistanceRate" value="0.0" />
 			</parameterset>
@@ -191,7 +179,7 @@
 				<param name="dailyMonetaryConstant" value="0.0" />
 				<param name="dailyUtilityConstant" value="0.0" />
 				<param name="marginalUtilityOfDistance_util_m" value="0.0" />
-				<param name="marginalUtilityOfTraveling_util_hr" value="-6.0" />
+				<param name="marginalUtilityOfTraveling_util_hr" value="0.0" />
 				<param name="mode" value="other" />
 				<param name="monetaryDistanceRate" value="0.0" />
 			</parameterset>
@@ -236,7 +224,7 @@
 		<!-- If link dynamics is set as SeepageQ, set to true if seep mode do not consumes any space on the link. Default is false. -->
 		<param name="isSeepModeStorageFree" value="false" />
 		<!-- default: FIFO; options: FIFO PassingQ SeepageQ -->
-		<param name="linkDynamics" value="FIFO" />
+		<param name="linkDynamics" value="PassingQ" />
 		<!-- The (initial) width of the links of the network. Use positive floating point values. This is used only for visualisation. -->
 		<param name="linkWidth" value="30.0" />
 		<!-- [comma-separated list] Defines which modes are congested modes. Technically, these are the modes that the departure handler of the netsimengine handles.  Effective cell size, effective lane width, flow capacity factor, and storage capacity factor need to be set with diligence.  Need to be vehicular modes to make sense. -->
@@ -272,7 +260,7 @@
 		<!-- Defines what happens if an agent wants to depart, but the specified vehicle is not available. One of: teleport wait exception  -->
 		<param name="vehicleBehavior" value="teleport" />
 		<!-- If vehicles should all be the same default vehicle, or come from the vehicles file, or something else.  Possible values:  defaultVehicle modeVehicleTypesFromVehiclesData fromVehiclesData -->
-		<param name="vehiclesSource" value="defaultVehicle" />
+		<param name="vehiclesSource" value="fromVehiclesData" />
 	</module>
 	<module name="strategy" >
 		<!-- the external executable will be called with a config file as argument.  This is the pathname to a possible skeleton config, to which additional information will be added.  Can be null. -->
