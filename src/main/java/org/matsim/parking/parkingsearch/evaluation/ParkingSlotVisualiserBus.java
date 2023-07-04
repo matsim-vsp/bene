@@ -12,6 +12,8 @@ import org.matsim.core.controler.events.IterationEndsEvent;
 import org.matsim.core.utils.collections.Tuple;
 import org.matsim.facilities.ActivityFacility;
 import org.matsim.parking.parkingsearch.ParkingUtils;
+import org.matsim.parking.parkingsearch.events.RemoveParkingActivityEvent;
+import org.matsim.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
 import org.matsim.parking.parkingsearch.events.StartParkingSearchEvent;
 import org.matsim.parking.parkingsearch.events.StartParkingSearchEventHandler;
 
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements ActivityEndEventHandler, StartParkingSearchEventHandler{
+public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements ActivityEndEventHandler, StartParkingSearchEventHandler, RemoveParkingActivityEventHandler {
     List<String> vehicleIsLookingForParking = new ArrayList<>();
 
 
@@ -35,7 +37,12 @@ public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements A
     public void handleEvent(StartParkingSearchEvent event) {
 		this.vehicleIsLookingForParking.add(event.getVehicleId().toString());
     }
-	
+
+	@Override
+	public void handleEvent(RemoveParkingActivityEvent event) {
+		this.vehicleIsLookingForParking.remove(event.getVehicleId().toString());
+	}
+
 	@Override
 	public void handleEvent(VehicleLeavesTrafficEvent event) {
 		if(this.vehicleIsLookingForParking.contains(event.getPersonId().toString()) && this.slotsOnLink.containsKey(event.getLinkId())){
