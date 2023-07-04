@@ -21,8 +21,9 @@ public class FacilityToCSV {
 
 	public static void main(String[] args) {
 
-		File outputFile = new File("output/outputFacilitiesFile.csv");
-		String facilitiesFile = "scenarios/tourismFacilities/tourismFacilities.xml";
+		File outputFile = new File("output/outputFacilitiesFile_Links.csv");
+		String facilitiesFile = "scenarios/tourismFacilities/tourismFacilities_withLinks.xml";
+		String working_dir = System.getProperty("user.dir");
 		String facilityCRS = TransformationFactory.DHDN_GK4;
 		String outputCRS = TransformationFactory.DHDN_GK4;
 		Config config = ConfigUtils.createConfig();
@@ -33,14 +34,15 @@ public class FacilityToCSV {
 		
 		CoordinateTransformation ts = TransformationFactory.getCoordinateTransformation(facilityCRS, outputCRS);
 		try (FileWriter writer = new FileWriter(outputFile, true)) {
-			writer.write("id	name	x	y	type\n");
+			writer.write("id	name	x	y	linkId	type\n");
 
 			for (Id<ActivityFacility> activityId : allFacilities.getFacilities().keySet()) {
 				ActivityFacilityImpl activity = (ActivityFacilityImpl) allFacilities.getFacilities().get(activityId);
 				String name = activity.getDesc();
 				Coord coord = ts.transform(activity.getCoord());
 				String type = activity.getActivityOptions().keySet().toString();
-				writer.write(activityId + "	" + name + "	" + coord.getX() + "	" + coord.getY() + "	" + type + "\n");
+				String linkId = activity.getLinkId().toString();
+				writer.write(activityId + "	" + name + "	" + coord.getX() + "	" + coord.getY() + "	" + linkId + "	" + type + "\n");
 			}
 			writer.flush();
 
