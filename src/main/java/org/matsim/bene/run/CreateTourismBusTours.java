@@ -110,7 +110,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 	private Path pathHotspotFile;
 	@CommandLine.Option(names = "--pathOutput", description = "Path for the output")
 	private Path output;
-//	@CommandLine.Option(names = "--pathNetworkChangeEvents", description = "Path for the networkChangeEvents", defaultValue = "../networkChangeEvents.xml.gz")
+	@CommandLine.Option(names = "--pathNetworkChangeEvents", description = "Path for the networkChangeEvents", defaultValue = "../networkChangeEvents.xml.gz")
 	private Path pathNetworkChangeEvents;
 	@CommandLine.Option(names = "--runAnalysisAtEnde", description = "Run the analysis at the end of the run.", defaultValue = "true")
 	private boolean runAnalysis;
@@ -118,7 +118,8 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		System.exit(new CommandLine(new CreateTourismBusTours()).execute(args));
 	}
 	//TODO beachte Schließzeiten von Parkplätzen, Höchstparkdauern
-	//TODO set NetworkChangeEvents
+	//TODO wenn ActivityLocation und vorhandener Parkplatz gleichen Link haben, kann ohne weiteren Leg geparkt werden
+
 	@Override
 	public Integer call() throws IOException, ExecutionException, InterruptedException {
 
@@ -186,7 +187,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		Controler controler = new Controler(scenario);
 		if (usedGenerationMode == GenerationMode.jsprit)
 			controler.addOverridingModule(new CarrierModule());
-		controler.addOverridingModule(new SimWrapperModule());
+//		controler.addOverridingModule(new SimWrapperModule());
 		controler.addOverridingModule(new AbstractModule() {
 
 			@Override
