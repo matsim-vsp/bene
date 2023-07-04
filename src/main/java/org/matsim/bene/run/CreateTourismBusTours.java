@@ -267,12 +267,11 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		FreightConfigGroup freightConfigGroup = ConfigUtils.addOrGetModule(config, FreightConfigGroup.class);
 		freightConfigGroup.setCarriersVehicleTypesFile("scenarios/vehicleTypes.xml");
 		if (output == null)
-			config.controler().setOutputDirectory("output/" + config.controler().getRunId()+ "." + java.time.LocalDate.now() + "_"
-					+ java.time.LocalTime.now().toSecondOfDay() + "_" + numberOfTours + "busses" + "_" + changeFactorOfParkingCapacity);
+			config.controler().setOutputDirectory("output/" + config.controler().getRunId()+ "." + numberOfTours + "busses"
+					+ "_" + changeFactorOfParkingCapacity + "_" + java.time.LocalDate.now() + "_" + java.time.LocalTime.now().toSecondOfDay());
 		else
-			config.controler().setOutputDirectory(output.toString() + "/" + config.controler().getRunId()+ "." + java.time.LocalDate.now() + "_"
-					+ java.time.LocalTime.now().toSecondOfDay() + "_" + numberOfTours + "busses" + "_" + changeFactorOfParkingCapacity);
-
+			config.controler().setOutputDirectory(output.toString() + "/" + config.controler().getRunId()+ "." + numberOfTours + "busses"
+					+ "_" + changeFactorOfParkingCapacity + "_" + java.time.LocalDate.now() + "_" + java.time.LocalTime.now().toSecondOfDay());
 		new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
 				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
 		config.controler().setRunId("bus");
