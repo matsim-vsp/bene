@@ -66,7 +66,7 @@ import static org.matsim.contrib.emissions.Pollutant.*;
  * (2) the password (passed as environment variable in your IDE
  * and/or on the server) to access the encrypted files on the public-svn.
  *
- * @author Ruan J. Gräbe (rgraebe)
+ * @author Ricardo Ewert
  */
 
 public class RunAfterSimAnalysisBene implements MATSimAppCommand {
@@ -164,6 +164,9 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         final String general_OverviewOutputFile = analysisOutputDirectory + runId + ".general_Overview.csv";
         log.info("Writing overview to: {}", general_OverviewOutputFile);
 
+        final String attraction_OverviewOutputFile = analysisOutputDirectory + runId + ".attraction_Overview.csv";
+        log.info("Writing overview to: {}", attraction_OverviewOutputFile);
+
         Config config = ConfigUtils.createConfig();
         config.vehicles().setVehiclesFile(String.valueOf(globFile(runDirectory, runId, "output_vehicles")));
         config.network().setInputFile(String.valueOf(globFile(runDirectory, runId, "network")));
@@ -244,9 +247,11 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         return 0;
     }
 
-    private void createGeneralResults(String generalResultsOutputFile, String general_OverviewOutputFile, LinkDemandEventHandler linkDemandEventHandler) {
+    private void createGeneralResults(String generalResultsOutputFile, String general_OverviewOutputFile, LinkDemandEventHandler linkDemandEventHandler,
+                                      String attraction_OverviewOutputFile) {
         File tourDataFile = new File(generalResultsOutputFile);
         File overViewFile = new File(general_OverviewOutputFile);
+        File attractionViewFile = new File(attraction_OverviewOutputFile);
         Object2DoubleMap<String> overviewData = new Object2DoubleOpenHashMap<>();
         Map<Id<Vehicle>, Object2DoubleMap<String>> tourInformation = linkDemandEventHandler.getTourInformation();
         overviewData.put("numberOfTours", tourInformation.keySet().size());
@@ -314,6 +319,22 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        try {
+            Map<String, AtomicLong> facilityCount = linkDemandEventHandler.getAttractionInformation();
+            BufferedWriter bw = new BufferedWriter(new FileWriter(attractionViewFile));
+            bw.write(
+                    "facilityID;count");
+            bw.newLine();
+            for (String facilityID : facilityCount.keySet()) {
+                bw.write(facilityID + ";" + facilityCount.get(facilityID));
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void createLinkVolumeAnalysis(String fileName, LinkDemandEventHandler linkDemandEventHandler) {
