@@ -1,0 +1,31 @@
+header:
+  tab: "Attractions"
+  title: "something"
+  title_en: "Attractions"
+  title_de: "Attractions"
+  description_en: "TODO"
+  description_de: "TODO"
+
+layout:
+  Base:
+    - type: "map"
+      title: "Basisfall - Parkwunsch"
+      description: ""
+      width: 2
+      height: 8
+      center: 13.4010, 52.51892
+      zoom: 11
+      projection: 'EPSG:31468'
+      shapes:
+        file: 'shp/attractions.shp'
+        join: name
+      datasets:
+        attractionData:
+          file: 'bus.attraction_Overview.csv'
+      display:
+        lineWidth:
+          dataset: attractionData
+          columnName: count
+          join: facilityID
+          scaleFactor: 10
+ 
