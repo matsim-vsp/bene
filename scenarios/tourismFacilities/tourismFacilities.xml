@@ -46,10 +46,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="10130657648" x="4584816.755813873" y="5808229.561461087" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="10142723917" x="4594488.039333013" y="5821389.938833599" desc="BudSpencerMuseum">
 		<activity type="attraction">
 		</activity>
@@ -107,14 +103,6 @@
 		</activity>
 	</facility>
 	<facility id="10314816005" x="4592472.213501122" y="5818251.821916416" desc="FirmaHassan">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="10314908433" x="4594232.150270509" y="5814512.979120627" desc="TKMaxx">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="1032978594" x="4601680.153993682" y="5823509.2376443865" desc="Woolworth">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -284,10 +272,6 @@
 	</facility>
 	<facility id="1108100226" x="4582097.966463143" y="5826880.860849158" desc="Waldschänke">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="1110332688" x="4585883.089312649" y="5812009.932391287" desc="Woolworth">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="1118309471" x="4601375.347866684" y="5817941.1150283385" desc="Riesenrad(ehem.)">
@@ -850,10 +834,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="1634588125" x="4597707.061486727" y="5811208.086490504" desc="Fressnapf">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="1637952052" x="4596936.822805562" y="5828984.166943922" desc="Pankow">
 		<activity type="hotel">
 		</activity>
@@ -899,18 +879,6 @@
 		</activity>
 	</facility>
 	<facility id="167983108" x="4593694.081745488" y="5819329.753227179" desc="Rosinenbomber">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="1681965858" x="4578275.370127963" y="5825895.182162523" desc="Streichelzoo">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="16970136" x="4590900.7835023515" y="5820196.066330631" desc="Antilopenhaus">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="17042389" x="4590848.456961147" y="5820397.510041249" desc="Flusspferdehaus">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -988,10 +956,6 @@
 	</facility>
 	<facility id="1795584083" x="4605108.783687866" y="5805696.80099636" desc="BuBHotelBerlin-Airport">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="1812309215" x="4592637.973355508" y="5819413.8386141" desc="Woolworth">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="1814553686" x="4604481.996334822" y="5812117.980795251" desc="AirporthotelBerlin-Adlershof">
@@ -1075,10 +1039,6 @@
 		</activity>
 	</facility>
 	<facility id="1874529830" x="4587912.264597327" y="5821540.467955511" desc="AusstellungeninderKleinenOrangerieamSchlossCharlottenburg">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="18771934" x="4601737.222716087" y="5820641.1466066735" desc="BahnhofLichtenberg">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -1182,10 +1142,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="1951181028" x="4588829.320377643" y="5820135.857980867" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="195302828" x="4598761.384345792" y="5814468.379525458" desc="HotelamBuschkrugpark">
 		<activity type="hotel">
 		</activity>
@@ -1252,10 +1208,6 @@
 	</facility>
 	<facility id="2068646526" x="4596991.3242323" y="5818299.948324058" desc="Hüttenpalast">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="2069614553" x="4592347.353640322" y="5824498.468560616" desc="Woolworth">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="2095599562" x="4588961.887935084" y="5818970.9235436255" desc="HotelPensionMargrit">
@@ -1330,10 +1282,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="2187660564" x="4581405.549769403" y="5821934.495933088" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="2196136407" x="4607845.524212878" y="5820975.484276321" desc="CVJMHostel-JugendGästehausKaulsdorf">
 		<activity type="hotel">
 		</activity>
@@ -1382,10 +1330,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="2242357761" x="4600456.334643803" y="5822596.710748055" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="2246559586" x="4594160.031920606" y="5819989.970349188" desc="relexahotelStuttgarterHofBerlin">
 		<activity type="hotel">
 		</activity>
@@ -1400,10 +1344,6 @@
 	</facility>
 	<facility id="225549343" x="4580422.693792379" y="5808062.644920639" desc="HotelundCampingamWasser">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="2257628769" x="4608523.442133686" y="5825244.503929116" desc="TKMaxx">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="2258022689" x="4589547.666159942" y="5828951.599952435" desc="HotelBongard">
@@ -1642,20 +1582,12 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="2423076739" x="4593985.09272884" y="5825145.202926001" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="24240381" x="4594834.395476134" y="5821445.435851741" desc="NeueWache">
 		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="2424320245" x="4609527.096716031" y="5819232.528073409" desc="ZumZiehbrunnen">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="2424333196" x="4607537.2459704" y="5815051.27071138" desc="Woolworth">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="2426118" x="4594258.125979667" y="5823050.767628161" desc="SymbolischeGleise">
@@ -1822,15 +1754,7 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="2529737622" x="4604943.499279416" y="5815653.608622007" desc="Waschbären">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="2529748103" x="4604972.235848872" y="5815596.80535439" desc="Taubenturm">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="2529758733" x="4604939.889573418" y="5815664.718859979" desc="Tauben">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -1872,10 +1796,6 @@
 	</facility>
 	<facility id="253776551" x="4581091.470821122" y="5811886.8099707095" desc="HotelundRasthofGrunewald">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="2538714892" x="4597973.139641343" y="5824334.5989346355" desc="Woolworth">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="2539504215" x="4593917.058869024" y="5818691.158987479" desc="KühnKeramik">
@@ -2286,10 +2206,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="2841527498" x="4594250.759924691" y="5815608.539955211" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="2842306125" x="4594990.859506529" y="5820543.041139781" desc="AdinaApartmentHotelBerlinCheckpointCharlie">
 		<activity type="hotel">
 		</activity>
@@ -2300,10 +2216,6 @@
 	</facility>
 	<facility id="28497169" x="4588097.356055317" y="5820502.388147898" desc="BuBHôtel">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="2850095901" x="4591932.089382245" y="5830232.839490586" desc="Woolworth">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="28504026" x="4590193.076623584" y="5815020.583891908" desc="Schloss110">
@@ -2386,16 +2298,8 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="2902663101" x="4595137.821754076" y="5835852.111869779" desc="Bienen">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="29056578" x="4597622.149704736" y="5822062.466195778" desc="NHBerlinAlexanderplatz">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="291762623" x="4592480.638124265" y="5826843.376873603" desc="Woolworth">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="29214537" x="4598883.886085567" y="5822840.294176205" desc="GeneratorBerlinPrenzlauerBerg">
@@ -2542,10 +2446,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="3039050728" x="4598754.469511953" y="5824968.327756184" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="30419819" x="4593190.85923631" y="5816702.739037712" desc="SA-GefängnisPapestraße">
 		<activity type="attraction">
 		</activity>
@@ -2600,10 +2500,6 @@
 	</facility>
 	<facility id="3084834449" x="4590890.707042707" y="5819447.919521732" desc="Bernstein">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="3092037193" x="4595879.712906668" y="5821809.4079234935" desc="TKMaxx">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="30926247" x="4586891.011209327" y="5819866.145253288" desc="Funkturm">
@@ -2694,10 +2590,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="3150167065" x="4591570.070234676" y="5812283.870919973" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="31523527" x="4600150.907873692" y="5824367.690669194" desc="HerbergeFritz-Lesch-Straße">
 		<activity type="hotel">
 		</activity>
@@ -2716,10 +2608,6 @@
 	</facility>
 	<facility id="3166224260" x="4594128.581974622" y="5819268.223396237" desc="GrandHostelBerlin">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="3172043329" x="4590592.0118703535" y="5811542.020740871" desc="Woolworth">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="3172134163" x="4590348.0051603345" y="5819765.773197651" desc="HotelZoo">
@@ -2795,10 +2683,6 @@
 		</activity>
 	</facility>
 	<facility id="3255895792" x="4594389.343447193" y="5820274.9460691735" desc="TrabiMuseum">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="32651652" x="4588863.338982862" y="5819999.834403215" desc="TKMaxx">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -3070,15 +2954,7 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="36336447" x="4595513.479324458" y="5806902.68039037" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="363532801" x="4590625.597379082" y="5819731.4295844175" desc="Karstadt">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="3644393798" x="4607440.4558795635" y="5815033.746436962" desc="TKMaxx">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -3290,10 +3166,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="3780600604" x="4585956.3028048" y="5812341.013831716" desc="TKMaxx">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="3780854972" x="4594450.509846881" y="5822076.402130822" desc="HotelDietrich-Bonhoeffer-Haus">
 		<activity type="hotel">
 		</activity>
@@ -3391,10 +3263,6 @@
 		</activity>
 	</facility>
 	<facility id="380498034" x="4594459.133321528" y="5821052.233766534" desc="GaleriesLafayette">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="38133489" x="4597951.663373973" y="5816816.435126488" desc="Woolworth">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -3568,20 +3436,12 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="3959492218" x="4608907.265690624" y="5823842.534340695" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="39674922" x="4597457.181271731" y="5815866.585640462" desc="HermannQuartier">
 		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="396801196" x="4611039.834775782" y="5825258.932244224" desc="HönowHotel">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="3969487257" x="4597686.168235166" y="5817262.064825016" desc="TKMaxx">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="397532274" x="4597606.279042525" y="5822198.330198189" desc="AusstellungzurBerlinerMärzrevolution">
@@ -3594,14 +3454,6 @@
 	</facility>
 	<facility id="397821440" x="4592467.579058534" y="5819177.18752069" desc="NovumStyleHotelAldea">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="3978727073" x="4599174.321556092" y="5811761.651546904" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="3978727090" x="4606012.702234483" y="5820414.320418238" desc="TKMaxx">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="3982921774" x="4604626.299535579" y="5822628.570510394" desc="Springpfuhl-Passage">
@@ -3618,10 +3470,6 @@
 	</facility>
 	<facility id="40128237" x="4602957.252679787" y="5815026.543610061" desc="ibisStylesBerlinTreptow">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="4017367048" x="4592219.89734305" y="5817815.687953968" desc="TKMaxx">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="402751124" x="4588627.476342127" y="5819576.1541197505" desc="HotelOrion">
@@ -4120,10 +3968,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="4553089243" x="4579052.186521671" y="5821625.844330034" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="45570779" x="4602603.532311598" y="5824733.281504409" desc="GarniHotelMolks">
 		<activity type="hotel">
 		</activity>
@@ -4162,10 +4006,6 @@
 	</facility>
 	<facility id="4612831606" x="4588779.691201295" y="5819625.5882125385" desc="12Monkeys">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="4630466559" x="4587336.937106643" y="5828726.39787484" desc="TKMaxx">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="464524861" x="4596398.629190969" y="5822244.506852162" desc="HamptonbyHiltonBerlinCityCentreAlexanderplatz">
@@ -4400,10 +4240,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="508669163" x="4587161.72281891" y="5829151.659512017" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="50898721" x="4577374.724199096" y="5821589.045418852" desc="FortHahneberg">
 		<activity type="attraction">
 		</activity>
@@ -4417,10 +4253,6 @@
 		</activity>
 	</facility>
 	<facility id="5105769" x="4581719.876168773" y="5823264.975785213" desc="Karstadt">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="5105771" x="4581882.4412402185" y="5823369.114120299" desc="Woolworth">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -4704,10 +4536,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="5844370737" x="4591341.47922487" y="5822372.066014458" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="5844370740" x="4591341.649500756" y="5822331.964740774" desc="MeiningerHotelBerlinTiergarten">
 		<activity type="hotel">
 		</activity>
@@ -4816,10 +4644,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="6124184385" x="4592159.570741237" y="5817826.142119219" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="6137529" x="4595276.165008606" y="5822025.327295654" desc="HackescherMarkt">
 		<activity type="attraction">
 		</activity>
@@ -4908,14 +4732,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="6340163764" x="4607777.357446785" y="5822315.874284553" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="6370869381" x="4581401.341274393" y="5822938.728128253" desc="TKMaxx">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="639131685" x="4579832.7239772845" y="5810150.394954035" desc="Kleistgrab">
 		<activity type="attraction">
 		</activity>
@@ -4965,10 +4781,6 @@
 		</activity>
 	</facility>
 	<facility id="6522039698" x="4594318.777275592" y="5812717.992859276" desc="TempelhofMuseum">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="652409952" x="4590034.521425975" y="5826566.16762233" desc="Woolworth">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -5176,10 +4988,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="701053944" x="4601895.694586269" y="5810358.870464831" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="701057032" x="4601822.146076003" y="5810404.645053447" desc="HeimatmuseumRudow">
 		<activity type="attraction">
 		</activity>
@@ -5352,15 +5160,7 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="7503974385" x="4589979.937837677" y="5814700.221042565" desc="Woolworth">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="753249359" x="4591361.530786846" y="5822954.4721690295" desc="MoaBogen">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="7538236381" x="4594226.282641918" y="5814485.640415932" desc="TKMaxx">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -5557,11 +5357,6 @@
 	<facility id="844740667" x="4594623.173706426" y="5820965.26295495" desc="Gendarmenmarkt">
 		<activity type="attraction">
 		</activity>
-	</facility>
-	<facility id="8462242297" x="4602216.719371528" y="5826743.55604297" desc="TKMaxx">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="84644772" x="4594119.625644452" y="5819979.299402429" desc="IbisBudget">
 		<activity type="hotel">
 		</activity>
@@ -5727,10 +5522,6 @@
 		</activity>
 	</facility>
 	<facility id="9024702266" x="4590916.154934135" y="5820321.834104188" desc="Adlerschlucht">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9032210424" x="4596987.673737698" y="5817147.17849002" desc="Woolworth">
 		<activity type="attraction">
 		</activity>
 	</facility>
