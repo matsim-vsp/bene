@@ -21,7 +21,7 @@ layout:
         join: linkId
       datasets:
         parkingData:
-          file: 'base/bus.0.parkingStats.csv'
+          file: '../ITERS/it.0/bus.0.parkingStats.csv'
       display:
         lineWidth:
           dataset: parkingData

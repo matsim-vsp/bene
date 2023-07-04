@@ -8,6 +8,7 @@ description: 'description'
 files:
   base:
     file: "bus.general_results.csv"
+    useLastRow: true
   #parkingTotal:
     #file: "bus.emissionsPerLink_parkingTotal.csv"
 
@@ -16,6 +17,7 @@ files:
 # Calculations ------------------------
 # these are evaluated top down!
 calculations: 
+  vehicles: '{base.vehicle}'
   total_m: '{base.drivenDistance}'
   total_km: 'round(total_m/100)/10'
   parkingSearch_m: '{base.drivenDistance_parkingSearch}'
@@ -28,6 +30,9 @@ calculations:
   parkingSearchOfParking_pct: 'round(parkingSearch_m / parkingTotal_m *1000)/10'
 # Table rows
 outputs:
+  - title_en: Number of vehicles
+    title_de: Anzahl an Fahrzeugen
+    value: vehicles
   - title_en: Total driven distance [km]
     title_de: Gefahrene Strecke [km]
     value: total_km
