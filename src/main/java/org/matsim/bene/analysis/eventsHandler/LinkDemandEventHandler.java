@@ -57,6 +57,7 @@ public class LinkDemandEventHandler
 	private final Map<Id<Vehicle>, Object2DoubleMap<String>> tourInformation = new HashMap<>();
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles_parkingTotal = new HashMap<>();
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles_parkingSearch = new HashMap<>();
+	private final Map<String, AtomicLong> attractionCount = new HashMap<>();
 	private final Map<Id<Vehicle>, Double> parkingStartTimes = new HashMap<>();
 	private final Map<Id<Vehicle>, Double> tourStartTimes = new HashMap<>();
 	private final Network network;
@@ -89,6 +90,8 @@ public class LinkDemandEventHandler
 			linkId2vehicles_parkingTotal.computeIfAbsent(event.getLinkId(), (k) -> new AtomicLong()).getAndIncrement();
 			tourInformation.computeIfAbsent(event.getVehicleId(), (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("DistanceParkingTotal",network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
 		}
+		else
+			tourInformation.computeIfAbsent(event.getVehicleId(), (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("drivenDistance_Passanger",network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
 	}
 
 	@Override
@@ -96,9 +99,10 @@ public class LinkDemandEventHandler
 		vehicleIsInParkingSearch.put(event.getVehicleId(), event.getTime());
 		vehicleBetweenPassengerDropOffAndPickup.put(event.getVehicleId(), event.getTime());
 	}
-
+	@Override
 	public void handleEvent(RemoveParkingActivityEvent event){
 		tourInformation.get(event.getVehicleId()).mergeDouble("removedParking", 1, Double::sum);
+		vehicleIsInParkingSearch.remove(event.getVehicleId());
 	}
 
 	@Override
@@ -121,6 +125,8 @@ public class LinkDemandEventHandler
 		}
 		if(event.getActType().contains("_GetOff")) {
 			tourInformation.get(vehicleId).mergeDouble("numberOfStops", 1, Double::sum);
+			String attractionName = event.getActType().split("_")[4];
+			attractionCount.computeIfAbsent(attractionName, (k) -> new AtomicLong()).getAndIncrement();
 		}
 		if(event.getActType().contains("_End_")) {
 			double tourDuration = event.getTime() - tourStartTimes.get(vehicleId);
@@ -156,5 +162,7 @@ public class LinkDemandEventHandler
 		return tourInformation;
 	}
 
-
+	public Map<String, AtomicLong> getAttractionInformation() {
+		return attractionCount;
+	}
 }
