@@ -18,18 +18,9 @@
 
 package org.matsim.parking.parkingsearch.evaluation;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Map.Entry;
-
+import com.google.inject.Inject;
 import org.apache.commons.lang3.mutable.MutableDouble;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.matsim.api.core.v01.Coord;
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.Scenario;
@@ -52,7 +43,10 @@ import org.matsim.facilities.ActivityFacility;
 import org.matsim.parking.parkingsearch.ParkingUtils;
 import org.matsim.vehicles.Vehicle;
 
-import com.google.inject.Inject;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class ParkingSlotVisualiser implements PersonEntersVehicleEventHandler, PersonLeavesVehicleEventHandler, VehicleLeavesTrafficEventHandler, VehicleEntersTrafficEventHandler, IterationEndsListener{
 	
@@ -68,7 +62,7 @@ public class ParkingSlotVisualiser implements PersonEntersVehicleEventHandler, P
 	Map<Id<Vehicle>,Id<Link>> parkedVehicles = new HashMap<Id<Vehicle>,Id<Link>>();
 		
 	/**
-	 * 
+	 *
 	 */
 	@Inject
 	public ParkingSlotVisualiser(Scenario scenario) {
@@ -129,8 +123,6 @@ public class ParkingSlotVisualiser implements PersonEntersVehicleEventHandler, P
 	
 	@Override
 	public void handleEvent(PersonEntersVehicleEvent event) {
-//		if (event.getVehicleId().toString().equals("Tour_57"))
-//			System.out.println("");
 		if (this.parkedVehicles.containsKey(event.getVehicleId())){
 			ParkingSlotManager manager = this.slotsOnLink.get(this.parkedVehicles.get(event.getVehicleId()));
 			Tuple<Coord,Double> parkingTuple = manager.processUnParking(event.getTime(), event.getVehicleId());
@@ -228,9 +220,8 @@ class ParkingSlotManager{
 	 * @return tuple of the (now) occupied slot's coord and time point since it's been free
 	 */
 	public Tuple<Coord,Double> processParking(double timeOfParking, Id<Vehicle> vehID){
-//		if (linkID.toString().equals("157058"))
-//			System.out.println("");
-		if(this.freeSlots.size() == 0) throw new RuntimeException("all slots at link " + linkID.toString() + " already occupied. cannot display another occupied slot (" + vehID.toString() + ")");
+		if(this.freeSlots.size() == 0)
+			throw new RuntimeException("all slots at link " + linkID.toString() + " already occupied. cannot display another occupied slot (" + vehID.toString() + ")");
 		Tuple<Coord,Double> parkingTuple = this.freeSlots.remove(r.nextInt(this.freeSlots.size()));
 		this.occupiedSlots.put(vehID, new Tuple<Coord,Double>(parkingTuple.getFirst(),timeOfParking) );
 		return parkingTuple;
@@ -255,8 +246,6 @@ class ParkingSlotManager{
 	 */
 	public Tuple<Coord, Double> processUnParking(double timeOfUnparking, Id<Vehicle> vehID){
 		Tuple<Coord,Double> parkingTuple;
-//		if (linkID.toString().equals("157058"))
-//			System.out.println("");
 		if(this.occupiedSlots.size() == 0 || !(this.occupiedSlots.containsKey(vehID))){
 //			throw new RuntimeException("or all slots already free or vehicle wasn't parked here.");
 			if(freeSlots.size() == 0){
