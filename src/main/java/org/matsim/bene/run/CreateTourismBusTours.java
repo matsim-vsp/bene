@@ -331,7 +331,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 					Double.parseDouble(record.get("Breitengrad")));
 			hotspotCoord = ts.transform(hotspotCoord);
 			int numberOfStopsForHotspot = (int) Math
-					.round(totalNumberOfStops * Double.parseDouble(record.get("Anteil")) / 100);
+					.round(totalNumberOfStops * Double.parseDouble(record.get("Anteil")));
 			stopsPerHotspotDistribution.put(hotspotCoord, numberOfStopsForHotspot);
 			totalNumberOfStopsInTours += numberOfStopsForHotspot;
 		}
