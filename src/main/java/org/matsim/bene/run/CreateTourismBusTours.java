@@ -87,7 +87,7 @@ import java.util.stream.Collectors;
  *
  */
 
-@CommandLine.Command(name = "BENE-bus-tours-creation", description = "Creates and simulates the bus tours related to the BENE project ", showDefaultValues = true)
+@CommandLine.Command(name = "create-tourism-bus-tours", description = "Creates and simulates the bus tours related to the BENE project ", showDefaultValues = true)
 public class CreateTourismBusTours implements MATSimAppCommand {
 	private static final Logger log = LogManager.getLogger(CreateTourismBusTours.class);
 	static SplittableRandom random;
