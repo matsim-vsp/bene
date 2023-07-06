@@ -10,10 +10,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="10015822718" x="4591385.151039923" y="5822888.327779392">
-		<activity type="hotel">
-		</activity>
-	</facility>
 	<facility id="10029372863" x="4594423.719510907" y="5818076.389270959" desc="KurtMühlenhauptMuseum">
 		<activity type="attraction">
 		</activity>
@@ -78,15 +74,7 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="10250205410" x="4585749.544198208" y="5823793.398902799">
-		<activity type="hotel">
-		</activity>
-	</facility>
 	<facility id="10264516383" x="4594751.4194748895" y="5822121.936353197" desc="Telegraphenamt">
-		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="10276710009" x="4603009.729366614" y="5815543.112252513">
 		<activity type="hotel">
 		</activity>
 	</facility>
@@ -114,10 +102,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="1036522103" x="4583820.22550609" y="5831484.978947151">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="1039863708" x="4593846.179707307" y="5818237.274286294" desc="TiergehegeimViktoriapark">
 		<activity type="attraction">
 		</activity>
@@ -130,19 +114,7 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="1042056244" x="4606539.109342934" y="5823730.657794861" desc="americancar">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="1042056245" x="4606544.181667602" y="5823729.33208307" desc="americancar">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="1042056246" x="4606562.166583604" y="5823724.023689474" desc="americancar">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="1042056267" x="4606771.400406948" y="5823922.426472379">
+	<facility id="1042056245" x="4606544.181667602" y="5823729.33208307" desc="GaertenDerWelt">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -154,10 +126,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="104414792" x="4590314.370688257" y="5819932.459914573">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="104506319" x="4580156.472052486" y="5823221.066068476" desc="HotelAmWasserturm">
 		<activity type="hotel">
 		</activity>
@@ -167,10 +135,6 @@
 		</activity>
 	</facility>
 	<facility id="104776772" x="4593211.030491526" y="5822643.747180971" desc="Kleihueshalle">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="104779560" x="4592069.447895447" y="5814542.505529455">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -290,10 +254,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="112620621" x="4592060.317813147" y="5814539.501690469">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="1129787533" x="4594309.697692665" y="5822388.666144843" desc="MärkischerHof">
 		<activity type="hotel">
 		</activity>
@@ -331,10 +291,6 @@
 		</activity>
 	</facility>
 	<facility id="117395689" x="4593697.017128501" y="5825633.244891401" desc="mkhotelberlin">
-		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="117500584" x="4589493.014085488" y="5806448.627710981">
 		<activity type="hotel">
 		</activity>
 	</facility>
@@ -530,14 +486,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="132382128" x="4585002.962103883" y="5828718.455684591" desc="Damwildgehege">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="132382129" x="4584915.209000663" y="5828765.794605338" desc="Muffelwildgehege">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="132555271" x="4596021.264629789" y="5823962.232667772" desc="MuseuminderKulturbrauerei">
 		<activity type="attraction">
 		</activity>
@@ -626,10 +574,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="1387922020" x="4578617.539581891" y="5822886.190247783">
-		<activity type="hotel">
-		</activity>
-	</facility>
 	<facility id="1390712121" x="4589622.6103293225" y="5820251.066113892" desc="DasVerborgeneMuseum">
 		<activity type="attraction">
 		</activity>
@@ -663,10 +607,6 @@
 		</activity>
 	</facility>
 	<facility id="142801571" x="4615701.71187089" y="5817816.411407389" desc="HeimathausSchöneiche">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="143367746" x="4592840.340077954" y="5820410.935877762">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -782,10 +722,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="156650952" x="4604862.490543629" y="5815656.537097449" desc="Rot-undDamwild">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="156959020" x="4602880.144948947" y="5827275.489905535" desc="FALKENBOGEN">
 		<activity type="attraction">
 		</activity>
@@ -812,10 +748,6 @@
 	</facility>
 	<facility id="1598987141" x="4594739.200587088" y="5821210.065737417" desc="HoteldeRome">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="1609064712" x="4584368.74806497" y="5829875.963482281">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="16095527" x="4592098.5347791035" y="5820023.637339371" desc="SheratonBerlinGrandHotelEsplanade">
@@ -862,10 +794,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="167177398" x="4607479.00915686" y="5815010.433546049">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="1673240952" x="4609535.489233968" y="5814008.318858631" desc="Spreeidyll">
 		<activity type="hotel">
 		</activity>
@@ -876,10 +804,6 @@
 	</facility>
 	<facility id="1677275386" x="4594614.138466937" y="5820365.965915285" desc="ABRIApartmentsBerlin-Mitte">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="167983108" x="4593694.081745488" y="5819329.753227179" desc="Rosinenbomber">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="1711934396" x="4601083.488810324" y="5819836.356425835" desc="MidelHostel">
@@ -908,10 +832,6 @@
 	</facility>
 	<facility id="1738706654" x="4591432.793244443" y="5819284.719276464" desc="Hotelartim">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="173954099" x="4590766.404081954" y="5816379.024364527">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="1742757439" x="4604960.610474936" y="5808162.852216204" desc="MeiningerBerlinAirport">
@@ -1011,10 +931,6 @@
 		</activity>
 	</facility>
 	<facility id="18340403" x="4590907.872715656" y="5820552.288180558" desc="Fasanerie">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="183966473" x="4599331.213186909" y="5822176.024333933">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -1566,10 +1482,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="24036371" x="4598625.196924764" y="5819052.070853792" desc="WachturmSchlesischerBusch">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="24054915" x="4594736.583049745" y="5822233.550294873" desc="NeueSynagoge">
 		<activity type="attraction">
 		</activity>
@@ -1602,11 +1514,7 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="24273422" x="4596153.282824435" y="5821875.431134239" desc="diemitte">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="242920955" x="4589996.218742854" y="5825015.368321713">
+	<facility id="24273422" x="4596153.282824435" y="5821875.431134239" desc="Alexanderplatz">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -1630,10 +1538,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="24358794" x="4582082.774887805" y="5825541.64412482">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="24368681" x="4594099.315138321" y="5820128.6104582995" desc="TopographiedesTerrors">
 		<activity type="attraction">
 		</activity>
@@ -1644,10 +1548,6 @@
 	</facility>
 	<facility id="2439759166" x="4586830.892326103" y="5820355.485575915" desc="ConcordeHotelamStudio">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="2441922682" x="4615722.341346835" y="5834122.594080352">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="2441922844" x="4610505.461731321" y="5837718.702009701" desc="KinderbauernhofBörnicke">
@@ -1712,10 +1612,6 @@
 	</facility>
 	<facility id="24865205" x="4590217.709925369" y="5819781.729759185" desc="HotelBristolBerlin">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="24921263" x="4607944.2017953135" y="5814485.77754129">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="24945667" x="4590341.733140151" y="5826923.507795728" desc="GoodMorningBerlinCityWest">
@@ -1802,19 +1698,7 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="254307091" x="4590539.281423556" y="5819651.83702743">
-		<activity type="hotel">
-		</activity>
-	</facility>
 	<facility id="25498297" x="4598210.616712732" y="5816046.608063338" desc="NeuköllnerTor">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="255072469" x="4593756.857918895" y="5819294.710095478" desc="Rotorblatt">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="2552889621" x="4613219.411405713" y="5834003.259949478" desc="Insektenhotel">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -1875,10 +1759,6 @@
 		</activity>
 	</facility>
 	<facility id="260768839" x="4593356.8709551" y="5820494.7451294465" desc="DeutscheKinemathek-MuseumfürFilmundFernsehen">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="26131643" x="4588975.437874357" y="5814506.322164078">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -1998,10 +1878,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="2671992" x="4599606.349455164" y="5822039.698909811">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="267246999" x="4586196.197132455" y="5820443.407071742" desc="HotelVillaKastaniaBerlin">
 		<activity type="hotel">
 		</activity>
@@ -2078,19 +1954,11 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="273198564" x="4592064.841189114" y="5814535.0617868705">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="2733904737" x="4585097.647037961" y="5817841.316978415" desc="Waldmuseum">
 		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="27356394" x="4586962.359048205" y="5824017.264446478" desc="Gustav-Böß-Freilichtbühne">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="27481262" x="4589111.3397579" y="5810563.398460819">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -2378,10 +2246,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="2966005919" x="4593778.279720936" y="5820382.837688085" desc="Wachturm">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="297049901" x="4607470.469107502" y="5813632.655114061" desc="HeimatmuseumKöpenick">
 		<activity type="attraction">
 		</activity>
@@ -2424,14 +2288,6 @@
 	</facility>
 	<facility id="30215600" x="4585727.457566732" y="5823791.465235257" desc="HolidayInnBerlinCity-West">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="30217932" x="4590007.336520944" y="5825101.908767887" desc="Damwildgehege">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="30218109" x="4590009.809207921" y="5824871.207005367" desc="Wildschweingehege">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="302942554" x="4594916.729687992" y="5819671.881149383" desc="JüdischesMuseum">
@@ -2602,10 +2458,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="31622818" x="4593585.861882369" y="5819119.171742039" desc="DeutschesTechnikmuseumBerlin">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="3166224260" x="4594128.581974622" y="5819268.223396237" desc="GrandHostelBerlin">
 		<activity type="hotel">
 		</activity>
@@ -2620,10 +2472,6 @@
 	</facility>
 	<facility id="317785085" x="4596350.975679738" y="5822858.451597689" desc="Schoenhousestudios">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="317836043" x="4598895.60097852" y="5822777.504686962">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="317858421" x="4599320.930080277" y="5822923.423683141" desc="LandsbergerSpitze">
@@ -2782,19 +2630,11 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="33880025" x="4594305.824812809" y="5814490.761625909" desc="TempelhoferHafenBerlin">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="33910270" x="4609618.868646033" y="5810032.892278735" desc="Schmetterlingshorst">
 		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="339477343" x="4594126.434556708" y="5819738.789138935" desc="Akzisemauer">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="34000362" x="4605602.443280503" y="5824789.3601866355" desc="MarzahnerPromenade">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -2806,24 +2646,12 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="34113800" x="4605453.303577673" y="5824729.807857041" desc="MarzahnerPromenade">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="34146669" x="4605296.493942894" y="5824652.785184464" desc="FußgängerzoneMarzahnerPromenade">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="343093984" x="4587675.614041508" y="5813975.676604832" desc="BerlinBrain">
 		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="343095342" x="4588028.304921787" y="5814536.390396003" desc="SeminarisCampusHotelBerlin">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="34348766" x="4604873.702619131" y="5824419.595559949" desc="MarzahnerPromenade">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="343841055" x="4609157.662715915" y="5820338.6741682645" desc="HotelanderWeide">
@@ -2864,10 +2692,6 @@
 	</facility>
 	<facility id="350625556" x="4581401.766635593" y="5818474.271405441" desc="SeehotelGrunewald">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="35085398" x="4597684.52286332" y="5811203.709578484">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="35092463" x="4603691.796144084" y="5827078.234180012" desc="Welsegalerie1">
@@ -2922,10 +2746,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="3570845453" x="4590294.061991897" y="5815338.627132142" desc="HEMA">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="360009454" x="4577899.208792634" y="5814165.024806796" desc="Cladow-Center">
 		<activity type="attraction">
 		</activity>
@@ -2940,10 +2760,6 @@
 	</facility>
 	<facility id="3619" x="4595051.709459048" y="5821623.701022792" desc="AltesMuseum">
 		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="362283501" x="4591446.651013108" y="5830012.869580134">
-		<activity type="hotel">
 		</activity>
 	</facility>
 	<facility id="3626233" x="4592776.598011732" y="5820361.900140811" desc="GemäldegalerieamKulturforum">
@@ -3374,10 +3190,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="386141103" x="4594719.326955131" y="5831370.190657021" desc="Damwildgehege">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="3862782284" x="4590024.396452895" y="5819375.001705232" desc="AmarylCity-HotelamKurfürstendamm">
 		<activity type="hotel">
 		</activity>
@@ -3401,8 +3213,6 @@
 	<facility id="3900017" x="4595799.157352803" y="5823682.270496646" desc="StadtbadOderbergerStraße">
 		<activity type="attraction">
 		</activity>
-		<activity type="leisure">
-		</activity>
 	</facility>
 	<facility id="391603884" x="4593869.277086001" y="5823052.519821566" desc="TitanicChausseeBerlin">
 		<activity type="hotel">
@@ -3418,14 +3228,6 @@
 	</facility>
 	<facility id="3937513964" x="4595187.706754213" y="5822829.356588778" desc="ibisStylesBerlinMitte">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="393884517" x="4593674.802401882" y="5820443.761299551">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="393884518" x="4593709.529121792" y="5820563.125435659">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="39496774" x="4596225.277615119" y="5822121.395816346" desc="IbisStylesBerlinAlexanderplatz">
@@ -3836,15 +3638,7 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="4402578974" x="4590411.488442875" y="5819410.72587247">
-		<activity type="hotel">
-		</activity>
-	</facility>
 	<facility id="440867269" x="4599987.53409053" y="5831829.873124565" desc="HotelBelAir">
-		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="4412853199" x="4590638.523880483" y="5813041.437336636">
 		<activity type="hotel">
 		</activity>
 	</facility>
@@ -3885,14 +3679,6 @@
 		</activity>
 	</facility>
 	<facility id="4433338391" x="4595959.287802357" y="5824072.864487093" desc="GuruShop">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="4436897" x="4580676.787948919" y="5827004.11478285" desc="Damhirsche">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="4436898" x="4580669.76780707" y="5826970.235427742" desc="Wildschweine">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -4012,14 +3798,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="4664317489" x="4595990.000452949" y="5806859.26635894" desc="EinEuroShop">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="4665192292" x="4595750.846204302" y="5806873.0111831315" desc="ModeTrend">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="4675675367" x="4603754.368869478" y="5817861.095416203" desc="DieBotschaft">
 		<activity type="hotel">
 		</activity>
@@ -4088,10 +3866,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="4809132621" x="4587708.66313482" y="5816641.894417839">
-		<activity type="hotel">
-		</activity>
-	</facility>
 	<facility id="481694341" x="4599870.327894344" y="5821038.866822772" desc="UInnBerlinHostel">
 		<activity type="hotel">
 		</activity>
@@ -4113,10 +3887,6 @@
 		</activity>
 	</facility>
 	<facility id="48395703" x="4589924.57078104" y="5831320.10172134" desc="Nordmeile">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="4844728421" x="4593546.474438132" y="5820531.55059252">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -4180,10 +3950,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="49967469" x="4591956.782864392" y="5814658.114611954" desc="Wilhelm-Foerster-Sternwarte">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="49973931" x="4588643.619922809" y="5818871.293582077" desc="yggotelRavn">
 		<activity type="hotel">
 		</activity>
@@ -4226,10 +3992,6 @@
 	</facility>
 	<facility id="506743681" x="4597620.191521808" y="5820433.322344962" desc="MeiningerHotelBerlinEastSideGallery">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="50680100" x="4581770.667531516" y="5834554.216538384">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="507083358" x="4585815.30793987" y="5812103.412415296" desc="HeimatmuseumZehlendorf">
@@ -4309,10 +4071,6 @@
 		</activity>
 	</facility>
 	<facility id="5268753601" x="4589415.650880122" y="5819367.498000341" desc="Midi-InnCityWest">
-		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="5295444732" x="4597901.965317243" y="5819376.900242013">
 		<activity type="hotel">
 		</activity>
 	</facility>
@@ -4417,10 +4175,6 @@
 		</activity>
 	</facility>
 	<facility id="54897320" x="4591884.604210152" y="5830254.960187853" desc="MärkischesZentrum">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="54930132" x="4600285.202487032" y="5829653.7619052185" desc="Damwildgehege">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -4840,10 +4594,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="6700335785" x="4592560.2593372185" y="5826338.02046628">
-		<activity type="hotel">
-		</activity>
-	</facility>
 	<facility id="6700627705" x="4586308.457379587" y="5813645.61552893" desc="SamuraiArtMuseum">
 		<activity type="attraction">
 		</activity>
@@ -5072,10 +4822,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="722386119" x="4593545.930429444" y="5820347.144685061">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="7233815620" x="4594196.885274264" y="5817806.523766538" desc="Columbia">
 		<activity type="hotel">
 		</activity>
@@ -5113,10 +4859,6 @@
 		</activity>
 	</facility>
 	<facility id="73427143" x="4577081.422927366" y="5812380.694330689" desc="Meierei">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="73427165" x="4576914.75138619" y="5811726.20817308">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -5161,10 +4903,6 @@
 		</activity>
 	</facility>
 	<facility id="753249359" x="4591361.530786846" y="5822954.4721690295" desc="MoaBogen">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="75405910" x="4591939.047906429" y="5824836.7087476915" desc="Cittipoint">
 		<activity type="attraction">
 		</activity>
 	</facility>
@@ -5228,14 +4966,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="779355298" x="4594043.415068169" y="5818995.294949481" desc="Wohnanlageehem.Gertraudenhospital">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="779355299" x="4593979.766208462" y="5818947.0137103675" desc="Wohnanlageehem.Gertraudenhospital">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="78140038" x="4589419.193665128" y="5832203.838026379" desc="MuseumReinickendorf">
 		<activity type="attraction">
 		</activity>
@@ -5260,10 +4990,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="788144127" x="4600772.882282067" y="5831784.0816870695">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="7922049872" x="4590701.586508236" y="5819838.192205047" desc="Muji">
 		<activity type="attraction">
 		</activity>
@@ -5282,8 +5008,6 @@
 	</facility>
 	<facility id="7997184" x="4598578.198255302" y="5822949.701172623" desc="Velodrom">
 		<activity type="attraction">
-		</activity>
-		<activity type="leisure">
 		</activity>
 	</facility>
 	<facility id="80339681" x="4594715.136465642" y="5822307.302184539" desc="HeckmannHöfe">
@@ -5357,6 +5081,7 @@
 	<facility id="844740667" x="4594623.173706426" y="5820965.26295495" desc="Gendarmenmarkt">
 		<activity type="attraction">
 		</activity>
+	</facility>
 	<facility id="84644772" x="4594119.625644452" y="5819979.299402429" desc="IbisBudget">
 		<activity type="hotel">
 		</activity>
@@ -5485,10 +5210,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="893956651" x="4605573.060133612" y="5824249.129313851">
-		<activity type="hotel">
-		</activity>
-	</facility>
 	<facility id="8941022529" x="4610720.573399622" y="5837936.881323538" desc="HistoricAgriculturalEquipment">
 		<activity type="attraction">
 		</activity>
@@ -5517,14 +5238,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="9024689571" x="4590763.212547711" y="5820486.007550184" desc="Traktor">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9024702266" x="4590916.154934135" y="5820321.834104188" desc="Adlerschlucht">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="910426645" x="4593525.757521365" y="5823416.964675135" desc="City54HotelundHostel">
 		<activity type="hotel">
 		</activity>
@@ -5551,10 +5264,6 @@
 	</facility>
 	<facility id="920644189" x="4596806.938491283" y="5818806.682363465" desc="Schokoladenfabrik">
 		<activity type="hotel">
-		</activity>
-	</facility>
-	<facility id="9214315227" x="4592001.903755459" y="5819258.325980985">
-		<activity type="attraction">
 		</activity>
 	</facility>
 	<facility id="92335625" x="4594027.116880283" y="5819614.365709505" desc="CrownePlazaBerlinPotsdamerPlatz">
@@ -5617,10 +5326,6 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="940754304" x="4594382.217993828" y="5822303.673997706">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="9468742106" x="4607476.822144431" y="5814747.483986837" desc="GedenkstätteKöpenickerBlutwoche">
 		<activity type="attraction">
 		</activity>
@@ -5653,26 +5358,6 @@
 		<activity type="hotel">
 		</activity>
 	</facility>
-	<facility id="9549827153" x="4591109.254464696" y="5820125.463791342" desc="Nachttierhaus">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9558385246" x="4591088.007994642" y="5820381.901106381" desc="Pinguinwelt">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9558385247" x="4590846.697033787" y="5820508.468022773" desc="WeltderVögel">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9558385250" x="4591128.899773122" y="5820150.516845601" desc="ReichderJäger">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9558385251" x="4590901.900530335" y="5820102.627446721" desc="Affenhaus">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="958347848" x="4590662.627052246" y="5818701.4902024" desc="HyperionHotelBerlin">
 		<activity type="hotel">
 		</activity>
@@ -5681,44 +5366,8 @@
 		<activity type="attraction">
 		</activity>
 	</facility>
-	<facility id="9592974367" x="4607399.247309595" y="5823575.322990016" desc="offeneSichtaufStahlknoten">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9592974384" x="4607026.269904526" y="5823746.63108302" desc="ChinYingYang">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9592974399" x="4606979.167635799" y="5823787.358435251">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9592974529" x="4607189.805592593" y="5823966.646650402">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9592974607" x="4606620.037267072" y="5823826.661818692">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9592974863" x="4607151.812466424" y="5824096.449799451">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9592974871" x="4607161.778440204" y="5824093.57311279" desc="Spendenbox">
-		<activity type="attraction">
-		</activity>
-	</facility>
 	<facility id="9592974963" x="4606583.182043105" y="5823793.766311623" desc="chinesearrt">
 		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="9592974993" x="4606674.156001772" y="5823747.845533486">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="960740201" x="4590513.986450406" y="5819592.9171476">
-		<activity type="hotel">
 		</activity>
 	</facility>
 	<facility id="9623829508" x="4593530.351839815" y="5826599.128801185" desc="OnHostel24">
@@ -5810,10 +5459,6 @@
 		</activity>
 	</facility>
 	<facility id="9979815162" x="4588060.976118124" y="5821656.34632745" desc="SchlossCharlottenburg">
-		<activity type="attraction">
-		</activity>
-	</facility>
-	<facility id="99835337" x="4585022.028520948" y="5828878.627412071" desc="Wildschweingehege">
 		<activity type="attraction">
 		</activity>
 	</facility>
