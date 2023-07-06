@@ -167,6 +167,9 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         final String attraction_OverviewOutputFile = analysisOutputDirectory + runId + ".attraction_Overview.csv";
         log.info("Writing overview to: {}", attraction_OverviewOutputFile);
 
+        final String parkingRelation_OutputFile = analysisOutputDirectory + runId + ".parking_Overview.csv";
+        log.info("Writing overview to: {}", parkingRelation_OutputFile);
+
         Config config = ConfigUtils.createConfig();
         config.vehicles().setVehiclesFile(String.valueOf(globFile(runDirectory, runId, "output_vehicles")));
         config.network().setInputFile(String.valueOf(globFile(runDirectory, runId, "network")));
@@ -242,13 +245,13 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                     linkEmissionPerMOutputFile_parkingSearch, linkEmissionOutputFile_parkingSearch, scenario,
                     emissionsOnLinkEventHandler);
         }
-        createGeneralResults(general_resultsOutputFile, general_OverviewOutputFile, linkDemandEventHandler, attraction_OverviewOutputFile);
+        createGeneralResults(general_resultsOutputFile, general_OverviewOutputFile, linkDemandEventHandler, attraction_OverviewOutputFile, parkingRelation_OutputFile);
 
         return 0;
     }
 
     private void createGeneralResults(String generalResultsOutputFile, String general_OverviewOutputFile, LinkDemandEventHandler linkDemandEventHandler,
-                                      String attraction_OverviewOutputFile) {
+                                      String attraction_OverviewOutputFile, String parkingRelation_OutputFile) {
         File tourDataFile = new File(generalResultsOutputFile);
         File overViewFile = new File(general_OverviewOutputFile);
         File attractionViewFile = new File(attraction_OverviewOutputFile);
@@ -334,6 +337,28 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
             bw.newLine();
             for (String facilityID : facilityCount.keySet()) {
                 bw.write(facilityID + ";" + facilityCount.get(facilityID));
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Map<String, Object2DoubleMap<String>> parkingRelation = linkDemandEventHandler.getParkingRelations();
+            BufferedWriter bw = new BufferedWriter(new FileWriter(parkingRelation_OutputFile));
+            List<String> header = Arrays.asList("fromX", "fromY", "toX", "toY");
+            bw.write("stopID");
+            for (String category : header) {
+                bw.write(";" + category);
+            }
+            bw.newLine();
+
+            for (String stopID : parkingRelation.keySet()) {
+                bw.write(stopID);
+                for (String category : header) {
+                    bw.write(";" + parkingRelation.get(stopID).getDouble(category));
+                }
                 bw.newLine();
             }
             bw.close();
