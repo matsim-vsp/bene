@@ -131,7 +131,7 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 				}
 				if (!driveToBaseWithoutParking) {
 					Id<Link> nextPlanedParkingLink = ((NearestParkingSpotSearchLogic) this.logic).getNextParkingLocation();
-					if (nextSelectedParkingLink == null || !nextSelectedParkingLink.equals(nextPlanedParkingLink)) {
+					if ((nextPlanedParkingLink != null) && (nextSelectedParkingLink == null || !nextSelectedParkingLink.equals(nextPlanedParkingLink))) {
 						nextSelectedParkingLink = nextPlanedParkingLink;
 						if (((NearestParkingSpotSearchLogic) this.logic).canReserveParkingSlot()) {
 							alreadyReservedParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, nextSelectedParkingLink);
@@ -144,8 +144,8 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 							this.events.processEvent(
 									new SelectNewParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, nextSelectedParkingLink));
 						}
+						followingActivity.setLinkId(nextPlanedParkingLink);
 					}
-					followingActivity.setLinkId(nextPlanedParkingLink);
 				}
 				currentAndNextParkLink = new Tuple<>(currentLinkId, nextLinkId);
 				currentPlannedLeg.setRoute(((NearestParkingSpotSearchLogic) this.logic).getNextRoute());
