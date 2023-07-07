@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * @author jbischoff
+ * @author Ricardo Ewert
  *
  */
 
@@ -50,6 +50,7 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 	private final ParkingSearchManager parkingManager;
 	private NetworkRoute actualRoute = null;
 	private final boolean canReserveParkingSlot;
+	private final boolean canCheckParkingCapacitiesInAdvanced;
 	private int currentLinkIdx;
 	private final HashSet <Id<ActivityFacility>> triedParking;
 	private Id<Link> nextLink;
@@ -60,11 +61,12 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 	 *
 	 * @param parkingManager
 	 */
-	public NearestParkingSpotSearchLogic(Network network, ParkingRouter parkingRouter, ParkingSearchManager parkingManager, boolean canReserveParkingSlot) {
+	public NearestParkingSpotSearchLogic(Network network, ParkingRouter parkingRouter, ParkingSearchManager parkingManager, boolean canReserveParkingSlot, boolean canCheckParkingCapacitiesInAdvanced) {
 		this.network = network;
 		this.parkingRouter = parkingRouter;
 		this.parkingManager = parkingManager;
 		this.canReserveParkingSlot = canReserveParkingSlot;
+		this.canCheckParkingCapacitiesInAdvanced = canCheckParkingCapacitiesInAdvanced;
 		activityFacilities = ((FacilityBasedParkingManager) parkingManager).getParkingFacilities();
 		currentLinkIdx = 0;
 		triedParking = new HashSet<>();
@@ -77,13 +79,13 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 	public Id<Link> getNextLink(Id<Link> currentLinkId, Id<Link> baseLinkId, Id<Vehicle> vehicleId, String mode, double now, double maxParkingDuration, double nextPickupTime) {
 
 		if (actualRoute == null) {
-			actualRoute = findRouteToNearestParkingFacility(baseLinkId, currentLinkId, canReserveParkingSlot, now, maxParkingDuration);
+			actualRoute = findRouteToNearestParkingFacility(baseLinkId, currentLinkId, canCheckParkingCapacitiesInAdvanced, now, maxParkingDuration);
 			checkIfDrivingToNextParkingLocationIsPossible(currentLinkId, baseLinkId, now, nextPickupTime);
 			actualRoute.setVehicleId(vehicleId);
 			triedParking.clear();
 		} else if (currentLinkId.equals(actualRoute.getEndLinkId()) && !skipParkingActivity) {
 			currentLinkIdx = 0;
-			actualRoute = findRouteToNearestParkingFacility(baseLinkId, currentLinkId, canReserveParkingSlot, now, maxParkingDuration);
+			actualRoute = findRouteToNearestParkingFacility(baseLinkId, currentLinkId, canCheckParkingCapacitiesInAdvanced, now, maxParkingDuration);
 			checkIfDrivingToNextParkingLocationIsPossible(currentLinkId, baseLinkId, now, nextPickupTime);
 			actualRoute.setVehicleId(vehicleId);
 		}
@@ -134,7 +136,7 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 		return canReserveParkingSlot;
 	}
 
-	private NetworkRoute findRouteToNearestParkingFacility(Id<Link> baseLinkId, Id<Link> currentLinkId, boolean canReserveParkingSlot, double now, double maxParkingDuration) {
+	private NetworkRoute findRouteToNearestParkingFacility(Id<Link> baseLinkId, Id<Link> currentLinkId, boolean canCheckParkingCapacitiesInAdvanced, double now, double maxParkingDuration) {
 		TreeMap<Double, ActivityFacility> euclideanDistanceToParkingFacilities = new TreeMap<>();
 		ActivityFacility nearstActivityFacility = null;
 		NetworkRoute selectedRoute = null;
@@ -144,7 +146,7 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 				triedParking.clear();
 			if (triedParking.contains(activityFacility.getId()))
 				continue;
-			if (canReserveParkingSlot) {
+			if (canCheckParkingCapacitiesInAdvanced) {
 				if (((FacilityBasedParkingManager) parkingManager).getNrOfFreeParkingSpacesOnLink(activityFacility.getLinkId()) < 1)
 					continue;
 			}

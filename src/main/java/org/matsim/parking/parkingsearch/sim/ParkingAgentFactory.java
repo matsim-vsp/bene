@@ -109,13 +109,15 @@ public class ParkingAgentFactory implements AgentFactory {
 				agentLogic = new MemoryBasedParkingAgentLogic(p.getSelectedPlan(), parkingManager, walkRouter, network,
 						parkingRouter, events, parkingLogic, ((QSim) qsim).getSimTimer(), teleportationLogic, psConfigGroup);
 			}
-			case NearestParkingSpot, NearestParkingSpotWithReservation -> {
+			case NearestParkingSpot, NearestParkingSpotWithReservation, NearestParkingSpotWithCapacityCheck -> {
 
 				if (Objects.requireNonNull(psConfigGroup.getParkingSearchStrategy()) == ParkingSearchStrategy.NearestParkingSpotWithReservation) {
-					parkingLogic = new NearestParkingSpotSearchLogic(network, parkingRouter, parkingManager, true);
-				} else {
-					parkingLogic = new NearestParkingSpotSearchLogic(network, parkingRouter, parkingManager, false);
+					parkingLogic = new NearestParkingSpotSearchLogic(network, parkingRouter, parkingManager, true, true);
+				} else if (Objects.requireNonNull(psConfigGroup.getParkingSearchStrategy()) == ParkingSearchStrategy.NearestParkingSpotWithCapacityCheck){
+					parkingLogic = new NearestParkingSpotSearchLogic(network, parkingRouter, parkingManager, false, true);
 				}
+				else
+					parkingLogic = new NearestParkingSpotSearchLogic(network, parkingRouter, parkingManager, false, false);
 				agentLogic = new NearestParkingSpotAgentLogic(p.getSelectedPlan(), parkingManager, walkRouter,
 						network, parkingRouter, events, parkingLogic, ((QSim) qsim).getSimTimer(),
 						teleportationLogic, psConfigGroup);

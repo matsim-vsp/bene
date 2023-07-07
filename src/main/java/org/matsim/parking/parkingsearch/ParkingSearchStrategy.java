@@ -23,5 +23,6 @@ public enum ParkingSearchStrategy {
 	Benenson,
 	DistanceMemory,
 	NearestParkingSpot,
-	NearestParkingSpotWithReservation
+	NearestParkingSpotWithReservation,
+	NearestParkingSpotWithCapacityCheck
 }
