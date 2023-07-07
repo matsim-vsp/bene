@@ -24,8 +24,11 @@ layout:
           file: 'bus.attraction_Overview.csv'
       display:
         lineWidth:
+          dataset: "@1"
+          columnName: ""
+          scaleFactor: 10
+        radius:
           dataset: attractionData
           columnName: count
+          scaleFactor: 0.1
           join: facilityID
-          scaleFactor: 10
- 

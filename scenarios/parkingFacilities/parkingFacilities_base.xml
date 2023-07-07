@@ -8,19 +8,19 @@
 
 		</activity>
 	</facility>
-	<facility id="Ackerstraße" linkId="126393" x="4603402.981285995" y="5819672.924516433">
+	<facility id="Ackerstrasse" linkId="126393" x="4603402.981285995" y="5819672.924516433">
 		<activity type="parking">			<capacity value="5.0" />
 			<opentime day="wkday" start_time="08:00:00" end_time="18:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Alexanderstraße" linkId="11905" x="4596167.86304569" y="5821981.0347364275">
+	<facility id="Alexanderstrasse" linkId="11905" x="4596167.86304569" y="5821981.0347364275">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="AltSchmöckwitz21" linkId="8735" x="4612505.480212142" y="5805910.149828035">
+	<facility id="AltSchmoeckwitz21" linkId="8735" x="4612505.480212142" y="5805910.149828035">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -32,25 +32,25 @@
 
 		</activity>
 	</facility>
-	<facility id="AmGroßenWannsee56" linkId="114877" x="4579277.014335245" y="5811521.233667994">
+	<facility id="AmGrossenWannsee56" linkId="114877" x="4579277.014335245" y="5811521.233667994">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="10:00:00" end_time="18:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="AmKöllnischenPark(Hausnummer 2)" linkId="30126" x="4596192.050682686" y="5820968.072354766">
+	<facility id="AmKoellnischenPark(Hausnummer 2)" linkId="30126" x="4596192.050682686" y="5820968.072354766">
 		<activity type="parking">			<capacity value="1.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="AmKöllnischenPark(Hausnummer 4)" linkId="30126" x="4596192.050682686" y="5820968.072354766">
+	<facility id="AmKoellnischenPark(Hausnummer 4)" linkId="30126" x="4596192.050682686" y="5820968.072354766">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="09:00:00" end_time="18:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="AmKöllnischenPark(Märkisches Museum)" linkId="30125" x="4596192.050682686" y="5820968.072354766">
+	<facility id="AmKoellnischenPark(Maerkisches Museum)" linkId="30125" x="4596192.050682686" y="5820968.072354766">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="08:00:00" end_time="18:00:00" />
 
@@ -80,19 +80,19 @@
 
 		</activity>
 	</facility>
-	<facility id="AnDerMühle" linkId="129250" x="4586784.611294858" y="5829762.3998260815">
+	<facility id="AnDerMuehle" linkId="129250" x="4586784.611294858" y="5829762.3998260815">
 		<activity type="parking">			<capacity value="4.0" />
 			<opentime day="wkday" start_time="08:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Behrenstraße52" linkId="773" x="4594297.129142643" y="5821174.69129746">
+	<facility id="Behrenstrasse52" linkId="773" x="4594297.129142643" y="5821174.69129746">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="BrandenburgischeStraße" linkId="48224" x="4589179.767508952" y="5818517.220872024">
+	<facility id="BrandenburgischeStrasse" linkId="48224" x="4589179.767508952" y="5818517.220872024">
 		<activity type="parking">			<capacity value="5.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -104,37 +104,37 @@
 
 		</activity>
 	</facility>
-	<facility id="Böttgerstraße" linkId="25770" x="4594026.228446489" y="5824945.63346607">
+	<facility id="Boettgerstrasse" linkId="25770" x="4594026.228446489" y="5824945.63346607">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Bülowstraße19–22" linkId="38384" x="4592513.334584877" y="5819181.573701916">
+	<facility id="Buelowstrasse19–22" linkId="38384" x="4592513.334584877" y="5819181.573701916">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Crellestraße31" linkId="143534" x="4592735.2061356865" y="5818258.153753804">
+	<facility id="Crellestrasse31" linkId="143534" x="4592735.2061356865" y="5818258.153753804">
 		<activity type="parking">			<capacity value="1.0" />
 			<opentime day="wkday" start_time="08:00:00" end_time="20:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Dircksenstraße" linkId="46257" x="4595462.425626405" y="5822060.887204544">
+	<facility id="Dircksenstrasse" linkId="46257" x="4595462.425626405" y="5822060.887204544">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Dominicusstraße2–14" linkId="43408" x="4591559.227754816" y="5817548.091560181">
+	<facility id="Dominicusstrasse2–14" linkId="43408" x="4591559.227754816" y="5817548.091560181">
 		<activity type="parking">			<capacity value="4.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="EberswalderStraße39" linkId="53465" x="4595633.044282384" y="5824105.098501809">
+	<facility id="EberswalderStrasse39" linkId="53465" x="4595633.044282384" y="5824105.098501809">
 		<activity type="parking">			<capacity value="30.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -146,7 +146,7 @@
 
 		</activity>
 	</facility>
-	<facility id="FlatowalleeAndHanns-Braun-Straße" linkId="154148" x="4584444.700162233" y="5821340.148988353">
+	<facility id="FlatowalleeAndHanns-Braun-Strasse" linkId="154148" x="4584444.700162233" y="5821340.148988353">
 		<activity type="parking">			<capacity value="80.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -158,13 +158,13 @@
 
 		</activity>
 	</facility>
-	<facility id="Franz-Mett-Straße3–9" linkId="126393" x="4603402.981285995" y="5819672.924516433">
+	<facility id="Franz-Mett-Strasse3–9" linkId="126393" x="4603402.981285995" y="5819672.924516433">
 		<activity type="parking">			<capacity value="8.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="FranzösischeStraße33–34D" linkId="12195" x="4594880.104066641" y="5821146.310217818">
+	<facility id="FranzoesischeStrasse33–34D" linkId="12195" x="4594880.104066641" y="5821146.310217818">
 		<activity type="parking">			<capacity value="7.0" />
 			<opentime day="wkday" start_time="09:00:00" end_time="20:00:00" />
 
@@ -176,31 +176,31 @@
 
 		</activity>
 	</facility>
-	<facility id="Friedrichstraße150" linkId="97817" x="4594362.121018551" y="5821490.025023965">
+	<facility id="Friedrichstrasse150" linkId="97817" x="4594362.121018551" y="5821490.025023965">
 		<activity type="parking">			<capacity value="4.0" />
 			<opentime day="wkday" start_time="07:00:00" end_time="21:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="FürstenwalderDamm883/882" linkId="25333" x="4614536.690579932" y="5813609.559297025">
+	<facility id="FuerstenwalderDamm883/882" linkId="25333" x="4614536.690579932" y="5813609.559297025">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Gartenstraße46" linkId="2955" x="4594042.405700645" y="5823440.189293005">
+	<facility id="Gartenstrasse46" linkId="2955" x="4594042.405700645" y="5823440.189293005">
 		<activity type="parking">			<capacity value="4.0" />
 			<opentime day="wkday" start_time="09:00:00" end_time="19:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Genslerstraße66" linkId="55696" x="4601862.498573316" y="5824222.966828684">
+	<facility id="Genslerstrasse66" linkId="55696" x="4601862.498573316" y="5824222.966828684">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="08:00:00" end_time="18:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Hannah-Arendt-Straße" linkId="52872" x="4593706.452422952" y="5820914.060760004">
+	<facility id="Hannah-Arendt-Strasse" linkId="52872" x="4593706.452422952" y="5820914.060760004">
 		<activity type="parking">			<capacity value="4.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -212,7 +212,7 @@
 
 		</activity>
 	</facility>
-	<facility id="Hardenbergstraße31" linkId="133426" x="4590390.490267441" y="5820205.803749589">
+	<facility id="Hardenbergstrasse31" linkId="133426" x="4590390.490267441" y="5820205.803749589">
 		<activity type="parking">			<capacity value="14.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -230,7 +230,7 @@
 
 		</activity>
 	</facility>
-	<facility id="Hermannstraße" linkId="146103" x="4597504.587702057" y="5815537.521265826">
+	<facility id="Hermannstrasse" linkId="146103" x="4597504.587702057" y="5815537.521265826">
 		<activity type="parking">			<capacity value="1.0" />
 			<opentime day="wkday" start_time="16:00:00" end_time="24:00:00" />
 
@@ -248,25 +248,25 @@
 
 		</activity>
 	</facility>
-	<facility id="Jüdenstraße" linkId="94125" x="4595763.82585747" y="5821541.464746403">
+	<facility id="Juedenstrasse" linkId="94125" x="4595763.82585747" y="5821541.464746403">
 		<activity type="parking">			<capacity value="6.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Kleiststraße9–12" linkId="74521" x="4591676.525042692" y="5819478.536806787">
+	<facility id="Kleiststrasse9–12" linkId="74521" x="4591676.525042692" y="5819478.536806787">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Koppenstraße33" linkId="120238" x="4597600.074085427" y="5821299.2897561975">
+	<facility id="Koppenstrasse33" linkId="120238" x="4597600.074085427" y="5821299.2897561975">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="09:00:00" end_time="19:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Kronenstraße48" linkId="88685" x="4594652.247743326" y="5820717.46861246">
+	<facility id="Kronenstrasse48" linkId="88685" x="4594652.247743326" y="5820717.46861246">
 		<activity type="parking">			<capacity value="5.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -278,19 +278,19 @@
 
 		</activity>
 	</facility>
-	<facility id="Königstraße2" linkId="134803" x="4585497.562001172" y="5811982.986020768">
+	<facility id="Koenigstrasse2" linkId="134803" x="4585497.562001172" y="5811982.986020768">
 		<activity type="parking">			<capacity value="6.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Königstraße36B" linkId="134798" x="4585257.455779432" y="5811864.982848142">
+	<facility id="Koenigstrasse36B" linkId="134798" x="4585257.455779432" y="5811864.982848142">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Landgrafenstraße4" linkId="92418" x="4591673.600024703" y="5819868.89497667">
+	<facility id="Landgrafenstrasse4" linkId="92418" x="4591673.600024703" y="5819868.89497667">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -302,13 +302,13 @@
 
 		</activity>
 	</facility>
-	<facility id="Lewishamstraße14" linkId="159264" x="4588668.059060519" y="5819765.501433374">
+	<facility id="Lewishamstrasse14" linkId="159264" x="4588668.059060519" y="5819765.501433374">
 		<activity type="parking">			<capacity value="10.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="LietzenburgerStraße" linkId="117686" x="4591158.477507877" y="5819336.359525301">
+	<facility id="LietzenburgerStrasse" linkId="117686" x="4591158.477507877" y="5819336.359525301">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -320,7 +320,7 @@
 
 		</activity>
 	</facility>
-	<facility id="MainzerStraße31" linkId="144677" x="4597132.951685664" y="5817265.803477844">
+	<facility id="MainzerStrasse31" linkId="144677" x="4597132.951685664" y="5817265.803477844">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -332,13 +332,13 @@
 
 		</activity>
 	</facility>
-	<facility id="Mauerstraße69" linkId="9212" x="4594130.103954824" y="5820410.88808913">
+	<facility id="Mauerstrasse69" linkId="9212" x="4594130.103954824" y="5820410.88808913">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="09:00:00" end_time="19:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Muehlenstraße12" linkId="7664" x="4598053.787679758" y="5819982.161753833">
+	<facility id="Muehlenstrasse12" linkId="7664" x="4598053.787679758" y="5819982.161753833">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -350,13 +350,13 @@
 
 		</activity>
 	</facility>
-	<facility id="Mühlendamm" linkId="157058" x="4595686.03693535" y="5821269.170111024">
+	<facility id="Muehlendamm" linkId="157058" x="4595686.03693535" y="5821269.170111024">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Niederkirchnerstraße9" linkId="87622" x="4593961.546070721" y="5820242.649076505">
+	<facility id="Niederkirchnerstrasse9" linkId="87622" x="4593961.546070721" y="5820242.649076505">
 		<activity type="parking">			<capacity value="6.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -374,25 +374,25 @@
 
 		</activity>
 	</facility>
-	<facility id="OranienburgerStraße" linkId="87963" x="4594888.015960524" y="5822133.6567061925">
+	<facility id="OranienburgerStrasse" linkId="87963" x="4594888.015960524" y="5822133.6567061925">
 		<activity type="parking">			<capacity value="5.0" />
 			<opentime day="wkday" start_time="09:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Otto-Braun-Straße" linkId="140802" x="4596427.375926299" y="5822191.147243647">
+	<facility id="Otto-Braun-Strasse" linkId="140802" x="4596427.375926299" y="5822191.147243647">
 		<activity type="parking">			<capacity value="8.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Pablo-Neruda-Straße/MüggelheimerStraße" linkId="124878" x="4608006.197159944" y="5813137.485324485">
+	<facility id="Pablo-Neruda-Strasse/MueggelheimerStrasse" linkId="124878" x="4608006.197159944" y="5813137.485324485">
 		<activity type="parking">			<capacity value="4.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="PlatzDerLuftbrücke" linkId="5121" x="4594397.844188027" y="5817665.82088574">
+	<facility id="PlatzDerLuftbruecke" linkId="5121" x="4594397.844188027" y="5817665.82088574">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -410,7 +410,7 @@
 
 		</activity>
 	</facility>
-	<facility id="Rathausstraße2–3" linkId="32369" x="4600697.36254962" y="5821091.374648465">
+	<facility id="Rathausstrasse2–3" linkId="32369" x="4600697.36254962" y="5821091.374648465">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -422,25 +422,25 @@
 
 		</activity>
 	</facility>
-	<facility id="RiesaerStraße2" linkId="110269" x="4609085.3266774295" y="5823626.307724684">
+	<facility id="RiesaerStrasse2" linkId="110269" x="4609085.3266774295" y="5823626.307724684">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="RudowerStraße80+82" linkId="79935" x="4599691.143133812" y="5812535.104220113">
+	<facility id="RudowerStrasse80+82" linkId="79935" x="4599691.143133812" y="5812535.104220113">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Ruschestraße45" linkId="127045" x="4600941.555853412" y="5822057.306712437">
+	<facility id="Ruschestrasse45" linkId="127045" x="4600941.555853412" y="5822057.306712437">
 		<activity type="parking">			<capacity value="2.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Scharounstraße" linkId="9085" x="4593052.20969003" y="5820404.232295532">
+	<facility id="Scharounstrasse" linkId="9085" x="4593052.20969003" y="5820404.232295532">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -458,7 +458,7 @@
 
 		</activity>
 	</facility>
-	<facility id="Soorstraße" linkId="149054" x="4586906.9285834655" y="5820186.023326814">
+	<facility id="Soorstrasse" linkId="149054" x="4586906.9285834655" y="5820186.023326814">
 		<activity type="parking">			<capacity value="4.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -482,19 +482,19 @@
 
 		</activity>
 	</facility>
-	<facility id="Sredzkistraße8" linkId="93673" x="4596026.448722018" y="5823732.008412538">
+	<facility id="Sredzkistrasse8" linkId="93673" x="4596026.448722018" y="5823732.008412538">
 		<activity type="parking">			<capacity value="4.0" />
 			<opentime day="wkday" start_time="08:00:00" end_time="18:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Stauffenbergstraße 14" linkId="11507" x="4592656.343020124" y="5820197.644537733">
+	<facility id="Stauffenbergstrasse 14" linkId="11507" x="4592656.343020124" y="5820197.644537733">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="StrandbadMüggelsee" linkId="7255" x="4614074.33749156" y="5813822.054323915">
+	<facility id="StrandbadMueggelsee" linkId="7255" x="4614074.33749156" y="5813822.054323915">
 		<activity type="parking">			<capacity value="1.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
@@ -506,37 +506,37 @@
 
 		</activity>
 	</facility>
-	<facility id="StraßeDes17.Juni" linkId="67932" x="4593356.143366659" y="5821214.94744127">
+	<facility id="StrasseDes17.Juni" linkId="67932" x="4593356.143366659" y="5821214.94744127">
 		<activity type="parking">			<capacity value="26.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="StraßeDes17.Juni(otherDirection)" linkId="57955" x="4593329.210212819" y="5821198.980640767">
+	<facility id="StrasseDes17.Juni(otherDirection)" linkId="57955" x="4593329.210212819" y="5821198.980640767">
 		<activity type="parking">			<capacity value="30.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Stresemannstraße28" linkId="87612" x="4594345.591978543" y="5819470.596220993">
+	<facility id="Stresemannstrasse28" linkId="87612" x="4594345.591978543" y="5819470.596220993">
 		<activity type="parking">			<capacity value="1.0" />
 			<opentime day="wkday" start_time="09:00:00" end_time="19:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Stülerstraße1" linkId="24442" x="4591607.092878101" y="5820364.277687122">
+	<facility id="Stuelerstrasse1" linkId="24442" x="4591607.092878101" y="5820364.277687122">
 		<activity type="parking">			<capacity value="4.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Takustraße42–44" linkId="121333" x="4588036.44236464" y="5814487.19507065">
+	<facility id="Takustrasse42–44" linkId="121333" x="4588036.44236464" y="5814487.19507065">
 		<activity type="parking">			<capacity value="6.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="TrebbinerStraße9" linkId="68868" x="4593621.758133441" y="5819307.296748484">
+	<facility id="TrebbinerStrasse9" linkId="68868" x="4593621.758133441" y="5819307.296748484">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="09:00:00" end_time="18:00:00" />
 
@@ -566,13 +566,13 @@
 
 		</activity>
 	</facility>
-	<facility id="Ziegrastraße48" linkId="5677" x="4599227.03934964" y="5816801.359056169">
+	<facility id="Ziegrastrasse48" linkId="5677" x="4599227.03934964" y="5816801.359056169">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
 		</activity>
 	</facility>
-	<facility id="Zimmerstraße82" linkId="12181" x="4594568.924576726" y="5820310.886190578">
+	<facility id="Zimmerstrasse82" linkId="12181" x="4594568.924576726" y="5820310.886190578">
 		<activity type="parking">			<capacity value="6.0" />
 			<opentime day="wkday" start_time="09:00:00" end_time="22:00:00" />
 
@@ -584,7 +584,7 @@
 
 		</activity>
 	</facility>
-	<facility id="ZüllichauerStraße7" linkId="146050" x="4595501.006574184" y="5817865.499309422">
+	<facility id="ZuellichauerStrasse7" linkId="146050" x="4595501.006574184" y="5817865.499309422">
 		<activity type="parking">			<capacity value="3.0" />
 			<opentime day="wkday" start_time="00:00:00" end_time="24:00:00" />
 
