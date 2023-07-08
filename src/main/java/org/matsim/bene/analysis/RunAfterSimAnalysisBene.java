@@ -101,7 +101,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 
             final String runId = args[1];
             boolean analyseEmissions = true;
-            if(args.length > 2 && args[2] != null)
+            if (args.length > 2 && args[2] != null)
                 analyseEmissions = Boolean.parseBoolean(args[2]);// based on the simulation output available in this project
             final String hbefaPath = "../public-svn/3507bb3997e5657ab9da76dbedbb13c9b5991d3e/0e73947443d68f95202b71a156b337f7f71604ae/";
 
@@ -219,10 +219,6 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         if (analyseEmissions) {
             emissionsOnLinkEventHandler = new EmissionsOnLinkHandler();
             eventsManager.addHandler(emissionsOnLinkEventHandler);
-            createEmissionAnalysis(linkEmissionPerMOutputFile, linkEmissionOutputFile,
-                    linkEmissionPerMOutputFile_parkingTotal, linkEmissionOutputFile_parkingTotal,
-                    linkEmissionPerMOutputFile_parkingSearch, linkEmissionOutputFile_parkingSearch, scenario,
-                    emissionsOnLinkEventHandler);
         }
         eventsManager.initProcessing();
         new BeneEventsReader(eventsManager).readFile(eventsFile);
@@ -245,24 +241,28 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                     linkEmissionPerMOutputFile_parkingSearch, linkEmissionOutputFile_parkingSearch, scenario,
                     emissionsOnLinkEventHandler);
         }
-        createGeneralResults(general_resultsOutputFile, general_OverviewOutputFile, linkDemandEventHandler, attraction_OverviewOutputFile, parkingRelation_OutputFile);
+        createGeneralResults(general_resultsOutputFile, general_OverviewOutputFile, linkDemandEventHandler, emissionsOnLinkEventHandler,
+                attraction_OverviewOutputFile, parkingRelation_OutputFile);
 
         return 0;
     }
 
-    private void createGeneralResults(String generalResultsOutputFile, String general_OverviewOutputFile, LinkDemandEventHandler linkDemandEventHandler,
-                                      String attraction_OverviewOutputFile, String parkingRelation_OutputFile) {
+    private void createGeneralResults(String generalResultsOutputFile, String general_OverviewOutputFile,
+                                      LinkDemandEventHandler linkDemandEventHandler,
+                                      EmissionsOnLinkHandler emissionsOnLinkEventHandler, String attraction_OverviewOutputFile,
+                                      String parkingRelation_OutputFile) {
         File tourDataFile = new File(generalResultsOutputFile);
         File overViewFile = new File(general_OverviewOutputFile);
         File attractionViewFile = new File(attraction_OverviewOutputFile);
         Object2DoubleMap<String> overviewData = new Object2DoubleOpenHashMap<>();
         Map<Id<Vehicle>, Object2DoubleMap<String>> tourInformation = linkDemandEventHandler.getTourInformation();
+        Map<Id<Vehicle>, Map<Pollutant, Double>> pollutantsPerVehicle = emissionsOnLinkEventHandler.getPollutantsPerVehicle();
         overviewData.put("numberOfTours", tourInformation.keySet().size());
 
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(tourDataFile));
             bw.write(
-                    "vehicle;drivenDistance;drivenDistance_parkingSearch;drivenDistance_parkingTotal;drivenDistance_Passanger;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations");
+                    "vehicle;drivenDistance;drivenDistance_parkingSearch;drivenDistance_parkingTotal;drivenDistance_Passanger;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations;CO2_TOTAL");
             bw.newLine();
             for (Id<Vehicle> vehcileId : tourInformation.keySet()) {
                 Object2DoubleMap<String> tourData = tourInformation.get(vehcileId);
@@ -274,32 +274,34 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                         "numberParkingActivities") + ";" + (int) tourData.getDouble(
                         "removedParking") + ";" + Time.writeTime(tourData.getDouble(
                         "tourDurations"), timeformatForOutput) + ";" + Time.writeTime(
-                        tourData.getDouble("parkingDurations"), timeformatForOutput)+ ";" + Time.writeTime(
-                        tourData.getDouble("parkingSearchDurations"), timeformatForOutput));
+                        tourData.getDouble("parkingDurations"), timeformatForOutput) + ";" + Time.writeTime(
+                        tourData.getDouble("parkingSearchDurations"), timeformatForOutput) + ";" + pollutantsPerVehicle.get(vehcileId).get(
+                        CO2_TOTAL));
                 bw.newLine();
 
                 //sum data for overview
-                overviewData.mergeDouble("drivenDistance",tourData.getDouble("drivenDistance"), Double::sum);
-                overviewData.mergeDouble("DistanceParkingSearch",tourData.getDouble("DistanceParkingSearch"), Double::sum);
-                overviewData.mergeDouble("DistanceParkingTotal",tourData.getDouble("DistanceParkingTotal"), Double::sum);
-                overviewData.mergeDouble("drivenDistance_Passanger",tourData.getDouble("drivenDistance_Passanger"), Double::sum);
-                overviewData.mergeDouble("numberOfStops",tourData.getDouble("numberOfStops"), Double::sum);
-                overviewData.mergeDouble("numberParkingActivities",tourData.getDouble("numberParkingActivities"), Double::sum);
-                overviewData.mergeDouble("removedParking",tourData.getDouble("removedParking"), Double::sum);
-                overviewData.mergeDouble("tourDurations",tourData.getDouble("tourDurations"), Double::sum);
-                overviewData.mergeDouble("parkingDurations",tourData.getDouble("parkingDurations"), Double::sum);
-                overviewData.mergeDouble("parkingSearchDurations",tourData.getDouble("parkingSearchDurations"), Double::sum);
+                overviewData.mergeDouble("drivenDistance", tourData.getDouble("drivenDistance"), Double::sum);
+                overviewData.mergeDouble("DistanceParkingSearch", tourData.getDouble("DistanceParkingSearch"), Double::sum);
+                overviewData.mergeDouble("DistanceParkingTotal", tourData.getDouble("DistanceParkingTotal"), Double::sum);
+                overviewData.mergeDouble("drivenDistance_Passanger", tourData.getDouble("drivenDistance_Passanger"), Double::sum);
+                overviewData.mergeDouble("numberOfStops", tourData.getDouble("numberOfStops"), Double::sum);
+                overviewData.mergeDouble("numberParkingActivities", tourData.getDouble("numberParkingActivities"), Double::sum);
+                overviewData.mergeDouble("removedParking", tourData.getDouble("removedParking"), Double::sum);
+                overviewData.mergeDouble("tourDurations", tourData.getDouble("tourDurations"), Double::sum);
+                overviewData.mergeDouble("parkingDurations", tourData.getDouble("parkingDurations"), Double::sum);
+                overviewData.mergeDouble("parkingSearchDurations", tourData.getDouble("parkingSearchDurations"), Double::sum);
+                overviewData.mergeDouble("CO2_TOTAL", pollutantsPerVehicle.get(vehcileId).get(CO2_TOTAL), Double::sum);
             }
-           bw.write( (int) overviewData.getDouble("numberOfTours") + ";" + overviewData.getDouble("drivenDistance") + ";" + overviewData.getDouble(
+            bw.write((int) overviewData.getDouble("numberOfTours") + ";" + overviewData.getDouble("drivenDistance") + ";" + overviewData.getDouble(
                     "DistanceParkingSearch") + ";" + overviewData.getDouble(
                     "DistanceParkingTotal") + ";" + overviewData.getDouble(
-                   "drivenDistance_Passanger")+ ";" + (int) overviewData.getDouble(
+                    "drivenDistance_Passanger") + ";" + (int) overviewData.getDouble(
                     "numberOfStops") + ";" + (int) overviewData.getDouble(
                     "numberParkingActivities") + ";" + (int) overviewData.getDouble(
                     "removedParking") + ";" + Time.writeTime(overviewData.getDouble(
                     "tourDurations"), timeformatForOutput) + ";" + Time.writeTime(
-                    overviewData.getDouble("parkingDurations"), timeformatForOutput)+ ";" + Time.writeTime(
-                    overviewData.getDouble("parkingSearchDurations"), timeformatForOutput));
+                    overviewData.getDouble("parkingDurations"), timeformatForOutput) + ";" + Time.writeTime(
+                    overviewData.getDouble("parkingSearchDurations"), timeformatForOutput) + ";" + overviewData.getDouble("CO2_TOTAL"));
 
             bw.close();
         } catch (IOException e) {
@@ -312,18 +314,19 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(overViewFile));
             bw.write(
-                    "case;capacityFactor;numberOfVehicles;drivenDistance;drivenDistance_parkingSearch;drivenDistance_parkingTotal;drivenDistance_passanger;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations");
+                    "case;capacityFactor;numberOfVehicles;drivenDistance;drivenDistance_parkingSearch;drivenDistance_parkingTotal;drivenDistance_passanger;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations;CO2_TOTAL");
             bw.newLine();
-            bw.write( scenarioName + ";" + capacityFactor + ";" + (int) overviewData.getDouble("numberOfTours") + ";" + overviewData.getDouble("drivenDistance") + ";" + overviewData.getDouble(
+            bw.write(scenarioName + ";" + capacityFactor + ";" + (int) overviewData.getDouble("numberOfTours") + ";" + overviewData.getDouble(
+                    "drivenDistance") + ";" + overviewData.getDouble(
                     "DistanceParkingSearch") + ";" + overviewData.getDouble(
                     "DistanceParkingTotal") + ";" + overviewData.getDouble(
-                    "drivenDistance_Passanger")+ ";" + (int) overviewData.getDouble(
+                    "drivenDistance_Passanger") + ";" + (int) overviewData.getDouble(
                     "numberOfStops") + ";" + (int) overviewData.getDouble(
                     "numberParkingActivities") + ";" + (int) overviewData.getDouble(
                     "removedParking") + ";" + Time.writeTime(overviewData.getDouble(
                     "tourDurations"), timeformatForOutput) + ";" + Time.writeTime(
-                    overviewData.getDouble("parkingDurations"), timeformatForOutput)+ ";" + Time.writeTime(
-                    overviewData.getDouble("parkingSearchDurations"), timeformatForOutput));
+                    overviewData.getDouble("parkingDurations"), timeformatForOutput) + ";" + Time.writeTime(
+                    overviewData.getDouble("parkingSearchDurations"), timeformatForOutput) + ";" + overviewData.getDouble("CO2_TOTAL"));
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();

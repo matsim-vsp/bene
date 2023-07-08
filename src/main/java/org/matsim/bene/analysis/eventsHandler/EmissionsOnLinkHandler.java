@@ -9,7 +9,8 @@ import org.matsim.contrib.emissions.events.ColdEmissionEvent;
 import org.matsim.contrib.emissions.events.ColdEmissionEventHandler;
 import org.matsim.contrib.emissions.events.WarmEmissionEvent;
 import org.matsim.contrib.emissions.events.WarmEmissionEventHandler;
-import org.matsim.parking.parkingsearch.events.*;
+import org.matsim.parking.parkingsearch.events.StartParkingSearchEvent;
+import org.matsim.parking.parkingsearch.events.StartParkingSearchEventHandler;
 import org.matsim.vehicles.Vehicle;
 
 import java.util.ArrayList;
@@ -20,18 +21,20 @@ import java.util.Map;
 public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmissionEventHandler,  StartParkingSearchEventHandler, PersonLeavesVehicleEventHandler {
 
     private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutants = new HashMap<>();
-    private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutantsParkingSearch = new HashMap<>();
+	private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutantsParkingSearch = new HashMap<>();
 	private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutantsParkingTotal = new HashMap<>();
+	private final Map<Id<Vehicle>, Map<Pollutant, Double>> pollutantsPerVehicle = new HashMap<>();
     private final List<Id<Vehicle>> vehicleIsInParkingSearch = new ArrayList<>();
 	private final List<Id<Vehicle>> vehicleBetweenPassengerDropOffAndPickup = new ArrayList<>();
 
-    @Override
+	@Override
     public void reset(int iteration) {
     	link2pollutants.clear();
 		link2pollutantsParkingSearch.clear();
 		link2pollutantsParkingTotal.clear();
 		vehicleIsInParkingSearch.clear();
 		vehicleBetweenPassengerDropOffAndPickup.clear();
+		pollutantsPerVehicle.clear();
     }
 
     @Override
@@ -63,35 +66,22 @@ public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmi
 	}
 
 	private void handleEmissionEvent(double time, Id<Link> linkId, Map<Pollutant, Double> emissions,
-			Id<Vehicle> vehicleId) {
-		if (link2pollutants.get(linkId) == null) {
-			link2pollutants.put(linkId, emissions);
-		} else {
-			for (Pollutant pollutant : emissions.keySet()) {
-				link2pollutants.get(linkId).merge(pollutant, emissions.get(pollutant), Double::sum);
+									 Id<Vehicle> vehicleId) {
+		for (Pollutant pollutant : emissions.keySet()) {
+			if (emissions.get(pollutant) != 0) {
+				pollutantsPerVehicle.computeIfAbsent(vehicleId, (k) -> new HashMap<>()).merge(pollutant, emissions.get(pollutant), Double::sum);
+				link2pollutants.computeIfAbsent(linkId, (k) -> new HashMap<>()).merge(pollutant, emissions.get(pollutant), Double::sum);
+				if (vehicleIsInParkingSearch.contains(vehicleId))
+					link2pollutantsParkingSearch.computeIfAbsent(linkId, (k) -> new HashMap<>()).merge(pollutant, emissions.get(pollutant),
+							Double::sum);
+				if (vehicleBetweenPassengerDropOffAndPickup.contains(vehicleId))
+					link2pollutantsParkingTotal.computeIfAbsent(linkId, (k) -> new HashMap<>()).merge(pollutant, emissions.get(pollutant),
+							Double::sum);
+
 			}
 		}
-		if (vehicleIsInParkingSearch.contains(vehicleId)) {
-			if (link2pollutantsParkingSearch.get(linkId) == null) {
-				link2pollutantsParkingSearch.put(linkId, emissions);
-			} else {
-				for (Pollutant pollutant : emissions.keySet()) {
-					link2pollutantsParkingSearch.get(linkId).merge(pollutant, emissions.get(pollutant), Double::sum);
-				}
-			}
-		}
-		if (vehicleBetweenPassengerDropOffAndPickup.contains(vehicleId)) {
-			if (link2pollutantsParkingTotal.get(linkId) == null) {
-				link2pollutantsParkingTotal.put(linkId, emissions);
-			} else {
-				for (Pollutant pollutant : emissions.keySet()) {
-					link2pollutantsParkingTotal.get(linkId).merge(pollutant, emissions.get(pollutant), Double::sum);
-				}
-			}
-		}
+
 	}
-
-
     
 	public Map<Id<Link>, Map<Pollutant, Double>> getLink2pollutants() {
 		return link2pollutants;
@@ -102,5 +92,7 @@ public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmi
 	public Map<Id<Link>, Map<Pollutant, Double>> getLink2pollutantsParkingTotal() {
 		return link2pollutantsParkingTotal;
 	}
-    
+	public Map<Id<Vehicle>, Map<Pollutant, Double>> getPollutantsPerVehicle() {
+		return pollutantsPerVehicle;
+	}
 }
