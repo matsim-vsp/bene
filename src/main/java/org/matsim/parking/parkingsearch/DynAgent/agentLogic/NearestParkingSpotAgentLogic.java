@@ -19,17 +19,11 @@
 
 package org.matsim.parking.parkingsearch.DynAgent.agentLogic;
 
-import java.util.List;
-
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.TransportMode;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
-import org.matsim.api.core.v01.population.Activity;
-import org.matsim.api.core.v01.population.Leg;
-import org.matsim.api.core.v01.population.Plan;
-import org.matsim.api.core.v01.population.PlanElement;
-import org.matsim.api.core.v01.population.Route;
+import org.matsim.api.core.v01.population.*;
 import org.matsim.contrib.dynagent.DynAction;
 import org.matsim.contrib.dynagent.IdleDynActivity;
 import org.matsim.contrib.dynagent.StaticPassengerDynLeg;
@@ -46,11 +40,13 @@ import org.matsim.core.router.RoutingModule;
 import org.matsim.core.utils.misc.OptionalTime;
 import org.matsim.core.utils.misc.Time;
 import org.matsim.facilities.Facility;
-import org.matsim.parking.parkingsearch.ParkingUtils;
 import org.matsim.parking.parkingsearch.DynAgent.NearestParkingDynLeg;
+import org.matsim.parking.parkingsearch.ParkingUtils;
 import org.matsim.parking.parkingsearch.sim.ParkingSearchConfigGroup;
 import org.matsim.pt.routes.TransitPassengerRoute;
 import org.matsim.vehicles.Vehicle;
+
+import java.util.List;
 
 
 /**
