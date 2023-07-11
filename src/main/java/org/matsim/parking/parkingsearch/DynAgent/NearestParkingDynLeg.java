@@ -129,9 +129,9 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 					this.events.processEvent(
 							new RemoveParkingActivityEvent(timer.getTimeOfDay(), vehicleId, currentLinkId));
 				}
-				if (!driveToBaseWithoutParking) {
+				if (!driveToBaseWithoutParking && !((NearestParkingSpotSearchLogic) this.logic).isUseRandomLinkChoice()) {
 					Id<Link> nextPlanedParkingLink = ((NearestParkingSpotSearchLogic) this.logic).getNextParkingLocation();
-					if ((nextPlanedParkingLink != null) && (nextSelectedParkingLink == null || !nextSelectedParkingLink.equals(nextPlanedParkingLink))) {
+					if (nextSelectedParkingLink == null || !nextSelectedParkingLink.equals(nextPlanedParkingLink)) {
 						nextSelectedParkingLink = nextPlanedParkingLink;
 						if (((NearestParkingSpotSearchLogic) this.logic).canReserveParkingSlot()) {
 							alreadyReservedParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, nextSelectedParkingLink);

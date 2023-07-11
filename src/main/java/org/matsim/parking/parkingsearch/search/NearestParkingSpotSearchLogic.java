@@ -50,6 +50,7 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 	private NetworkRoute actualRoute = null;
 	private final boolean canReserveParkingSlot;
 	private final boolean canCheckParkingCapacitiesInAdvanced;
+	private boolean useRandomLinkChoice;
 	private int currentLinkIdx;
 	private final HashSet <Id<ActivityFacility>> triedParking;
 	private Id<Link> nextLink;
@@ -71,6 +72,7 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 		currentLinkIdx = 0;
 		triedParking = new HashSet<>();
 		nextLink = null;
+		useRandomLinkChoice = false;
 	}
 
 	/**
@@ -157,6 +159,13 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 		return canReserveParkingSlot;
 	}
 
+	/** If no possible parking was found the vehicle selects a random outgoing link.
+	 * @return
+	 */
+	public boolean isUseRandomLinkChoice() {
+		return useRandomLinkChoice;
+	}
+
 	private NetworkRoute findRouteToNearestParkingFacility(Id<Link> baseLinkId, Id<Link> currentLinkId, boolean canCheckParkingCapacitiesInAdvanced, double now, double maxParkingDuration) {
 		TreeMap<Double, ActivityFacility> euclideanDistanceToParkingFacilities = new TreeMap<>();
 		ActivityFacility nearstActivityFacility = null;
@@ -213,9 +222,10 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 				break;
 		}
 
-		if (selectedRoute == null)
+		if (selectedRoute == null) {
+			useRandomLinkChoice = true;
 			return null;
-
+		}
 		triedParking.add(nearstActivityFacility.getId());
 		actualRoute = selectedRoute;
 		return actualRoute;
