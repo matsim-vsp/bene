@@ -52,7 +52,6 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 
 	@Override
 	public void movedOverNode(Id<Link> newLinkId) {
-
 		currentLinkIdx++;
 		currentLinkId = newLinkId;
 		if (!parkingMode) {
@@ -64,19 +63,22 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 					this.events
 							.processEvent(new StartParkingSearchEvent(timer.getTimeOfDay(), vehicleId, currentLinkId));
 					hasFoundParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, currentLinkId);
-					if (hasFoundParking)
+					if (hasFoundParking) {
 						this.events.processEvent(new ReserveParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, currentLinkId));
-					else
+						nextSelectedParkingLink = currentLinkId;
+					} else
 						((FacilityBasedParkingManager) parkingManager).registerRejectedReservation(timer.getTimeOfDay());
 				}
 			}
-		} else if (followingActivity.getLinkId().equals(newLinkId)){
+		} else if (followingActivity.getLinkId().equals(newLinkId)) {
 			if (alreadyReservedParking)
 				hasFoundParking = true;
 			else {
 				hasFoundParking = parkingManager.reserveSpaceIfVehicleCanParkHere(vehicleId, currentLinkId);
-				if (hasFoundParking)
+				if (hasFoundParking) {
 					this.events.processEvent(new ReserveParkingLocationEvent(timer.getTimeOfDay(), vehicleId, currentLinkId, currentLinkId));
+					nextSelectedParkingLink = currentLinkId;
+				}
 				else
 					((FacilityBasedParkingManager) parkingManager).registerRejectedReservation(timer.getTimeOfDay());
 			}
@@ -102,9 +104,19 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 			if (hasFoundParking || reachedDestinationWithoutParking) {
 				// easy, we can just park where at our destination link
 				if (hasFoundParking) {
-					double expectedDrivingDurationToPickup = ((NearestParkingSpotSearchLogic) this.logic).getExpectedTravelDuration(currentPlannedLeg.getRoute().getStartLinkId(), timer.getTimeOfDay(), currentLinkId);
+					double parkingDuration;
+					double expectedDrivingDurationToPickup;
 					double drivingDurationFromDropOff = timer.getTimeOfDay() - currentPlannedLeg.getDepartureTime().seconds();
-					double parkingDuration = followingActivity.getMaximumDuration().seconds() - drivingDurationFromDropOff - expectedDrivingDurationToPickup;
+
+					if (nextSelectedParkingLink.equals(currentLinkId)){
+						expectedDrivingDurationToPickup = ((NearestParkingSpotSearchLogic) this.logic).getExpectedTravelDuration(
+								followingActivity.getLinkId(), timer.getTimeOfDay(), currentLinkId);
+					}
+					else {
+						expectedDrivingDurationToPickup = ((NearestParkingSpotSearchLogic) this.logic).getExpectedTravelDuration(
+								currentPlannedLeg.getRoute().getStartLinkId(), timer.getTimeOfDay(), currentLinkId);
+					}
+					parkingDuration = followingActivity.getMaximumDuration().seconds() - drivingDurationFromDropOff - expectedDrivingDurationToPickup;
 					followingActivity.setMaximumDuration(parkingDuration);
 				}
 				this.logic.reset();
@@ -148,7 +160,8 @@ public class NearestParkingDynLeg extends ParkingDynLeg {
 					}
 				}
 				currentAndNextParkLink = new Tuple<>(currentLinkId, nextLinkId);
-				currentPlannedLeg.setRoute(((NearestParkingSpotSearchLogic) this.logic).getNextRoute());
+				if (((NearestParkingSpotSearchLogic) this.logic).getNextRoute() != null)
+					currentPlannedLeg.setRoute(((NearestParkingSpotSearchLogic) this.logic).getNextRoute());
 				return nextLinkId;
 			}
 		}
