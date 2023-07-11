@@ -90,8 +90,8 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 		} else if (currentLinkId.equals(actualRoute.getEndLinkId()) && !skipParkingActivity) {
 			currentLinkIdx = 0;
 			actualRoute = findRouteToNearestParkingFacility(baseLinkId, currentLinkId, canCheckParkingCapacitiesInAdvanced, now, maxParkingDuration);
+			checkIfDrivingToNextParkingLocationIsPossible(currentLinkId, baseLinkId, now, nextPickupTime);
 			if(actualRoute != null) {
-				checkIfDrivingToNextParkingLocationIsPossible(currentLinkId, baseLinkId, now, nextPickupTime);
 				actualRoute.setVehicleId(vehicleId);
 			}
 		}
@@ -182,8 +182,11 @@ public class NearestParkingSpotSearchLogic implements ParkingSearchLogic {
 			}
 			double latestEndOfParking = now + maxParkingDuration;
 
-			// checks if parking slot is now open and still open when the parking will finished
-			if (activityFacility.getActivityOptions().get("parking").getOpeningTimes().first().getStartTime() > now || activityFacility.getActivityOptions().get("parking").getOpeningTimes().first().getEndTime() < latestEndOfParking)
+			// checks if parking slot is now open and still open when the parking will finish
+			if (activityFacility.getActivityOptions().get(
+					"parking").getOpeningTimes().first().getStartTime() > now || (activityFacility.getActivityOptions().get(
+					"parking").getOpeningTimes().first().getEndTime() < latestEndOfParking) || activityFacility.getActivityOptions().get(
+					"parking").getOpeningTimes().first().getEndTime() == 24 * 3600)
 				continue;
 
 			// create Euclidean distances to the parking activities to find routes only to the nearest facilities in the next step
