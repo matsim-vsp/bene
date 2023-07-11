@@ -564,8 +564,13 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 						.get(activityId);
 				Id<Link> hotelLinkId = getNearestLink(links, hotelFacility.getCoord());
 				hotelFacility.setLinkId(hotelLinkId);
+				int numberOfStops = getNumberOfStopsForThisTour(stopsPerTourDistribution);
 				String tourName = newPerson.getId().toString();
-				double startTime = random.nextDouble(10 * 3600, 14 * 3600);
+				double startTime;
+				if (numberOfStops > 3)
+					startTime = random.nextDouble(10 * 3600, 12 * 3600);
+				else
+					startTime = random.nextDouble(10 * 3600, 14 * 3600);
 //				Activity depot = populationFactory.createActivityFromLinkId("depot", hotelLinkId);
 //				depot.getAttributes().putAttribute("parking", "noParking");
 //				depot.setStartTime(0.);
@@ -594,7 +599,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 				Leg legActivity = populationFactory.createLeg("car");
 				plan.addLeg(legActivity);
 
-				int numberOfStops = getNumberOfStopsForThisTour(stopsPerTourDistribution);
 				for (int j = 0; j < numberOfStops; j++) {
 					Id<ActivityFacility> attractionFacilityID = findAttractionLocation(attractionsForHotspots, stopsPerHotspotDistribution);
 					ActivityFacilityImpl attractionFacility	= (ActivityFacilityImpl) attractionFacilities.get(attractionFacilityID);
@@ -686,10 +690,17 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 				ActivityFacilityImpl hotelFacility = (ActivityFacilityImpl) hotelFacilitiesPerArea.get(area)
 						.get(activityId);
 				String tourName = newCarrier.getId().toString();
+
+				int numberOfStops = getNumberOfStopsForThisTour(stopsPerTourDistribution);
+
 				Id<CarrierService> startActivityName = Id.create(tourName + "_Start_" + hotelFacility.getDesc(), CarrierService.class);
 				Id<Link> hotelLinkId = getNearestLink(links, hotelFacility.getCoord());
 
-				double startTimeStart = random.nextDouble(10 * 3600, 14 * 3600);
+				double startTimeStart;
+				if (numberOfStops > 3)
+					startTimeStart = random.nextDouble(10 * 3600, 12 * 3600);
+				else
+					startTimeStart = random.nextDouble(10 * 3600, 14 * 3600);
 				double startDuration = 0.5 * 3600;
 				double endTimeStart = startTimeStart + startDuration;
 				CarrierService tourStart = CarrierService.Builder.newInstance(startActivityName, hotelLinkId)
@@ -710,7 +721,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
 				tour.addLeg(tour.createLeg());
 				
-				int numberOfStops = getNumberOfStopsForThisTour(stopsPerTourDistribution);
+
 				for (int j = 0; j < numberOfStops; j++) {
 					Id<ActivityFacility> attractionFacilityID = findAttractionLocation(attractionsForHotspots, stopsPerHotspotDistribution);
 					ActivityFacilityImpl attractionFacility	= (ActivityFacilityImpl) attractionFacilities.get(attractionFacilityID);
