@@ -44,7 +44,6 @@ import org.matsim.core.events.algorithms.EventWriterXML;
 import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.core.utils.geometry.transformations.TransformationFactory;
 import org.matsim.core.utils.misc.Time;
-import org.matsim.parking.parkingsearch.events.*;
 import org.matsim.vehicles.Vehicle;
 
 import java.io.BufferedWriter;
@@ -173,7 +172,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         Config config = ConfigUtils.createConfig();
         config.vehicles().setVehiclesFile(String.valueOf(globFile(runDirectory, runId, "output_vehicles")));
         config.network().setInputFile(String.valueOf(globFile(runDirectory, runId, "network")));
-
+        //TODO OSMHBEFAMAPPING siehe Kehlheim project
         config.global().setCoordinateSystem(TransformationFactory.DHDN_GK4);
         log.info("Using coordinate system '{}'", config.global().getCoordinateSystem());
         config.plans().setInputFile(null);

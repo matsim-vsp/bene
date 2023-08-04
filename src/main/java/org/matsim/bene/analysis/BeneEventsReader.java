@@ -1,7 +1,11 @@
-package org.matsim.parking.parkingsearch.events;
+package org.matsim.bene.analysis;
 
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.network.Link;
+import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEvent;
+import org.matsim.contrib.parking.parkingsearch.events.ReserveParkingLocationEvent;
+import org.matsim.contrib.parking.parkingsearch.events.SelectNewParkingLocationEvent;
+import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEvent;
 import org.matsim.core.api.experimental.events.EventsManager;
 import org.matsim.core.events.EventsReaderXMLv1;
 import org.matsim.core.events.MatsimEventsReader;

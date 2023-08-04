@@ -28,11 +28,14 @@ import org.matsim.contrib.dvrp.router.TimeAsTravelDisutility;
 import org.matsim.contrib.dvrp.run.DvrpConfigGroup;
 import org.matsim.contrib.dvrp.run.DvrpModes;
 import org.matsim.contrib.dvrp.trafficmonitoring.DvrpTravelTimeModule;
-import org.matsim.contrib.parking.parkingsearch.manager.ParkingSearchManager;
+import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingListener;
+import org.matsim.contrib.parking.parkingsearch.manager.vehicleteleportationlogic.NoVehicleTeleportationLogic;
 import org.matsim.contrib.parking.parkingsearch.manager.vehicleteleportationlogic.VehicleTeleportationLogic;
-import org.matsim.contrib.parking.parkingsearch.manager.vehicleteleportationlogic.VehicleTeleportationToNearbyParking;
 import org.matsim.contrib.parking.parkingsearch.routing.ParkingRouter;
 import org.matsim.contrib.parking.parkingsearch.routing.WithinDayParkingRouter;
+import org.matsim.contrib.parking.parkingsearch.sim.ParkingManagerModule;
+import org.matsim.contrib.parking.parkingsearch.sim.ParkingSearchPopulationModule;
+import org.matsim.contrib.parking.parkingsearch.sim.ParkingSearchQSimModule;
 import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.mobsim.qsim.PopulationModule;
@@ -40,8 +43,6 @@ import org.matsim.core.mobsim.qsim.components.QSimComponentsConfig;
 import org.matsim.core.mobsim.qsim.components.StandardQSimComponentConfigurator;
 import org.matsim.core.router.costcalculators.TravelDisutilityFactory;
 import org.matsim.core.router.util.TravelTime;
-import org.matsim.parking.parkingsearch.evaluation.ParkingListener;
-import org.matsim.parking.parkingsearch.manager.FacilityBasedParkingManager;
 
 /**
  * @author jbischoff
@@ -71,11 +72,12 @@ public class SetupParking_new {
 				bind(Network.class).annotatedWith(Names.named(DvrpGlobalRoutingNetworkProvider.DVRP_ROUTING))
 						.to(Network.class)
 						.asEagerSingleton();
-				bind(ParkingSearchManager.class).to(FacilityBasedParkingManager.class).asEagerSingleton();
+//				bind(ParkingSearchManager.class).to(FacilityBasedParkingManager.class).asEagerSingleton();
 				this.install(new ParkingSearchQSimModule());
+				this.install(new ParkingManagerModule());
 				addControlerListenerBinding().to(ParkingListener.class);
 				bind(ParkingRouter.class).to(WithinDayParkingRouter.class);
-				bind(VehicleTeleportationLogic.class).to(VehicleTeleportationToNearbyParking.class);
+				bind(VehicleTeleportationLogic.class).to(NoVehicleTeleportationLogic.class);
 
 			}
 		});

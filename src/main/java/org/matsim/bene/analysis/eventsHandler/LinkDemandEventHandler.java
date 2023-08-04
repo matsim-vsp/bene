@@ -34,10 +34,10 @@ import org.matsim.api.core.v01.events.handler.LinkLeaveEventHandler;
 import org.matsim.api.core.v01.events.handler.PersonLeavesVehicleEventHandler;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.network.Network;
-import org.matsim.parking.parkingsearch.events.RemoveParkingActivityEvent;
-import org.matsim.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
-import org.matsim.parking.parkingsearch.events.StartParkingSearchEvent;
-import org.matsim.parking.parkingsearch.events.StartParkingSearchEventHandler;
+import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEvent;
+import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
+import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEvent;
+import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEventHandler;
 import org.matsim.vehicles.Vehicle;
 
 import java.util.HashMap;
