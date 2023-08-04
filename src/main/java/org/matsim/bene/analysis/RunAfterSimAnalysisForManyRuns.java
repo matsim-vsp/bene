@@ -100,6 +100,7 @@ public class RunAfterSimAnalysisForManyRuns {
             double sumRemovedParkingActivities = Integer.parseInt(record.get("removedParkingActivities"));
             double sumNumberOfStops = Integer.parseInt(record.get("numberOfStops"));
             double sumNumberParkingActivities = Integer.parseInt(record.get("numberParkingActivities"));
+            double sumCO2_TOTAL = Double.parseDouble(record.get("CO2_TOTAL")) /1000;
 
             double shareParking = (double) Math.round(sumDrivenDistance_parking / sumDrivenDistance * 1000) /10;
             double shareParkingSearchOfParking = (double) Math.round(sumDrivenDistance_ParkingSearch_parking / sumDrivenDistance_parking * 1000) /10;
@@ -112,6 +113,7 @@ public class RunAfterSimAnalysisForManyRuns {
             double averageRemovedParkingActivities =  (double) Math.round(sumRemovedParkingActivities/numberOfTours*100)/100;
             double averageNumberOfStops =  (double) Math.round(sumNumberOfStops/numberOfTours*100)/100;
             double averageNumberParkingActivities =  (double) Math.round(sumNumberParkingActivities/numberOfTours*100)/100;
+            double averageCO2_TOTAL =  (double) Math.round(sumCO2_TOTAL/numberOfTours*100)/100;
 
             valuesForThisRun.put(prefix+"distance_shareParking", String.valueOf(shareParking));
             valuesForThisRun.put(prefix+"distance_shareParkingSearch_parking", String.valueOf(shareParkingSearchOfParking));
@@ -124,6 +126,7 @@ public class RunAfterSimAnalysisForManyRuns {
             valuesForThisRun.put(prefix+"average_removedParkingActivities", String.valueOf(averageRemovedParkingActivities));
             valuesForThisRun.put(prefix+"average_numberOfStops", String.valueOf(averageNumberOfStops));
             valuesForThisRun.put(prefix+"average_numberParkingActivities", String.valueOf(averageNumberParkingActivities));
+            valuesForThisRun.put(prefix+"average_CO2_TOTAL", String.valueOf(averageCO2_TOTAL));
 
         } catch (IOException e) {
             e.printStackTrace();
