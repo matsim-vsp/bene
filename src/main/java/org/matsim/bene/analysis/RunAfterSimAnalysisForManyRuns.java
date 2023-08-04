@@ -5,6 +5,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.matsim.core.utils.io.IOUtils;
 import org.matsim.core.utils.misc.Time;
 
@@ -20,6 +22,7 @@ import java.util.TreeMap;
 public class RunAfterSimAnalysisForManyRuns {
     private static final Joiner JOIN = Joiner.on(";");
     private static final String timeformatForOutput = Time.TIMEFORMAT_SSSS;
+    private static final Logger log = LogManager.getLogger(RunAfterSimAnalysisForManyRuns.class);
 
     public static void main(String[] args) throws IOException {
 
@@ -27,7 +30,11 @@ public class RunAfterSimAnalysisForManyRuns {
 
         File runFolder = new File(Path.of("output/Cluster/Cluster_2023_06_30_2/").toUri());
         TreeMap<Integer, TreeMap<String, String>> runValues = new TreeMap<>();
+        int count = 0;
+        int numberOfRuns = Objects.requireNonNull(runFolder.listFiles()).length;
         for (File singleRunFolder : Objects.requireNonNull(runFolder.listFiles())) {
+            count++;
+            log.info("Run Analysis for run " + count + " of " + numberOfRuns + " runs.");
 
             if (singleRunFolder.isFile())
                 continue;
