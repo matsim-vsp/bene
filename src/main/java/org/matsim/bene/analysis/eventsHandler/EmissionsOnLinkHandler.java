@@ -9,8 +9,8 @@ import org.matsim.contrib.emissions.events.ColdEmissionEvent;
 import org.matsim.contrib.emissions.events.ColdEmissionEventHandler;
 import org.matsim.contrib.emissions.events.WarmEmissionEvent;
 import org.matsim.contrib.emissions.events.WarmEmissionEventHandler;
-import org.matsim.parking.parkingsearch.events.StartParkingSearchEvent;
-import org.matsim.parking.parkingsearch.events.StartParkingSearchEventHandler;
+import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEvent;
+import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEventHandler;
 import org.matsim.vehicles.Vehicle;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmissionEventHandler,  StartParkingSearchEventHandler, PersonLeavesVehicleEventHandler {
+public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmissionEventHandler, StartParkingSearchEventHandler, PersonLeavesVehicleEventHandler {
 
     private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutants = new HashMap<>();
 	private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutantsParkingSearch = new HashMap<>();

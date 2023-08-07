@@ -1,4 +1,4 @@
-package org.matsim.parking.parkingsearch.evaluation;
+package org.matsim.bene.analysis;
 
 import org.matsim.api.core.v01.Coord;
 import org.matsim.api.core.v01.Id;
@@ -8,14 +8,16 @@ import org.matsim.api.core.v01.events.VehicleEntersTrafficEvent;
 import org.matsim.api.core.v01.events.VehicleLeavesTrafficEvent;
 import org.matsim.api.core.v01.events.handler.ActivityEndEventHandler;
 import org.matsim.api.core.v01.network.Network;
+import org.matsim.contrib.parking.parkingsearch.ParkingUtils;
+import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotManager;
+import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
 import org.matsim.core.controler.events.IterationEndsEvent;
 import org.matsim.core.utils.collections.Tuple;
 import org.matsim.facilities.ActivityFacility;
-import org.matsim.parking.parkingsearch.ParkingUtils;
-import org.matsim.parking.parkingsearch.events.RemoveParkingActivityEvent;
-import org.matsim.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
-import org.matsim.parking.parkingsearch.events.StartParkingSearchEvent;
-import org.matsim.parking.parkingsearch.events.StartParkingSearchEventHandler;
+import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEvent;
+import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
+import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEvent;
+import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEventHandler;
 
 import java.util.ArrayList;
 import java.util.List;

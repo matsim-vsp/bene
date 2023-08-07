@@ -44,6 +44,8 @@ import org.matsim.contrib.freight.carrier.CarrierCapabilities.FleetSize;
 import org.matsim.contrib.freight.carrier.Tour.Builder;
 import org.matsim.contrib.freight.controler.CarrierModule;
 import org.matsim.contrib.freight.controler.FreightUtils;
+import org.matsim.contrib.parking.parkingsearch.ParkingUtils;
+import org.matsim.contrib.parking.parkingsearch.sim.ParkingSearchConfigGroup;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.ControlerConfigGroup;
@@ -61,12 +63,9 @@ import org.matsim.core.utils.geometry.CoordinateTransformation;
 import org.matsim.core.utils.geometry.geotools.MGC;
 import org.matsim.core.utils.geometry.transformations.TransformationFactory;
 import org.matsim.facilities.*;
-import org.matsim.parking.parkingsearch.ParkingUtils;
-import org.matsim.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
-import org.matsim.parking.parkingsearch.evaluation.ParkingSlotVisualiserBus;
-import org.matsim.parking.parkingsearch.sim.ParkingSearchConfigGroup;
+import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
+import org.matsim.bene.analysis.ParkingSlotVisualiserBus;
 import org.matsim.parking.parkingsearch.sim.SetupParking_new;
-import org.matsim.simwrapper.SimWrapperModule;
 import org.matsim.vehicles.CostInformation;
 import org.matsim.vehicles.Vehicle;
 import org.matsim.vehicles.VehicleType;
@@ -94,13 +93,13 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 	private enum GenerationMode {
 		jsprit, plans, existingPlans
 	}
-	@CommandLine.Parameters(arity = "1", defaultValue = "scenarios/config/config_base.xml",paramLabel = "INPUT", description = "Path to the config")
+	@CommandLine.Parameters(arity = "1", defaultValue = "scenarios/config/config_case2.xml",paramLabel = "INPUT", description = "Path to the config")
 	private static Path pathToConfig;
 	@CommandLine.Option(names = "--generationMode", defaultValue = "plans", description = "Set option of the generation of 'plans' or using 'jsprit'")
 	private GenerationMode usedGenerationMode;
-	@CommandLine.Option(names = "--numberOfTours", defaultValue = "315", description = "Set the number of created tours")
+	@CommandLine.Option(names = "--numberOfTours", defaultValue = "5", description = "Set the number of created tours")
 	private int numberOfTours; //526 (315 = 60% von 526 Touren);
-	@CommandLine.Option(names = "--changeFactorOfParkingCapacity", defaultValue = "1.0", description = "Sets the percentage of change of the existing parking Capacity")
+	@CommandLine.Option(names = "--changeFactorOfParkingCapacity", defaultValue = "0.75", description = "Sets the percentage of change of the existing parking Capacity")
 	private double changeFactorOfParkingCapacity;
 	@CommandLine.Option(names = "--pathTourismFacilitiesFile", description = "Path for the used tourism facilities", defaultValue = "scenarios/tourismFacilities/tourismFacilities.xml")
 	private Path facilitiesFileLocation;
@@ -110,16 +109,17 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 	private Path pathHotspotFile;
 	@CommandLine.Option(names = "--pathOutput", description = "Path for the output")
 	private Path output;
-	@CommandLine.Option(names = "--pathNetworkChangeEvents", description = "Path for the networkChangeEvents", defaultValue = "../networkChangeEvents.xml.gz")
+	@CommandLine.Option(names = "--pathNetworkChangeEvents", description = "Path for the networkChangeEvents", defaultValue = "../networkChangeEvents_V5.5-10pct.xml.gz")
 	private Path pathNetworkChangeEvents;
 	@CommandLine.Option(names = "--runAnalysisAtEnde", description = "Run the analysis at the end of the run.", defaultValue = "true")
 	private boolean runAnalysis;
 	public static void main(String[] args) {
 		System.exit(new CommandLine(new CreateTourismBusTours()).execute(args));
 	}
-	//TODO beachte Schließzeiten von Parkplätzen, Höchstparkdauern
+	//TODO beachte Höchstparkdauern
 	//TODO wenn ActivityLocation und vorhandener Parkplatz gleichen Link haben, kann ohne weiteren Leg geparkt werden
-
+	//TODO check: Wo werden die Emissionen nach skipParking erfasst? unter parking_Search?
+	//TODO --> GetOn
 	@Override
 	public Integer call() throws IOException, ExecutionException, InterruptedException {
 
@@ -252,7 +252,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 				config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
 		config.controler().setRunId("bus");
 		config.controler().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
-
 		if(pathNetworkChangeEvents != null) {
 			config.network().setTimeVariantNetwork(true);
 			config.network().setChangeEventsInputFile(pathNetworkChangeEvents.toString());
