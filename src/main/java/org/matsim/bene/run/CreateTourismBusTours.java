@@ -92,7 +92,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 	private static final Logger log = LogManager.getLogger(CreateTourismBusTours.class);
 	static SplittableRandom random;
 	private enum GenerationMode {
-		jsprit, plans, existingPLans
+		jsprit, plans, existingPlans
 	}
 	@CommandLine.Parameters(arity = "1", defaultValue = "scenarios/config/config_base.xml",paramLabel = "INPUT", description = "Path to the config")
 	private static Path pathToConfig;
@@ -131,7 +131,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 		String shapeCRS = "EPSG:4326";
 		String hotspotsCRS = "EPSG:4326";
 
-		boolean setParkingCapacityToZeroForNonParkingLinks= false;
 		ShpOptions shpZones = new ShpOptions(shapeFileZonePath, shapeCRS, StandardCharsets.UTF_8);
 
 		Config config = prepareConfig(numberOfTours, output, changeFactorOfParkingCapacity, pathNetworkChangeEvents);
@@ -143,7 +142,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 //		((MutableScenario)scenario).setNetwork(filteredNetwork);
 		random = new SplittableRandom(config.global().getRandomSeed());		
 
-		if(scenario.getPopulation().getPersons().size() == 0) {
+		if(scenario.getPopulation().getPersons().isEmpty()) {
 
 			HashMap<String, Integer> busStartDistribution = new HashMap<>();
 			HashMap<Integer, Integer> stopsPerTourDistribution = new HashMap<>();
@@ -158,9 +157,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 					pathHotspotFile, hotspotsCRS, config.global().getCoordinateSystem());
 			if (changeFactorOfParkingCapacity != 1.)
 				changeParkingCapacity(scenario, changeFactorOfParkingCapacity);
-
-			if (setParkingCapacityToZeroForNonParkingLinks)
-				setParkingCapacityToZeroForNonParkingLinks(scenario);
 
 			MatsimFacilitiesReader matsimFacilitiesReader = new MatsimFacilitiesReader(scenario);
 			matsimFacilitiesReader.readFile(String.valueOf(facilitiesFileLocation));
@@ -237,27 +233,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 			parkingFacility.getActivityOptions().get("parking").setCapacity(roundedParkingCapacity);
 		}
 		log.warn("Changed the initial parkingCapacity by the factor " + changeFactorOfParkingCapacity + " from " + initialSumParkingCapacity + " to " + resultingSumParkingCapacity + "parking slots.");
-	}
-
-	private static void setParkingCapacityToZeroForNonParkingLinks(Scenario scenario) {
-
-		ActivityFacilitiesFactory activityFacilityFactory = new ActivityFacilitiesFactoryImpl();
-		ArrayList<Id<Link>> linksWithCoachParking = new ArrayList<>();
-
-		scenario.getActivityFacilities().getFacilities().values().forEach(f -> linksWithCoachParking.add(f.getLinkId()));
-		for (Link link : scenario.getNetwork().getLinks().values()) {
-			if (link.getAllowedModes().contains("car") && !linksWithCoachParking.contains(link.getId())) {
-
-				Id<ActivityFacility> facilityId = Id.create("noParking_" + link.getId().toString(),
-						ActivityFacility.class);
-				ActivityFacilityImpl newActivityFacility = (ActivityFacilityImpl) activityFacilityFactory
-						.createActivityFacility(facilityId, link.getCoord());
-
-				newActivityFacility.createAndAddActivityOption(ParkingUtils.PARKACTIVITYTYPE).setCapacity(0.);
-				newActivityFacility.setLinkId(link.getId());
-				scenario.getActivityFacilities().addActivityFacility(newActivityFacility);
-			}
-		}
 	}
 
 	private static Config prepareConfig(int numberOfTours, Path output, double changeFactorOfParkingCapacity, Path pathNetworkChangeEvents) {
@@ -457,7 +432,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 				numberOfStopsByAttraction--;
 				continue;
 			}
-			if (numberOfStopsByAttraction < numberOfStops) {
+			else {
 				stopsTypeDistribution.replace(selectedStopType,
 						stopsTypeDistribution.get(selectedStopType) + 1);
 				numberOfStopsByAttraction++;
@@ -483,7 +458,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 				currentSumOfValues--;
 				continue;
 			}
-			if (currentSumOfValues < aimSumOfValues) {
+			else {
 				dataSourceMap.replace(thisKey,
 						dataSourceMap.get(thisKey) + 1);
 				currentSumOfValues++;
@@ -520,7 +495,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 				sumTours--;
 				continue;
 			}
-			if (sumTours < numberOfTours) {
+			else {
 				busStartDistribution.replace("Mitte", busStartDistribution.get("Mitte") + 1);
 				sumTours++;
 			}
