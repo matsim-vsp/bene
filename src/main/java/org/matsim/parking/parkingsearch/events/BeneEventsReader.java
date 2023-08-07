@@ -14,9 +14,10 @@ import java.util.Stack;
 
 public class BeneEventsReader extends MatsimXmlParser {
 
-    private EventsReaderXMLv1 delegate;
+    private final EventsReaderXMLv1 delegate;
 
     public BeneEventsReader(EventsManager events) {
+        super(ValidationType.NO_VALIDATION);
         delegate = new EventsReaderXMLv1(events);
         this.setValidating(false);
         delegate.addCustomEventMapper(StartParkingSearchEvent.EVENT_TYPE, getStartParkingSearchEventMapper());
