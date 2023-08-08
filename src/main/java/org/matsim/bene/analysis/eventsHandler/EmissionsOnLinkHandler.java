@@ -41,11 +41,7 @@ public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmi
 
     @Override
     public void handleEvent(WarmEmissionEvent event) {
-    	Map<Pollutant, Double> map = new HashMap<>() ;
-        for( Map.Entry<Pollutant, Double> entry : event.getWarmEmissions().entrySet() ){
-            map.put( entry.getKey(), entry.getValue() ) ;
-        }
-        handleEmissionEvent(event.getTime(), event.getLinkId(), map, event.getVehicleId() );
+        handleEmissionEvent(event.getTime(), event.getLinkId(), event.getWarmEmissions(), event.getVehicleId() );
     }
 
     @Override
