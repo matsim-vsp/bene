@@ -84,26 +84,41 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 	private static final Logger log = LogManager.getLogger(CreateTourismBusTours.class);
 	static SplittableRandom random;
 
-	@CommandLine.Parameters(arity = "1", defaultValue = "scenarios/config/config_base.xml",paramLabel = "INPUT", description = "Path to the config")
+	@CommandLine.Parameters(arity = "1", defaultValue = "scenarios/config/config_case2test.xml",paramLabel = "INPUT", description = "Path to the config")
 	private static Path pathToConfig;
-	@CommandLine.Option(names = "--numberOfTours", defaultValue = "5", description = "Set the number of created tours")
-	private int numberOfTours; //526 (315 = 60% von 526 Touren);
-	@CommandLine.Option(names = "--changeFactorOfParkingCapacity", defaultValue = "0.75", description = "Sets the percentage of change of the existing parking Capacity")
-	private double changeFactorOfParkingCapacity;
+	@CommandLine.Option(names = "--numberOfTours", defaultValue = "1", description = "Set the number of created tours")
+	private static int numberOfTours; //526 (315 = 60% von 526 Touren);
+	@CommandLine.Option(names = "--changeFactorOfParkingCapacity", defaultValue = "1.0", description = "Sets the percentage of change of the existing parking Capacity")
+	private static double changeFactorOfParkingCapacity;
 	@CommandLine.Option(names = "--pathTourismFacilitiesFile", description = "Path for the used tourism facilities", defaultValue = "scenarios/tourismFacilities/tourismFacilities.xml")
-	private Path facilitiesFileLocation;
+	private static Path facilitiesFileLocation;
 	@CommandLine.Option(names = "--pathShpFile", description = "Path for the used shp file", defaultValue = "original-input-data/shp/bezirke/bezirksgrenzen.shp")
-	private Path shapeFileZonePath;
+	private static Path shapeFileZonePath;
 	@CommandLine.Option(names = "--pathHotspotFile", description = "Path for the used hotspot information", defaultValue = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspotsV2.csv")
-	private Path pathHotspotFile;
+	private static Path pathHotspotFile;
 	@CommandLine.Option(names = "--pathOutput", description = "Path for the output")
-	private Path output;
+	private static Path output;
 	@CommandLine.Option(names = "--pathNetworkChangeEvents", description = "Path for the networkChangeEvents", defaultValue = "../networkChangeEvents_V5.5-10pct.xml.gz")
-	private Path pathNetworkChangeEvents;
+	private static Path pathNetworkChangeEvents;
 	@CommandLine.Option(names = "--runAnalysisAtEnde", description = "Run the analysis at the end of the run.", defaultValue = "true")
-	private boolean runAnalysis;
+	private static boolean runAnalysis;
+
+	public CreateTourismBusTours(Path pathToConfig, int numberOfTours, double changeFactorOfParkingCapacity, Path facilitiesFileLocation, Path shapeFileZonePath,
+								 Path pathHotspotFile, Path output, Path pathNetworkChangeEvents, boolean runAnalysis) {
+		CreateTourismBusTours.pathToConfig = pathToConfig;
+		CreateTourismBusTours.numberOfTours = numberOfTours;
+		CreateTourismBusTours.changeFactorOfParkingCapacity = changeFactorOfParkingCapacity;
+		CreateTourismBusTours.facilitiesFileLocation = facilitiesFileLocation;
+		CreateTourismBusTours.shapeFileZonePath = shapeFileZonePath;
+		CreateTourismBusTours.pathHotspotFile = pathHotspotFile;
+		CreateTourismBusTours.output = output;
+		CreateTourismBusTours.pathNetworkChangeEvents = pathNetworkChangeEvents;
+		CreateTourismBusTours.runAnalysis = runAnalysis;
+	}
+
 	public static void main(String[] args) {
-		System.exit(new CommandLine(new CreateTourismBusTours()).execute(args));
+		System.exit(new CommandLine(new CreateTourismBusTours(pathToConfig, numberOfTours, changeFactorOfParkingCapacity, facilitiesFileLocation, shapeFileZonePath,
+				pathHotspotFile, output, pathNetworkChangeEvents, runAnalysis)).execute(args));
 	}
 	//TODO beachte Höchstparkdauern
 	//TODO wenn ActivityLocation und vorhandener Parkplatz gleichen Link haben, kann ohne weiteren Leg geparkt werden
