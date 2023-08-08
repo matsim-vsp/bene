@@ -579,14 +579,8 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 					attractionFacility.setLinkId(linkIdTourStop);
 					
 					// add one parking slot at activity
-					scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getOffActivityName)
-							.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
-					tourStopGetOff.getAttributes().putAttribute("parking", "noParking");
-					tourStopGetOff.setMaximumDuration(0.25 * 3600);
-					tourStopGetOff.setLinkId(linkIdTourStop);
-					plan.addActivity(tourStopGetOff);
-					plan.addLeg(legActivity);
-					
+					createActivityParamsForGetOffAndPickUp(scenario, plan, legActivity, getOffActivityName, tourStopGetOff, linkIdTourStop);
+
 					Activity parkingActivity = populationFactory.createActivityFromLinkId(ParkingUtils.PARKACTIVITYTYPE + "_activity", linkIdTourStop);
 					double parkingDuration = getDurationForThisStop(stopDurationDistribution);
 					parkingActivity.setMaximumDuration(parkingDuration);
@@ -598,14 +592,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 					
 					Activity tourStopGetIn = populationFactory.createActivityFromActivityFacilityId(getInActivityName,
 							attractionFacility.getId());
-					scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getInActivityName)
-							.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
-					tourStopGetIn.getAttributes().putAttribute("parking", "noParking");
-					tourStopGetIn.setMaximumDuration(0.25 * 3600);
-					tourStopGetIn.setLinkId(linkIdTourStop);
-					plan.addActivity(tourStopGetIn);
-
-					plan.addLeg(legActivity);
+					createActivityParamsForGetOffAndPickUp(scenario, plan, legActivity, getInActivityName, tourStopGetIn, linkIdTourStop);
 				}
 				String endActivityName = tourName + "_End_" + hotelFacility.getDesc();
 				Activity tourEnd = populationFactory.createActivityFromActivityFacilityId(endActivityName,
@@ -621,6 +608,17 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 				population.addPerson(newPerson);
 			}
 		}
+	}
+
+	private static void createActivityParamsForGetOffAndPickUp(Scenario scenario, Plan plan, Leg legActivity, String getOffActivityName,
+															   Activity tourStopGetOff, Id<Link> linkIdTourStop) {
+		scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getOffActivityName)
+				.setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
+		tourStopGetOff.getAttributes().putAttribute("parking", "noParking");
+		tourStopGetOff.setMaximumDuration(0.25 * 3600);
+		tourStopGetOff.setLinkId(linkIdTourStop);
+		plan.addActivity(tourStopGetOff);
+		plan.addLeg(legActivity);
 	}
 
 	private static Id<Link> getNearestLink(List<Link> links, Coord coord) {
