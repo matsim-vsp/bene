@@ -9,6 +9,8 @@ import org.matsim.contrib.emissions.events.ColdEmissionEvent;
 import org.matsim.contrib.emissions.events.ColdEmissionEventHandler;
 import org.matsim.contrib.emissions.events.WarmEmissionEvent;
 import org.matsim.contrib.emissions.events.WarmEmissionEventHandler;
+import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEvent;
+import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
 import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEvent;
 import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEventHandler;
 import org.matsim.vehicles.Vehicle;
@@ -18,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmissionEventHandler, StartParkingSearchEventHandler, PersonLeavesVehicleEventHandler {
+public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmissionEventHandler, StartParkingSearchEventHandler, PersonLeavesVehicleEventHandler, RemoveParkingActivityEventHandler {
 
     private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutants = new HashMap<>();
 	private final Map<Id<Link>, Map<Pollutant, Double>> link2pollutantsParkingSearch = new HashMap<>();
@@ -63,6 +65,11 @@ public class EmissionsOnLinkHandler implements WarmEmissionEventHandler, ColdEmi
 			vehicleIsInParkingSearch.remove(event.getVehicleId());
 		else
 			vehicleBetweenPassengerDropOffAndPickup.remove(event.getVehicleId());
+	}
+
+	@Override
+	public void handleEvent(RemoveParkingActivityEvent event){
+		vehicleIsInParkingSearch.remove(event.getVehicleId());
 	}
 
 	private void handleEmissionEvent(double time, Id<Link> linkId, Map<Pollutant, Double> emissions,
