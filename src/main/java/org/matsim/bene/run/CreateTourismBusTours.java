@@ -122,8 +122,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 	}
 	//TODO beachte Höchstparkdauern
 	//TODO wenn ActivityLocation und vorhandener Parkplatz gleichen Link haben, kann ohne weiteren Leg geparkt werden
-	//TODO check: Wo werden die Emissionen nach skipParking erfasst? unter parking_Search?
-	//TODO --> GetOn
+
 	@Override
 	public Integer call() throws IOException, ExecutionException, InterruptedException {
 
@@ -159,6 +158,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 			createStopsPerTourDistribution(stopsPerTourDistribution, stopsTypeDistribution, stopDurationDistribution, numberOfTours);
 			createStopsPerHotspotDistribution(stopsPerHotspotDistribution, stopsPerTourDistribution,
 					pathHotspotFile, hotspotsCRS, config.global().getCoordinateSystem());
+
 			if (changeFactorOfParkingCapacity != 1.)
 				changeParkingCapacity(scenario, changeFactorOfParkingCapacity);
 
@@ -194,12 +194,12 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
 		if (runAnalysis)
 			RunAfterSimAnalysisBene.main(new String[]{scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId(), "true"});
-				try {
-					FileUtils.copyDirectory(new File("scenarios/vizExample"),
-							new File(scenario.getConfig().controler().getOutputDirectory() + "/simwrapper_analysis"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+		try {
+			FileUtils.copyDirectory(new File("scenarios/vizExample"),
+					new File(scenario.getConfig().controler().getOutputDirectory() + "/simwrapper_analysis"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
@@ -647,9 +647,8 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
 		ArrayList<Id<ActivityFacility>> attractionsAtThisHotspot = new ArrayList<>(
 				attractionsForHotspots.get(hotspotCoord));
-		Id<ActivityFacility> selectedAttraction = attractionsAtThisHotspot.get(random.nextInt(attractionsAtThisHotspot.size()));
 
-		return selectedAttraction;
+        return attractionsAtThisHotspot.get(random.nextInt(attractionsAtThisHotspot.size()));
 	}
 
 
