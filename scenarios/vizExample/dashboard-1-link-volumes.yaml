@@ -1,23 +1,23 @@
 header:
-  tab: "Road volumes"
+  tab: "Fahrzeugaufkommen"
   title: "something"
   title_en: "Vehicle volumes per road segment"
   title_de: "Fahrzeugaufkommen pro Straßenabschnitt"
-  description_en: "Note that public transport is disregarded. By default, the difference to the base case is displayed for the daily volumes. You can also display values for specific time windows. For each visualization individually, you can configure the width/color to show the absolute scenario values."
-  description_de: "Beachten Sie, dass der öffentliche Verkehr unberücksichtigt bleibt. Standardmäßig wird die Differenz zum Basisfall für die Tagesmengen angezeigt. Sie können auch Werte für spezifische Zeitfenster anzeigen lassen. Sie können für jede Visualisierung einzeln die Breite und Farbe konfigurieren, um bspw. die absoluten Szenariowerte anzuzeigen.  Passen Sie den Skalierungsfaktor für die Breite entsprechend an!"
+  description_en: "Simulation results for the VSP project 'Reisebusstrategie Berlin'"
+  description_de: "Simulationsergebnisse für das BENE Projekt 'Reisebusstrategie Berlin'"
 
 layout:
   Sum:
     - type: "links"
-      title: "Coach Services Berlin"
-      description: ""
+      title: "Fahrzeugaufkommen"
+      description: "Gesamt-Aufkommen während der kompletten Tour"
       width: 2
       height: 8
       props:
  #       thumbnail: "thumbnails/thumbnail-accident-costs.png"
         network: ../bus.output_network.xml.gz
         projection: EPSG:31468
-  #      showDifferences: false
+        showDifferences: false
         center: 13.4010, 52.51892
         zoom: 11
 #        sampleRate: 1
@@ -42,8 +42,8 @@ layout:
         configFile: "topsheet-coach-links.yaml"
   ParkingTotal:
     - type: "links"
-      title: "Coach Services Berlin"
-      description: ""
+      title: "Fahrzeugaufkommen beim Parkverkehr"
+      description: "Zählt Fahrzeuge, die zwischen dem Ausstieg an einer Attraction und dem späteren Wiedereinstieg unterwegs sind."
       #width: 4
       height: 15
       props:
@@ -71,8 +71,8 @@ layout:
 
   ParkingSearch:
     - type: "links"
-      title: "Coach Services Berlin - Parking Search"
-      description: ""
+      title: "Fahrzeugaufkommen beim Parksuchverkehr"
+      description: "Zählt Fahrzeuge, die auf der Suche nach einem Parkplatz sind. Fahrzeuge mit einem reservierten Parkplatz zählen bis zur Ankunft am Parkplatz zum Parksuchverkehr."
       #width: 4
       height: 15
       props:
