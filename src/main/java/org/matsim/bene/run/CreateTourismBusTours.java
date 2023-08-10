@@ -83,7 +83,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
     private static final Logger log = LogManager.getLogger(CreateTourismBusTours.class);
     static SplittableRandom random;
 
-    @CommandLine.Parameters(arity = "1", defaultValue = "scenarios/config/config_case2test.xml", paramLabel = "INPUT", description = "Path to the config")
+    @CommandLine.Parameters(arity = "1", defaultValue = "scenarios/config/config_base.xml", paramLabel = "INPUT", description = "Path to the config")
     private static Path pathToConfig;
     @CommandLine.Option(names = "--numberOfTours", defaultValue = "1", description = "Set the number of created tours")
     private static int numberOfTours; //526 (315 = 60% von 526 Touren);
@@ -93,7 +93,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
     private static Path facilitiesFileLocation;
     @CommandLine.Option(names = "--pathShpFile", description = "Path for the used shp file", defaultValue = "original-input-data/shp/bezirke/bezirksgrenzen.shp")
     private static Path shapeFileZonePath;
-    @CommandLine.Option(names = "--pathHotspotFile", description = "Path for the used hotspot information", defaultValue = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspotsV2.csv")
+    @CommandLine.Option(names = "--pathHotspotFile", description = "Path for the used hotspot information", defaultValue = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspotsV3.csv")
     private static Path pathHotspotFile;
     @CommandLine.Option(names = "--pathOutput", description = "Path for the output")
     private static Path output;
@@ -121,7 +121,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                 new CreateTourismBusTours(pathToConfig, numberOfTours, changeFactorOfParkingCapacity, facilitiesFileLocation, shapeFileZonePath,
                         pathHotspotFile, output, pathNetworkChangeEvents, runAnalysis)).execute(args));
     }
-    //TODO beachte Höchstparkdauern
     //TODO wenn ActivityLocation und vorhandener Parkplatz gleichen Link haben, kann ohne weiteren Leg geparkt werden
 
     @Override
