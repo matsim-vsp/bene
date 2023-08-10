@@ -1,16 +1,16 @@
 header:
-  tab: "Attractions"
+  tab: "Attraktionen"
   title: "something"
   title_en: "Attractions"
-  title_de: "Attractions"
+  title_de: "Attraktionen"
   description_en: "TODO"
-  description_de: "TODO"
+  description_de: "Die möglichen Attraktionen an denen Ausstiege stattfinden können, entstammen OpenStreetMap. "
 
 layout:
   Base:
     - type: "map"
-      title: "Basisfall - Parkwunsch"
-      description: ""
+      title: "Attraktionen, an den ein Ausstieg der Fahrgäste möglich ist."
+      description: "Anzahl der Busse, die an dieser Attraktionen einen Stop haben und die Fahrgäste aussteigen lassen."
       width: 2
       height: 8
       center: 13.4010, 52.51892

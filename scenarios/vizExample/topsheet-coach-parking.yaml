@@ -1,20 +1,23 @@
 # Topsheet Test
-title: Coach emissions
-title_en: Coach emissions
-title_de: Coach emissions
+title: Parking Statistics
+title_en: Parking Statistics
+title_de: Parking Statistics
 description: 'description'
 
 # Input files -------------------------
 files:
   parkingStats:
     file: "../ITERS/it.0/bus.0.parkingStats.csv"
-
+  generalStats:
+    file: "*bus.general_Overview.csv"
 # These are text entry boxes in the UI
     
 # Calculations ------------------------
 # these are evaluated top down!
 calculations: 
   capacity: '{parkingStats.capacity}'
+  numberOfPlanedStops: '{generalStats.numberOfStops}'
+  removedParkingActivities:  '{generalStats.removedParkingActivities}'
   reservationsRequests: '{parkingStats.reservationsRequests}' 
   numberOfParkedVehicles: '({parkingStats.numberOfParkedVehicles})'
   rejectedReservations: '({parkingStats.rejectedReservations})'
@@ -24,9 +27,15 @@ outputs:
   - title_en: capacity
     title_de: capacity
     value: capacity
+  - title_en: numberOfPlanedStops
+    title_de: numberOfPlanedStops
+    value: numberOfPlanedStops
   - title_en: numberOfParkedVehicles
     title_de: numberOfParkedVehicles
-    value: numberOfParkedVehicles
+    value: numberOfParkedVehicles  
+  - title_en: removedParkingActivities
+    title_de: removedParkingActivities
+    value: removedParkingActivities
   - title_en: rejectedReservations
     title_de: rejectedReservations
     value: rejectedReservations

@@ -1,13 +1,16 @@
 header:
-  tab: "Emissions"
+  tab: "Emissionen"
   title: "Spatial and temporal distribution of air pollutants"
-  description: "The calculation is based on HBEFA 4.1. The visualisations show the results in grams per meter (as long links have higher absolute values). By default, the difference to the base case is displayed for CO2. You can configure the width/color to show the absolute scenario values for each visualization individually. You can also change the pollutant type - adjust the scale factor for the width accordingly! For cost rates, see also https://www.umweltbundesamt.de/sites/default/files/medien/378/publikationen/uba_methodenkonvention_2.0_-_anhang_b_0.pdf"
-
+  description: ""
+  title_en: "Spatial and temporal distribution of air pollutants"
+  title_de: "Auswertungen Emissionen"
+  description_en: "The calculation is based on HBEFA 4.1. The visualisations show the results in grams per meter (as long links have higher absolute values). For cost rates, see also https://www.umweltbundesamt.de/sites/default/files/medien/378/publikationen/uba_methodenkonvention_2.0_-_anhang_b_0.pdf"
+  description_de: "Die Berechnung basiert auf HBEFA 4.1. Die Visualisierungen zeigen die Ergebnisse in Gramm pro Meter (da lange Verbindungen höhere absolute Werte haben). Für Kostensätze, siehe auch https://www.umweltbundesamt.de/sites/default/files/medien/378/publikationen/uba_methodenkonvention_2.0_-_anhang_b_0.pdf"
 layout:
 
   Sum:
-    - title: "Coach emissions"
-      description: ""
+    - title: "Emissionen Zusammenfassung"
+      description: "Die Angaben beziehen sich auf die Emissionen aller Busse."
       type: 'topsheet'
       width: 1
       props:
@@ -18,8 +21,8 @@ layout:
         configFile: "table-all-emissions.yaml"
   Coach:
     - type: "links"
-      title: "Coach Services Berlin"
-      description: "Pollutant emissions per link"
+      title: "Emissionen"
+      description: "Emissionen, die während der gesamten Touren aller Busse ausgestoßen werden. Sie können zwischen verschiedenen Daten wählen."
       #width: 2
       height: 15
       props:
@@ -46,11 +49,39 @@ layout:
                 columnName: CO2_TOTAL [g/m]
                 scaleFactor: 8
 
-
+  Coach_parkingSearch:
+    - type: "links"
+      title: "Emissionen Parkplatzsuche"
+      description: "Emissionen, die während der Parkplatzsuche (ab Ausstieg der Fahrgäste bis zum Erreichen des Parkplatzes) ausgestoßen werden. Sie können zwischen verschiedenen Daten wählen."
+      #width: 2
+      height: 15
+      props:
+        #thumbnail: "thumbnails/thumbnail-accident-costs.png"
+        network: ../bus.output_network.xml.gz
+        projection: EPSG:31468
+        center: 13.4010, 52.51892
+        #center: 4595411, 5821900
+        zoom: 11
+        #showDifferences: true
+        #sampleRate: 10
+        datasets:
+            emissionPerLinkPerM_parkingSearch: bus.emissionsPerLinkPerM_parkingSearch.csv
+        display:
+            color:
+                dataset: emissionPerLinkPerM_parkingSearch
+                columnName: CO2_TOTAL [g/m]
+                colorRamp:
+                    ramp: Viridis
+                    reverse: false
+                    steps: 9
+            width:
+                dataset: emissionPerLinkPerM_parkingSearch
+                columnName: CO2_TOTAL [g/m]
+                scaleFactor: 8
   Coach_parking:
     - type: "links"
-      title: "Parking"
-      description: "Pollutant emissions per link"
+      title: "Emissionen Parkverkehr"
+      description: "Emissionen, die zwischen dem Ausstieg und dem späeteren Wiedereinstieg der Fahrgäste (Parkverkehr) ausgestoßen werden. Sie können zwischen verschiedenen Daten wählen."
       #width: 2
       height: 15
       props:
