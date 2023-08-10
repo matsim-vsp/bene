@@ -31,7 +31,7 @@
 		<!-- The type of routing (least cost path) algorithm used, may have the values: [Dijkstra, AStarLandmarks, FastDijkstra, FastAStarLandmarks, SpeedyALT] -->
 		<param name="routingAlgorithmType" value="SpeedyALT" />
 		<!-- An identifier for the current run which is used as prefix for output files and mentioned in output xml files etc. -->
-		<param name="runId" value="case3" />
+		<param name="runId" value="case1" />
 		<!-- Comma-separated list of visualizer output file formats. `transims' and `otfvis'. -->
 		<param name="snapshotFormat" value="" />
 		<!-- iterationNumber % writeEventsInterval == 0 defines in which iterations events are written to a file. `0' disables events writing completely. -->
@@ -72,9 +72,19 @@
 	</module>
 	<module name="parkingSearch" >
 		<param name="avgParkingSlotLength" value="10.0" />
+		<!-- Set if a vehicle can park only at given parking facilities or it can park freely at a link without a facility. -->
+		<param name="canParkOnlyAtFacilities" value="true" />
+		<!-- Fraction of agents who can check free capacities in advanced. This is currently developed for the FacilityBasedParkingManager -->
+		<param name="fractionCanCheckFreeCapacitiesInAdvanced" value="0.0" />
+		<!-- Fraction of agents who can reserve free capacities in advanced. This is currently developed for the FacilityBasedParkingManager" -->
+		<param name="fractionCanReserveParkingInAdvanced" value="1.0" />
+		<!-- Duration to park a vehicle -->
 		<param name="parkDuration" value="60.0" />
-		<!-- Possible values: Random,Benenson,DistanceMemory,NearestParkingSpot,NearestParkingSpotWithReservation,NearestParkingSpotWithCapacityCheck -->
-		<param name="parkingSearchStrategy" value="NearestParkingSpotWithCapacityCheck" />
+		<!-- The type of the ParkingManager, may have the values: [FacilityBasedParkingManager, LinkLengthBasedParkingManagerWithRandomInitialUtilisation, ZoneParkingManager] -->
+		<param name="parkingSearchManager" value="FacilityBasedParkingManager" />
+		<!-- The strategy to find a parking slot. Possible strategies: [Random, Benenson, DistanceMemory, NearestParkingSpot] -->
+		<param name="parkingSearchStrategy" value="NearestParkingSpot" />
+		<!-- Duration to unpark a vehicle -->
 		<param name="unparkDuration" value="60.0" />
 	</module>
 	<module name="planCalcScore" >
