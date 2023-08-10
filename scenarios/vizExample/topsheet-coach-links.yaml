@@ -43,7 +43,7 @@ outputs:
     title_de: Anteil der Parkplatzsuche am Gesamtverkehr[%]
     value: parkingSearch_pct
   - title_en: Distance parking total [km]
-    title_de: Strecke Parkplatzsuche [km]
+    title_de: Strecke Parkpverkehrs [km]
     value: parkingTotal_km
   - title_en: Share of parking total [%]
     title_de: Anteil des Parkverkehrs [%]
