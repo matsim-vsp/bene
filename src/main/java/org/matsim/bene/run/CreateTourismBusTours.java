@@ -254,6 +254,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
         TreeMap<Id<ActivityFacility>, ActivityFacility> attractionFacilities = scenario.getActivityFacilities()
                 .getFacilitiesForActivityType("attraction");
+        int count = 0;
         for (Coord hotspotCoord : stopsPerHotspotDistribution.keySet()) {
             Point hotspotPoint = MGC.coord2Point(hotspotCoord);
             for (Id<ActivityFacility> activityID : attractionFacilities.keySet()) {
@@ -263,12 +264,12 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                     attractionsForHotspots.computeIfAbsent(hotspotCoord, k -> new ArrayList<>()).add(activityID);
             }
             if (!attractionsForHotspots.containsKey(hotspotCoord)) {
-                Id<ActivityFacility> facilityId = Id.create("unknownAttraction_" + hotspotCoord.hashCode(),
+                count++;
+                Id<ActivityFacility> facilityId = Id.create("unknownAttractionForHotspot" + count,
                         ActivityFacility.class);
                 ActivityFacilitiesFactory activityFacilityFactory = new ActivityFacilitiesFactoryImpl();
-                ActivityFacility newActivityFacility = activityFacilityFactory.createActivityFacility(facilityId,
+                ActivityFacilityImpl newActivityFacility = (ActivityFacilityImpl) activityFacilityFactory.createActivityFacility(facilityId,
                         hotspotCoord);
-
                 newActivityFacility.addActivityOption(new ActivityOptionImpl("attraction"));
                 scenario.getActivityFacilities().addActivityFacility(newActivityFacility);
                 attractionsForHotspots.computeIfAbsent(hotspotCoord, k -> new ArrayList<>()).add(newActivityFacility.getId());
@@ -566,7 +567,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                     if (attractionFacility.getDesc() != null)
                         stopActivityName = tourName + "_Stop_" + (j + 1) + "_" + attractionFacility.getDesc();
                     else
-                        stopActivityName = tourName + "_Stop_" + (j + 1);
+                        stopActivityName = tourName + "_Stop_" + (j + 1) + "_" + attractionFacility.getId().toString();
                     String getOffActivityName = stopActivityName + "_GetOff";
                     Activity tourStopGetOff = populationFactory.createActivityFromActivityFacilityId(getOffActivityName,
                             attractionFacility.getId());
