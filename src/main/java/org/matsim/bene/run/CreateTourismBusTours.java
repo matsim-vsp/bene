@@ -264,6 +264,14 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                     attractionsForHotspots.computeIfAbsent(hotspotCoord, k -> new ArrayList<>()).add(activityID);
             }
             if (!attractionsForHotspots.containsKey(hotspotCoord)) {
+                for (Id<ActivityFacility> activityID : attractionFacilities.keySet()) {
+                    Point attractionPoint = MGC.coord2Point(attractionFacilities.get(activityID).getCoord());
+                    double distance = attractionPoint.distance(hotspotPoint);
+                    if (distance <= 1000)
+                        attractionsForHotspots.computeIfAbsent(hotspotCoord, k -> new ArrayList<>()).add(activityID);
+                }
+            }
+            if (!attractionsForHotspots.containsKey(hotspotCoord)) {
                 count++;
                 Id<ActivityFacility> facilityId = Id.create("unknownAttractionForHotspot" + count,
                         ActivityFacility.class);
