@@ -42,18 +42,22 @@ import org.matsim.core.controler.Injector;
 import org.matsim.core.events.EventsUtils;
 import org.matsim.core.events.algorithms.EventWriterXML;
 import org.matsim.core.scenario.ScenarioUtils;
+import org.matsim.core.utils.geometry.geotools.MGC;
 import org.matsim.core.utils.geometry.transformations.TransformationFactory;
+import org.matsim.core.utils.gis.PointFeatureFactory;
+import org.matsim.core.utils.gis.ShapeFileWriter;
 import org.matsim.core.utils.misc.Time;
+import org.matsim.facilities.*;
 import org.matsim.vehicles.Vehicle;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static org.matsim.application.ApplicationUtils.globFile;
@@ -134,6 +138,10 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         if (!dir.exists()) {
             dir.mkdir();
         }
+        File dirShape = new File(analysisOutputDirectory + "/shp/");
+        if (!dirShape.exists()) {
+            dirShape.mkdir();
+        }
         final String emissionEventOutputFile = analysisOutputDirectory + runId + ".emission.events.offline.xml.gz";
         log.info("Writing events to: {}", emissionEventOutputFile);
 
@@ -172,6 +180,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         Config config = ConfigUtils.createConfig();
         config.vehicles().setVehiclesFile(String.valueOf(globFile(runDirectory, runId, "output_vehicles")));
         config.network().setInputFile(String.valueOf(globFile(runDirectory, runId, "network")));
+        config.facilities().setInputFile(String.valueOf(globFile(runDirectory, runId, "facilities")));
         //TODO OSMHBEFAMAPPING siehe Kehlheim project
         config.global().setCoordinateSystem(TransformationFactory.DHDN_GK4);
         log.info("Using coordinate system '{}'", config.global().getCoordinateSystem());
@@ -242,8 +251,71 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         }
         createGeneralResults(general_resultsOutputFile, general_OverviewOutputFile, linkDemandEventHandler, emissionsOnLinkEventHandler,
                 attraction_OverviewOutputFile, parkingRelation_OutputFile);
-
+        createShpForDashboards(scenario, dirShape);
         return 0;
+    }
+
+    private void createShpForDashboards(Scenario scenario, File dirShape) {
+        CoordinateReferenceSystem crs = MGC.getCRS(scenario.getConfig().global().getCoordinateSystem());
+        PointFeatureFactory attractionFactory = new PointFeatureFactory.Builder().
+                setCrs(crs).
+                setName("attraction").
+                addAttribute("name", String.class).
+                create();
+        Collection<SimpleFeature> attractionFeatures = new ArrayList<>();
+        ActivityFacilities allFacilities = scenario.getActivityFacilities();
+
+        TreeMap<Id<ActivityFacility>, ActivityFacility> attractionFacilities = allFacilities
+                .getFacilitiesForActivityType("attraction");
+
+        for (ActivityFacility attractionFacility : attractionFacilities.values()) {
+            String attractionFacilityName;
+            if (((ActivityFacilityImpl) attractionFacility).getDesc() != null) {
+                if (((ActivityFacilityImpl) attractionFacility).getDesc().contains("unknownAttractionForHotspot"))
+                    attractionFacilityName = attractionFacility.getId().toString();
+                else
+                    attractionFacilityName = ((ActivityFacilityImpl) attractionFacility).getDesc();
+            } else
+                attractionFacilityName = attractionFacility.getId().toString();
+            SimpleFeature ft = attractionFactory.createPoint(attractionFacility.getCoord(), new Object[]{attractionFacilityName}, null);
+            attractionFeatures.add(ft);
+        }
+        ShapeFileWriter.writeGeometries(attractionFeatures, dirShape + "/attractions.shp");
+
+        PointFeatureFactory parkingFactory = new PointFeatureFactory.Builder().
+                setCrs(crs).
+                setName("parking").
+                addAttribute("name", String.class).
+                addAttribute("capacity", Integer.class).
+                addAttribute("linkId", Integer.class).
+                addAttribute("Open", String.class).
+                addAttribute("maxTime", String.class).
+                create();
+        Collection<SimpleFeature> parkingFeatures = new ArrayList<>();
+        TreeMap<Id<ActivityFacility>, ActivityFacility> parkingFacilities = allFacilities
+                .getFacilitiesForActivityType("parking");
+
+        for (ActivityFacility parkingFacility : parkingFacilities.values()) {
+            String parkingFacilityName = parkingFacility.getId().toString();
+
+            Object openingTime;
+            SortedSet<OpeningTime> thisOpeningTime = parkingFacility.getActivityOptions().get("parking").getOpeningTimes();
+            if (thisOpeningTime.isEmpty())
+                openingTime = "24h";
+            else
+                openingTime = Time.writeTime(thisOpeningTime.first().getStartTime(), Time.TIMEFORMAT_HHMM) + " - " + Time.writeTime(
+                        thisOpeningTime.first().getEndTime(), Time.TIMEFORMAT_HHMM);
+            String maxDuration;
+            if (parkingFacility.getAttributes().getAsMap().containsKey("maxParkingDurationInHours"))
+                maxDuration = parkingFacility.getAttributes().getAttribute("maxParkingDurationInHours").toString();
+            else
+                maxDuration = "-";
+            SimpleFeature ft = parkingFactory.createPoint(parkingFacility.getCoord(),
+                    new Object[]{parkingFacilityName, parkingFacility.getActivityOptions().get(
+                            "parking").getCapacity(), parkingFacility.getLinkId().toString(), openingTime, maxDuration}, null);
+            parkingFeatures.add(ft);
+        }
+        ShapeFileWriter.writeGeometries(parkingFeatures, dirShape + "/parking.shp");
     }
 
     private void createGeneralResults(String generalResultsOutputFile, String general_OverviewOutputFile,

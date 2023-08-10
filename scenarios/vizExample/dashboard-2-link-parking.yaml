@@ -42,7 +42,7 @@ layout:
       zoom: 20
       projection: 'EPSG:31468'
       shapes:
-        file: 'shp/base_parking.shp'
+        file: 'shp/parking.shp'
         join: linkId
       datasets:
         parkingData:
@@ -63,7 +63,7 @@ layout:
       zoom: 11
       projection: 'EPSG:31468'
       shapes:
-        file: 'shp/base_parking.shp'
+        file: 'shp/parking.shp'
         join: linkId
       datasets:
         parkingData:
@@ -84,7 +84,7 @@ layout:
       zoom: 11
       projection: 'EPSG:31468'
       shapes:
-        file: 'shp/base_parking.shp'
+        file: 'shp/parking.shp'
         join: linkId
       datasets:
         parkingData:
