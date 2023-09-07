@@ -544,7 +544,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                 Activity tourStart = populationFactory.createActivityFromActivityFacilityId(startActivityName,
                         hotelFacility.getId());
                 ParkingUtils.setNoParkingForActivity(tourStart);
-//                tourStart.getAttributes().putAttribute("parking", "noParking");
                 tourStart.setLinkId(hotelLinkId);
                 tourStart.setEndTime(startTime);
                 tourStart.setMaximumDuration(0.5 * 3600);
