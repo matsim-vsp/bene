@@ -554,8 +554,8 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                 String startActivityName = tourName + "_Start_" + hotelFacility.getDesc();
                 Activity tourStart = populationFactory.createActivityFromActivityFacilityId(startActivityName,
                         hotelFacility.getId());
-
-                tourStart.getAttributes().putAttribute("parking", "noParking");
+                ParkingUtils.setNoParkingForActivity(tourStart);
+//                tourStart.getAttributes().putAttribute("parking", "noParking");
                 tourStart.setLinkId(hotelLinkId);
                 tourStart.setEndTime(startTime);
                 tourStart.setMaximumDuration(0.5 * 3600);
@@ -588,7 +588,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                             linkIdTourStop);
                     double parkingDuration = getDurationForThisStop(stopDurationDistribution);
                     parkingActivity.setMaximumDuration(parkingDuration);
-                    parkingActivity.getAttributes().putAttribute("parking", "withParking");
+//                    parkingActivity.getAttributes().putAttribute("parking", "withParking");
                     plan.addActivity(parkingActivity);
                     plan.addLeg(legActivity);
 
@@ -604,7 +604,8 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                 tourEnd.setLinkId(hotelLinkId);
                 scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(endActivityName)
                         .setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
-                tourEnd.getAttributes().putAttribute("parking", "noParking");
+                ParkingUtils.setNoParkingForActivity(tourEnd);
+//                tourEnd.getAttributes().putAttribute("parking", "noParking");
                 tourEnd.setMaximumDurationUndefined();
                 plan.addActivity(tourEnd);
 
@@ -622,6 +623,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
         tourStopGetOff.setMaximumDuration(0.25 * 3600);
         tourStopGetOff.setLinkId(linkIdTourStop);
         plan.addActivity(tourStopGetOff);
+        ParkingUtils.setNoParkingForActivity(tourStopGetOffOrPickUp);
         plan.addLeg(legActivity);
     }
 
