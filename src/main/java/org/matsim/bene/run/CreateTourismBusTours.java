@@ -576,7 +576,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                             linkIdTourStop);
                     double parkingDuration = getDurationForThisStop(stopDurationDistribution);
                     parkingActivity.setMaximumDuration(parkingDuration);
-//                    parkingActivity.getAttributes().putAttribute("parking", "withParking");
                     plan.addActivity(parkingActivity);
                     plan.addLeg(legActivity);
 
