@@ -539,17 +539,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                     startTime = random.nextDouble(10 * 3600, 12 * 3600);
                 else
                     startTime = random.nextDouble(10 * 3600, 14 * 3600);
-//				Activity depot = populationFactory.createActivityFromLinkId("depot", hotelLinkId);
-//				depot.getAttributes().putAttribute("parking", "noParking");
-//				depot.setStartTime(0.);
-//				depot.setEndTime(startTime);
-//				if (!scenario.getConfig().planCalcScore().getActivityParams().contains(depot.getType()))
-//					scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(depot.getType())
-//							.setTypicalDuration(0.5 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
-//				plan.addActivity(depot);
-//
-//				Leg legActivity = populationFactory.createLeg("car");
-//				plan.addLeg(legActivity);
 
                 String startActivityName = tourName + "_Start_" + hotelFacility.getDesc();
                 Activity tourStart = populationFactory.createActivityFromActivityFacilityId(startActivityName,
@@ -581,7 +570,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                     Id<Link> linkIdTourStop = getNearestLink(links, attractionFacility.getCoord());
                     attractionFacility.setLinkId(linkIdTourStop);
 
-                    // add one parking slot at activity
                     createActivityParamsForGetOffAndPickUp(scenario, plan, legActivity, getOffActivityName, tourStopGetOff, linkIdTourStop);
 
                     Activity parkingActivity = populationFactory.createActivityFromLinkId(ParkingUtils.PARKACTIVITYTYPE + "_activity",
@@ -619,11 +607,12 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                                                                Activity tourStopGetOff, Id<Link> linkIdTourStop) {
         scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getOffActivityName)
                 .setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
-        tourStopGetOff.getAttributes().putAttribute("parking", "noParking");
-        tourStopGetOff.setMaximumDuration(0.25 * 3600);
-        tourStopGetOff.setLinkId(linkIdTourStop);
-        plan.addActivity(tourStopGetOff);
+        //TODO
         ParkingUtils.setNoParkingForActivity(tourStopGetOffOrPickUp);
+
+        tourStopGetOffOrPickUp.setMaximumDuration(0.25 * 3600);
+        tourStopGetOffOrPickUp.setLinkId(linkIdTourStop);
+        plan.addActivity(tourStopGetOffOrPickUp);
         plan.addLeg(legActivity);
     }
 
