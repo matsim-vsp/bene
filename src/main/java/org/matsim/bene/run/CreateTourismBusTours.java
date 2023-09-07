@@ -602,7 +602,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
     }
 
     private static void createActivityParamsForGetOffAndPickUp(Scenario scenario, Plan plan, Leg legActivity, String getOffActivityName,
-                                                               Activity tourStopGetOff, Id<Link> linkIdTourStop) {
+                                                               Activity tourStopGetOffOrPickUp, Id<Link> linkIdTourStop) {
         scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getOffActivityName)
                 .setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
         //TODO
