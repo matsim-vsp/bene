@@ -48,10 +48,10 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Ricardo Ewert
  *
  */
-public class LinkDemandEventHandler
+public class LinkDemandAndParkingEventHandler
 		implements LinkLeaveEventHandler, PersonLeavesVehicleEventHandler, StartParkingSearchEventHandler, ActivityStartEventHandler, ActivityEndEventHandler, RemoveParkingActivityEventHandler
 {
-	private static final Logger log = LogManager.getLogger(LinkDemandEventHandler.class);
+	private static final Logger log = LogManager.getLogger(LinkDemandAndParkingEventHandler.class);
 
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles = new HashMap<>();
 	private final Map<Id<Vehicle>, Object2DoubleMap<String>> tourInformation = new HashMap<>();
