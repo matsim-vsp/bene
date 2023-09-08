@@ -27,7 +27,7 @@ import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.application.MATSimAppCommand;
 import org.matsim.bene.analysis.eventsHandler.EmissionsOnLinkHandler;
-import org.matsim.bene.analysis.eventsHandler.LinkDemandEventHandler;
+import org.matsim.bene.analysis.eventsHandler.LinkDemandAndParkingEventHandler;
 import org.matsim.contrib.emissions.EmissionModule;
 import org.matsim.contrib.emissions.Pollutant;
 import org.matsim.contrib.emissions.VspHbefaRoadTypeMapping;
@@ -221,7 +221,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
             emissionModule.getEmissionEventsManager().addHandler(emissionEventWriter);
         }
         // link events handler
-        LinkDemandEventHandler linkDemandEventHandler = new LinkDemandEventHandler(scenario.getNetwork());
+        LinkDemandAndParkingEventHandler linkDemandEventHandler = new LinkDemandAndParkingEventHandler(scenario);
         eventsManager.addHandler(linkDemandEventHandler);
         EmissionsOnLinkHandler emissionsOnLinkEventHandler = null;
         if (analyseEmissions) {
@@ -319,14 +319,14 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
     }
 
     private void createGeneralResults(String generalResultsOutputFile, String general_OverviewOutputFile,
-                                      LinkDemandEventHandler linkDemandEventHandler,
+                                      LinkDemandAndParkingEventHandler linkDemandAndParkingEventHandler,
                                       EmissionsOnLinkHandler emissionsOnLinkEventHandler, String attraction_OverviewOutputFile,
                                       String parkingRelation_OutputFile) {
         File tourDataFile = new File(generalResultsOutputFile);
         File overViewFile = new File(general_OverviewOutputFile);
         File attractionViewFile = new File(attraction_OverviewOutputFile);
         Object2DoubleMap<String> overviewData = new Object2DoubleOpenHashMap<>();
-        Map<Id<Vehicle>, Object2DoubleMap<String>> tourInformation = linkDemandEventHandler.getTourInformation();
+        Map<Id<Vehicle>, Object2DoubleMap<String>> tourInformation = linkDemandAndParkingEventHandler.getTourInformation();
         Map<Id<Vehicle>, Map<Pollutant, Double>> pollutantsPerVehicle = emissionsOnLinkEventHandler.getPollutantsPerVehicle();
         overviewData.put("numberOfTours", tourInformation.keySet().size());
 
@@ -404,7 +404,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         }
 
         try {
-            Map<String, AtomicLong> facilityCount = linkDemandEventHandler.getAttractionInformation();
+            Map<String, AtomicLong> facilityCount = linkDemandAndParkingEventHandler.getAttractionInformation();
             BufferedWriter bw = new BufferedWriter(new FileWriter(attractionViewFile));
             bw.write(
                     "facilityID;count");
@@ -419,7 +419,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         }
 
         try {
-            Map<String, Object2DoubleMap<String>> parkingRelation = linkDemandEventHandler.getParkingRelations();
+            Map<String, Object2DoubleMap<String>> parkingRelation = linkDemandAndParkingEventHandler.getParkingRelations();
             BufferedWriter bw = new BufferedWriter(new FileWriter(parkingRelation_OutputFile));
             List<String> header = Arrays.asList("fromX", "fromY", "toX", "toY");
             bw.write("stopID");
@@ -442,7 +442,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 
     }
 
-    public void createLinkVolumeAnalysis(String fileName, LinkDemandEventHandler linkDemandEventHandler) {
+    public void createLinkVolumeAnalysis(String fileName, LinkDemandAndParkingEventHandler linkDemandEventHandler) {
 
         File file = new File(fileName);
         Map<Id<Link>, AtomicLong> linkId2vehicles = linkDemandEventHandler.getLinkId2demand();

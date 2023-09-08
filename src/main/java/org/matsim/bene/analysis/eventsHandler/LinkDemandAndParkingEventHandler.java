@@ -62,12 +62,12 @@ public class LinkDemandAndParkingEventHandler
 	private final Map<String, AtomicLong> attractionCount = new HashMap<>();
 	private final Map<Id<Vehicle>, Double> parkingStartTimes = new HashMap<>();
 	private final Map<Id<Vehicle>, Double> tourStartTimes = new HashMap<>();
-	private final Network network;
+	private final Scenario scenario;
 	private final Map<Id<Vehicle>, Double> vehicleIsInParkingSearch = new HashMap<>();
 	private final Map<Id<Vehicle>, Double> vehicleBetweenPassengerDropOffAndPickup = new HashMap<>();
 
-	public LinkDemandEventHandler(Network network) {
-		this.network = network;
+	public LinkDemandAndParkingEventHandler(Scenario scenario) {
+		this.scenario = scenario;
 	}
 
 	@Override
@@ -83,17 +83,17 @@ public class LinkDemandAndParkingEventHandler
 	@Override
 	public void handleEvent(LinkLeaveEvent event) {
 		linkId2vehicles.computeIfAbsent(event.getLinkId(), (k) -> new AtomicLong()).getAndIncrement();
-		tourInformation.computeIfAbsent(event.getVehicleId(), (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("drivenDistance",network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
+		tourInformation.computeIfAbsent(event.getVehicleId(), (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("drivenDistance",scenario.getNetwork().getLinks().get(event.getLinkId()).getLength(), Double::sum);
 		if (vehicleIsInParkingSearch.containsKey(event.getVehicleId())) {
 			linkId2vehicles_parkingSearch.computeIfAbsent(event.getLinkId(), (k) -> new AtomicLong()).getAndIncrement();
-			tourInformation.computeIfAbsent(event.getVehicleId(), (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("DistanceParkingSearch",network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
+			tourInformation.get(event.getVehicleId()).mergeDouble("DistanceParkingSearch",scenario.getNetwork().getLinks().get(event.getLinkId()).getLength(), Double::sum);
 		}
 		if (vehicleBetweenPassengerDropOffAndPickup.containsKey(event.getVehicleId())) {
 			linkId2vehicles_parkingTotal.computeIfAbsent(event.getLinkId(), (k) -> new AtomicLong()).getAndIncrement();
-			tourInformation.computeIfAbsent(event.getVehicleId(), (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("DistanceParkingTotal",network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
+			tourInformation.get(event.getVehicleId()).mergeDouble("DistanceParkingTotal",scenario.getNetwork().getLinks().get(event.getLinkId()).getLength(), Double::sum);
 		}
 		else
-			tourInformation.computeIfAbsent(event.getVehicleId(), (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("drivenDistance_Passanger",network.getLinks().get(event.getLinkId()).getLength(), Double::sum);
+			tourInformation.get(event.getVehicleId()).mergeDouble("drivenDistance_Passanger",scenario.getNetwork().getLinks().get(event.getLinkId()).getLength(), Double::sum);
 	}
 
 	@Override
@@ -106,8 +106,8 @@ public class LinkDemandAndParkingEventHandler
 		tourInformation.get(event.getVehicleId()).mergeDouble("removedParking", 1, Double::sum);
 		vehicleIsInParkingSearch.remove(event.getVehicleId());
 		String stopName = lastStop.get(event.getVehicleId().toString());
-		parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("toX",network.getLinks().get(event.getCurrentLinkId()).getCoord().getX(), Double::sum);
-		parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("toY",network.getLinks().get(event.getCurrentLinkId()).getCoord().getY(), Double::sum);
+		parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("toX",scenario.getNetwork().getLinks().get(event.getCurrentLinkId()).getCoord().getX(), Double::sum);
+		parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("toY",scenario.getNetwork().getLinks().get(event.getCurrentLinkId()).getCoord().getY(), Double::sum);
 		lastStop.remove(event.getVehicleId().toString());
 	}
 
@@ -135,8 +135,8 @@ public class LinkDemandAndParkingEventHandler
 			attractionCount.computeIfAbsent(attractionName, (k) -> new AtomicLong()).getAndIncrement();
 			String stopName = event.getPersonId().toString() + "_Stop_" + event.getActType().split("_")[3];
 			lastStop.put(event.getPersonId().toString(), stopName);
-			parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("fromX",network.getLinks().get(event.getLinkId()).getCoord().getX(), Double::sum);
-			parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("fromY",network.getLinks().get(event.getLinkId()).getCoord().getY(), Double::sum);
+			parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("fromX",scenario.getNetwork().getLinks().get(event.getLinkId()).getCoord().getX(), Double::sum);
+			parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("fromY",scenario.getNetwork().getLinks().get(event.getLinkId()).getCoord().getY(), Double::sum);
 		}
 		if(event.getActType().contains("_End_")) {
 			double tourDuration = event.getTime() - tourStartTimes.get(vehicleId);
@@ -151,8 +151,8 @@ public class LinkDemandAndParkingEventHandler
 			double parkingDuration = event.getTime() - parkingStartTimes.get(vehicleId);
 			tourInformation.get(vehicleId).mergeDouble("parkingDurations", parkingDuration, Double::sum);
 			String stopName = lastStop.get(event.getPersonId().toString());
-			parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("toX",network.getLinks().get(event.getLinkId()).getCoord().getX(), Double::sum);
-			parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("toY",network.getLinks().get(event.getLinkId()).getCoord().getY(), Double::sum);
+			parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("toX",scenario.getNetwork().getLinks().get(event.getLinkId()).getCoord().getX(), Double::sum);
+			parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("toY",scenario.getNetwork().getLinks().get(event.getLinkId()).getCoord().getY(), Double::sum);
 			lastStop.remove(event.getPersonId().toString());
 		}
 		if(event.getActType().contains("_Start_")) {
