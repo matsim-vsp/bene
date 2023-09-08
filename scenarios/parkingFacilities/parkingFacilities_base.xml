@@ -5,7 +5,7 @@
 		<activity type="parking">			<capacity value="20.0" />			
 		</activity>
 	</facility>
-	<facility id="Ackerstrasse" linkId="126393" x="4603402.981285995" y="5819672.924516433">
+	<facility id="Ackerstrasse" linkId="86889" x="4594561.774171723" y="5823290.126583086">
 		<activity type="parking">			<capacity value="5.0" />
 			<opentime day="wkday" start_time="08:00:00" end_time="18:00:00" />
 		</activity>
@@ -386,11 +386,11 @@
 		</activity>
 	</facility>
 	<facility id="StrasseDes17.Juni" linkId="67932" x="4593356.143366659" y="5821214.94744127">
-		<activity type="parking">			<capacity value="26.0" />
+		<activity type="parking">			<capacity value="15.0" />
 		</activity>
 	</facility>
 	<facility id="StrasseDes17.Juni(otherDirection)" linkId="57955" x="4593329.210212819" y="5821198.980640767">
-		<activity type="parking">			<capacity value="30.0" />
+		<activity type="parking">			<capacity value="15.0" />
 		</activity>
 	</facility>
 	<facility id="Stresemannstrasse28" linkId="87612" x="4594345.591978543" y="5819470.596220993">
