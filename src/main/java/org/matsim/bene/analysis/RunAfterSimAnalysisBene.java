@@ -333,7 +333,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(tourDataFile));
             bw.write(
-                    "vehicle;drivenDistance;drivenDistance_parkingSearch;drivenDistance_parkingTotal;drivenDistance_Passanger;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations;CO2_TOTAL");
+                    "vehicle;drivenDistance;drivenDistance_parkingSearch;drivenDistance_parkingTotal;drivenDistance_Passanger;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations;CO2_TOTAL;distanceToAttraction");
             bw.newLine();
             for (Id<Vehicle> vehcileId : tourInformation.keySet()) {
                 Object2DoubleMap<String> tourData = tourInformation.get(vehcileId);
@@ -347,7 +347,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                         "tourDurations"), timeformatForOutput) + ";" + Time.writeTime(
                         tourData.getDouble("parkingDurations"), timeformatForOutput) + ";" + Time.writeTime(
                         tourData.getDouble("parkingSearchDurations"), timeformatForOutput) + ";" + pollutantsPerVehicle.get(vehcileId).get(
-                        CO2_TOTAL));
+                        CO2_TOTAL) + ";" + tourData.getDouble("distanceToAttraction"));
                 bw.newLine();
 
                 //sum data for overview
@@ -362,6 +362,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                 overviewData.mergeDouble("parkingDurations", tourData.getDouble("parkingDurations"), Double::sum);
                 overviewData.mergeDouble("parkingSearchDurations", tourData.getDouble("parkingSearchDurations"), Double::sum);
                 overviewData.mergeDouble("CO2_TOTAL", pollutantsPerVehicle.get(vehcileId).get(CO2_TOTAL), Double::sum);
+                overviewData.mergeDouble("distanceToAttraction", tourData.getDouble("distanceToAttraction"), Double::sum);
             }
             bw.write((int) overviewData.getDouble("numberOfTours") + ";" + overviewData.getDouble("drivenDistance") + ";" + overviewData.getDouble(
                     "DistanceParkingSearch") + ";" + overviewData.getDouble(
@@ -372,7 +373,8 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                     "removedParking") + ";" + Time.writeTime(overviewData.getDouble(
                     "tourDurations"), timeformatForOutput) + ";" + Time.writeTime(
                     overviewData.getDouble("parkingDurations"), timeformatForOutput) + ";" + Time.writeTime(
-                    overviewData.getDouble("parkingSearchDurations"), timeformatForOutput) + ";" + overviewData.getDouble("CO2_TOTAL"));
+                    overviewData.getDouble("parkingSearchDurations"), timeformatForOutput) + ";" + overviewData.getDouble(
+                    "CO2_TOTAL") + ";" + overviewData.getDouble("distanceToAttraction"));
 
             bw.close();
         } catch (IOException e) {

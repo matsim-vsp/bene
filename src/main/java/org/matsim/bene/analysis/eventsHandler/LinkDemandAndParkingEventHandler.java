@@ -23,7 +23,9 @@ import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.matsim.api.core.v01.Coord;
 import org.matsim.api.core.v01.Id;
+import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.events.ActivityEndEvent;
 import org.matsim.api.core.v01.events.ActivityStartEvent;
 import org.matsim.api.core.v01.events.LinkLeaveEvent;
@@ -33,11 +35,12 @@ import org.matsim.api.core.v01.events.handler.ActivityStartEventHandler;
 import org.matsim.api.core.v01.events.handler.LinkLeaveEventHandler;
 import org.matsim.api.core.v01.events.handler.PersonLeavesVehicleEventHandler;
 import org.matsim.api.core.v01.network.Link;
-import org.matsim.api.core.v01.network.Network;
+import org.matsim.api.core.v01.population.Activity;
 import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEvent;
 import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
 import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEvent;
 import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEventHandler;
+import org.matsim.core.network.NetworkUtils;
 import org.matsim.vehicles.Vehicle;
 
 import java.util.HashMap;
@@ -130,6 +133,17 @@ public class LinkDemandAndParkingEventHandler
 			parkingStartTimes.put(vehicleId, event.getTime());
 		}
 		if(event.getActType().contains("_GetOff")) {
+			Activity thisPlanElement = (Activity) scenario.getPopulation().getPersons().get(
+					event.getPersonId()).getSelectedPlan().getPlanElements().stream().filter(p -> {
+				if (p instanceof Activity planElement) {
+                    return event.getActType().equals(planElement.getType());
+				}
+				return false;
+			}).findFirst().orElseThrow();
+			Coord attractionCoord = scenario.getActivityFacilities().getFacilities().get(thisPlanElement.getFacilityId()).getCoord();
+			double distanceToAttraction = NetworkUtils.getEuclideanDistance(scenario.getNetwork().getLinks().get(event.getLinkId()).getCoord(),
+					attractionCoord);
+			tourInformation.get(vehicleId).mergeDouble("distanceToAttraction", distanceToAttraction, Double::sum);
 			tourInformation.get(vehicleId).mergeDouble("numberOfStops", 1, Double::sum);
 			String attractionName = event.getActType().split("_")[4];
 			attractionCount.computeIfAbsent(attractionName, (k) -> new AtomicLong()).getAndIncrement();
