@@ -37,7 +37,7 @@ import org.matsim.api.core.v01.population.*;
 import org.matsim.application.MATSimAppCommand;
 import org.matsim.application.options.ShpOptions;
 import org.matsim.application.options.ShpOptions.Index;
-import org.matsim.bene.analysis.ParkingSlotVisualiserBus;
+import org.matsim.bene.analysis.eventsHandler.ParkingSlotVisualiserBus;
 import org.matsim.bene.analysis.RunAfterSimAnalysisBene;
 import org.matsim.contrib.parking.parkingsearch.ParkingUtils;
 import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
