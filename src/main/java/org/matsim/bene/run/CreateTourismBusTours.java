@@ -101,6 +101,8 @@ public class CreateTourismBusTours implements MATSimAppCommand {
     private static Path pathNetworkChangeEvents;
     @CommandLine.Option(names = "--runAnalysisAtEnde", description = "Run the analysis at the end of the run.", defaultValue = "true")
     private static boolean runAnalysis;
+    @CommandLine.Option(names = "--dropOffOnlyAtParkingLocations", description = "Run the analysis at the end of the run.", defaultValue = "false")
+    private static boolean dropOffOnlyAtParkingLocations;
 
     public CreateTourismBusTours(Path pathToConfig, int numberOfTours, double changeFactorOfParkingCapacity, Path facilitiesFileLocation,
                                  Path shapeFileZonePath,
@@ -128,6 +130,9 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
         Configurator.setLevel("org.matsim.contrib.parking.parkingsearch.manager.FacilityBasedParkingManager", Level.WARN);
         Configurator.setLevel("org.matsim.core.utils.geometry.geotools.MGC", Level.ERROR);
+
+        if(pathToConfig.getFileName().toString().contains("policyCase"))
+            dropOffOnlyAtParkingLocations = true;
 
         String facilityCRS = TransformationFactory.DHDN_GK4;
 
@@ -509,6 +514,13 @@ public class CreateTourismBusTours implements MATSimAppCommand {
         TreeMap<Id<ActivityFacility>, ActivityFacility> attractionFacilities = allFacilities
                 .getFacilitiesForActivityType("attraction");
 
+        TreeMap<Id<ActivityFacility>, ActivityFacility> parkingFacilities = allFacilities
+                .getFacilitiesForActivityType("parking");
+        List<Id<Link>> parkingLinkIds = new ArrayList<>();
+        parkingFacilities.values().forEach(f -> parkingLinkIds.add(f.getLinkId()));
+        List<Link> parkingLinks = scenario.getNetwork().getLinks().values().stream().filter(l -> parkingLinkIds.contains(l.getId()))
+                .collect(Collectors.toList());
+
         int tourCount = 0;
         for (String area : busStartDistribution.keySet()) {
             ArrayList<Id<ActivityFacility>> hotelKeyList = new ArrayList<>(
@@ -566,7 +578,11 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                     String getOffActivityName = stopActivityName + "_GetOff";
                     Activity tourStopGetOff = populationFactory.createActivityFromActivityFacilityId(getOffActivityName,
                             attractionFacility.getId());
-                    Id<Link> linkIdTourStop = getNearestLink(links, attractionFacility.getCoord());
+                    Id<Link> linkIdTourStop;
+                    if (dropOffOnlyAtParkingLocations)
+                        linkIdTourStop = getNearestLink(parkingLinks, attractionFacility.getCoord());
+                    else
+                        linkIdTourStop = getNearestLink(links, attractionFacility.getCoord());
                     attractionFacility.setLinkId(linkIdTourStop);
 
                     createActivityParamsForGetOffAndPickUp(scenario, plan, legActivity, getOffActivityName, tourStopGetOff, linkIdTourStop);
@@ -591,7 +607,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                 scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(endActivityName)
                         .setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
                 ParkingUtils.setNoParkingForActivity(tourEnd);
-//                tourEnd.getAttributes().putAttribute("parking", "noParking");
                 tourEnd.setMaximumDurationUndefined();
                 plan.addActivity(tourEnd);
 
@@ -605,9 +620,10 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                                                                Activity tourStopGetOffOrPickUp, Id<Link> linkIdTourStop) {
         scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getOffActivityName)
                 .setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
-        //TODO
-        ParkingUtils.setNoParkingForActivity(tourStopGetOffOrPickUp);
-
+        if (dropOffOnlyAtParkingLocations)
+            ParkingUtils.setPassangerInteractionForActivity(tourStopGetOffOrPickUp);
+        else
+            ParkingUtils.setNoParkingForActivity(tourStopGetOffOrPickUp);
         tourStopGetOffOrPickUp.setMaximumDuration(0.25 * 3600);
         tourStopGetOffOrPickUp.setLinkId(linkIdTourStop);
         plan.addActivity(tourStopGetOffOrPickUp);
