@@ -28,6 +28,8 @@ calculations:
   parkingSearch_pct: 'round(parkingSearch_m / total_m *1000)/10'
   parkingTotal_pct: 'round(parkingTotal_m / total_m *1000)/10'
   parkingSearchOfParking_pct: 'round(parkingSearch_m / parkingTotal_m *1000)/10'
+  
+  avarageDistanceAttraction: 'round({base.distanceToAttraction}/{base.numberOfStops})'
 # Table rows
 outputs:
   - title_en: Number of vehicles
@@ -51,3 +53,6 @@ outputs:
   - title_en: Share of parking search while Parking [%]
     title_de: Anteil der Parkplatzsuche beim Parkverkehr [%]
     value: parkingSearchOfParking_pct
+  - title_en: Average distance to attraction from getOff [m]
+    title_de: Durchschnittliche Entfernung bei Ausstieg zur Attraktion [m]
+    value: avarageDistanceAttraction
