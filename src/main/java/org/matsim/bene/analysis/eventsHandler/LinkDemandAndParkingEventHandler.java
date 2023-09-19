@@ -85,7 +85,7 @@ public class LinkDemandAndParkingEventHandler
 		}
 		if (vehicleBetweenPassengerDropOffAndPickup.containsKey(event.getVehicleId())) {
 			linkId2vehicles_parkingTotal.computeIfAbsent(event.getLinkId(), (k) -> new AtomicLong()).getAndIncrement();
-			tourInformation.get(event.getVehicleId()).mergeDouble("DistanceParkingTotal",scenario.getNetwork().getLinks().get(event.getLinkId()).getLength(), Double::sum);
+			tourInformation.get(event.getVehicleId()).mergeDouble("Distance_NoPassanger",scenario.getNetwork().getLinks().get(event.getLinkId()).getLength(), Double::sum);
 		}
 		else
 			tourInformation.get(event.getVehicleId()).mergeDouble("drivenDistance_Passanger",scenario.getNetwork().getLinks().get(event.getLinkId()).getLength(), Double::sum);
@@ -113,8 +113,7 @@ public class LinkDemandAndParkingEventHandler
 			tourInformation.get(event.getVehicleId()).mergeDouble("parkingSearchDurations", parkingSearchDuration, Double::sum);
 			vehicleIsInParkingSearch.remove(event.getVehicleId());
 		}
-		else
-			vehicleBetweenPassengerDropOffAndPickup.remove(event.getVehicleId());
+
 	}
 
 	@Override
