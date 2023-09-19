@@ -37,8 +37,8 @@ import org.matsim.api.core.v01.population.*;
 import org.matsim.application.MATSimAppCommand;
 import org.matsim.application.options.ShpOptions;
 import org.matsim.application.options.ShpOptions.Index;
-import org.matsim.bene.analysis.eventsHandler.ParkingSlotVisualiserBus;
 import org.matsim.bene.analysis.RunAfterSimAnalysisBene;
+import org.matsim.bene.analysis.eventsHandler.ParkingSlotVisualiserBus;
 import org.matsim.contrib.parking.parkingsearch.ParkingUtils;
 import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
 import org.matsim.contrib.parking.parkingsearch.sim.ParkingSearchConfigGroup;
@@ -71,7 +71,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -126,7 +125,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
     //TODO wenn ActivityLocation und vorhandener Parkplatz gleichen Link haben, kann ohne weiteren Leg geparkt werden
 
     @Override
-    public Integer call() throws IOException, ExecutionException, InterruptedException {
+    public Integer call() throws IOException {
 
         Configurator.setLevel("org.matsim.contrib.parking.parkingsearch.manager.FacilityBasedParkingManager", Level.WARN);
         Configurator.setLevel("org.matsim.core.utils.geometry.geotools.MGC", Level.ERROR);
