@@ -32,3 +32,23 @@ layout:
           columnName: count
           scaleFactor: 0.1
           join: facilityID
+  Sum:
+    - title: "Darstellung der Attraktionen und der Orte des Ausstiegs der Fahrgäste, die diese Attraction besuchen."
+      description: "Anzahl der Busse die an einer Attraktion Fahrgäste rauslassen und an einem Parkplatz parken"
+      type: hexagons
+      radius: 100
+      zoom: 20
+      height: 8
+      width: 8
+      props:
+        file: bus.parking_Overview.csv
+        projection: "EPSG:31468"
+        center: 13.4010, 52.51892
+        aggregations:
+          Attraktion:
+            - title: Attraktionen (Ausstieg)
+              x: GetOff_X
+              y: GetOff_Y
+            - title: Attraktionen (Ort)
+              x: attraction_X
+              y: attraction_Y

@@ -22,11 +22,11 @@ layout:
         aggregations:
           Attraktion:
             - title: Attraktionen (Ausstieg)
-              x: fromX
-              y: fromY
+              x: GetOff_X
+              y: GetOff_Y
             - title: Parkplaetze
-              x: toX
-              y: toY
+              x: parking_X
+              y: parking_Y
     - title: "General results"
       description: "TODO"
       type: 'topsheet'

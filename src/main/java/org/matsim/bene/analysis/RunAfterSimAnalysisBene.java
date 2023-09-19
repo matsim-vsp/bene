@@ -423,7 +423,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         try {
             Map<String, Object2DoubleMap<String>> parkingRelation = linkDemandAndParkingEventHandler.getParkingRelations();
             BufferedWriter bw = new BufferedWriter(new FileWriter(parkingRelation_OutputFile));
-            List<String> header = Arrays.asList("fromX", "fromY", "toX", "toY");
+            List<String> header = Arrays.asList("GetOff_X", "GetOff_Y", "parking_X", "parking_Y", "attraction_X", "attraction_Y");
             bw.write("stopID");
             for (String category : header) {
                 bw.write(";" + category);
