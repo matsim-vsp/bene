@@ -53,6 +53,13 @@ layout:
           columnName: reservationsRequests
           join: linkId
           scaleFactor: 10
+        fill:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Blues
+              steps: 3  
   numberOfParkedVehicles:
     - type: "map"
       title: "Anzahl geparkter Busse"
@@ -74,6 +81,13 @@ layout:
           columnName: numberOfParkedVehicles
           join: linkId
           scaleFactor: 10
+        fill:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Blues
+              steps: 3  
   rejectedReservations:
     - type: "map"
       title: "Anzahl der Situationen, in den ein Parkplatz keine freien Kapazitäten hatte."
@@ -95,6 +109,13 @@ layout:
           columnName: rejectedReservations
           join: linkId
           scaleFactor: 10
+        fill:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Blues
+              steps: 3  
   ParkingSlots:
     - type: "line"
       title: "Darstellung der Parkplatzsuche"
