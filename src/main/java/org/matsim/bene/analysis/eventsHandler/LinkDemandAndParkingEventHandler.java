@@ -34,6 +34,7 @@ import org.matsim.api.core.v01.events.handler.LinkLeaveEventHandler;
 import org.matsim.api.core.v01.events.handler.PersonLeavesVehicleEventHandler;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Activity;
+import org.matsim.api.core.v01.population.Person;
 import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEvent;
 import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
 import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEvent;
@@ -50,8 +51,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  */
 public class LinkDemandAndParkingEventHandler
-		implements LinkLeaveEventHandler, PersonLeavesVehicleEventHandler, StartParkingSearchEventHandler, ActivityStartEventHandler, ActivityEndEventHandler, RemoveParkingActivityEventHandler
-{
+		implements LinkLeaveEventHandler, PersonLeavesVehicleEventHandler, StartParkingSearchEventHandler, ActivityStartEventHandler, ActivityEndEventHandler, RemoveParkingActivityEventHandler, PersonEntersVehicleEventHandler {
 
 	private final Map<Id<Link>, AtomicLong> linkId2vehicles = new HashMap<>();
 	private final Map<Id<Vehicle>, Object2DoubleMap<String>> tourInformation = new HashMap<>();
@@ -65,6 +65,7 @@ public class LinkDemandAndParkingEventHandler
 	private final Scenario scenario;
 	private final Map<Id<Vehicle>, Double> vehicleIsInParkingSearch = new HashMap<>();
 	private final Map<Id<Vehicle>, Double> vehicleBetweenPassengerDropOffAndPickup = new HashMap<>();
+	private final Map<Id<Person>, Id<Vehicle>> personAndVehicleConnection= new HashMap<>();
 
 	public LinkDemandAndParkingEventHandler(Scenario scenario) {
 		this.scenario = scenario;
@@ -99,7 +100,6 @@ public class LinkDemandAndParkingEventHandler
 	@Override
 	public void handleEvent(StartParkingSearchEvent event){
 		vehicleIsInParkingSearch.put(event.getVehicleId(), event.getTime());
-		vehicleBetweenPassengerDropOffAndPickup.put(event.getVehicleId(), event.getTime());
 	}
 	@Override
 	public void handleEvent(RemoveParkingActivityEvent event){
@@ -107,6 +107,11 @@ public class LinkDemandAndParkingEventHandler
 		vehicleIsInParkingSearch.remove(event.getVehicleId());
 	}
 
+	@Override
+	public void handleEvent(PersonEntersVehicleEvent event){
+		if (!personAndVehicleConnection.containsKey(event.getPersonId()))
+			personAndVehicleConnection.put(event.getPersonId(), event.getVehicleId());
+	}
 	@Override
 	public void handleEvent(PersonLeavesVehicleEvent event) {
 		if (vehicleIsInParkingSearch.containsKey(event.getVehicleId())) {
@@ -126,6 +131,7 @@ public class LinkDemandAndParkingEventHandler
 			parkingStartTimes.put(vehicleId, event.getTime());
 		}
 		if(event.getActType().contains("_GetOff")) {
+			vehicleBetweenPassengerDropOffAndPickup.put(personAndVehicleConnection.get(event.getPersonId()), event.getTime());
 			Activity thisPlanElement = (Activity) scenario.getPopulation().getPersons().get(
 					event.getPersonId()).getSelectedPlan().getPlanElements().stream().filter(p -> {
 				if (p instanceof Activity planElement) {
@@ -154,6 +160,7 @@ public class LinkDemandAndParkingEventHandler
 				parkingRelations.remove(stopName);
 				lastStop.remove(event.getPersonId().toString());
 			}
+			vehicleBetweenPassengerDropOffAndPickup.remove(personAndVehicleConnection.get(event.getPersonId()));
 		}
 		if(event.getActType().contains("_End_")) {
 			double tourDuration = event.getTime() - tourStartTimes.get(vehicleId);
