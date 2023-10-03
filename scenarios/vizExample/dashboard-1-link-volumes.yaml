@@ -13,6 +13,11 @@ layout:
       type: 'topsheet'
       props:
         configFile: "topsheet-coach-links.yaml"
+    - title: "General results"
+      description: "TODO"
+      type: 'topsheet'
+      props:
+        configFile: "topsheet-coach-links_average.yaml"
   Sum:
     - type: "links"
       title: "Fahrzeugaufkommen"
