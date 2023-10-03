@@ -333,14 +333,14 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(tourDataFile));
             bw.write(
-                    "vehicle;drivenDistance;drivenDistance_parkingSearch;Distance_NoPassanger;drivenDistance_Passanger;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations;CO2_TOTAL;distanceToAttraction");
+                    "vehicle;drivenDistance;Distance_ParkingSearch;Distance_NoPassanger;Distance_Passanger;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations;CO2_TOTAL;distanceToAttraction");
             bw.newLine();
             for (Id<Vehicle> vehcileId : tourInformation.keySet()) {
                 Object2DoubleMap<String> tourData = tourInformation.get(vehcileId);
                 bw.write(vehcileId.toString() + ";" + tourData.getDouble("drivenDistance") + ";" + tourData.getDouble(
-                        "DistanceParkingSearch") + ";" + tourData.getDouble(
+                        "Distance_ParkingSearch") + ";" + tourData.getDouble(
                         "Distance_NoPassanger") + ";" + tourData.getDouble(
-                        "drivenDistance_Passanger") + ";" + (int) tourData.getDouble(
+                        "Distance_Passanger") + ";" + (int) tourData.getDouble(
                         "numberOfStops") + ";" + (int) tourData.getDouble(
                         "numberParkingActivities") + ";" + (int) tourData.getDouble(
                         "removedParking") + ";" + Time.writeTime(tourData.getDouble(
@@ -352,9 +352,9 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 
                 //sum data for overview
                 overviewData.mergeDouble("drivenDistance", tourData.getDouble("drivenDistance"), Double::sum);
-                overviewData.mergeDouble("DistanceParkingSearch", tourData.getDouble("DistanceParkingSearch"), Double::sum);
+                overviewData.mergeDouble("Distance_ParkingSearch", tourData.getDouble("Distance_ParkingSearch"), Double::sum);
                 overviewData.mergeDouble("Distance_NoPassanger", tourData.getDouble("Distance_NoPassanger"), Double::sum);
-                overviewData.mergeDouble("drivenDistance_Passanger", tourData.getDouble("drivenDistance_Passanger"), Double::sum);
+                overviewData.mergeDouble("Distance_Passanger", tourData.getDouble("Distance_Passanger"), Double::sum);
                 overviewData.mergeDouble("numberOfStops", tourData.getDouble("numberOfStops"), Double::sum);
                 overviewData.mergeDouble("numberParkingActivities", tourData.getDouble("numberParkingActivities"), Double::sum);
                 overviewData.mergeDouble("removedParking", tourData.getDouble("removedParking"), Double::sum);
@@ -365,9 +365,9 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                 overviewData.mergeDouble("distanceToAttraction", tourData.getDouble("distanceToAttraction"), Double::sum);
             }
             bw.write((int) overviewData.getDouble("numberOfTours") + ";" + overviewData.getDouble("drivenDistance") + ";" + overviewData.getDouble(
-                    "DistanceParkingSearch") + ";" + overviewData.getDouble(
+                    "Distance_ParkingSearch") + ";" + overviewData.getDouble(
                     "Distance_NoPassanger") + ";" + overviewData.getDouble(
-                    "drivenDistance_Passanger") + ";" + (int) overviewData.getDouble(
+                    "Distance_Passanger") + ";" + (int) overviewData.getDouble(
                     "numberOfStops") + ";" + (int) overviewData.getDouble(
                     "numberParkingActivities") + ";" + (int) overviewData.getDouble(
                     "removedParking") + ";" + Time.writeTime(overviewData.getDouble(
@@ -387,13 +387,13 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(overViewFile));
             bw.write(
-                    "case;capacityFactor;numberOfVehicles;drivenDistance;drivenDistance_parkingSearch;Distance_NoPassanger;drivenDistance_passanger;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations;CO2_TOTAL");
+                    "case;capacityFactor;numberOfVehicles;drivenDistance;Distance_ParkingSearch;Distance_NoPassanger;Distance_Passanger;numberOfStops;numberParkingActivities;removedParkingActivities;tourDurations;parkingDurations;parkingSearchDurations;CO2_TOTAL");
             bw.newLine();
             bw.write(scenarioName + ";" + capacityFactor + ";" + (int) overviewData.getDouble("numberOfTours") + ";" + overviewData.getDouble(
                     "drivenDistance") + ";" + overviewData.getDouble(
-                    "DistanceParkingSearch") + ";" + overviewData.getDouble(
+                    "Distance_ParkingSearch") + ";" + overviewData.getDouble(
                     "Distance_NoPassanger") + ";" + overviewData.getDouble(
-                    "drivenDistance_Passanger") + ";" + (int) overviewData.getDouble(
+                    "Distance_Passanger") + ";" + (int) overviewData.getDouble(
                     "numberOfStops") + ";" + (int) overviewData.getDouble(
                     "numberParkingActivities") + ";" + (int) overviewData.getDouble(
                     "removedParking") + ";" + Time.writeTime(overviewData.getDouble(
