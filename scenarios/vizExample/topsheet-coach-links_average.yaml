@@ -1,0 +1,79 @@
+# Topsheet Test
+title: General results
+title_en: Average per vehicle
+title_de: Durchschnitt pro Fahrzeug
+description: 'description'
+
+# Input files -------------------------
+files:
+  base:
+    file: "bus.general_results.csv"
+    useLastRow: true
+  #parkingTotal:
+    #file: "bus.emissionsPerLink_parkingTotal.csv"
+
+# These are text entry boxes in the UI
+    
+# Calculations ------------------------
+# these are evaluated top down!
+calculations: 
+  vehicles: '{base.vehicle}'
+  total_m: '{base.drivenDistance}/vehicles'
+  total_km: 'round(total_m/100)/10'
+  Distance_ParkingSearch_m: '{base.Distance_ParkingSearch}/vehicles'
+  Distance_ParkingSearch_km: 'round(Distance_ParkingSearch_m/100)/10'
+  Distance_NoPassanger_m: '{base.Distance_NoPassanger}/vehicles'
+  Distance_NoPassanger_km: 'round(Distance_NoPassanger_m/100)/10'
+  Distance_Passanger_m: '{base.Distance_Passanger}/vehicles'
+  Distance_Passanger_km: 'round(Distance_Passanger_m/100)/10'
+  tourDurations_s: '{base.tourDurations}/vehicles'
+  tourDurations_h: 'round(tourDurations_s/36)/100'  
+  parkingDurations_s: '{base.parkingDurations}/{base.numberOfStops}'
+  parkingDurations_h: 'round(parkingDurations_s/36)/100'
+  parkingSearchDurations_s: '{base.parkingSearchDurations}/{base.numberOfStops}'
+  parkingSearchDurations_min: 'round(parkingSearchDurations_s/6)/10'
+  CO2_g: '{base.CO2_TOTAL}/vehicles'
+  CO2_kg: 'round(CO2_g/100)/10'
+  
+  parkingSearch_pct: 'round(Distance_ParkingSearch_m / total_m *1000)/10'
+  Distance_NoPassanger_pct: 'round(Distance_NoPassanger_m / total_m *1000)/10'
+  
+  avarageDistanceAttraction: 'round({base.distanceToAttraction}/{base.numberOfStops})'
+# Table rows
+outputs:
+  - title_en: " "
+    title_de: " "
+    value: vehicles
+  - title_en: " "
+    title_de: " "
+    value: total_km
+  - title_en: " "
+    title_de: " "
+    value: Distance_Passanger_km
+  - title_en: " "
+    title_de: " "
+    value: Distance_NoPassanger_km
+  - title_en: " "
+    title_de: " "
+    value: Distance_ParkingSearch_km
+  - title_en: " "
+    title_de: " "
+    value: parkingSearch_pct
+  - title_en: " "
+    title_de: " "
+    value: Distance_NoPassanger_pct
+  - title_en: " "
+    title_de: " "
+    value: tourDurations_h
+  - title_en: " "
+    title_de: " "
+    value: parkingSearchDurations_min
+  - title_en: " "
+    title_de: " "
+    value: parkingDurations_h
+  - title_en: " "
+    title_de: " "
+    value: CO2_kg
+  - title_en: " "
+    title_de: " "
+    value: avarageDistanceAttraction
