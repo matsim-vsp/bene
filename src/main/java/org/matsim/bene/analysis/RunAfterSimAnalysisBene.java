@@ -109,7 +109,7 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
             final String hbefaPath = "../public-svn/3507bb3997e5657ab9da76dbedbb13c9b5991d3e/0e73947443d68f95202b71a156b337f7f71604ae/";
 
             String hbefaFileWarm = hbefaPath + "7eff8f308633df1b8ac4d06d05180dd0c5fdf577.enc";
-            String hbefaFileCold = hbefaPath + "ColdStart_Vehcat_2020_Average_withHGVetc.csv.enc";
+            String hbefaFileCold = hbefaPath + "r9230ru2n209r30u2fn0c9rn20n2rujkhkjhoewt84202.enc";
 
             RunAfterSimAnalysisBene analysis = new RunAfterSimAnalysisBene(
                     runDirectory,
