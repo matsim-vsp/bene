@@ -577,6 +577,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                     String getOffActivityName = stopActivityName + "_GetOff";
                     Activity tourStopGetOff = populationFactory.createActivityFromActivityFacilityId(getOffActivityName,
                             attractionFacility.getId());
+                    tourStopGetOff.setCoord(attractionFacility.getCoord());
                     Id<Link> linkIdTourStop;
                     if (dropOffOnlyAtParkingLocations)
                         linkIdTourStop = getNearestLink(parkingLinks, attractionFacility.getCoord());
@@ -597,6 +598,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
                     Activity tourStopGetIn = populationFactory.createActivityFromActivityFacilityId(getInActivityName,
                             attractionFacility.getId());
+                    tourStopGetIn.setCoord(attractionFacility.getCoord());
                     createActivityParamsForGetOffAndPickUp(scenario, plan, legActivity, getInActivityName, tourStopGetIn, linkIdTourStop);
                 }
                 String endActivityName = tourName + "_End_" + hotelFacility.getDesc();
