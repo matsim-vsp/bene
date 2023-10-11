@@ -52,14 +52,26 @@ layout:
           dataset: parkingData
           columnName: reservationsRequests
           join: linkId
-          scaleFactor: 10
+          scaleFactor: 1
         fill:
           dataset: parking.shp
           columnName: maxTime
           join: ""
           colorRamp:
-              ramp: Blues
-              steps: 3  
+              ramp: Plasma
+              steps: 3
+        lineColor:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Plasma
+              steps: 3
+        radius:
+          dataset: parkingData
+          columnName: reservationsRequests
+          scaleFactor: 1
+          join: linkId
   numberOfParkedVehicles:
     - type: "map"
       title: "Anzahl geparkter Busse"
@@ -80,14 +92,26 @@ layout:
           dataset: parkingData
           columnName: numberOfParkedVehicles
           join: linkId
-          scaleFactor: 10
+          scaleFactor: 1
         fill:
           dataset: parking.shp
           columnName: maxTime
           join: ""
           colorRamp:
-              ramp: Blues
-              steps: 3  
+              ramp: Plasma
+              steps: 3
+        lineColor:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Plasma
+              steps: 3
+        radius:
+          dataset: parkingData
+          columnName: numberOfParkedVehicles
+          scaleFactor: 1
+          join: linkId
   rejectedReservations:
     - type: "map"
       title: "Anzahl der Situationen, in den ein Parkplatz keine freien Kapazitäten hatte."
@@ -108,14 +132,26 @@ layout:
           dataset: parkingData
           columnName: rejectedReservations
           join: linkId
-          scaleFactor: 10
+          scaleFactor: 1
         fill:
           dataset: parking.shp
           columnName: maxTime
           join: ""
           colorRamp:
-              ramp: Blues
-              steps: 3  
+              ramp: Plasma
+              steps: 3
+        lineColor:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Plasma
+              steps: 3
+        radius:
+          dataset: parkingData
+          columnName: rejectedReservations
+          scaleFactor: 1
+          join: linkId
   ParkingSlots:
     - type: "line"
       title: "Darstellung der Parkplatzsuche"
