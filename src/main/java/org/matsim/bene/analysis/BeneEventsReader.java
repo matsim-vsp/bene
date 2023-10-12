@@ -2,10 +2,7 @@ package org.matsim.bene.analysis;
 
 import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.network.Link;
-import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEvent;
-import org.matsim.contrib.parking.parkingsearch.events.ReserveParkingLocationEvent;
-import org.matsim.contrib.parking.parkingsearch.events.SelectNewParkingLocationEvent;
-import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEvent;
+import org.matsim.contrib.parking.parkingsearch.events.*;
 import org.matsim.core.api.experimental.events.EventsManager;
 import org.matsim.core.events.EventsReaderXMLv1;
 import org.matsim.core.events.MatsimEventsReader;
@@ -28,7 +25,20 @@ public class BeneEventsReader extends MatsimXmlParser {
         delegate.addCustomEventMapper(SelectNewParkingLocationEvent.EVENT_TYPE, getSelectNewParkingLocationEvent());
         delegate.addCustomEventMapper(ReserveParkingLocationEvent.EVENT_TYPE, getReserveParkingLocationEventMapper());
         delegate.addCustomEventMapper(RemoveParkingActivityEvent.EVENT_TYPE, getRemoveParkingActivityEventMapper());
+        delegate.addCustomEventMapper(StartWaitingForParkingEvent.EVENT_TYPE, getStartWaitingForParkingEventMapper());
     }
+
+    private MatsimEventsReader.CustomEventMapper getStartWaitingForParkingEventMapper() {
+        return event -> {
+            Map<String, String> attributes = event.getAttributes();
+
+            double time = Double.parseDouble(attributes.get(StartWaitingForParkingEvent.ATTRIBUTE_TIME));
+            Id<Vehicle> vehicle = Id.createVehicleId(attributes.get(StartWaitingForParkingEvent.ATTRIBUTE_VEHICLE));
+            Id<Link> linkId = Id.createLinkId(attributes.get(StartWaitingForParkingEvent.ATTRIBUTE_LINK));
+            return new StartWaitingForParkingEvent(time, vehicle, linkId);
+        };
+    }
+
     private MatsimEventsReader.CustomEventMapper getStartParkingSearchEventMapper() {
         return event -> {
             Map<String, String> attributes = event.getAttributes();
