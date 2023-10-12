@@ -30,10 +30,7 @@ import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Activity;
 import org.matsim.api.core.v01.population.Person;
 import org.matsim.contrib.parking.parkingsearch.ParkingUtils;
-import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEvent;
-import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
-import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEvent;
-import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEventHandler;
+import org.matsim.contrib.parking.parkingsearch.events.*;
 import org.matsim.core.network.NetworkUtils;
 import org.matsim.vehicles.Vehicle;
 
@@ -45,7 +42,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Ricardo Ewert
  */
 public class LinkDemandAndParkingEventHandler
-        implements LinkLeaveEventHandler, PersonLeavesVehicleEventHandler, StartParkingSearchEventHandler, ActivityStartEventHandler, ActivityEndEventHandler, RemoveParkingActivityEventHandler, PersonEntersVehicleEventHandler {
+        implements LinkLeaveEventHandler, PersonLeavesVehicleEventHandler, StartParkingSearchEventHandler, ActivityStartEventHandler, ActivityEndEventHandler, RemoveParkingActivityEventHandler, PersonEntersVehicleEventHandler, StartWaitingForParkingEventHandler {
 
     private final Map<Id<Link>, AtomicLong> linkId2vehicles = new HashMap<>();
     private final Map<Id<Vehicle>, Object2DoubleMap<String>> tourInformation = new HashMap<>();
@@ -60,6 +57,7 @@ public class LinkDemandAndParkingEventHandler
     private final Scenario scenario;
     private final Map<Id<Vehicle>, Double> vehicleIsInParkingSearch = new HashMap<>();
     private final Map<Id<Vehicle>, Double> vehicleBetweenPassengerDropOffAndPickup = new HashMap<>();
+    private final Map<Id<Vehicle>, Double> vehicleIsWaitingForParking = new HashMap<>();
     private final Map<Id<Person>, Id<Vehicle>> personAndVehicleConnection = new HashMap<>();
 
     public LinkDemandAndParkingEventHandler(Scenario scenario) {
@@ -102,8 +100,13 @@ public class LinkDemandAndParkingEventHandler
 
     @Override
     public void handleEvent(RemoveParkingActivityEvent event) {
-        tourInformation.get(event.getVehicleId()).mergeDouble("removedParking", 1, Double::sum);
+        tourInformation.get(event.getVehicleId()).mergeDouble("removedParkingActivities", 1, Double::sum);
         vehicleIsInParkingSearch.remove(event.getVehicleId());
+    }
+
+    @Override
+    public void handleEvent(StartWaitingForParkingEvent event) {
+        vehicleIsWaitingForParking.put(event.getVehicleId(), event.getTime());
     }
 
     @Override
@@ -114,7 +117,7 @@ public class LinkDemandAndParkingEventHandler
 
     @Override
     public void handleEvent(PersonLeavesVehicleEvent event) {
-        if (vehicleIsInParkingSearch.containsKey(event.getVehicleId())) {
+        if (vehicleIsInParkingSearch.containsKey(event.getVehicleId()) && !vehicleIsWaitingForParking.containsKey(event.getVehicleId())) {
             double parkingSearchDuration = event.getTime() - vehicleIsInParkingSearch.get(event.getVehicleId());
             tourInformation.get(event.getVehicleId()).mergeDouble("parkingSearchDurations", parkingSearchDuration, Double::sum);
             vehicleIsInParkingSearch.remove(event.getVehicleId());
@@ -191,9 +194,13 @@ public class LinkDemandAndParkingEventHandler
         if (event.getActType().contains("_Start_")) {
             tourStartTimes.put(vehicleId, event.getTime());
         }
-        if (event.getActType().equals(ParkingUtils.ParkingActivityType)) {
+        if (event.getActType().equals(ParkingUtils.WaitingForParkingActivityType)) {
             double waitingDuration = event.getTime() - waitingActivityStartTimes.get(vehicleId);
-            tourInformation.get(vehicleId).mergeDouble("waitingDurations", waitingDuration, Double::sum);
+            tourInformation.get(vehicleId).mergeDouble("waitingActivityDurations", waitingDuration, Double::sum);
+            double parkingSearchDuration = event.getTime() - vehicleIsInParkingSearch.get(vehicleId);
+            tourInformation.get(vehicleId).mergeDouble("parkingSearchDurations", parkingSearchDuration, Double::sum);
+            vehicleIsInParkingSearch.remove(vehicleId);
+            vehicleIsWaitingForParking.remove(vehicleId);
         }
     }
 
