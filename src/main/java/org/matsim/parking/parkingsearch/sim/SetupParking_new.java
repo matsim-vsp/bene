@@ -75,7 +75,8 @@ public class SetupParking_new {
 //				bind(ParkingSearchManager.class).to(FacilityBasedParkingManager.class).asEagerSingleton();
 				this.install(new ParkingSearchQSimModule());
 				this.install(new ParkingManagerModule());
-				addControlerListenerBinding().to(ParkingListener.class);
+				addControlerListenerBinding().to(ParkingListener.class).asEagerSingleton();
+				addMobsimListenerBinding().to(ParkingListener.class);
 				bind(ParkingRouter.class).to(WithinDayParkingRouter.class);
 				bind(VehicleTeleportationLogic.class).to(NoVehicleTeleportationLogic.class);
 
