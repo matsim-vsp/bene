@@ -94,7 +94,7 @@ public class RunAfterSimAnalysisForManyRuns {
             double sumDrivenDistance_parking = Double.parseDouble(record.get("drivenDistance_parkingTotal"));
             double sumDrivenDistance_ParkingSearch_parking = Double.parseDouble(record.get("drivenDistance_parkingSearch"));
             double sumDrivenDistance_Passanger = Double.parseDouble(record.get("drivenDistance_passanger"));
-            double sumParkingDuration = Double.parseDouble(record.get("parkingDurations"));
+            double sumParkingDuration = Double.parseDouble(record.get("parkingActivityDurations"));
             double sumTourDuration = Double.parseDouble(record.get("tourDurations"));
             double sumParkingSearchDuration = Double.parseDouble(record.get("parkingSearchDurations"));
             double sumRemovedParkingActivities = Integer.parseInt(record.get("removedParkingActivities"));

@@ -54,7 +54,8 @@ public class LinkDemandAndParkingEventHandler
     private final Map<Id<Link>, AtomicLong> linkId2vehicles_parkingTotal = new HashMap<>();
     private final Map<Id<Link>, AtomicLong> linkId2vehicles_parkingSearch = new HashMap<>();
     private final Map<String, AtomicLong> attractionCount = new HashMap<>();
-    private final Map<Id<Vehicle>, Double> parkingStartTimes = new HashMap<>();
+    private final Map<Id<Vehicle>, Double> parkingActivityStartTimes = new HashMap<>();
+    private final Map<Id<Vehicle>, Double> waitingActivityStartTimes = new HashMap<>();
     private final Map<Id<Vehicle>, Double> tourStartTimes = new HashMap<>();
     private final Scenario scenario;
     private final Map<Id<Vehicle>, Double> vehicleIsInParkingSearch = new HashMap<>();
@@ -177,10 +178,9 @@ public class LinkDemandAndParkingEventHandler
     @Override
     public void handleEvent(ActivityEndEvent event) {
         Id<Vehicle> vehicleId = Id.createVehicleId(event.getPersonId().toString());
-        if (event.getActType().equals("parking_activity")) {
-            double parkingDuration = event.getTime() - parkingStartTimes.get(vehicleId);
-            tourInformation.get(vehicleId).mergeDouble("parkingDurations", parkingDuration, Double::sum);
         if (event.getActType().equals(ParkingUtils.ParkingActivityType)) {
+            double parkingDuration = event.getTime() - parkingActivityStartTimes.get(vehicleId);
+            tourInformation.get(vehicleId).mergeDouble("parkingActivityDurations", parkingDuration, Double::sum);
             String stopName = previousGetOff.get(event.getPersonId().toString());
             parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("parking_X",
                     scenario.getNetwork().getLinks().get(event.getLinkId()).getCoord().getX(), Double::sum);
@@ -190,6 +190,10 @@ public class LinkDemandAndParkingEventHandler
         }
         if (event.getActType().contains("_Start_")) {
             tourStartTimes.put(vehicleId, event.getTime());
+        }
+        if (event.getActType().equals(ParkingUtils.ParkingActivityType)) {
+            double waitingDuration = event.getTime() - waitingActivityStartTimes.get(vehicleId);
+            tourInformation.get(vehicleId).mergeDouble("waitingDurations", waitingDuration, Double::sum);
         }
     }
 
