@@ -132,6 +132,18 @@
 				<param name="typicalDuration" value="01:00:00" />
 				<param name="typicalDurationScoreComputation" value="relative" />
 			</parameterset>
+			<parameterset type="activityParams" >
+				<param name="activityType" value="waitingForParkingSpace_activity" />
+				<param name="closingTime" value="undefined" />
+				<param name="earliestEndTime" value="undefined" />
+				<param name="latestStartTime" value="undefined" />
+				<param name="minimalDuration" value="undefined" />
+				<param name="openingTime" value="undefined" />
+				<param name="priority" value="1.0" />
+				<param name="scoringThisActivityAtAll" value="true" />
+				<param name="typicalDuration" value="01:00:00" />
+				<param name="typicalDurationScoreComputation" value="relative" />
+			</parameterset>
 
 			<parameterset type="modeParams" >
 				<!-- [utils] alternative-specific constant.  Normally per trip, but that is probably buggy for multi-leg trips. -->
