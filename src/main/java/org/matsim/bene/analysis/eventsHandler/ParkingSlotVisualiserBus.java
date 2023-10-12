@@ -78,7 +78,7 @@ public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements A
 
 	@Override
 	public void handleEvent(ActivityEndEvent event) {
-		if (event.getActType().equals("waitingForParkingSpace_activity")) {
+		if (event.getActType().equals(ParkingUtils.WaitingForParkingActivityType)) {
 			ParkingSlotManager manager = this.slotsOnLink.get(event.getLinkId());
 			if (manager != null) {
 				Tuple<Coord, Double> parkingTuple = manager.processParking(event.getTime(), Id.createVehicleId(event.getPersonId().toString()));
