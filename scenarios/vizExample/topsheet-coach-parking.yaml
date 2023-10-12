@@ -22,7 +22,8 @@ calculations:
   numberOfParkedVehicles: '({parkingStats.numberOfParkedVehicles})'
   rejectedParkingRequest: '({parkingStats.rejectedParkingRequest})'
   numberOfWaitingActivities: '({parkingStats.numberOfWaitingActivities})'
-
+  numberOfStaysFromGetOffUntilGetIn: '({parkingStats.numberOfStaysFromGetOffUntilGetIn})'
+  numberOfParkingBeforeGetIn: '({parkingStats.numberOfParkingBeforeGetIn})'
 # Table rows
 outputs:
   - title_en: "Number of parking spaces in the study area"
@@ -37,12 +38,18 @@ outputs:
   - title_en: "Number of cancelled park activities"
     title_de: "Anzahl ausgefallener Parkaktivitäten"
     value: removedParkingActivities
+  - title_en: "Number of continuous parking from getOff to getIn"
+    title_de: "Anzahl an durchgängigem Parken von Ausstieg bis Einstieg"
+    value: numberOfStaysFromGetOffUntilGetIn
+  - title_en: "Number of parking already before getIn"
+    title_de: "Anzahl an Parken bereits vor dem Einstieg"
+    value: numberOfParkingBeforeGetIn  
   - title_en: "Number of situations: 'requested parking space occupied'"
     title_de: "Anzahl der Situationen: 'gewünschter Parkplatz belegt'"
     value: rejectedParkingRequest
   - title_en: "Number of parking attempts"
     title_de: "Anzahl der Parkversuche"
     value: reservationsRequests
-  - title_en: "Number of waiting activities before exit/entry"
+  - title_en: "Number of waiting activities before getOff/getIn"
     title_de: "Anzahl an Warteaktivitäten vor dem Ausstieg/Einstieg"
-    value: numberOfWaitingActivities  
+    value: numberOfWaitingActivities
