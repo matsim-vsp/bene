@@ -18,7 +18,7 @@ layout:
       description: "Anzahl der Busse die an einer Attraktion Fahrgäste rauslassen und an einem Parkplatz parken"
       type: hexagons
       radius: 100
-      zoom: 20
+      zoom: 25
       height: 8
       width: 8
       props:
@@ -40,7 +40,7 @@ layout:
       width: 2
       height: 8
       center: 13.4010, 52.51892
-      zoom: 20
+      zoom: 25
       projection: 'EPSG:31468'
       shapes:
         file: 'shp/parking.shp'
@@ -80,7 +80,7 @@ layout:
       width: 2
       height: 8
       center: 13.4010, 52.51892
-      zoom: 11
+      zoom: 25
       projection: 'EPSG:31468'
       shapes:
         file: 'shp/parking.shp'
@@ -120,7 +120,7 @@ layout:
       width: 2
       height: 8
       center: 13.4010, 52.51892
-      zoom: 11
+      zoom: 25
       projection: 'EPSG:31468'
       shapes:
         file: 'shp/parking.shp'
@@ -160,7 +160,7 @@ layout:
       width: 2
       height: 8
       center: 13.4010, 52.51892
-      zoom: 11
+      zoom: 25
       projection: 'EPSG:31468'
       shapes:
         file: 'shp/parking.shp'
