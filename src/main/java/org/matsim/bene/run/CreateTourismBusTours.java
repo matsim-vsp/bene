@@ -100,7 +100,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
     private static Path pathNetworkChangeEvents;
     @CommandLine.Option(names = "--runAnalysisAtEnde", description = "Run the analysis at the end of the run.", defaultValue = "true")
     private static boolean runAnalysis;
-    @CommandLine.Option(names = "--dropOffOnlyAtParkingLocations", description = "Run the analysis at the end of the run.", defaultValue = "false")
+    @CommandLine.Option(names = "--dropOffOnlyAtParkingLocations", description = "Set if the passangerInteraction while stops can only take place at parking facilities.", defaultValue = "false")
     private static boolean dropOffOnlyAtParkingLocations;
 
     public CreateTourismBusTours(Path pathToConfig, int numberOfTours, double changeFactorOfParkingCapacity, Path facilitiesFileLocation,
