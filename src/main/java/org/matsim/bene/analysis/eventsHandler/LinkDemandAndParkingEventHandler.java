@@ -29,6 +29,7 @@ import org.matsim.api.core.v01.events.handler.*;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Activity;
 import org.matsim.api.core.v01.population.Person;
+import org.matsim.contrib.parking.parkingsearch.ParkingUtils;
 import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEvent;
 import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
 import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEvent;
@@ -123,9 +124,13 @@ public class LinkDemandAndParkingEventHandler
     @Override
     public void handleEvent(ActivityStartEvent event) {
         Id<Vehicle> vehicleId = Id.createVehicleId(event.getPersonId().toString());
-        if (event.getActType().equals("parking_activity")) {
+        if (event.getActType().equals(ParkingUtils.WaitingForParkingActivityType)) {
+            tourInformation.get(vehicleId).mergeDouble("numberWaitingActivities", 1, Double::sum);
+            waitingActivityStartTimes.put(vehicleId, event.getTime());
+        }
+        if (event.getActType().equals(ParkingUtils.ParkingActivityType)) {
             tourInformation.get(vehicleId).mergeDouble("numberParkingActivities", 1, Double::sum);
-            parkingStartTimes.put(vehicleId, event.getTime());
+            parkingActivityStartTimes.put(vehicleId, event.getTime());
         }
         if (event.getActType().contains("_GetOff")) {
             vehicleBetweenPassengerDropOffAndPickup.put(personAndVehicleConnection.get(event.getPersonId()), event.getTime());
@@ -175,6 +180,7 @@ public class LinkDemandAndParkingEventHandler
         if (event.getActType().equals("parking_activity")) {
             double parkingDuration = event.getTime() - parkingStartTimes.get(vehicleId);
             tourInformation.get(vehicleId).mergeDouble("parkingDurations", parkingDuration, Double::sum);
+        if (event.getActType().equals(ParkingUtils.ParkingActivityType)) {
             String stopName = previousGetOff.get(event.getPersonId().toString());
             parkingRelations.computeIfAbsent(stopName, (k) -> new Object2DoubleOpenHashMap<>()).mergeDouble("parking_X",
                     scenario.getNetwork().getLinks().get(event.getLinkId()).getCoord().getX(), Double::sum);
