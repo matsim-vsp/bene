@@ -72,7 +72,6 @@ public class SetupParking_new {
 				bind(Network.class).annotatedWith(Names.named(DvrpGlobalRoutingNetworkProvider.DVRP_ROUTING))
 						.to(Network.class)
 						.asEagerSingleton();
-//				bind(ParkingSearchManager.class).to(FacilityBasedParkingManager.class).asEagerSingleton();
 				this.install(new ParkingSearchQSimModule());
 				this.install(new ParkingManagerModule());
 				addControlerListenerBinding().to(ParkingListener.class).asEagerSingleton();
