@@ -146,7 +146,7 @@ public class RunAfterSimAnalysisForManyRuns {
             int sumNumberOfParkedVehicles = 0;
 
             for (CSVRecord record : parse) {
-                sumParkingRejections += Integer.parseInt(record.get("rejectedReservations"));
+                sumParkingRejections += Integer.parseInt(record.get("rejectedParkingRequest"));
                 sumReservationsRequests += Integer.parseInt(record.get("reservationsRequests"));
                 sumNumberOfParkedVehicles += Integer.parseInt(record.get("numberOfParkedVehicles"));
 
@@ -155,7 +155,7 @@ public class RunAfterSimAnalysisForManyRuns {
             double averageReservationsRequests = (double) Math.round((float) sumReservationsRequests / numberOfTours * 10) /10;
             double averageNumberOfParkedVehicles = (double) Math.round((float) sumNumberOfParkedVehicles /numberOfTours*10)/10;
 
-            valuesForThisRun.put(prefix+"rejectedReservations", String.valueOf(averageParkingRejections));
+            valuesForThisRun.put(prefix+"rejectedParkingRequest", String.valueOf(averageParkingRejections));
             valuesForThisRun.put(prefix+"reservationsRequests", String.valueOf(averageReservationsRequests));
             valuesForThisRun.put(prefix+"numberOfParkedVehicles", String.valueOf(averageNumberOfParkedVehicles));
 
