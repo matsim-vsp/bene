@@ -32,13 +32,16 @@ calculations:
   parkingDurations_h: 'round(parkingDurations_s/36)/100'
   parkingSearchDurations_s: '{base.parkingSearchDurations}'
   parkingSearchDurations_min: 'round(parkingSearchDurations_s/6)/10'
+  waitingForParkingDurations_s: '{base.waitingActivityDurations}'
+  waitingForParkingDurations_min: 'round(waitingForParkingDurations_s/6)/10'
+
   CO2_g: '{base.CO2_TOTAL}'
   CO2_kg: 'round(CO2_g/100)/10'
 
   parkingSearch_pct: 'round(Distance_ParkingSearch_m / total_m *1000)/10'
   Distance_NoPassanger_pct: 'round(Distance_NoPassanger_m / total_m *1000)/10'
   
-  avarageDistanceAttraction: 'round({base.distanceToAttraction}/{base.numberOfStops})'
+  distanceToAttraction_km: 'round({base.distanceToAttraction})/1000'
 # Table rows
 outputs:
   - title_en: Number of vehicles
@@ -71,9 +74,12 @@ outputs:
   - title_en: Durations of parking [h]
     title_de: Dauer Parkplatzaufenthalt [h]
     value: parkingDurations_h
+  - title_en: Durations of waiting for parking [min]
+    title_de: Dauer Warte auf Parkplatz [min]
+    value: waitingForParkingDurations_min
   - title_en: CO2 emissions [kg]
     title_de: CO2 Emissionen [kg]
     value: CO2_kg  
-  - title_en: Average distance to attraction from getOff [m]
-    title_de: Durchschnittliche Entfernung bei Ausstieg zur Attraktion [m]
-    value: avarageDistanceAttraction
+  - title_en: Distance to attraction from getOff [km]
+    title_de: Entfernungen bei Ausstieg zur Attraktion [km]
+    value: distanceToAttraction_km

@@ -1,7 +1,7 @@
 # Topsheet Test
 title: General results
 title_en: Average per vehicle
-title_de: Durchschnitt pro Fahrzeug
+title_de: Durchschnitt
 description: 'description'
 
 # Input files -------------------------
@@ -32,29 +32,32 @@ calculations:
   parkingDurations_h: 'round(parkingDurations_s/36)/100'
   parkingSearchDurations_s: '{base.parkingSearchDurations}/{base.numberOfStops}'
   parkingSearchDurations_min: 'round(parkingSearchDurations_s/6)/10'
+  waitingForParkingDurations_s: '{base.waitingActivityDurations}/vehicles'
+  waitingForParkingDurations_min: 'round(waitingForParkingDurations_s/6)/10'
+  
   CO2_g: '{base.CO2_TOTAL}/vehicles'
   CO2_kg: 'round(CO2_g/100)/10'
   
   parkingSearch_pct: 'round(Distance_ParkingSearch_m / total_m *1000)/10'
   Distance_NoPassanger_pct: 'round(Distance_NoPassanger_m / total_m *1000)/10'
   
-  avarageDistanceAttraction: 'round({base.distanceToAttraction}/{base.numberOfStops})'
+  avarageDistanceToAttraction_km: 'round({base.distanceToAttraction}/{base.numberOfStops})/1000'
 # Table rows
 outputs:
   - title_en: " "
     title_de: " "
     value: vehicles
-  - title_en: " "
-    title_de: " "
+  - title_en: "[per vehicle]"
+    title_de: "[je Fahrzeug]"
     value: total_km
-  - title_en: " "
-    title_de: " "
+  - title_en: "[per vehicle]"
+    title_de: "[je Fahrzeug]"
     value: Distance_Passanger_km
-  - title_en: " "
-    title_de: " "
+  - title_en: "[per vehicle]"
+    title_de: "[je Fahrzeug]"
     value: Distance_NoPassanger_km
-  - title_en: " "
-    title_de: " "
+  - title_en: "[per vehicle]"
+    title_de: "[je Fahrzeug]"
     value: Distance_ParkingSearch_km
   - title_en: " "
     title_de: " "
@@ -62,18 +65,21 @@ outputs:
   - title_en: " "
     title_de: " "
     value: Distance_NoPassanger_pct
-  - title_en: " "
-    title_de: " "
+  - title_en: "[per vehicle]"
+    title_de: "[je Fahrzeug]"
     value: tourDurations_h
-  - title_en: " "
-    title_de: " "
+  - title_en: "[per parking]"
+    title_de: "[je Parkvorgang]"
     value: parkingSearchDurations_min
-  - title_en: " "
-    title_de: " "
+  - title_en: "[per parking]"
+    title_de: "[je Parkvorgang]"
     value: parkingDurations_h
-  - title_en: " "
-    title_de: " "
+  - title_en: "[per vehicle]"
+    title_de: "[je Fahrzeug]"
+    value: waitingForParkingDurations_min
+  - title_en: "[per vehicle]"
+    title_de: "[je Fahrzeug]"
     value: CO2_kg
-  - title_en: " "
-    title_de: " "
-    value: avarageDistanceAttraction
+  - title_en: "[per stop]"
+    title_de: "[je Stop]"
+    value: avarageDistanceToAttraction_km

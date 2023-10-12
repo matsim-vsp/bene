@@ -1,7 +1,7 @@
 # Topsheet Test
 title: Parking Statistics
-title_en: Parking Statistics
-title_de: Parking Statistics
+title_en: Overview
+title_de: Übersicht
 description: 'description'
 
 # Input files -------------------------
@@ -20,25 +20,29 @@ calculations:
   removedParkingActivities:  '{generalStats.removedParkingActivities}'
   reservationsRequests: '{parkingStats.reservationsRequests}' 
   numberOfParkedVehicles: '({parkingStats.numberOfParkedVehicles})'
-  rejectedReservations: '({parkingStats.rejectedReservations})'
+  rejectedParkingRequest: '({parkingStats.rejectedParkingRequest})'
+  numberOfWaitingActivities: '({parkingStats.numberOfWaitingActivities})'
 
 # Table rows
 outputs:
-  - title_en: capacity
-    title_de: capacity
+  - title_en: "Number of parking spaces in the study area"
+    title_de: "Anzahl der Parkflächen im Untersuchungsgebiet"
     value: capacity
-  - title_en: numberOfPlanedStops
-    title_de: numberOfPlanedStops
+  - title_en: "Number of planned park activities"
+    title_de: "Anzahl geplanter Parkaktivitäten"
     value: numberOfPlanedStops
-  - title_en: numberOfParkedVehicles
-    title_de: numberOfParkedVehicles
+  - title_en: "Number of performed parking activities"
+    title_de: "Anzahl an durchgeführten Parkvorgängen"
     value: numberOfParkedVehicles  
-  - title_en: removedParkingActivities
-    title_de: removedParkingActivities
+  - title_en: "Number of cancelled park activities"
+    title_de: "Anzahl ausgefallener Parkaktivitäten"
     value: removedParkingActivities
-  - title_en: rejectedReservations
-    title_de: rejectedReservations
-    value: rejectedReservations
-  - title_en: reservationsRequests
-    title_de: reservationsRequests
-    value: reservationsRequests  
+  - title_en: "Number of situations: 'requested parking space occupied'"
+    title_de: "Anzahl der Situationen: 'gewünschter Parkplatz belegt'"
+    value: rejectedParkingRequest
+  - title_en: "Number of parking attempts"
+    title_de: "Anzahl der Parkversuche"
+    value: reservationsRequests
+  - title_en: "Number of waiting activities before exit/entry"
+    title_de: "Anzahl an Warteaktivitäten vor dem Ausstieg/Einstieg"
+    value: numberOfWaitingActivities  
