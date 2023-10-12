@@ -80,5 +80,6 @@ public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements A
 		if (event.getActType().equals(ParkingUtils.PARKACTIVITYTYPE))
 			this.vehicleIsLookingForParking.remove(event.getPersonId().toString());
 		
+			if (event.getActType().equals(ParkingUtils.ParkingStageInteractionType))
 	}
 }

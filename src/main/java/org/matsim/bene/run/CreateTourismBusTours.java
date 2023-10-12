@@ -587,7 +587,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
                     createActivityParamsForGetOffAndPickUp(scenario, plan, legActivity, getOffActivityName, tourStopGetOff, linkIdTourStop);
 
-                    Activity parkingActivity = populationFactory.createActivityFromLinkId(ParkingUtils.PARKACTIVITYTYPE + "_activity",
+                    Activity parkingActivity = populationFactory.createActivityFromLinkId(ParkingUtils.ParkingStageInteractionType + "_activity",
                             linkIdTourStop);
                     double parkingDuration = getDurationForThisStop(stopDurationDistribution);
                     parkingActivity.setMaximumDuration(parkingDuration);
