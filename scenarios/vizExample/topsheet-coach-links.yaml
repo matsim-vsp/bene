@@ -42,6 +42,8 @@ calculations:
   Distance_NoPassanger_pct: 'round(Distance_NoPassanger_m / total_m *1000)/10'
   
   distanceToAttraction_km: 'round({base.distanceToAttraction})/1000'
+  distanceToAttraction_Mitte_km: 'round({base.distanceToAttraction_Mitte})/1000'
+
 # Table rows
 outputs:
   - title_en: Number of vehicles
@@ -83,3 +85,6 @@ outputs:
   - title_en: Distance to attraction from getOff [km]
     title_de: Entfernungen bei Ausstieg zur Attraktion [km]
     value: distanceToAttraction_km
+  - title_en: Distance to attraction from getOff (Mitte)[km]
+    title_de: Entfernungen bei Ausstieg zur Attraktion (Mitte)[km]
+    value: distanceToAttraction_Mitte_km

@@ -42,6 +42,7 @@ calculations:
   Distance_NoPassanger_pct: 'round(Distance_NoPassanger_m / total_m *1000)/10'
   
   avarageDistanceToAttraction_km: 'round({base.distanceToAttraction}/{base.numberOfStops})/1000'
+  averageDistanceToAttraction_Mitte_km: 'round({base.distanceToAttraction_Mitte}/{base.numberOfStops_Mitte})/1000'
 # Table rows
 outputs:
   - title_en: " "
@@ -83,3 +84,6 @@ outputs:
   - title_en: "[per stop]"
     title_de: "[je Stop]"
     value: avarageDistanceToAttraction_km
+  - title_en: "[per stop]"
+    title_de: "[je Stop]"
+    value: averageDistanceToAttraction_Mitte_km
