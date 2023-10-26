@@ -81,18 +81,18 @@ import java.util.stream.Collectors;
 public class CreateTourismBusTours implements MATSimAppCommand {
     private static final Logger log = LogManager.getLogger(CreateTourismBusTours.class);
     static SplittableRandom random;
-
+// config_base, config_capacityCheck, config_reservation, config_centralizedParking, config_dropOffLocations, config_newParkingLocations, config_newParkingLocations_DropOffLocations, config_newParkingLocations_DropOffLocations_Reservation
     @CommandLine.Parameters(arity = "1", defaultValue = "scenarios/config/config_base.xml", paramLabel = "INPUT", description = "Path to the config")
     private static Path pathToConfig;
-    @CommandLine.Option(names = "--numberOfTours", defaultValue = "1", description = "Set the number of created tours")
-    private static int numberOfTours; //526 (315 = 60% von 526 Touren);
+    @CommandLine.Option(names = "--numberOfTours", defaultValue = "239", description = "Set the number of created tours")
+    private static int numberOfTours; //411 (239 = 60% von 411 Touren);
     @CommandLine.Option(names = "--changeFactorOfParkingCapacity", defaultValue = "1.0", description = "Sets the percentage of change of the existing parking Capacity")
     private static double changeFactorOfParkingCapacity;
     @CommandLine.Option(names = "--pathTourismFacilitiesFile", description = "Path for the used tourism facilities", defaultValue = "scenarios/tourismFacilities/tourismFacilities.xml")
     private static Path facilitiesFileLocation;
     @CommandLine.Option(names = "--pathShpFile", description = "Path for the used shp file", defaultValue = "original-input-data/shp/bezirke/bezirksgrenzen.shp")
     private static Path shapeFileZonePath;
-    @CommandLine.Option(names = "--pathHotspotFile", description = "Path for the used hotspot information", defaultValue = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspotsV3.csv")
+    @CommandLine.Option(names = "--pathHotspotFile", description = "Path for the used hotspot information", defaultValue = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspotsV2.csv")
     private static Path pathHotspotFile;
     @CommandLine.Option(names = "--pathOutput", description = "Path for the output")
     private static Path output;
