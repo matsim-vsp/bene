@@ -44,8 +44,8 @@ import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotVisualiser
 import org.matsim.contrib.parking.parkingsearch.sim.ParkingSearchConfigGroup;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
-import org.matsim.core.config.groups.ControlerConfigGroup;
-import org.matsim.core.config.groups.PlanCalcScoreConfigGroup.ActivityParams;
+import org.matsim.core.config.groups.ControllerConfigGroup;
+import org.matsim.core.config.groups.ScoringConfigGroup;
 import org.matsim.core.config.groups.VspExperimentalConfigGroup.VspDefaultsCheckingLevel;
 import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
@@ -173,7 +173,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                     stopsPerTourDistribution, stopDurationDistribution, shpZones, facilityCRS);
 
             PopulationUtils.writePopulation(scenario.getPopulation(),
-                    config.controler().getOutputDirectory() + "/" + config.controler().getRunId() + ".output_plans_generated.xml.gz");
+                    config.controller().getOutputDirectory() + "/" + config.controller().getRunId() + ".output_plans_generated.xml.gz");
         } else
             log.warn("The given input plans used. No new demand created.");
 
@@ -195,10 +195,10 @@ public class CreateTourismBusTours implements MATSimAppCommand {
         controler.run();
 
         if (runAnalysis)
-            RunAfterSimAnalysisBene.main(new String[]{scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId(), "true"});
+            RunAfterSimAnalysisBene.main(new String[]{scenario.getConfig().controller().getOutputDirectory(), config.controller().getRunId(), "true"});
         try {
             FileUtils.copyDirectory(new File("scenarios/vizExample"),
-                    new File(scenario.getConfig().controler().getOutputDirectory() + "/simwrapper_analysis"));
+                    new File(scenario.getConfig().controller().getOutputDirectory() + "/simwrapper_analysis"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -236,15 +236,15 @@ public class CreateTourismBusTours implements MATSimAppCommand {
         ConfigUtils.addOrGetModule(config, ParkingSearchConfigGroup.class);
 
         if (output == null)
-            config.controler().setOutputDirectory("output/" + config.controler().getRunId() + "." + numberOfTours + "busses"
+            config.controller().setOutputDirectory("output/" + config.controller().getRunId() + "." + numberOfTours + "busses"
                     + "_" + changeFactorOfParkingCapacity + "_" + java.time.LocalDate.now() + "_" + java.time.LocalTime.now().toSecondOfDay());
         else
-            config.controler().setOutputDirectory(output.toString() + "/" + config.controler().getRunId() + "." + numberOfTours + "busses"
+            config.controller().setOutputDirectory(output.toString() + "/" + config.controller().getRunId() + "." + numberOfTours + "busses"
                     + "_" + changeFactorOfParkingCapacity + "_" + java.time.LocalDate.now() + "_" + java.time.LocalTime.now().toSecondOfDay());
-        new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
-                config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
-        config.controler().setRunId("bus");
-        config.controler().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
+        new OutputDirectoryHierarchy(config.controller().getOutputDirectory(), config.controller().getRunId(),
+                config.controller().getOverwriteFileSetting(), ControllerConfigGroup.CompressionType.gzip);
+        config.controller().setRunId("bus");
+        config.controller().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
         if (pathNetworkChangeEvents != null) {
             config.network().setTimeVariantNetwork(true);
             config.network().setChangeEventsInputFile(pathNetworkChangeEvents.toString());
@@ -605,7 +605,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                 Activity tourEnd = populationFactory.createActivityFromActivityFacilityId(endActivityName,
                         hotelFacility.getId());
                 tourEnd.setLinkId(hotelLinkId);
-                scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(endActivityName)
+                scenario.getConfig().scoring().addActivityParams(new ScoringConfigGroup.ActivityParams(endActivityName)
                         .setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
                 ParkingUtils.setNoParkingForActivity(tourEnd);
                 tourEnd.setMaximumDurationUndefined();
@@ -619,8 +619,8 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
     private static void createActivityParamsForGetOffAndPickUp(Scenario scenario, Plan plan, Leg legActivity, String getOffActivityName,
                                                                Activity tourStopGetOffOrPickUp, Id<Link> linkIdTourStop) {
-        scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getOffActivityName)
-                .setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
+        scenario.getConfig().scoring().addActivityParams(new ScoringConfigGroup.ActivityParams(getOffActivityName)
+                .setTypicalDuration(15 * 60).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
         if (dropOffOnlyAtParkingLocations)
             ParkingUtils.setPassangerInteractionForActivity(tourStopGetOffOrPickUp);
         else

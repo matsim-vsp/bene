@@ -185,8 +185,8 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
         config.global().setCoordinateSystem(TransformationFactory.DHDN_GK4);
         log.info("Using coordinate system '{}'", config.global().getCoordinateSystem());
         config.plans().setInputFile(String.valueOf(globFile(runDirectory, runId, "plans.xml")));
-        config.parallelEventHandling().setNumberOfThreads(null);
-        config.parallelEventHandling().setEstimatedNumberOfEvents(null);
+        config.eventsManager().setNumberOfThreads(null);
+        config.eventsManager().setEstimatedNumberOfEvents(null);
         config.global().setNumberOfThreads(4);
 
         EmissionsConfigGroup eConfig = ConfigUtils.addOrGetModule(config, EmissionsConfigGroup.class);
