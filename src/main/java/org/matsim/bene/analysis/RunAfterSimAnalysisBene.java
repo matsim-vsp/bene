@@ -351,11 +351,12 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                         "removedParkingActivities") + ";" + (int) tourData.getDouble(
                         "numberWaitingActivities") + ";" +
                         Time.writeTime(tourData.getDouble(
-                        "tourDurations"), timeformatForOutput) + ";" + Time.writeTime(
+                                "tourDurations"), timeformatForOutput) + ";" + Time.writeTime(
                         tourData.getDouble("parkingActivityDurations"), timeformatForOutput) + ";" + Time.writeTime(
                         tourData.getDouble("parkingSearchDurations"), timeformatForOutput) + ";" + Time.writeTime(
-                        tourData.getDouble("waitingActivityDurations"), timeformatForOutput) + ";"+ pollutantsPerVehicle.get(vehcileId).get(
-                        CO2_TOTAL) + ";" + tourData.getDouble("distanceToAttraction") + ";" + tourData.getDouble("distanceToAttraction_Mitte") + ";" + tourData.getDouble("numberOfStops_Mitte"));
+                        tourData.getDouble("waitingActivityDurations"), timeformatForOutput) + ";" + pollutantsPerVehicle.get(vehcileId).get(
+                        CO2_TOTAL) + ";" + tourData.getDouble("distanceToAttraction") + ";" + tourData.getDouble(
+                        "distanceToAttraction_Mitte") + ";" + tourData.getDouble("numberOfStops_Mitte"));
                 bw.newLine();
 
                 //sum data for overview
@@ -382,13 +383,14 @@ public class RunAfterSimAnalysisBene implements MATSimAppCommand {
                     "Distance_Passanger") + ";" + (int) overviewData.getDouble(
                     "numberOfStops") + ";" + (int) overviewData.getDouble(
                     "numberParkingActivities") + ";" + (int) overviewData.getDouble(
-                    "removedParkingActivities")+ ";" + (int) overviewData.getDouble(
+                    "removedParkingActivities") + ";" + (int) overviewData.getDouble(
                     "numberWaitingActivities") + ";" + Time.writeTime(overviewData.getDouble(
                     "tourDurations"), timeformatForOutput) + ";" + Time.writeTime(
                     overviewData.getDouble("parkingActivityDurations"), timeformatForOutput) + ";" + Time.writeTime(
                     overviewData.getDouble("parkingSearchDurations"), timeformatForOutput) + ";" + Time.writeTime(
-                    overviewData.getDouble("waitingActivityDurations"), timeformatForOutput) + ";"+ overviewData.getDouble(
-                    "CO2_TOTAL") + ";" + overviewData.getDouble("distanceToAttraction") + ";" + overviewData.getDouble("distanceToAttraction_Mitte") + ";" + overviewData.getDouble("numberOfStops_Mitte"));
+                    overviewData.getDouble("waitingActivityDurations"), timeformatForOutput) + ";" + overviewData.getDouble(
+                    "CO2_TOTAL") + ";" + overviewData.getDouble("distanceToAttraction") + ";" + overviewData.getDouble(
+                    "distanceToAttraction_Mitte") + ";" + overviewData.getDouble("numberOfStops_Mitte"));
 
             bw.close();
         } catch (IOException e) {

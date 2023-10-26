@@ -81,7 +81,7 @@ import java.util.stream.Collectors;
 public class CreateTourismBusTours implements MATSimAppCommand {
     private static final Logger log = LogManager.getLogger(CreateTourismBusTours.class);
     static SplittableRandom random;
-// config_base, config_capacityCheck, config_reservation, config_centralizedParking, config_dropOffLocations, config_newParkingLocations, config_newParkingLocations_DropOffLocations, config_newParkingLocations_DropOffLocations_Reservation
+    // config_base, config_capacityCheck, config_reservation, config_centralizedParking, config_dropOffLocations, config_newParkingLocations, config_newParkingLocations_DropOffLocations, config_newParkingLocations_DropOffLocations_Reservation
     @CommandLine.Parameters(arity = "1", defaultValue = "scenarios/config/config_base.xml", paramLabel = "INPUT", description = "Path to the config")
     private static Path pathToConfig;
     @CommandLine.Option(names = "--numberOfTours", defaultValue = "239", description = "Set the number of created tours")
@@ -123,12 +123,12 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                         pathHotspotFile, output, pathNetworkChangeEvents, runAnalysis)).execute(args));
     }
 
+
     @Override
     public Integer call() throws IOException {
 
         Configurator.setLevel("org.matsim.contrib.parking.parkingsearch.manager.FacilityBasedParkingManager", Level.WARN);
         Configurator.setLevel("org.matsim.core.utils.geometry.geotools.MGC", Level.ERROR);
-
 
 
         String facilityCRS = TransformationFactory.DHDN_GK4;
@@ -140,11 +140,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
         Config config = prepareConfig(numberOfTours, output, changeFactorOfParkingCapacity, pathNetworkChangeEvents);
         Scenario scenario = ScenarioUtils.loadScenario(config);
-//		Network filteredNetwork = NetworkUtils.createNetwork();
-//		Map<String, Object> networkAttributes = scenario.getNetwork().getAttributes().getAsMap();
-//		new TransportModeNetworkFilter(scenario.getNetwork()).filter(filteredNetwork, new HashSet<>(Arrays.asList("car")));
-//		networkAttributes.forEach((k,v) ->filteredNetwork.getAttributes().putAttribute(k,v) );
-//		((MutableScenario)scenario).setNetwork(filteredNetwork);
+
         random = new SplittableRandom(config.global().getRandomSeed());
 
         if (scenario.getPopulation().getPersons().isEmpty()) {
@@ -193,7 +189,8 @@ public class CreateTourismBusTours implements MATSimAppCommand {
         controler.run();
 
         if (runAnalysis)
-            RunAfterSimAnalysisBene.main(new String[]{scenario.getConfig().controller().getOutputDirectory(), config.controller().getRunId(), "true"});
+            RunAfterSimAnalysisBene.main(
+                    new String[]{scenario.getConfig().controller().getOutputDirectory(), config.controller().getRunId(), "true"});
         try {
             FileUtils.copyDirectory(new File("scenarios/vizExample"),
                     new File(scenario.getConfig().controller().getOutputDirectory() + "/simwrapper_analysis"));
@@ -233,7 +230,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
         Config config = ConfigUtils.loadConfig(pathToConfig.toString());
         ConfigUtils.addOrGetModule(config, ParkingSearchConfigGroup.class);
 
-        if(config.controller().getRunId().contains("DropOffLocations") || config.controller().getRunId().contains("dropOffLocations"))
+        if (config.controller().getRunId().contains("DropOffLocations") || config.controller().getRunId().contains("dropOffLocations"))
             dropOffOnlyAtParkingLocations = true;
 
         if (output == null)
@@ -335,26 +332,26 @@ public class CreateTourismBusTours implements MATSimAppCommand {
         }
     }
 
-	private static void createStopsPerTourDistribution(HashMap<Integer, Integer> stopsPerTourDistribution,
-													   HashMap<String, HashMap<Integer, Integer>> stopDurationDistributionPerType,
-													   int numberOfTours) {
+    private static void createStopsPerTourDistribution(HashMap<Integer, Integer> stopsPerTourDistribution,
+                                                       HashMap<String, HashMap<Integer, Integer>> stopDurationDistributionPerType,
+                                                       int numberOfTours) {
 
-		HashMap<String, Integer> stopsTypeDistribution = new HashMap<>();
-		// from survey
-		stopsPerTourDistribution.put(1, (int) Math.round(0.05 * numberOfTours));
-		stopsPerTourDistribution.put(2, (int) Math.round(0.26 * numberOfTours));
-		stopsPerTourDistribution.put(3, (int) Math.round(0.37 * numberOfTours));
-		stopsPerTourDistribution.put(4, (int) Math.round(0.15 * numberOfTours));
-		stopsPerTourDistribution.put(5, (int) Math.round(0.17 * numberOfTours));
+        HashMap<String, Integer> stopsTypeDistribution = new HashMap<>();
+        // from survey
+        stopsPerTourDistribution.put(1, (int) Math.round(0.05 * numberOfTours));
+        stopsPerTourDistribution.put(2, (int) Math.round(0.26 * numberOfTours));
+        stopsPerTourDistribution.put(3, (int) Math.round(0.37 * numberOfTours));
+        stopsPerTourDistribution.put(4, (int) Math.round(0.15 * numberOfTours));
+        stopsPerTourDistribution.put(5, (int) Math.round(0.17 * numberOfTours));
 
-		correctRoundingErrors(stopsPerTourDistribution, numberOfTours);
+        correctRoundingErrors(stopsPerTourDistribution, numberOfTours);
 
-		int numberOfStops = 0;
-		for (Integer stopsPerTour : stopsPerTourDistribution.keySet()) {
-			numberOfStops += stopsPerTour * stopsPerTourDistribution.get(stopsPerTour);
-		}
-		stopsTypeDistribution.put("attraction", (int) Math.round(0.277 * numberOfStops));
-		stopsTypeDistribution.put("photoStop", (int) Math.round(0.293 * numberOfStops));
+        int numberOfStops = 0;
+        for (Integer stopsPerTour : stopsPerTourDistribution.keySet()) {
+            numberOfStops += stopsPerTour * stopsPerTourDistribution.get(stopsPerTour);
+        }
+        stopsTypeDistribution.put("attraction", (int) Math.round(0.277 * numberOfStops));
+        stopsTypeDistribution.put("photoStop", (int) Math.round(0.293 * numberOfStops));
         stopsTypeDistribution.put("lunch", (int) Math.round(0.185 * numberOfStops));
         stopsTypeDistribution.put("walk", (int) Math.round(0.244 * numberOfStops));
 
@@ -502,7 +499,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
     private static void generateTours(Scenario scenario, HashMap<String, Integer> busStartDistribution,
                                       HashMap<Coord, ArrayList<Id<ActivityFacility>>> attractionsForHotspots,
                                       HashMap<Coord, Integer> stopsPerHotspotDistribution, HashMap<Integer, Integer> stopsPerTourDistribution,
-									  HashMap<String, HashMap<Integer, Integer>> stopDurationDistribution, ShpOptions shpZones, String facilityCRS) {
+                                      HashMap<String, HashMap<Integer, Integer>> stopDurationDistribution, ShpOptions shpZones, String facilityCRS) {
         Population population = scenario.getPopulation();
         PopulationFactory populationFactory = population.getFactory();
         List<Link> links = scenario.getNetwork().getLinks().values().stream().filter(l -> l.getAllowedModes().contains("car"))

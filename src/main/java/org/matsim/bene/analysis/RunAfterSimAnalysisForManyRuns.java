@@ -72,6 +72,7 @@ public class RunAfterSimAnalysisForManyRuns {
             writeOutputForPlots(runFolder, runValues);
 
     }
+
     private static void writeOutputForOverview(File runFolder, TreeMap<Integer, TreeMap<String, String>> runValues,
                                                int numberOfRuns_base,
                                                String baseRunId, String baseCapacityFactor) throws IOException {
@@ -80,13 +81,16 @@ public class RunAfterSimAnalysisForManyRuns {
         BufferedWriter bw_averages = IOUtils.getBufferedWriter(String.valueOf(Path.of(runFolder.getPath(), "/overview_scenarios_averages.csv")));
 
         BufferedWriter bw_parking = IOUtils.getBufferedWriter(String.valueOf(Path.of(runFolder.getPath(), "/overview_scenarios_parking.csv")));
-        BufferedWriter bw_averages_parking = IOUtils.getBufferedWriter(String.valueOf(Path.of(runFolder.getPath(), "/overview_scenarios_averages_parking.csv")));
+        BufferedWriter bw_averages_parking = IOUtils.getBufferedWriter(
+                String.valueOf(Path.of(runFolder.getPath(), "/overview_scenarios_averages_parking.csv")));
 
 
         ArrayList<String> header = new ArrayList<>(
                 Arrays.asList("Parameter", "Basis", "Kapazitätsprüfung", "Reservierung", "Zentrale Parkplätze", "Ausstieg nur am Parkplatz",
                         "Neue Parkinfrastruktur",
-                        "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz", "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz + Reservierung", "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz + Reservierung + 2x Kapazität", "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz + Reservierung + 3x Kapazität" ));
+                        "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz", "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz + Reservierung",
+                        "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz + Reservierung + 2x Kapazität",
+                        "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz + Reservierung + 3x Kapazität"));
         JOIN.appendTo(bw, header);
         JOIN.appendTo(bw_averages, header);
         JOIN.appendTo(bw_parking, header);
@@ -106,16 +110,19 @@ public class RunAfterSimAnalysisForManyRuns {
 
         ArrayList<String> variables_parking = new ArrayList<>(
                 Arrays.asList("parkingCapacity",
-                        "numberOfStops", "numberOfParkedVehicles", "parkingSearchDurations", "removedParkingActivities", "numberOfStaysFromGetOffUntilGetIn",
+                        "numberOfStops", "numberOfParkedVehicles", "parkingSearchDurations", "removedParkingActivities",
+                        "numberOfStaysFromGetOffUntilGetIn",
                         "numberOfParkingBeforeGetIn", "rejectedParkingRequest", "reservationsRequests", "numberWaitingActivities"));
         ArrayList<String> categories_parking = new ArrayList<>(
-                Arrays.asList( "Anzahl verfügbarer Parkplätze", "Anzahl geplanter Parkvorgänge", "Anzahl an durchgeführten Parkvorgängen", "Dauer Parkplatzsuche [h]",
+                Arrays.asList("Anzahl verfügbarer Parkplätze", "Anzahl geplanter Parkvorgänge", "Anzahl an durchgeführten Parkvorgängen",
+                        "Dauer Parkplatzsuche [h]",
                         "Anzahl ausgefallener Parkaktivitäten", "Anzahl an durchgängigem Parken von Ausstieg bis Einstieg",
                         "Anzahl an Parken bereits vor dem Einstieg", "Anzahl der Situationen: 'gewünschter Parkplatz belegt'",
                         "Anzahl der Parkversuche", "Anzahl an Warteaktivitäten vor dem Ausstieg/Einstieg"));
 
         writeDataForAllCategories(runValues, numberOfRuns_base, baseRunId, baseCapacityFactor, categories, bw, bw_averages, variables);
-        writeDataForAllCategories(runValues, numberOfRuns_base, baseRunId, baseCapacityFactor, categories_parking, bw_parking, bw_averages_parking, variables_parking);
+        writeDataForAllCategories(runValues, numberOfRuns_base, baseRunId, baseCapacityFactor, categories_parking, bw_parking, bw_averages_parking,
+                variables_parking);
 
 
         bw.flush();
@@ -132,10 +139,12 @@ public class RunAfterSimAnalysisForManyRuns {
     }
 
     private static void writeDataForAllCategories(TreeMap<Integer, TreeMap<String, String>> runValues, int numberOfRuns_base, String baseRunId,
-                                  String baseCapacityFactor, ArrayList<String> categories, BufferedWriter bw, BufferedWriter bw_averages,
-                                  ArrayList<String> variables) throws IOException {
+                                                  String baseCapacityFactor, ArrayList<String> categories, BufferedWriter bw,
+                                                  BufferedWriter bw_averages,
+                                                  ArrayList<String> variables) throws IOException {
         ArrayList<String> cases = new ArrayList<>(Arrays.asList("capacityCheck", "reservation", "centralizedParking", "dropOffLocations",
-                "newParkingLocations", "newParkingLocationsDropOffLocations", "newParkingLocationsDropOffLocationsReservation", "newParkingLocationsDropOffLocationsReservation2Cap", "newParkingLocationsDropOffLocationsReservation3Cap"));
+                "newParkingLocations", "newParkingLocationsDropOffLocations", "newParkingLocationsDropOffLocationsReservation",
+                "newParkingLocationsDropOffLocationsReservation2Cap", "newParkingLocationsDropOffLocationsReservation3Cap"));
 
         double numberOfStops = Double.parseDouble(runValues.get(numberOfRuns_base).get(baseRunId + "_" + baseCapacityFactor + "_" + "numberOfStops"));
         for (int i = 0; i < categories.size(); i++) {
@@ -146,29 +155,27 @@ public class RunAfterSimAnalysisForManyRuns {
             ArrayList<String> thisValues_averages = new ArrayList<>();
             double baseValue = Double.parseDouble(runValues.get(numberOfRuns_base).get(baseRunId + thisKey));
             thisValues.add(categories.get(i));
-            if(thisKey.contains("distanceToAttraction"))
-                thisValues_averages.add( categories.get(i).replace("[km]", "[m]"));
+            if (thisKey.contains("distanceToAttraction"))
+                thisValues_averages.add(categories.get(i).replace("[km]", "[m]"));
             else if (thisKey.contains("parkingSearchDurations"))
-                thisValues_averages.add( categories.get(i).replace("Dauer Parkplatzsuche [h]", "Dauer Parkplatzsuche pro Stop [min]"));
+                thisValues_averages.add(categories.get(i).replace("Dauer Parkplatzsuche [h]", "Dauer Parkplatzsuche pro Stop [min]"));
             else
                 thisValues_averages.add(categories.get(i));
             if (thisKey.contains("Durations")) {
                 thisValues.add(Time.writeTime(baseValue, Time.TIMEFORMAT_HHMM));
                 if (thisKey.contains("parkingSearchDurations"))
-                    thisValues_averages.add(String.valueOf((double) Math.round(baseValue/ numberOfStops/6)/10));
+                    thisValues_averages.add(String.valueOf((double) Math.round(baseValue / numberOfStops / 6) / 10));
                 else
-                    thisValues_averages.add(Time.writeTime(Math.round(baseValue/ numberOfRuns_base), Time.TIMEFORMAT_HHMM));
-            }
-            else{
+                    thisValues_averages.add(Time.writeTime(Math.round(baseValue / numberOfRuns_base), Time.TIMEFORMAT_HHMM));
+            } else {
                 thisValues.add(String.valueOf(baseValue));
                 if (thisKey.contains("_share")) {
                     thisValues_averages.add(String.valueOf(baseValue));
-                }
-                else if (thisKey.contains("distanceToAttraction"))
-                    thisValues_averages.add(String.valueOf((double) Math.round(baseValue/ numberOfStops * 1000)));
+                } else if (thisKey.contains("distanceToAttraction"))
+                    thisValues_averages.add(String.valueOf((double) Math.round(baseValue / numberOfStops * 1000)));
                 else
-                    thisValues_averages.add(String.valueOf((double) Math.round(baseValue/ numberOfRuns_base * 10)/10));
-                }
+                    thisValues_averages.add(String.valueOf((double) Math.round(baseValue / numberOfRuns_base * 10) / 10));
+            }
             for (String thisCase : cases) {
                 double thisValue = Double.parseDouble(runValues.get(numberOfRuns_base).get(thisCase + thisKey));
                 double thisChange = (double) Math.round((thisValue / baseValue - 1) * 10000) / 100;
@@ -176,28 +183,25 @@ public class RunAfterSimAnalysisForManyRuns {
                     if (baseValue != 0.) {
                         thisValues.add(Time.writeTime(thisValue, Time.TIMEFORMAT_HHMM) + " (" + thisChange + " %)");
                         if (thisKey.contains("parkingSearchDurations"))
-                            thisValues_averages.add((double)Math.round(thisValue / numberOfStops/6)/10 + " (" + thisChange + " %)");
+                            thisValues_averages.add((double) Math.round(thisValue / numberOfStops / 6) / 10 + " (" + thisChange + " %)");
                         else
                             thisValues_averages.add(
-                                Time.writeTime(Math.round(thisValue / numberOfRuns_base), Time.TIMEFORMAT_HHMM) + " (" + thisChange + " %)");
+                                    Time.writeTime(Math.round(thisValue / numberOfRuns_base), Time.TIMEFORMAT_HHMM) + " (" + thisChange + " %)");
                     } else {
                         thisValues.add(Time.writeTime(thisValue, Time.TIMEFORMAT_HHMM));
                         thisValues_averages.add(Time.writeTime(Math.round(thisValue / numberOfRuns_base), Time.TIMEFORMAT_HHMM));
                     }
-                }
-                else if (baseValue != 0.) {
+                } else if (baseValue != 0.) {
                     thisValues.add(thisValue + " (" + thisChange + " %)");
                     if (thisKey.contains("_share")) {
                         thisValues_averages.add(thisValue + " (" + thisChange + " %)");
-                    }
-                    else if (thisKey.contains("distanceToAttraction"))
-                        thisValues_averages.add((double) Math.round(thisValue/ numberOfStops * 1000)+ " (" + thisChange + " %)");
+                    } else if (thisKey.contains("distanceToAttraction"))
+                        thisValues_averages.add((double) Math.round(thisValue / numberOfStops * 1000) + " (" + thisChange + " %)");
                     else
-                        thisValues_averages.add((double)Math.round(thisValue/ numberOfRuns_base *10)/10 + " (" + thisChange + " %)");
-                }
-                else {
+                        thisValues_averages.add((double) Math.round(thisValue / numberOfRuns_base * 10) / 10 + " (" + thisChange + " %)");
+                } else {
                     thisValues.add(String.valueOf(thisValue));
-                    thisValues_averages.add(String.valueOf((double)Math.round(thisValue/ numberOfRuns_base *10)/10));
+                    thisValues_averages.add(String.valueOf((double) Math.round(thisValue / numberOfRuns_base * 10) / 10));
                 }
             }
             JOIN.appendTo(bw, thisValues);
@@ -209,7 +213,7 @@ public class RunAfterSimAnalysisForManyRuns {
 
     private static void writeOutputForPlots(File runFolder, TreeMap<Integer, TreeMap<String, String>> runValues) throws IOException {
         BufferedWriter bw = IOUtils.getBufferedWriter(String.valueOf(Path.of(runFolder.getPath(), "/overview_sensitivities.csv")));
-        ArrayList<String> header = new ArrayList<>(){
+        ArrayList<String> header = new ArrayList<>() {
             {
                 add("numberOfVehicles");
                 addAll(headerForPlots);
@@ -222,9 +226,9 @@ public class RunAfterSimAnalysisForManyRuns {
             TreeMap<String, String> thisValues = runValues.get(numberOfTours);
             StringBuilder row = new StringBuilder();
             row.append(numberOfTours);
-            for (int i = 1; i < header.size(); i++){
+            for (int i = 1; i < header.size(); i++) {
                 if (header.get(i).contains("Duration"))
-                    row.append(";").append((double)Math.round((Double.parseDouble(thisValues.get(header.get(i))))/36)/100);
+                    row.append(";").append((double) Math.round((Double.parseDouble(thisValues.get(header.get(i)))) / 36) / 100);
                 else
                     row.append(";").append(thisValues.get(header.get(i)));
             }
@@ -246,10 +250,10 @@ public class RunAfterSimAnalysisForManyRuns {
             List<CSVRecord> list = parser.getRecords();
             CSVRecord record = list.get(list.size() - 1);
             int numberOfTours = Integer.parseInt(record.get("vehicle"));
-            double sumDrivenDistance_km = (double)Math.round(Double.parseDouble(record.get("drivenDistance"))/100)/10;
-            double sumDrivenDistance_parkingSearch_km = (double)Math.round(Double.parseDouble(record.get("Distance_ParkingSearch"))/100)/10;
-            double sumDrivenDistance_noPassenger_km = (double)Math.round(Double.parseDouble(record.get("Distance_NoPassanger"))/100)/10;
-            double sumDrivenDistance_Passanger_km = (double)Math.round(Double.parseDouble(record.get("Distance_Passanger"))/100)/10;
+            double sumDrivenDistance_km = (double) Math.round(Double.parseDouble(record.get("drivenDistance")) / 100) / 10;
+            double sumDrivenDistance_parkingSearch_km = (double) Math.round(Double.parseDouble(record.get("Distance_ParkingSearch")) / 100) / 10;
+            double sumDrivenDistance_noPassenger_km = (double) Math.round(Double.parseDouble(record.get("Distance_NoPassanger")) / 100) / 10;
+            double sumDrivenDistance_Passanger_km = (double) Math.round(Double.parseDouble(record.get("Distance_Passanger")) / 100) / 10;
             double sumNumberOfStops = Integer.parseInt(record.get("numberOfStops"));
             double sumNumberParkingActivities = Integer.parseInt(record.get("numberParkingActivities"));
             double sumRemovedParkingActivities = Integer.parseInt(record.get("removedParkingActivities"));
@@ -258,72 +262,76 @@ public class RunAfterSimAnalysisForManyRuns {
             double sumParkingActivityDuration_s = Double.parseDouble(record.get("parkingActivityDurations"));
             double sumParkingSearchDuration_s = Double.parseDouble(record.get("parkingSearchDurations"));
             double sumWaitingActivityDuration_s = Double.parseDouble(record.get("waitingActivityDurations"));
-            double sumCO2_TOTAL_kg = (double)Math.round(Double.parseDouble(record.get("CO2_TOTAL"))/100)/10;
-            double sumDistanceToAttraction = (double)Math.round(Double.parseDouble(record.get("distanceToAttraction"))/100)/10;
-            double sumDistanceToAttractionMitte = (double)Math.round(Double.parseDouble(record.get("distanceToAttraction_Mitte"))/100)/10;
+            double sumCO2_TOTAL_kg = (double) Math.round(Double.parseDouble(record.get("CO2_TOTAL")) / 100) / 10;
+            double sumDistanceToAttraction = (double) Math.round(Double.parseDouble(record.get("distanceToAttraction")) / 100) / 10;
+            double sumDistanceToAttractionMitte = (double) Math.round(Double.parseDouble(record.get("distanceToAttraction_Mitte")) / 100) / 10;
             double sumNumberOfStops_Mitte = Double.parseDouble(record.get("numberOfStops_Mitte"));
 
-            valuesForThisRun.put(prefix+"drivenDistance", String.valueOf(sumDrivenDistance_km));
-            valuesForThisRun.put(prefix+"Distance_ParkingSearch", String.valueOf(sumDrivenDistance_parkingSearch_km));
-            valuesForThisRun.put(prefix+"Distance_NoPassanger", String.valueOf(sumDrivenDistance_noPassenger_km));
-            valuesForThisRun.put(prefix+"Distance_Passanger", String.valueOf(sumDrivenDistance_Passanger_km));
-            valuesForThisRun.put(prefix+"numberOfStops", String.valueOf(sumNumberOfStops));
-            valuesForThisRun.put(prefix+"numberParkingActivities", String.valueOf(sumNumberParkingActivities));
-            valuesForThisRun.put(prefix+"removedParkingActivities", String.valueOf(sumRemovedParkingActivities));
-            valuesForThisRun.put(prefix+"numberWaitingActivities", String.valueOf(sumWaitingActivities));
-            valuesForThisRun.put(prefix+"tourDurations", String.valueOf(sumTourDuration_s));
-            valuesForThisRun.put(prefix+"parkingActivityDurations", String.valueOf(sumParkingActivityDuration_s));
-            valuesForThisRun.put(prefix+"parkingSearchDurations", String.valueOf(sumParkingSearchDuration_s));
-            valuesForThisRun.put(prefix+"waitingActivityDurations", String.valueOf(sumWaitingActivityDuration_s));
-            valuesForThisRun.put(prefix+"CO2_TOTAL", String.valueOf(sumCO2_TOTAL_kg));
-            valuesForThisRun.put(prefix+"distanceToAttraction", String.valueOf(sumDistanceToAttraction));;
-            valuesForThisRun.put(prefix+"distanceToAttraction_Mitte", String.valueOf(sumDistanceToAttractionMitte));
-            valuesForThisRun.put(prefix+"numberOfStops_Mitte", String.valueOf(sumNumberOfStops_Mitte));
+            valuesForThisRun.put(prefix + "drivenDistance", String.valueOf(sumDrivenDistance_km));
+            valuesForThisRun.put(prefix + "Distance_ParkingSearch", String.valueOf(sumDrivenDistance_parkingSearch_km));
+            valuesForThisRun.put(prefix + "Distance_NoPassanger", String.valueOf(sumDrivenDistance_noPassenger_km));
+            valuesForThisRun.put(prefix + "Distance_Passanger", String.valueOf(sumDrivenDistance_Passanger_km));
+            valuesForThisRun.put(prefix + "numberOfStops", String.valueOf(sumNumberOfStops));
+            valuesForThisRun.put(prefix + "numberParkingActivities", String.valueOf(sumNumberParkingActivities));
+            valuesForThisRun.put(prefix + "removedParkingActivities", String.valueOf(sumRemovedParkingActivities));
+            valuesForThisRun.put(prefix + "numberWaitingActivities", String.valueOf(sumWaitingActivities));
+            valuesForThisRun.put(prefix + "tourDurations", String.valueOf(sumTourDuration_s));
+            valuesForThisRun.put(prefix + "parkingActivityDurations", String.valueOf(sumParkingActivityDuration_s));
+            valuesForThisRun.put(prefix + "parkingSearchDurations", String.valueOf(sumParkingSearchDuration_s));
+            valuesForThisRun.put(prefix + "waitingActivityDurations", String.valueOf(sumWaitingActivityDuration_s));
+            valuesForThisRun.put(prefix + "CO2_TOTAL", String.valueOf(sumCO2_TOTAL_kg));
+            valuesForThisRun.put(prefix + "distanceToAttraction", String.valueOf(sumDistanceToAttraction));
+            ;
+            valuesForThisRun.put(prefix + "distanceToAttraction_Mitte", String.valueOf(sumDistanceToAttractionMitte));
+            valuesForThisRun.put(prefix + "numberOfStops_Mitte", String.valueOf(sumNumberOfStops_Mitte));
 
             //TODO update shares
-            double shareParking = (double) Math.round(sumDrivenDistance_noPassenger_km / sumDrivenDistance_km * 1000) /10;
-            double shareParkingSearch = (double) Math.round(sumDrivenDistance_parkingSearch_km / sumDrivenDistance_km * 1000) /10;
-            double shareParkingSearchOfParking = (double) Math.round(sumDrivenDistance_parkingSearch_km / sumDrivenDistance_noPassenger_km * 1000) /10;
-            double averageDrivenDistance_perTour = (double) Math.round(sumDrivenDistance_km/numberOfTours*10)/10;
-            double averageDrivenDistance_Parking_perTour = (double) Math.round(sumDrivenDistance_noPassenger_km/numberOfTours*10)/10;
-            double averageDrivenDistance_Passanger_perTour = (double) Math.round(sumDrivenDistance_Passanger_km/numberOfTours*10)/10;
-            double averageParkingDuration_perTour = (double) Math.round(sumParkingActivityDuration_s/numberOfTours);
-            double averageTourDuration_perTour = (double) Math.round(sumTourDuration_s/numberOfTours);
-            double averageParkingSearchDuration_perTour = (double) Math.round(sumParkingSearchDuration_s/numberOfTours);
-            double averageParkingSearchDuration_perStop = (double) Math.round(sumParkingSearchDuration_s/sumNumberOfStops);
-            double averageRemovedParkingActivities_perTour =  (double) Math.round(sumRemovedParkingActivities/numberOfTours*100)/100;
-            double averageNumberOfStops_perTour =  (double) Math.round(sumNumberOfStops/numberOfTours*100)/100;
-            double averageNumberParkingActivities_perTour =  (double) Math.round(sumNumberParkingActivities/numberOfTours*100)/100;
-            double averageCO2_TOTAL_kg_perTour =  (double) Math.round(sumCO2_TOTAL_kg/numberOfTours*100)/100;
+            double shareParking = (double) Math.round(sumDrivenDistance_noPassenger_km / sumDrivenDistance_km * 1000) / 10;
+            double shareParkingSearch = (double) Math.round(sumDrivenDistance_parkingSearch_km / sumDrivenDistance_km * 1000) / 10;
+            double shareParkingSearchOfParking = (double) Math.round(
+                    sumDrivenDistance_parkingSearch_km / sumDrivenDistance_noPassenger_km * 1000) / 10;
+            double averageDrivenDistance_perTour = (double) Math.round(sumDrivenDistance_km / numberOfTours * 10) / 10;
+            double averageDrivenDistance_Parking_perTour = (double) Math.round(sumDrivenDistance_noPassenger_km / numberOfTours * 10) / 10;
+            double averageDrivenDistance_Passanger_perTour = (double) Math.round(sumDrivenDistance_Passanger_km / numberOfTours * 10) / 10;
+            double averageParkingDuration_perTour = (double) Math.round(sumParkingActivityDuration_s / numberOfTours);
+            double averageTourDuration_perTour = (double) Math.round(sumTourDuration_s / numberOfTours);
+            double averageParkingSearchDuration_perTour = (double) Math.round(sumParkingSearchDuration_s / numberOfTours);
+            double averageParkingSearchDuration_perStop = (double) Math.round(sumParkingSearchDuration_s / sumNumberOfStops);
+            double averageRemovedParkingActivities_perTour = (double) Math.round(sumRemovedParkingActivities / numberOfTours * 100) / 100;
+            double averageNumberOfStops_perTour = (double) Math.round(sumNumberOfStops / numberOfTours * 100) / 100;
+            double averageNumberParkingActivities_perTour = (double) Math.round(sumNumberParkingActivities / numberOfTours * 100) / 100;
+            double averageCO2_TOTAL_kg_perTour = (double) Math.round(sumCO2_TOTAL_kg / numberOfTours * 100) / 100;
 
-            valuesForThisRun.put(prefix+"distance_shareParking", String.valueOf(shareParking));
-            valuesForThisRun.put(prefix+"distance_shareParkingSearch", String.valueOf(shareParkingSearch));
-            valuesForThisRun.put(prefix+"distance_shareParkingSearch_parking", String.valueOf(shareParkingSearchOfParking));
-            valuesForThisRun.put(prefix+"distance_average", String.valueOf(averageDrivenDistance_perTour));
-            valuesForThisRun.put(prefix+"distance_average_parking", String.valueOf(averageDrivenDistance_Parking_perTour));
-            valuesForThisRun.put(prefix+"distance_average_passanger", String.valueOf(averageDrivenDistance_Passanger_perTour));
-            valuesForThisRun.put(prefix+"average_parkingDuration", Time.writeTime(averageParkingDuration_perTour, timeformatForOutput));
-            valuesForThisRun.put(prefix+"average_tourDuration", Time.writeTime(averageTourDuration_perTour, timeformatForOutput));
-            valuesForThisRun.put(prefix+"average_parkingSearchDurations_perTour", Time.writeTime(averageParkingSearchDuration_perTour, timeformatForOutput));
-            valuesForThisRun.put(prefix+"average_parkingSearchDurations_perStop", Time.writeTime(averageParkingSearchDuration_perStop, timeformatForOutput));
-            valuesForThisRun.put(prefix+"average_removedParkingActivities", String.valueOf(averageRemovedParkingActivities_perTour));
-            valuesForThisRun.put(prefix+"average_numberOfStops", String.valueOf(averageNumberOfStops_perTour));
-            valuesForThisRun.put(prefix+"average_numberParkingActivities", String.valueOf(averageNumberParkingActivities_perTour));
-            valuesForThisRun.put(prefix+"average_CO2_TOTAL", String.valueOf(averageCO2_TOTAL_kg_perTour));
+            valuesForThisRun.put(prefix + "distance_shareParking", String.valueOf(shareParking));
+            valuesForThisRun.put(prefix + "distance_shareParkingSearch", String.valueOf(shareParkingSearch));
+            valuesForThisRun.put(prefix + "distance_shareParkingSearch_parking", String.valueOf(shareParkingSearchOfParking));
+            valuesForThisRun.put(prefix + "distance_average", String.valueOf(averageDrivenDistance_perTour));
+            valuesForThisRun.put(prefix + "distance_average_parking", String.valueOf(averageDrivenDistance_Parking_perTour));
+            valuesForThisRun.put(prefix + "distance_average_passanger", String.valueOf(averageDrivenDistance_Passanger_perTour));
+            valuesForThisRun.put(prefix + "average_parkingDuration", Time.writeTime(averageParkingDuration_perTour, timeformatForOutput));
+            valuesForThisRun.put(prefix + "average_tourDuration", Time.writeTime(averageTourDuration_perTour, timeformatForOutput));
+            valuesForThisRun.put(prefix + "average_parkingSearchDurations_perTour",
+                    Time.writeTime(averageParkingSearchDuration_perTour, timeformatForOutput));
+            valuesForThisRun.put(prefix + "average_parkingSearchDurations_perStop",
+                    Time.writeTime(averageParkingSearchDuration_perStop, timeformatForOutput));
+            valuesForThisRun.put(prefix + "average_removedParkingActivities", String.valueOf(averageRemovedParkingActivities_perTour));
+            valuesForThisRun.put(prefix + "average_numberOfStops", String.valueOf(averageNumberOfStops_perTour));
+            valuesForThisRun.put(prefix + "average_numberParkingActivities", String.valueOf(averageNumberParkingActivities_perTour));
+            valuesForThisRun.put(prefix + "average_CO2_TOTAL", String.valueOf(averageCO2_TOTAL_kg_perTour));
 
-            headerForPlots.add(prefix+"distance_shareParking");
-            headerForPlots.add(prefix+"distance_shareParkingSearch");
-            headerForPlots.add(prefix+"distance_shareParkingSearch_parking");
-            headerForPlots.add(prefix+"distance_average");
-            headerForPlots.add(prefix+"distance_average_parking");
-            headerForPlots.add(prefix+"distance_average_passanger");
-            headerForPlots.add(prefix+"average_parkingDuration");
-            headerForPlots.add(prefix+"average_tourDuration");
-            headerForPlots.add(prefix+"average_parkingSearchDurations");
-            headerForPlots.add(prefix+"average_removedParkingActivities");
-            headerForPlots.add(prefix+"average_numberOfStops");
-            headerForPlots.add(prefix+"average_numberParkingActivities");
-            headerForPlots.add(prefix+"average_CO2_TOTAL");
+            headerForPlots.add(prefix + "distance_shareParking");
+            headerForPlots.add(prefix + "distance_shareParkingSearch");
+            headerForPlots.add(prefix + "distance_shareParkingSearch_parking");
+            headerForPlots.add(prefix + "distance_average");
+            headerForPlots.add(prefix + "distance_average_parking");
+            headerForPlots.add(prefix + "distance_average_passanger");
+            headerForPlots.add(prefix + "average_parkingDuration");
+            headerForPlots.add(prefix + "average_tourDuration");
+            headerForPlots.add(prefix + "average_parkingSearchDurations");
+            headerForPlots.add(prefix + "average_removedParkingActivities");
+            headerForPlots.add(prefix + "average_numberOfStops");
+            headerForPlots.add(prefix + "average_numberParkingActivities");
+            headerForPlots.add(prefix + "average_CO2_TOTAL");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -354,24 +362,26 @@ public class RunAfterSimAnalysisForManyRuns {
                 sumNumberOfParkingBeforeGetIn += Integer.parseInt(record.get("numberOfParkingBeforeGetIn"));
 
             }
-            valuesForThisRun.put(prefix+"parkingCapacity", String.valueOf(sumParkingCapacity));
-            valuesForThisRun.put(prefix+"rejectedParkingRequest", String.valueOf(sumParkingRejections));
-            valuesForThisRun.put(prefix+"reservationsRequests", String.valueOf(sumReservationsRequests));
-            valuesForThisRun.put(prefix+"numberOfParkedVehicles", String.valueOf(sumNumberOfParkedVehicles));
-            valuesForThisRun.put(prefix+"numberOfStaysFromGetOffUntilGetIn", String.valueOf(sumNumberOfStaysFromGetOffUntilGetIn));
-            valuesForThisRun.put(prefix+"numberOfParkingBeforeGetIn", String.valueOf(sumNumberOfParkingBeforeGetIn));
+            valuesForThisRun.put(prefix + "parkingCapacity", String.valueOf(sumParkingCapacity));
+            valuesForThisRun.put(prefix + "rejectedParkingRequest", String.valueOf(sumParkingRejections));
+            valuesForThisRun.put(prefix + "reservationsRequests", String.valueOf(sumReservationsRequests));
+            valuesForThisRun.put(prefix + "numberOfParkedVehicles", String.valueOf(sumNumberOfParkedVehicles));
+            valuesForThisRun.put(prefix + "numberOfStaysFromGetOffUntilGetIn", String.valueOf(sumNumberOfStaysFromGetOffUntilGetIn));
+            valuesForThisRun.put(prefix + "numberOfParkingBeforeGetIn", String.valueOf(sumNumberOfParkingBeforeGetIn));
 
-            double averageParkingRejections_perTour = (double) Math.round((float) sumParkingRejections / numberOfTours * 10) /10;
-            double averageReservationsRequests_perTour = (double) Math.round((float) sumReservationsRequests / numberOfTours * 10) /10;
-            double averageNumberOfParkedVehicles_perTour = (double) Math.round((float) sumNumberOfParkedVehicles / numberOfTours * 10)/10;
-            double averageNumberOfStaysFromGetOffUntilGetIn_perTour = (double) Math.round((float) sumNumberOfStaysFromGetOffUntilGetIn / numberOfTours * 10)/10;
-            double averageNumberOfParkingBeforeGetIn_perTour = (double) Math.round((float) sumNumberOfParkingBeforeGetIn / numberOfTours * 10)/10;
+            double averageParkingRejections_perTour = (double) Math.round((float) sumParkingRejections / numberOfTours * 10) / 10;
+            double averageReservationsRequests_perTour = (double) Math.round((float) sumReservationsRequests / numberOfTours * 10) / 10;
+            double averageNumberOfParkedVehicles_perTour = (double) Math.round((float) sumNumberOfParkedVehicles / numberOfTours * 10) / 10;
+            double averageNumberOfStaysFromGetOffUntilGetIn_perTour = (double) Math.round(
+                    (float) sumNumberOfStaysFromGetOffUntilGetIn / numberOfTours * 10) / 10;
+            double averageNumberOfParkingBeforeGetIn_perTour = (double) Math.round((float) sumNumberOfParkingBeforeGetIn / numberOfTours * 10) / 10;
 
-            valuesForThisRun.put(prefix+"average_rejectedParkingRequest", String.valueOf(averageParkingRejections_perTour));
-            valuesForThisRun.put(prefix+"average_reservationsRequests", String.valueOf(averageReservationsRequests_perTour));
-            valuesForThisRun.put(prefix+"average_numberOfParkedVehicles", String.valueOf(averageNumberOfParkedVehicles_perTour));
-            valuesForThisRun.put(prefix+"average_numberOfStaysFromGetOffUntilGetIn", String.valueOf(averageNumberOfStaysFromGetOffUntilGetIn_perTour));
-            valuesForThisRun.put(prefix+"average_numberOfParkingBeforeGetIn", String.valueOf(averageNumberOfParkingBeforeGetIn_perTour));
+            valuesForThisRun.put(prefix + "average_rejectedParkingRequest", String.valueOf(averageParkingRejections_perTour));
+            valuesForThisRun.put(prefix + "average_reservationsRequests", String.valueOf(averageReservationsRequests_perTour));
+            valuesForThisRun.put(prefix + "average_numberOfParkedVehicles", String.valueOf(averageNumberOfParkedVehicles_perTour));
+            valuesForThisRun.put(prefix + "average_numberOfStaysFromGetOffUntilGetIn",
+                    String.valueOf(averageNumberOfStaysFromGetOffUntilGetIn_perTour));
+            valuesForThisRun.put(prefix + "average_numberOfParkingBeforeGetIn", String.valueOf(averageNumberOfParkingBeforeGetIn_perTour));
 
         } catch (IOException e) {
             e.printStackTrace();
