@@ -29,9 +29,11 @@ import org.matsim.api.core.v01.events.handler.*;
 import org.matsim.api.core.v01.network.Link;
 import org.matsim.api.core.v01.population.Activity;
 import org.matsim.api.core.v01.population.Person;
+import org.matsim.application.options.ShpOptions;
 import org.matsim.contrib.parking.parkingsearch.ParkingUtils;
 import org.matsim.contrib.parking.parkingsearch.events.*;
 import org.matsim.core.network.NetworkUtils;
+import org.matsim.core.utils.geometry.transformations.TransformationFactory;
 import org.matsim.vehicles.Vehicle;
 
 import java.util.HashMap;
@@ -59,8 +61,12 @@ public class LinkDemandAndParkingEventHandler
     private final Map<Id<Vehicle>, Double> vehicleBetweenPassengerDropOffAndPickup = new HashMap<>();
     private final Map<Id<Vehicle>, Double> vehicleIsWaitingForParking = new HashMap<>();
     private final Map<Id<Person>, Id<Vehicle>> personAndVehicleConnection = new HashMap<>();
+    private final ShpOptions.Index indexZones;
+    private final ShpOptions shpZones;
 
-    public LinkDemandAndParkingEventHandler(Scenario scenario) {
+    public LinkDemandAndParkingEventHandler(Scenario scenario, ShpOptions shpZones) {
+        this.indexZones = shpZones.createIndex(shpZones.getShapeCrs(), "Gemeinde_n");
+        this.shpZones = shpZones;
         this.scenario = scenario;
     }
 
@@ -148,6 +154,16 @@ public class LinkDemandAndParkingEventHandler
             Coord attractionCoord = scenario.getActivityFacilities().getFacilities().get(thisPlanElement.getFacilityId()).getCoord();
             double distanceToAttraction = NetworkUtils.getEuclideanDistance(scenario.getNetwork().getLinks().get(event.getLinkId()).getCoord(),
                     attractionCoord);
+
+            String facilityCRS = TransformationFactory.DHDN_GK4;
+            String area = indexZones
+                    .query(shpZones.createTransformation(facilityCRS).transform(attractionCoord));
+            if (area != null && area.equals("Mitte")) {
+                tourInformation.get(vehicleId).mergeDouble("distanceToAttraction_Mitte", distanceToAttraction, Double::sum);
+                tourInformation.get(vehicleId).mergeDouble("numberOfStops_Mitte", 1, Double::sum);
+            }
+
+
             tourInformation.get(vehicleId).mergeDouble("distanceToAttraction", distanceToAttraction, Double::sum);
             tourInformation.get(vehicleId).mergeDouble("numberOfStops", 1, Double::sum);
             String attractionName = event.getActType().split("_")[4];
