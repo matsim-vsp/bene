@@ -130,8 +130,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
         Configurator.setLevel("org.matsim.contrib.parking.parkingsearch.manager.FacilityBasedParkingManager", Level.WARN);
         Configurator.setLevel("org.matsim.core.utils.geometry.geotools.MGC", Level.ERROR);
 
-        if(pathToConfig.getFileName().toString().contains("policyCase"))
-            dropOffOnlyAtParkingLocations = true;
+
 
         String facilityCRS = TransformationFactory.DHDN_GK4;
 
@@ -234,6 +233,9 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
         Config config = ConfigUtils.loadConfig(pathToConfig.toString());
         ConfigUtils.addOrGetModule(config, ParkingSearchConfigGroup.class);
+
+        if(config.controller().getRunId().contains("DropOffLocations") || config.controller().getRunId().contains("dropOffLocations"))
+            dropOffOnlyAtParkingLocations = true;
 
         if (output == null)
             config.controller().setOutputDirectory("output/" + config.controller().getRunId() + "." + numberOfTours + "busses"
