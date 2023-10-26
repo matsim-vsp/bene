@@ -559,7 +559,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                 tourStart.setEndTime(startTime);
                 tourStart.setMaximumDuration(0.5 * 3600);
 
-                scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(startActivityName)
+                scenario.getConfig().scoring().addActivityParams(new ScoringConfigGroup.ActivityParams(startActivityName)
                         .setTypicalDuration(0.5 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
                 plan.addActivity(tourStart);
 
