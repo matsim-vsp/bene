@@ -37,15 +37,15 @@ import org.matsim.api.core.v01.population.*;
 import org.matsim.application.MATSimAppCommand;
 import org.matsim.application.options.ShpOptions;
 import org.matsim.application.options.ShpOptions.Index;
-import org.matsim.bene.analysis.ParkingSlotVisualiserBus;
 import org.matsim.bene.analysis.RunAfterSimAnalysisBene;
+import org.matsim.bene.analysis.eventsHandler.ParkingSlotVisualiserBus;
 import org.matsim.contrib.parking.parkingsearch.ParkingUtils;
 import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
 import org.matsim.contrib.parking.parkingsearch.sim.ParkingSearchConfigGroup;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
-import org.matsim.core.config.groups.ControlerConfigGroup;
-import org.matsim.core.config.groups.PlanCalcScoreConfigGroup.ActivityParams;
+import org.matsim.core.config.groups.ControllerConfigGroup;
+import org.matsim.core.config.groups.ScoringConfigGroup;
 import org.matsim.core.config.groups.VspExperimentalConfigGroup.VspDefaultsCheckingLevel;
 import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
@@ -71,7 +71,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -82,18 +81,18 @@ import java.util.stream.Collectors;
 public class CreateTourismBusTours implements MATSimAppCommand {
     private static final Logger log = LogManager.getLogger(CreateTourismBusTours.class);
     static SplittableRandom random;
-
+    // config_base, config_capacityCheck, config_reservation, config_centralizedParking, config_dropOffLocations, config_newParkingLocations, config_newParkingLocations_DropOffLocations, config_newParkingLocations_DropOffLocations_Reservation
     @CommandLine.Parameters(arity = "1", defaultValue = "scenarios/config/config_base.xml", paramLabel = "INPUT", description = "Path to the config")
     private static Path pathToConfig;
-    @CommandLine.Option(names = "--numberOfTours", defaultValue = "1", description = "Set the number of created tours")
-    private static int numberOfTours; //526 (315 = 60% von 526 Touren);
+    @CommandLine.Option(names = "--numberOfTours", defaultValue = "239", description = "Set the number of created tours")
+    private static int numberOfTours; //411 (239 = 60% von 411 Touren);
     @CommandLine.Option(names = "--changeFactorOfParkingCapacity", defaultValue = "1.0", description = "Sets the percentage of change of the existing parking Capacity")
     private static double changeFactorOfParkingCapacity;
     @CommandLine.Option(names = "--pathTourismFacilitiesFile", description = "Path for the used tourism facilities", defaultValue = "scenarios/tourismFacilities/tourismFacilities.xml")
     private static Path facilitiesFileLocation;
     @CommandLine.Option(names = "--pathShpFile", description = "Path for the used shp file", defaultValue = "original-input-data/shp/bezirke/bezirksgrenzen.shp")
     private static Path shapeFileZonePath;
-    @CommandLine.Option(names = "--pathHotspotFile", description = "Path for the used hotspot information", defaultValue = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspotsV3.csv")
+    @CommandLine.Option(names = "--pathHotspotFile", description = "Path for the used hotspot information", defaultValue = "../shared-svn/projects/bene_reisebusstrategie/material/visitBerlin/anteileHotspotsV2.csv")
     private static Path pathHotspotFile;
     @CommandLine.Option(names = "--pathOutput", description = "Path for the output")
     private static Path output;
@@ -101,6 +100,8 @@ public class CreateTourismBusTours implements MATSimAppCommand {
     private static Path pathNetworkChangeEvents;
     @CommandLine.Option(names = "--runAnalysisAtEnde", description = "Run the analysis at the end of the run.", defaultValue = "true")
     private static boolean runAnalysis;
+    @CommandLine.Option(names = "--dropOffOnlyAtParkingLocations", description = "Set if the passangerInteraction while stops can only take place at parking facilities.", defaultValue = "false")
+    private static boolean dropOffOnlyAtParkingLocations;
 
     public CreateTourismBusTours(Path pathToConfig, int numberOfTours, double changeFactorOfParkingCapacity, Path facilitiesFileLocation,
                                  Path shapeFileZonePath,
@@ -121,13 +122,14 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                 new CreateTourismBusTours(pathToConfig, numberOfTours, changeFactorOfParkingCapacity, facilitiesFileLocation, shapeFileZonePath,
                         pathHotspotFile, output, pathNetworkChangeEvents, runAnalysis)).execute(args));
     }
-    //TODO wenn ActivityLocation und vorhandener Parkplatz gleichen Link haben, kann ohne weiteren Leg geparkt werden
+
 
     @Override
-    public Integer call() throws IOException, ExecutionException, InterruptedException {
+    public Integer call() throws IOException {
 
         Configurator.setLevel("org.matsim.contrib.parking.parkingsearch.manager.FacilityBasedParkingManager", Level.WARN);
         Configurator.setLevel("org.matsim.core.utils.geometry.geotools.MGC", Level.ERROR);
+
 
         String facilityCRS = TransformationFactory.DHDN_GK4;
 
@@ -138,11 +140,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
         Config config = prepareConfig(numberOfTours, output, changeFactorOfParkingCapacity, pathNetworkChangeEvents);
         Scenario scenario = ScenarioUtils.loadScenario(config);
-//		Network filteredNetwork = NetworkUtils.createNetwork();
-//		Map<String, Object> networkAttributes = scenario.getNetwork().getAttributes().getAsMap();
-//		new TransportModeNetworkFilter(scenario.getNetwork()).filter(filteredNetwork, new HashSet<>(Arrays.asList("car")));
-//		networkAttributes.forEach((k,v) ->filteredNetwork.getAttributes().putAttribute(k,v) );
-//		((MutableScenario)scenario).setNetwork(filteredNetwork);
+
         random = new SplittableRandom(config.global().getRandomSeed());
 
         if (scenario.getPopulation().getPersons().isEmpty()) {
@@ -169,7 +167,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                     stopsPerTourDistribution, stopDurationDistribution, shpZones, facilityCRS);
 
             PopulationUtils.writePopulation(scenario.getPopulation(),
-                    config.controler().getOutputDirectory() + "/" + config.controler().getRunId() + ".output_plans_generated.xml.gz");
+                    config.controller().getOutputDirectory() + "/" + config.controller().getRunId() + ".output_plans_generated.xml.gz");
         } else
             log.warn("The given input plans used. No new demand created.");
 
@@ -191,10 +189,11 @@ public class CreateTourismBusTours implements MATSimAppCommand {
         controler.run();
 
         if (runAnalysis)
-            RunAfterSimAnalysisBene.main(new String[]{scenario.getConfig().controler().getOutputDirectory(), config.controler().getRunId(), "true"});
+            RunAfterSimAnalysisBene.main(
+                    new String[]{scenario.getConfig().controller().getOutputDirectory(), config.controller().getRunId(), "true"});
         try {
             FileUtils.copyDirectory(new File("scenarios/vizExample"),
-                    new File(scenario.getConfig().controler().getOutputDirectory() + "/simwrapper_analysis"));
+                    new File(scenario.getConfig().controller().getOutputDirectory() + "/simwrapper_analysis"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -231,16 +230,19 @@ public class CreateTourismBusTours implements MATSimAppCommand {
         Config config = ConfigUtils.loadConfig(pathToConfig.toString());
         ConfigUtils.addOrGetModule(config, ParkingSearchConfigGroup.class);
 
+        if (config.controller().getRunId().contains("DropOffLocations") || config.controller().getRunId().contains("dropOffLocations"))
+            dropOffOnlyAtParkingLocations = true;
+
         if (output == null)
-            config.controler().setOutputDirectory("output/" + config.controler().getRunId() + "." + numberOfTours + "busses"
+            config.controller().setOutputDirectory("output/" + config.controller().getRunId() + "." + numberOfTours + "busses"
                     + "_" + changeFactorOfParkingCapacity + "_" + java.time.LocalDate.now() + "_" + java.time.LocalTime.now().toSecondOfDay());
         else
-            config.controler().setOutputDirectory(output.toString() + "/" + config.controler().getRunId() + "." + numberOfTours + "busses"
+            config.controller().setOutputDirectory(output.toString() + "/" + config.controller().getRunId() + "." + numberOfTours + "busses"
                     + "_" + changeFactorOfParkingCapacity + "_" + java.time.LocalDate.now() + "_" + java.time.LocalTime.now().toSecondOfDay());
-        new OutputDirectoryHierarchy(config.controler().getOutputDirectory(), config.controler().getRunId(),
-                config.controler().getOverwriteFileSetting(), ControlerConfigGroup.CompressionType.gzip);
-        config.controler().setRunId("bus");
-        config.controler().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
+        new OutputDirectoryHierarchy(config.controller().getOutputDirectory(), config.controller().getRunId(),
+                config.controller().getOverwriteFileSetting(), ControllerConfigGroup.CompressionType.gzip);
+        config.controller().setRunId("bus");
+        config.controller().setOverwriteFileSetting(OverwriteFileSetting.overwriteExistingFiles);
         if (pathNetworkChangeEvents != null) {
             config.network().setTimeVariantNetwork(true);
             config.network().setChangeEventsInputFile(pathNetworkChangeEvents.toString());
@@ -330,26 +332,26 @@ public class CreateTourismBusTours implements MATSimAppCommand {
         }
     }
 
-	private static void createStopsPerTourDistribution(HashMap<Integer, Integer> stopsPerTourDistribution,
-													   HashMap<String, HashMap<Integer, Integer>> stopDurationDistributionPerType,
-													   int numberOfTours) {
+    private static void createStopsPerTourDistribution(HashMap<Integer, Integer> stopsPerTourDistribution,
+                                                       HashMap<String, HashMap<Integer, Integer>> stopDurationDistributionPerType,
+                                                       int numberOfTours) {
 
-		HashMap<String, Integer> stopsTypeDistribution = new HashMap<>();
-		// from survey
-		stopsPerTourDistribution.put(1, (int) Math.round(0.05 * numberOfTours));
-		stopsPerTourDistribution.put(2, (int) Math.round(0.26 * numberOfTours));
-		stopsPerTourDistribution.put(3, (int) Math.round(0.37 * numberOfTours));
-		stopsPerTourDistribution.put(4, (int) Math.round(0.15 * numberOfTours));
-		stopsPerTourDistribution.put(5, (int) Math.round(0.17 * numberOfTours));
+        HashMap<String, Integer> stopsTypeDistribution = new HashMap<>();
+        // from survey
+        stopsPerTourDistribution.put(1, (int) Math.round(0.05 * numberOfTours));
+        stopsPerTourDistribution.put(2, (int) Math.round(0.26 * numberOfTours));
+        stopsPerTourDistribution.put(3, (int) Math.round(0.37 * numberOfTours));
+        stopsPerTourDistribution.put(4, (int) Math.round(0.15 * numberOfTours));
+        stopsPerTourDistribution.put(5, (int) Math.round(0.17 * numberOfTours));
 
-		correctRoundingErrors(stopsPerTourDistribution, numberOfTours);
+        correctRoundingErrors(stopsPerTourDistribution, numberOfTours);
 
-		int numberOfStops = 0;
-		for (Integer stopsPerTour : stopsPerTourDistribution.keySet()) {
-			numberOfStops += stopsPerTour * stopsPerTourDistribution.get(stopsPerTour);
-		}
-		stopsTypeDistribution.put("attraction", (int) Math.round(0.277 * numberOfStops));
-		stopsTypeDistribution.put("photoStop", (int) Math.round(0.293 * numberOfStops));
+        int numberOfStops = 0;
+        for (Integer stopsPerTour : stopsPerTourDistribution.keySet()) {
+            numberOfStops += stopsPerTour * stopsPerTourDistribution.get(stopsPerTour);
+        }
+        stopsTypeDistribution.put("attraction", (int) Math.round(0.277 * numberOfStops));
+        stopsTypeDistribution.put("photoStop", (int) Math.round(0.293 * numberOfStops));
         stopsTypeDistribution.put("lunch", (int) Math.round(0.185 * numberOfStops));
         stopsTypeDistribution.put("walk", (int) Math.round(0.244 * numberOfStops));
 
@@ -497,7 +499,7 @@ public class CreateTourismBusTours implements MATSimAppCommand {
     private static void generateTours(Scenario scenario, HashMap<String, Integer> busStartDistribution,
                                       HashMap<Coord, ArrayList<Id<ActivityFacility>>> attractionsForHotspots,
                                       HashMap<Coord, Integer> stopsPerHotspotDistribution, HashMap<Integer, Integer> stopsPerTourDistribution,
-									  HashMap<String, HashMap<Integer, Integer>> stopDurationDistribution, ShpOptions shpZones, String facilityCRS) {
+                                      HashMap<String, HashMap<Integer, Integer>> stopDurationDistribution, ShpOptions shpZones, String facilityCRS) {
         Population population = scenario.getPopulation();
         PopulationFactory populationFactory = population.getFactory();
         List<Link> links = scenario.getNetwork().getLinks().values().stream().filter(l -> l.getAllowedModes().contains("car"))
@@ -508,6 +510,13 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
         TreeMap<Id<ActivityFacility>, ActivityFacility> attractionFacilities = allFacilities
                 .getFacilitiesForActivityType("attraction");
+
+        TreeMap<Id<ActivityFacility>, ActivityFacility> parkingFacilities = allFacilities
+                .getFacilitiesForActivityType("parking");
+        List<Id<Link>> parkingLinkIds = new ArrayList<>();
+        parkingFacilities.values().forEach(f -> parkingLinkIds.add(f.getLinkId()));
+        List<Link> parkingLinks = scenario.getNetwork().getLinks().values().stream().filter(l -> parkingLinkIds.contains(l.getId()))
+                .collect(Collectors.toList());
 
         int tourCount = 0;
         for (String area : busStartDistribution.keySet()) {
@@ -539,28 +548,16 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                     startTime = random.nextDouble(10 * 3600, 12 * 3600);
                 else
                     startTime = random.nextDouble(10 * 3600, 14 * 3600);
-//				Activity depot = populationFactory.createActivityFromLinkId("depot", hotelLinkId);
-//				depot.getAttributes().putAttribute("parking", "noParking");
-//				depot.setStartTime(0.);
-//				depot.setEndTime(startTime);
-//				if (!scenario.getConfig().planCalcScore().getActivityParams().contains(depot.getType()))
-//					scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(depot.getType())
-//							.setTypicalDuration(0.5 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
-//				plan.addActivity(depot);
-//
-//				Leg legActivity = populationFactory.createLeg("car");
-//				plan.addLeg(legActivity);
 
                 String startActivityName = tourName + "_Start_" + hotelFacility.getDesc();
                 Activity tourStart = populationFactory.createActivityFromActivityFacilityId(startActivityName,
                         hotelFacility.getId());
-
-                tourStart.getAttributes().putAttribute("parking", "noParking");
+                ParkingUtils.setNoParkingForActivity(tourStart);
                 tourStart.setLinkId(hotelLinkId);
                 tourStart.setEndTime(startTime);
                 tourStart.setMaximumDuration(0.5 * 3600);
 
-                scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(startActivityName)
+                scenario.getConfig().scoring().addActivityParams(new ScoringConfigGroup.ActivityParams(startActivityName)
                         .setTypicalDuration(0.5 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
                 plan.addActivity(tourStart);
 
@@ -578,17 +575,20 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                     String getOffActivityName = stopActivityName + "_GetOff";
                     Activity tourStopGetOff = populationFactory.createActivityFromActivityFacilityId(getOffActivityName,
                             attractionFacility.getId());
-                    Id<Link> linkIdTourStop = getNearestLink(links, attractionFacility.getCoord());
+                    tourStopGetOff.setCoord(attractionFacility.getCoord());
+                    Id<Link> linkIdTourStop;
+                    if (dropOffOnlyAtParkingLocations)
+                        linkIdTourStop = getNearestLink(parkingLinks, attractionFacility.getCoord());
+                    else
+                        linkIdTourStop = getNearestLink(links, attractionFacility.getCoord());
                     attractionFacility.setLinkId(linkIdTourStop);
 
-                    // add one parking slot at activity
                     createActivityParamsForGetOffAndPickUp(scenario, plan, legActivity, getOffActivityName, tourStopGetOff, linkIdTourStop);
 
-                    Activity parkingActivity = populationFactory.createActivityFromLinkId(ParkingUtils.PARKACTIVITYTYPE + "_activity",
+                    Activity parkingActivity = populationFactory.createActivityFromLinkId(ParkingUtils.ParkingStageInteractionType + "_activity",
                             linkIdTourStop);
                     double parkingDuration = getDurationForThisStop(stopDurationDistribution);
                     parkingActivity.setMaximumDuration(parkingDuration);
-                    parkingActivity.getAttributes().putAttribute("parking", "withParking");
                     plan.addActivity(parkingActivity);
                     plan.addLeg(legActivity);
 
@@ -596,15 +596,16 @@ public class CreateTourismBusTours implements MATSimAppCommand {
 
                     Activity tourStopGetIn = populationFactory.createActivityFromActivityFacilityId(getInActivityName,
                             attractionFacility.getId());
+                    tourStopGetIn.setCoord(attractionFacility.getCoord());
                     createActivityParamsForGetOffAndPickUp(scenario, plan, legActivity, getInActivityName, tourStopGetIn, linkIdTourStop);
                 }
                 String endActivityName = tourName + "_End_" + hotelFacility.getDesc();
                 Activity tourEnd = populationFactory.createActivityFromActivityFacilityId(endActivityName,
                         hotelFacility.getId());
                 tourEnd.setLinkId(hotelLinkId);
-                scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(endActivityName)
+                scenario.getConfig().scoring().addActivityParams(new ScoringConfigGroup.ActivityParams(endActivityName)
                         .setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(24. * 3600.));
-                tourEnd.getAttributes().putAttribute("parking", "noParking");
+                ParkingUtils.setNoParkingForActivity(tourEnd);
                 tourEnd.setMaximumDurationUndefined();
                 plan.addActivity(tourEnd);
 
@@ -615,13 +616,16 @@ public class CreateTourismBusTours implements MATSimAppCommand {
     }
 
     private static void createActivityParamsForGetOffAndPickUp(Scenario scenario, Plan plan, Leg legActivity, String getOffActivityName,
-                                                               Activity tourStopGetOff, Id<Link> linkIdTourStop) {
-        scenario.getConfig().planCalcScore().addActivityParams(new ActivityParams(getOffActivityName)
-                .setTypicalDuration(0.25 * 3600).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
-        tourStopGetOff.getAttributes().putAttribute("parking", "noParking");
-        tourStopGetOff.setMaximumDuration(0.25 * 3600);
-        tourStopGetOff.setLinkId(linkIdTourStop);
-        plan.addActivity(tourStopGetOff);
+                                                               Activity tourStopGetOffOrPickUp, Id<Link> linkIdTourStop) {
+        scenario.getConfig().scoring().addActivityParams(new ScoringConfigGroup.ActivityParams(getOffActivityName)
+                .setTypicalDuration(15 * 60).setOpeningTime(10. * 3600).setClosingTime(20. * 3600.));
+        if (dropOffOnlyAtParkingLocations)
+            ParkingUtils.setPassangerInteractionForActivity(tourStopGetOffOrPickUp);
+        else
+            ParkingUtils.setNoParkingForActivity(tourStopGetOffOrPickUp);
+        tourStopGetOffOrPickUp.setMaximumDuration(15 * 60);
+        tourStopGetOffOrPickUp.setLinkId(linkIdTourStop);
+        plan.addActivity(tourStopGetOffOrPickUp);
         plan.addLeg(legActivity);
     }
 

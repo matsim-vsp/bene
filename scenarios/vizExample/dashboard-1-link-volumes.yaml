@@ -7,6 +7,19 @@ header:
   description_de: "Simulationsergebnisse für das BENE Projekt 'Reisebusstrategie Berlin'"
 
 layout:
+  Summary:
+    - title: "General results"
+      description: "TODO"
+      type: 'topsheet'
+      width: 7
+      props:
+        configFile: "topsheet-coach-links.yaml"
+    - title: "General results"
+      description: "TODO"
+      type: 'topsheet'
+      width: 3
+      props:
+        configFile: "topsheet-coach-links_average.yaml"
   Sum:
     - type: "links"
       title: "Fahrzeugaufkommen"
@@ -35,11 +48,6 @@ layout:
                 dataset: csvBase
                 columnName: volume
                 scaleFactor: 500
-    - title: "General results"
-      description: "TODO"
-      type: 'topsheet'
-      props:
-        configFile: "topsheet-coach-links.yaml"
   ParkingTotal:
     - type: "links"
       title: "Fahrzeugaufkommen beim Parkverkehr"

@@ -20,14 +20,30 @@ calculations:
   vehicles: '{base.vehicle}'
   total_m: '{base.drivenDistance}'
   total_km: 'round(total_m/100)/10'
-  parkingSearch_m: '{base.drivenDistance_parkingSearch}'
-  parkingSearch_km: 'round(parkingSearch_m/100)/10'
-  parkingTotal_m: '{base.drivenDistance_parkingTotal}'
-  parkingTotal_km: 'round(parkingTotal_m/100)/10'
+  Distance_ParkingSearch_m: '{base.Distance_ParkingSearch}'
+  Distance_ParkingSearch_km: 'round(Distance_ParkingSearch_m/100)/10'
+  Distance_NoPassanger_m: '{base.Distance_NoPassanger}'
+  Distance_NoPassanger_km: 'round(Distance_NoPassanger_m/100)/10'
+  Distance_Passanger_m: '{base.Distance_Passanger}'
+  Distance_Passanger_km: 'round(Distance_Passanger_m/100)/10'
+  tourDurations_s: '{base.tourDurations}'
+  tourDurations_h: 'round(tourDurations_s/36)/100'
+  parkingDurations_s: '{base.parkingDurations}'
+  parkingDurations_h: 'round(parkingDurations_s/36)/100'
+  parkingSearchDurations_s: '{base.parkingSearchDurations}'
+  parkingSearchDurations_min: 'round(parkingSearchDurations_s/6)/10'
+  waitingForParkingDurations_s: '{base.waitingActivityDurations}'
+  waitingForParkingDurations_min: 'round(waitingForParkingDurations_s/6)/10'
 
-  parkingSearch_pct: 'round(parkingSearch_m / total_m *1000)/10'
-  parkingTotal_pct: 'round(parkingTotal_m / total_m *1000)/10'
-  parkingSearchOfParking_pct: 'round(parkingSearch_m / parkingTotal_m *1000)/10'
+  CO2_g: '{base.CO2_TOTAL}'
+  CO2_kg: 'round(CO2_g/100)/10'
+
+  parkingSearch_pct: 'round(Distance_ParkingSearch_m / total_m *1000)/10'
+  Distance_NoPassanger_pct: 'round(Distance_NoPassanger_m / total_m *1000)/10'
+  
+  distanceToAttraction_km: 'round({base.distanceToAttraction})/1000'
+  distanceToAttraction_Mitte_km: 'round({base.distanceToAttraction_Mitte})/1000'
+
 # Table rows
 outputs:
   - title_en: Number of vehicles
@@ -36,18 +52,39 @@ outputs:
   - title_en: Total driven distance [km]
     title_de: Gefahrene Strecke [km]
     value: total_km
+  - title_en: Distance trips with passengers[km]
+    title_de: Strecke mit Passagieren [km]
+    value: Distance_Passanger_km
+  - title_en: Distance empty trips [km]
+    title_de: Strecke Leerfahrten [km]
+    value: Distance_NoPassanger_km
   - title_en: Distance parking search [km]
     title_de: Strecke Parkplatzsuche [km]
-    value: parkingSearch_km
+    value: Distance_ParkingSearch_km
   - title_en: Share of parking search [%]
-    title_de: Anteil der Parkplatzsuche am Gesamtverkehr[%]
+    title_de: Anteil der Parkplatzsuche[%]
     value: parkingSearch_pct
-  - title_en: Distance parking total [km]
-    title_de: Strecke Parkpverkehrs [km]
-    value: parkingTotal_km
   - title_en: Share of parking total [%]
     title_de: Anteil des Parkverkehrs [%]
-    value: parkingTotal_pct
-  - title_en: Share of parking search while Parking [%]
-    title_de: Anteil der Parkplatzsuche beim Parkverkehr [%]
-    value: parkingSearchOfParking_pct
+    value: Distance_NoPassanger_pct
+  - title_en: Tour durations [h]
+    title_de: Tourdauern [h]
+    value: tourDurations_h
+  - title_en: Durations of parking search [min]
+    title_de: Dauer Parkplatzsuche [min]
+    value: parkingSearchDurations_min
+  - title_en: Durations of parking [h]
+    title_de: Dauer Parkplatzaufenthalt [h]
+    value: parkingDurations_h
+  - title_en: Durations of waiting for parking [min]
+    title_de: Dauer Warte auf Parkplatz [min]
+    value: waitingForParkingDurations_min
+  - title_en: CO2 emissions [kg]
+    title_de: CO2 Emissionen [kg]
+    value: CO2_kg  
+  - title_en: Distance to attraction from getOff [km]
+    title_de: Entfernungen bei Ausstieg zur Attraktion [km]
+    value: distanceToAttraction_km
+  - title_en: Distance to attraction from getOff (Mitte)[km]
+    title_de: Entfernungen bei Ausstieg zur Attraktion (Mitte)[km]
+    value: distanceToAttraction_Mitte_km

@@ -31,7 +31,7 @@
 		<!-- The type of routing (least cost path) algorithm used, may have the values: [Dijkstra, AStarLandmarks, FastDijkstra, FastAStarLandmarks, SpeedyALT] -->
 		<param name="routingAlgorithmType" value="SpeedyALT" />
 		<!-- An identifier for the current run which is used as prefix for output files and mentioned in output xml files etc. -->
-		<param name="runId" value="capacityCheck" />
+		<param name="runId" value="newParkingLocationsDropOffLocations" />
 		<!-- Comma-separated list of visualizer output file formats. `transims' and `otfvis'. -->
 		<param name="snapshotFormat" value="" />
 		<!-- iterationNumber % writeEventsInterval == 0 defines in which iterations events are written to a file. `0' disables events writing completely. -->
@@ -50,7 +50,7 @@
 		<param name="idPrefix" value="f_auto_" />
 		<!-- The Coordinates Reference System in which the coordinates are expressed in the input file. At import, the coordinates will be converted to the coordinate system defined in "global", and willbe converted back at export. If not specified, no conversion happens. -->
 		<param name="inputCRS" value="null" />
-		<param name="inputFacilitiesFile" value="../parkingFacilities/parkingFacilities_base.xml" />
+		<param name="inputFacilitiesFile" value="../parkingFacilities/parkingFacilities_policyCase.xml" />
 		<param name="inputFacilityAttributesFile" value="null" />
 		<param name="insistingOnUsingDeprecatedFacilitiesAttributeFile" value="false" />
 	</module>
@@ -75,7 +75,7 @@
 		<!-- Set if a vehicle can park only at given parking facilities or it can park freely at a link without a facility. -->
 		<param name="canParkOnlyAtFacilities" value="true" />
 		<!-- Fraction of agents who can check free capacities in advanced. This is currently developed for the FacilityBasedParkingManager -->
-		<param name="fractionCanCheckFreeCapacitiesInAdvanced" value="1.0" />
+		<param name="fractionCanCheckFreeCapacitiesInAdvanced" value="0.0" />
 		<!-- Fraction of agents who can reserve free capacities in advanced. This is currently developed for the FacilityBasedParkingManager" -->
 		<param name="fractionCanReserveParkingInAdvanced" value="0.0" />
 		<!-- Duration to park a vehicle -->

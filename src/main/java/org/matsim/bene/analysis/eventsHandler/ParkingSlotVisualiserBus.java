@@ -1,4 +1,4 @@
-package org.matsim.bene.analysis;
+package org.matsim.bene.analysis.eventsHandler;
 
 import org.matsim.api.core.v01.Coord;
 import org.matsim.api.core.v01.Id;
@@ -11,21 +11,17 @@ import org.matsim.api.core.v01.network.Network;
 import org.matsim.contrib.parking.parkingsearch.ParkingUtils;
 import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotManager;
 import org.matsim.contrib.parking.parkingsearch.evaluation.ParkingSlotVisualiser;
+import org.matsim.contrib.parking.parkingsearch.events.*;
 import org.matsim.core.controler.events.IterationEndsEvent;
 import org.matsim.core.utils.collections.Tuple;
 import org.matsim.facilities.ActivityFacility;
-import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEvent;
-import org.matsim.contrib.parking.parkingsearch.events.RemoveParkingActivityEventHandler;
-import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEvent;
-import org.matsim.contrib.parking.parkingsearch.events.StartParkingSearchEventHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements ActivityEndEventHandler, StartParkingSearchEventHandler, RemoveParkingActivityEventHandler {
+public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements ActivityEndEventHandler, StartParkingSearchEventHandler, RemoveParkingActivityEventHandler, StartWaitingForParkingEventHandler {
     List<String> vehicleIsLookingForParking = new ArrayList<>();
-
 
 	public ParkingSlotVisualiserBus(Network network, Map<Id<ActivityFacility>, ActivityFacility> parkingFacilities) {
 		super(network, parkingFacilities);
@@ -42,6 +38,11 @@ public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements A
 
 	@Override
 	public void handleEvent(RemoveParkingActivityEvent event) {
+		this.vehicleIsLookingForParking.remove(event.getVehicleId().toString());
+	}
+
+	@Override
+	public void handleEvent(StartWaitingForParkingEvent event) {
 		this.vehicleIsLookingForParking.remove(event.getVehicleId().toString());
 	}
 
@@ -77,8 +78,17 @@ public class ParkingSlotVisualiserBus extends ParkingSlotVisualiser implements A
 
 	@Override
 	public void handleEvent(ActivityEndEvent event) {
-		if (event.getActType().equals(ParkingUtils.PARKACTIVITYTYPE))
-			this.vehicleIsLookingForParking.remove(event.getPersonId().toString());
-		
+		if (event.getActType().equals(ParkingUtils.WaitingForParkingActivityType)) {
+			ParkingSlotManager manager = this.slotsOnLink.get(event.getLinkId());
+			if (manager != null) {
+				Tuple<Coord, Double> parkingTuple = manager.processParking(event.getTime(), Id.createVehicleId(event.getPersonId().toString()));
+				this.parkings.add(manager.getLinkId() + ";" + parkingTuple.getSecond() + ";" + event.getTime() + ";" +
+						parkingTuple.getFirst().getX() + ";" + parkingTuple.getFirst().getY() + ";" + "free");
+				this.parkedVehicles.put(Id.createVehicleId(event.getPersonId().toString()), manager.getLinkId());
+			}
+		} else {
+			if (event.getActType().equals(ParkingUtils.ParkingStageInteractionType))
+				this.vehicleIsLookingForParking.remove(event.getPersonId().toString());
+		}
 	}
 }

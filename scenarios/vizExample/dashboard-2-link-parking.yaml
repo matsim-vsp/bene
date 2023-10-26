@@ -7,12 +7,18 @@ header:
   description_de: "Auswertungen zum Parken während die Fahrgäste einen Zwischenstop während der Tour haben."
 
 layout:
+  results:
+    - title: "General results"
+      description: " "
+      type: 'topsheet'
+      props:
+        configFile: "topsheet-coach-parking.yaml"  
   Sum:
     - title: "Darstellung der Attraktionen und der zugehörigen Parkplätze"
       description: "Anzahl der Busse die an einer Attraktion Fahrgäste rauslassen und an einem Parkplatz parken"
       type: hexagons
       radius: 100
-      zoom: 20
+      zoom: 25
       height: 8
       width: 8
       props:
@@ -22,16 +28,11 @@ layout:
         aggregations:
           Attraktion:
             - title: Attraktionen (Ausstieg)
-              x: fromX
-              y: fromY
+              x: GetOff_X
+              y: GetOff_Y
             - title: Parkplaetze
-              x: toX
-              y: toY
-    - title: "General results"
-      description: "TODO"
-      type: 'topsheet'
-      props:
-        configFile: "topsheet-coach-parking.yaml"
+              x: parking_X
+              y: parking_Y
   reservationsRequests:
     - type: "map"
       title: "Reservierungsanfragen"
@@ -39,7 +40,7 @@ layout:
       width: 2
       height: 8
       center: 13.4010, 52.51892
-      zoom: 20
+      zoom: 25
       projection: 'EPSG:31468'
       shapes:
         file: 'shp/parking.shp'
@@ -53,6 +54,25 @@ layout:
           columnName: reservationsRequests
           join: linkId
           scaleFactor: 10
+        fill:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Plasma
+              steps: 3
+        lineColor:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Plasma
+              steps: 3
+        radius:
+          dataset: parkingData
+          columnName: reservationsRequests
+          scaleFactor: 1
+          join: linkId
   numberOfParkedVehicles:
     - type: "map"
       title: "Anzahl geparkter Busse"
@@ -60,7 +80,7 @@ layout:
       width: 2
       height: 8
       center: 13.4010, 52.51892
-      zoom: 11
+      zoom: 25
       projection: 'EPSG:31468'
       shapes:
         file: 'shp/parking.shp'
@@ -74,14 +94,33 @@ layout:
           columnName: numberOfParkedVehicles
           join: linkId
           scaleFactor: 10
-  rejectedReservations:
+        fill:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Plasma
+              steps: 3
+        lineColor:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Plasma
+              steps: 3
+        radius:
+          dataset: parkingData
+          columnName: numberOfParkedVehicles
+          scaleFactor: 1
+          join: linkId
+  rejectedParkingRequest:
     - type: "map"
       title: "Anzahl der Situationen, in den ein Parkplatz keine freien Kapazitäten hatte."
       description: ""
       width: 2
       height: 8
       center: 13.4010, 52.51892
-      zoom: 11
+      zoom: 25
       projection: 'EPSG:31468'
       shapes:
         file: 'shp/parking.shp'
@@ -92,9 +131,68 @@ layout:
       display:
         lineWidth:
           dataset: parkingData
-          columnName: rejectedReservations
+          columnName: rejectedParkingRequest
           join: linkId
           scaleFactor: 10
+        fill:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Plasma
+              steps: 3
+        lineColor:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Plasma
+              steps: 3
+        radius:
+          dataset: parkingData
+          columnName: rejectedParkingRequest
+          scaleFactor: 1
+          join: linkId
+  numberOfWaitingActivities:
+    - type: "map"
+      title: "Anzahl der Situationen, in den ein Bus vor einem Parkplatz wartet um parken zu können."
+      description: ""
+      width: 2
+      height: 8
+      center: 13.4010, 52.51892
+      zoom: 25
+      projection: 'EPSG:31468'
+      shapes:
+        file: 'shp/parking.shp'
+        join: linkId
+      datasets:
+        parkingData:
+          file: '../ITERS/it.0/bus.0.parkingStats.csv'
+      display:
+        lineWidth:
+          dataset: parkingData
+          columnName: numberOfWaitingActivities
+          join: linkId
+          scaleFactor: 10
+        fill:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Plasma
+              steps: 3
+        lineColor:
+          dataset: parking.shp
+          columnName: maxTime
+          join: ""
+          colorRamp:
+              ramp: Plasma
+              steps: 3
+        radius:
+          dataset: parkingData
+          columnName: numberOfWaitingActivities
+          scaleFactor: 1
+          join: linkId
   ParkingSlots:
     - type: "line"
       title: "Darstellung der Parkplatzsuche"
