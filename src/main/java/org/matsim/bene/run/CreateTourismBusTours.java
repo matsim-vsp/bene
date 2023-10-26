@@ -122,7 +122,6 @@ public class CreateTourismBusTours implements MATSimAppCommand {
                 new CreateTourismBusTours(pathToConfig, numberOfTours, changeFactorOfParkingCapacity, facilitiesFileLocation, shapeFileZonePath,
                         pathHotspotFile, output, pathNetworkChangeEvents, runAnalysis)).execute(args));
     }
-    //TODO wenn ActivityLocation und vorhandener Parkplatz gleichen Link haben, kann ohne weiteren Leg geparkt werden
 
     @Override
     public Integer call() throws IOException {
