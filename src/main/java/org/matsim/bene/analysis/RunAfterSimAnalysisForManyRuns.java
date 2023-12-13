@@ -86,7 +86,7 @@ public class RunAfterSimAnalysisForManyRuns {
 
 
         ArrayList<String> header = new ArrayList<>(
-                Arrays.asList("Parameter", "Basis", "Kapazitätsprüfung", "Reservierung", "Zentrale Parkplätze", "Ausstieg nur am Parkplatz",
+                Arrays.asList("Parameter", "Basis", "Kapazitätsprüfung", "Reservierung", "Zentralisierte Parkplätze", "Ausstieg nur am Parkplatz",
                         "Neue Parkinfrastruktur",
                         "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz", "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz + Reservierung",
                         "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz + Reservierung + 2x Kapazität",
@@ -103,7 +103,7 @@ public class RunAfterSimAnalysisForManyRuns {
                         "waitingActivityDurations", "CO2_TOTAL", "distanceToAttraction", "distanceToAttraction_Mitte"));
         ArrayList<String> categories = new ArrayList<>(
                 Arrays.asList("Gefahrene Strecke [km]", "Strecke mit Passagieren [km]", "Strecke Leerfahrten [km]",
-                        "Strecke Parkplatzsuche [km] ", "Anteil der Strecke der Parkplatzsuche [%]", "Anteil der Strecke des Parkverkehrs [%]",
+                        "Strecke Parkplatzsuche [km] ", "Anteil der Strecke der Parkplatzsuche [%]", "Anteil der Strecke der Leerfahrten [%]",
                         "Tourdauern [h]",
                         "Dauer Parkplatzaufenthalt [h]", "Dauer Warte auf Parkplatz [h]", "CO2 Emissionen [kg]",
                         "Entfernungen bei Ausstieg zur Attraktion [km]", "Entfernungen bei Ausstieg zur Attraktion (Mitte) [km]"));
@@ -158,7 +158,7 @@ public class RunAfterSimAnalysisForManyRuns {
             if (thisKey.contains("distanceToAttraction"))
                 thisValues_averages.add(categories.get(i).replace("[km]", "[m]"));
             else if (thisKey.contains("parkingSearchDurations"))
-                thisValues_averages.add(categories.get(i).replace("Dauer Parkplatzsuche [h]", "Dauer Parkplatzsuche pro Stop [min]"));
+                thisValues_averages.add(categories.get(i).replace("Dauer Parkplatzsuche [h]", "Dauer Parkplatzsuche pro Stopp [min]"));
             else
                 thisValues_averages.add(categories.get(i));
             if (thisKey.contains("Durations")) {
@@ -281,7 +281,6 @@ public class RunAfterSimAnalysisForManyRuns {
             valuesForThisRun.put(prefix + "waitingActivityDurations", String.valueOf(sumWaitingActivityDuration_s));
             valuesForThisRun.put(prefix + "CO2_TOTAL", String.valueOf(sumCO2_TOTAL_kg));
             valuesForThisRun.put(prefix + "distanceToAttraction", String.valueOf(sumDistanceToAttraction));
-            ;
             valuesForThisRun.put(prefix + "distanceToAttraction_Mitte", String.valueOf(sumDistanceToAttractionMitte));
             valuesForThisRun.put(prefix + "numberOfStops_Mitte", String.valueOf(sumNumberOfStops_Mitte));
 
