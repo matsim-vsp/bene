@@ -86,7 +86,7 @@ public class RunAfterSimAnalysisForManyRuns {
 
 
         ArrayList<String> header = new ArrayList<>(
-                Arrays.asList("Parameter", "Basis", "Kapazitätsprüfung", "Reservierung", "Zentrale Parkplätze", "Ausstieg nur am Parkplatz",
+                Arrays.asList("Parameter", "Basis", "Kapazitätsprüfung", "Reservierung", "Zentralisierte Parkplätze", "Ausstieg nur am Parkplatz",
                         "Neue Parkinfrastruktur",
                         "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz", "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz + Reservierung",
                         "Neue Parkinfrastruktur + Ausstieg nur am Parkplatz + Reservierung + 2x Kapazität",
