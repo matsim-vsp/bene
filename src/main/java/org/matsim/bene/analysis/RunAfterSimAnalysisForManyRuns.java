@@ -281,7 +281,6 @@ public class RunAfterSimAnalysisForManyRuns {
             valuesForThisRun.put(prefix + "waitingActivityDurations", String.valueOf(sumWaitingActivityDuration_s));
             valuesForThisRun.put(prefix + "CO2_TOTAL", String.valueOf(sumCO2_TOTAL_kg));
             valuesForThisRun.put(prefix + "distanceToAttraction", String.valueOf(sumDistanceToAttraction));
-            ;
             valuesForThisRun.put(prefix + "distanceToAttraction_Mitte", String.valueOf(sumDistanceToAttractionMitte));
             valuesForThisRun.put(prefix + "numberOfStops_Mitte", String.valueOf(sumNumberOfStops_Mitte));
 
